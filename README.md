@@ -22,6 +22,17 @@ Tasks were hand-selected for difficulty and verified to be achievable. Each task
 
 **Important:** The task set is stored in base64 encoding to prevent web scrapers from inadvertently including the tasks in LLM training data. Please do not publish the tasks in plaintext or use them in model training data.
 
+### Task Format
+
+When decoded, the task file contains a JSON array. Each task has three fields:
+
+| Field | Description |
+|-------|-------------|
+| `task_id` | Unique identifier for the task |
+| `confirmed_task` | The task instruction to execute |
+| `category` | Source benchmark category |
+| `answer` | (optional) Ground truth answer if applicable |
+
 ## Configuration
 
 <!-- TODO -->
