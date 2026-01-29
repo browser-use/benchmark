@@ -28,8 +28,8 @@ RUNS = {
     # "ChatBrowserUse-1": 5,
     # "ChatBrowserUse-2": 5,
     # "gemini-2.5-flash": 5,
-    "claude-4.5-haiku": 5,
-    "claude-4.5-sonnet": 5,
+    "claude-4-5-haiku": 5,
+    "claude-4-5-sonnet": 5,
     # "gemini-3-flash-preview": 5,
 }
 
