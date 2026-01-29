@@ -1,16 +1,33 @@
 <picture>
-  <source media="(prefers-color-scheme: light)" srcset="https://github.com/user-attachments/assets/2ccdb752-22fb-41c7-8948-857fc1ad7e24">
+  <source media="(prefers-color-scheme: light)" srcset="https://github.com/user-attachments/assets/2ccdb752-22fb-41c7-8948-857fc1ad7e24"">
   <source media="(prefers-color-scheme: dark)" srcset="https://github.com/user-attachments/assets/774a46d5-27a0-490c-b7d0-e65fcbbfa358">
-  <img alt="Browser Use Logo" src="https://github.com/user-attachments/assets/2ccdb752-22fb-41c7-8948-857fc1ad7e24" width="full">
+  <img alt="Shows a black Browser Use Logo in light color mode and a white one in dark color mode." src="https://github.com/user-attachments/assets/2ccdb752-22fb-41c7-8948-857fc1ad7e24"  width="full">
 </picture>
-
-<h1 align="center">BU_Bench_V1</h1>
-
-<p align="center">100 hand-selected tasks for evaluating browser automation agents</p>
 
 ---
 
-## Results
+<div align="center">
+<a href="#demos"><img src="https://media.browser-use.tools/badges/demos" alt="Demos"></a>
+<img width="16" height="1" alt="">
+<a href="https://docs.browser-use.com"><img src="https://media.browser-use.tools/badges/docs" alt="Docs"></a>
+<img width="16" height="1" alt="">
+<a href="https://browser-use.com/posts"><img src="https://media.browser-use.tools/badges/blog" alt="Blog"></a>
+<img width="16" height="1" alt="">
+<a href="https://browsermerch.com"><img src="https://media.browser-use.tools/badges/merch" alt="Merch"></a>
+<img width="100" height="1" alt="">
+<a href="https://github.com/browser-use/browser-use"><img src="https://media.browser-use.tools/badges/github" alt="Github Stars"></a>
+<img width="4" height="1" alt="">
+<a href="https://x.com/intent/user?screen_name=browser_use"><img src="https://media.browser-use.tools/badges/twitter" alt="Twitter"></a>
+<img width="4 height="1" alt="">
+<a href="https://link.browser-use.com/discord"><img src="https://media.browser-use.tools/badges/discord" alt="Discord"></a>
+<img width="4" height="1" alt="">
+<a href="https://cloud.browser-use.com"><img src="https://media.browser-use.tools/badges/cloud" height="48" alt="Browser-Use Cloud"></a>
+</div>
+
+<h1 align="center">Open-Source Benchmarks</h1>
+</br>
+
+### **BU_Bench_V1**: 100 hand-selected tasks for evaluating browser automation agents
 
 <picture>
   <source media="(prefers-color-scheme: light)" srcset="official_plots/accuracy_by_model_light.png">
