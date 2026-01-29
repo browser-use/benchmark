@@ -30,9 +30,9 @@ MODELS = {
     "gpt-5": lambda: ChatOpenAI(model="gpt-5", api_key=os.getenv("OPENAI_API_KEY")),
 
     "claude-3-5-haiku": lambda: ChatAnthropic(model="claude-3-5-haiku", api_key=os.getenv("ANTHROPIC_API_KEY")),
-    "claude-haiku-4.5": lambda: ChatAnthropic(model="claude-haiku-4.5", api_key=os.getenv("ANTHROPIC_API_KEY")),
-    "claude-sonnet-4.5": lambda: ChatAnthropic(model="claude-sonnet-4.5", api_key=os.getenv("ANTHROPIC_API_KEY")),
-    "claude-opus-4.5": lambda: ChatAnthropic(model="claude-opus-4.5", api_key=os.getenv("ANTHROPIC_API_KEY")),
+    "claude-4.5-haiku": lambda: ChatAnthropic(model="claude-4.5-haiku", api_key=os.getenv("ANTHROPIC_API_KEY")),
+    "claude-4.5-sonnet": lambda: ChatAnthropic(model="claude-4.5-sonnet", api_key=os.getenv("ANTHROPIC_API_KEY")),
+    "claude-4.5-opus": lambda: ChatAnthropic(model="claude-4.5-opus", api_key=os.getenv("ANTHROPIC_API_KEY")),
 
     "gemini-2.5-flash-lite": lambda: ChatGoogle(model="gemini-2.5-flash-lite", api_key=os.getenv("GOOGLE_API_KEY")),
     "gemini-2.5-flash": lambda: ChatGoogle(model="gemini-2.5-flash", api_key=os.getenv("GOOGLE_API_KEY")),

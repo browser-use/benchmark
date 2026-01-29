@@ -25,12 +25,12 @@ POLL_INTERVAL = 5  # seconds
 
 # Models to evaluate: {model_name: number_of_runs}
 RUNS = {
-    "ChatBrowserUse-1": 5,
-    "ChatBrowserUse-2": 5,
-    "gemini-2.5-flash": 5,
-    "claude-haiku-4.5": 5,
-    "claude-sonnet-4.5": 5,
-    "gemini-3-flash-preview": 5,
+    # "ChatBrowserUse-1": 5,
+    # "ChatBrowserUse-2": 5,
+    # "gemini-2.5-flash": 5,
+    "claude-4.5-haiku": 5,
+    "claude-4.5-sonnet": 5,
+    # "gemini-3-flash-preview": 5,
 }
 
 RESULTS_DIR = Path(__file__).parent / "official_results"

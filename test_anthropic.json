@@ -1,0 +1,21 @@
+{
+  "tracking_id": "test",
+  "model": "claude-haiku-4.5",
+  "start": 0,
+  "end": 1,
+  "run_start": "test",
+  "tasks_completed": 1,
+  "tasks_successful": 0,
+  "total_steps": 5,
+  "total_duration": 5.401458263397217,
+  "total_cost": 0.0,
+  "task_results": [
+    {
+      "task_id": "66c6641b-f949-46a2-8bcc-6d9dd388b534",
+      "score": 0,
+      "steps": 5,
+      "duration": 5.401458263397217,
+      "cost": 0.0
+    }
+  ]
+}
