@@ -43,6 +43,22 @@
 
 ---
 
+### **Stealth_Bench_V1**: 80 tasks for evaluating browser stealth across anti-bot protections
+
+<picture>
+  <source media="(prefers-color-scheme: light)" srcset="stealth_bench/official_plots/accuracy_by_browser_light.png">
+  <source media="(prefers-color-scheme: dark)" srcset="stealth_bench/official_plots/accuracy_by_browser_dark.png">
+  <img alt="Stealth Bench - Accuracy by Browser" src="stealth_bench/official_plots/accuracy_by_browser_light.png" width="100%">
+</picture>
+
+<picture>
+  <source media="(prefers-color-scheme: light)" srcset="stealth_bench/official_plots/category_heatmap_light.png">
+  <source media="(prefers-color-scheme: dark)" srcset="stealth_bench/official_plots/category_heatmap_dark.png">
+  <img alt="Stealth Bench - Category Heatmap" src="stealth_bench/official_plots/category_heatmap_light.png" width="100%">
+</picture>
+
+---
+
 ## Quick Start
 
 **1. Install dependencies**

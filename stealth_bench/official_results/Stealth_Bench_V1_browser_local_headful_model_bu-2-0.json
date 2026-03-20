@@ -1,0 +1,172 @@
+[
+  {
+    "run_start": "cbc1bc13",
+    "tasks_completed": 80,
+    "tasks_successful": 40,
+    "total_steps": 759,
+    "total_duration": 4814.560132999999,
+    "total_cost": 0.26620185,
+    "tasks_successful_by_category": {
+      "Akamai": 0,
+      "Cloudflare": 12,
+      "Custom Antibot": 4,
+      "Datadome": 8,
+      "GeeTest": 3,
+      "Kasada": 1,
+      "PerimeterX": 5,
+      "Shape": 1,
+      "Temu Slider": 0,
+      "hCaptcha": 1,
+      "reCaptcha": 5
+    },
+    "tasks_total_by_category": {
+      "Akamai": 6,
+      "Cloudflare": 22,
+      "Custom Antibot": 5,
+      "Datadome": 13,
+      "GeeTest": 4,
+      "Kasada": 1,
+      "PerimeterX": 18,
+      "Shape": 1,
+      "Temu Slider": 1,
+      "hCaptcha": 3,
+      "reCaptcha": 6
+    }
+  },
+  {
+    "run_start": "4f411a81",
+    "tasks_completed": 80,
+    "tasks_successful": 39,
+    "total_steps": 808,
+    "total_duration": 4898.845052,
+    "total_cost": 0.28232109,
+    "tasks_successful_by_category": {
+      "Akamai": 0,
+      "Cloudflare": 10,
+      "Custom Antibot": 4,
+      "Datadome": 9,
+      "GeeTest": 3,
+      "Kasada": 1,
+      "PerimeterX": 5,
+      "Shape": 1,
+      "Temu Slider": 0,
+      "hCaptcha": 1,
+      "reCaptcha": 5
+    },
+    "tasks_total_by_category": {
+      "Akamai": 6,
+      "Cloudflare": 22,
+      "Custom Antibot": 5,
+      "Datadome": 13,
+      "GeeTest": 4,
+      "Kasada": 1,
+      "PerimeterX": 18,
+      "Shape": 1,
+      "Temu Slider": 1,
+      "hCaptcha": 3,
+      "reCaptcha": 6
+    }
+  },
+  {
+    "run_start": "e1479709",
+    "tasks_completed": 80,
+    "tasks_successful": 42,
+    "total_steps": 781,
+    "total_duration": 5118.369672999999,
+    "total_cost": 0.29623678999999997,
+    "tasks_successful_by_category": {
+      "Akamai": 0,
+      "Cloudflare": 13,
+      "Custom Antibot": 4,
+      "Datadome": 9,
+      "GeeTest": 3,
+      "Kasada": 1,
+      "PerimeterX": 5,
+      "Shape": 1,
+      "Temu Slider": 0,
+      "hCaptcha": 1,
+      "reCaptcha": 5
+    },
+    "tasks_total_by_category": {
+      "Akamai": 6,
+      "Cloudflare": 22,
+      "Custom Antibot": 5,
+      "Datadome": 13,
+      "GeeTest": 4,
+      "Kasada": 1,
+      "PerimeterX": 18,
+      "Shape": 1,
+      "Temu Slider": 1,
+      "hCaptcha": 3,
+      "reCaptcha": 6
+    }
+  },
+  {
+    "run_start": "67ebf655",
+    "tasks_completed": 80,
+    "tasks_successful": 39,
+    "total_steps": 805,
+    "total_duration": 5280.612021,
+    "total_cost": 0.28315376000000003,
+    "tasks_successful_by_category": {
+      "Akamai": 0,
+      "Cloudflare": 13,
+      "Custom Antibot": 4,
+      "Datadome": 9,
+      "GeeTest": 2,
+      "Kasada": 0,
+      "PerimeterX": 5,
+      "Shape": 1,
+      "Temu Slider": 0,
+      "hCaptcha": 1,
+      "reCaptcha": 4
+    },
+    "tasks_total_by_category": {
+      "Akamai": 6,
+      "Cloudflare": 22,
+      "Custom Antibot": 5,
+      "Datadome": 13,
+      "GeeTest": 4,
+      "Kasada": 1,
+      "PerimeterX": 18,
+      "Shape": 1,
+      "Temu Slider": 1,
+      "hCaptcha": 3,
+      "reCaptcha": 6
+    }
+  },
+  {
+    "run_start": "c12febff",
+    "tasks_completed": 80,
+    "tasks_successful": 39,
+    "total_steps": 703,
+    "total_duration": 4464.178492,
+    "total_cost": 0.26685684000000004,
+    "tasks_successful_by_category": {
+      "Akamai": 0,
+      "Cloudflare": 11,
+      "Custom Antibot": 4,
+      "Datadome": 9,
+      "GeeTest": 3,
+      "Kasada": 1,
+      "PerimeterX": 5,
+      "Shape": 1,
+      "Temu Slider": 0,
+      "hCaptcha": 1,
+      "reCaptcha": 4
+    },
+    "tasks_total_by_category": {
+      "Akamai": 6,
+      "Cloudflare": 22,
+      "Custom Antibot": 5,
+      "Datadome": 13,
+      "GeeTest": 4,
+      "Kasada": 1,
+      "PerimeterX": 18,
+      "Shape": 1,
+      "Temu Slider": 1,
+      "hCaptcha": 3,
+      "reCaptcha": 6
+    }
+  }
+]

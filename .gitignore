@@ -4,3 +4,4 @@ __pycache__/
 .env
 run_data/
 DESIGN.MD
+results/

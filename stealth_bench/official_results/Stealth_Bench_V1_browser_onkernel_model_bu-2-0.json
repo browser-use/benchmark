@@ -1,0 +1,104 @@
+[
+  {
+    "run_start": "7186b6e0",
+    "tasks_completed": 80,
+    "tasks_successful": 53,
+    "total_steps": 827,
+    "total_duration": 7826.793521,
+    "total_cost": 0.28450725,
+    "tasks_successful_by_category": {
+      "Akamai": 6,
+      "Cloudflare": 16,
+      "Custom Antibot": 5,
+      "Datadome": 8,
+      "GeeTest": 3,
+      "Kasada": 1,
+      "PerimeterX": 6,
+      "Shape": 0,
+      "Temu Slider": 1,
+      "hCaptcha": 2,
+      "reCaptcha": 5
+    },
+    "tasks_total_by_category": {
+      "Akamai": 6,
+      "Cloudflare": 22,
+      "Custom Antibot": 5,
+      "Datadome": 13,
+      "GeeTest": 4,
+      "Kasada": 1,
+      "PerimeterX": 18,
+      "Shape": 1,
+      "Temu Slider": 1,
+      "hCaptcha": 3,
+      "reCaptcha": 6
+    }
+  },
+  {
+    "run_start": "98be130d",
+    "tasks_completed": 80,
+    "tasks_successful": 57,
+    "total_steps": 808,
+    "total_duration": 7399.10521,
+    "total_cost": 0.28067063999999997,
+    "tasks_successful_by_category": {
+      "Akamai": 6,
+      "Cloudflare": 19,
+      "Custom Antibot": 5,
+      "Datadome": 8,
+      "GeeTest": 3,
+      "Kasada": 1,
+      "PerimeterX": 6,
+      "Shape": 0,
+      "Temu Slider": 1,
+      "hCaptcha": 2,
+      "reCaptcha": 6
+    },
+    "tasks_total_by_category": {
+      "Akamai": 6,
+      "Cloudflare": 22,
+      "Custom Antibot": 5,
+      "Datadome": 13,
+      "GeeTest": 4,
+      "Kasada": 1,
+      "PerimeterX": 18,
+      "Shape": 1,
+      "Temu Slider": 1,
+      "hCaptcha": 3,
+      "reCaptcha": 6
+    }
+  },
+  {
+    "run_start": "a0e1adbe",
+    "tasks_completed": 80,
+    "tasks_successful": 54,
+    "total_steps": 788,
+    "total_duration": 7230.585069999999,
+    "total_cost": 0.26607508,
+    "tasks_successful_by_category": {
+      "Akamai": 6,
+      "Cloudflare": 18,
+      "Custom Antibot": 5,
+      "Datadome": 8,
+      "GeeTest": 3,
+      "Kasada": 1,
+      "PerimeterX": 5,
+      "Shape": 0,
+      "Temu Slider": 1,
+      "hCaptcha": 2,
+      "reCaptcha": 5
+    },
+    "tasks_total_by_category": {
+      "Akamai": 6,
+      "Cloudflare": 22,
+      "Custom Antibot": 5,
+      "Datadome": 13,
+      "GeeTest": 4,
+      "Kasada": 1,
+      "PerimeterX": 18,
+      "Shape": 1,
+      "Temu Slider": 1,
+      "hCaptcha": 3,
+      "reCaptcha": 6
+    }
+  }
+]
