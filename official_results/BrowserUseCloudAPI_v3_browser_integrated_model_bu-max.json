@@ -1,0 +1,10 @@
+[
+  {
+    "run_start": "20260321_110000_0",
+    "tasks_completed": 100,
+    "tasks_successful": 74,
+    "total_steps": 1527,
+    "total_duration": 40246.741321,
+    "total_cost": 53.519873
+  }
+]
