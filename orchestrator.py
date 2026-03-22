@@ -35,7 +35,7 @@ RUNS = {
     "gpt-5": 5,
 }
 
-RESULTS_DIR = Path(__file__).parent / "official_results"
+RESULTS_DIR = Path(__file__).parent / "bu_bench" / "official_results"
 API_BASE = f"https://api.github.com/repos/{REPO}"
 HEADERS = {"Authorization": f"token {GITHUB_TOKEN}", "Accept": "application/vnd.github.v3+json"}
 

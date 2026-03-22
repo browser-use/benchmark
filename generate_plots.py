@@ -14,8 +14,8 @@ if FONT_PATH.exists():
     font_manager.fontManager.addfont(str(FONT_PATH))
     plt.rcParams["font.family"] = "Geist Mono"
 
-RESULTS_DIR = Path(__file__).parent / "official_results"
-OUTPUT_DIR = Path(__file__).parent / "official_plots"
+RESULTS_DIR = Path(__file__).parent / "bu_bench" / "official_results"
+OUTPUT_DIR = Path(__file__).parent / "bu_bench" / "official_plots"
 N_BOOTSTRAP = 1000
 EXPECTED_TASKS = 100
 HIGHLIGHT_MODELS = {"bu-max"}

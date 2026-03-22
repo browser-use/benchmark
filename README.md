@@ -103,15 +103,15 @@ Traces: `run_data/stealth/…`; run summaries: `results/stealth/…`.
 `run_eval.py` loads **`BU_Bench_V1.enc`** when you pass **`--benchmark bu`** (default benchmark is [Stealth Bench](#stealth-bench-v1)).
 
 <picture>
-  <source media="(prefers-color-scheme: light)" srcset="official_plots/accuracy_by_model_light.png">
-  <source media="(prefers-color-scheme: dark)" srcset="official_plots/accuracy_by_model_dark.png">
-  <img alt="Accuracy by Model" src="official_plots/accuracy_by_model_light.png" width="100%">
+  <source media="(prefers-color-scheme: light)" srcset="bu_bench/official_plots/accuracy_by_model_light.png">
+  <source media="(prefers-color-scheme: dark)" srcset="bu_bench/official_plots/accuracy_by_model_dark.png">
+  <img alt="Accuracy by Model" src="bu_bench/official_plots/accuracy_by_model_light.png" width="100%">
 </picture>
 
 <picture>
-  <source media="(prefers-color-scheme: light)" srcset="official_plots/accuracy_vs_throughput_light.png">
-  <source media="(prefers-color-scheme: dark)" srcset="official_plots/accuracy_vs_throughput_dark.png">
-  <img alt="Accuracy vs Latency" src="official_plots/accuracy_vs_throughput_light.png" width="100%">
+  <source media="(prefers-color-scheme: light)" srcset="bu_bench/official_plots/accuracy_vs_throughput_light.png">
+  <source media="(prefers-color-scheme: dark)" srcset="bu_bench/official_plots/accuracy_vs_throughput_dark.png">
+  <img alt="Accuracy vs Latency" src="bu_bench/official_plots/accuracy_vs_throughput_light.png" width="100%">
 </picture>
 
 ### Running BU Bench
