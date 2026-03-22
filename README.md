@@ -34,7 +34,7 @@
 
 ## Stealth Bench V1
 
-**71 tasks for evaluating browser stealth across anti-bot protections**
+**80 tasks for evaluating browser stealth across anti-bot protections**
 
 <picture>
   <source media="(prefers-color-scheme: light)" srcset="stealth_bench/official_plots/accuracy_by_browser_light.png">
