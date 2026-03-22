@@ -1,10 +1,13 @@
 """Main benchmark evaluation script.
 
 Usage:
-    uv run python run_eval.py                              # defaults: browser-use-cloud + bu-2-0
-    uv run python run_eval.py --browser anchor             # use Anchor Browser provider
+    uv run python run_eval.py                              # Stealth Bench (default) + browser-use-cloud + bu-2-0
+    uv run python run_eval.py --benchmark bu               # BU Bench
+    uv run python run_eval.py --browser anchor
     uv run python run_eval.py --browser local_headless     # use local headless Chromium
     uv run python run_eval.py --tasks 5                    # run only 5 tasks
+
+Default is Stealth Bench (`Stealth_Bench_V1.enc`). Pass `--benchmark bu` for BU Bench (`BU_Bench_V1.enc`).
 
 Available browsers: browser-use-cloud (default), anchor, browserbase,
     browserless, hyperbrowser, local_headful, local_headless, onkernel,
@@ -41,7 +44,13 @@ load_dotenv()
 
 # Judge LLM - always use gemini-2.5-flash for consistent judging across all evaluations
 JUDGE_LLM = ChatGoogle(model="gemini-2.5-flash", api_key=os.getenv("GOOGLE_API_KEY"))
-TASKS_FILE = Path(__file__).parent / "BU_Bench_V1.enc"
+
+# encrypted task blobs at repo root; Fernet key label must match encryption recipe
+BENCHMARK_CONFIG: dict[str, tuple[str, bytes]] = {
+    "bu": ("BU_Bench_V1.enc", b"BU_Bench_V1"),
+    "stealth": ("Stealth_Bench_V1.enc", b"Stealth_Bench_V1"),
+}
+
 MAX_CONCURRENT = 3
 TASK_TIMEOUT = 1800  # 30 minutes max per task
 
@@ -60,9 +69,10 @@ def encode_screenshots(paths: list[str]) -> list[str]:
     return result
 
 
-def load_tasks() -> list[dict]:
-    key = base64.urlsafe_b64encode(hashlib.sha256(b"BU_Bench_V1").digest())
-    encrypted = base64.b64decode(TASKS_FILE.read_text())
+def load_tasks(enc_filename: str, key_material: bytes) -> list[dict]:
+    enc_path = Path(__file__).parent / enc_filename
+    key = base64.urlsafe_b64encode(hashlib.sha256(key_material).digest())
+    encrypted = base64.b64decode(enc_path.read_text())
     return json.loads(Fernet(key).decrypt(encrypted))
 
 
@@ -211,7 +221,15 @@ async def run_task(
 
 
 async def main():
-    parser = argparse.ArgumentParser(description="Run BU_Bench_V1 evaluation")
+    parser = argparse.ArgumentParser(
+        description="Run Stealth Bench V1 (default) or BU Bench V1 (--benchmark bu)"
+    )
+    parser.add_argument(
+        "--benchmark",
+        choices=tuple(BENCHMARK_CONFIG.keys()),
+        default="stealth",
+        help="Task set (default: stealth). bu=BU Bench V1 (100 tasks), stealth=Stealth Bench V1 (80 tasks)",
+    )
     parser.add_argument(
         "--browser",
         default="browser-use-cloud",
@@ -233,15 +251,17 @@ async def main():
     else:
         browser_provider = get_provider(browser_name)
 
-    # Build run key and paths
+    # Paths: benchmark (stealth | bu) is a folder under run_data/ and results/, not in run_key
     run_start = datetime.now().strftime("%Y%m%d_%H%M%S")
-    run_key = f"{AGENT_FRAMEWORK_NAME}_{AGENT_FRAMEWORK_VERSION}_browser_{browser_name}_model_{MODEL_NAME}"
-    run_data_dir = (
-        Path(__file__).parent / "run_data" / f"{run_key}_start_at_{run_start}"
+    run_key = (
+        f"{AGENT_FRAMEWORK_NAME}_{AGENT_FRAMEWORK_VERSION}_browser_{browser_name}_model_{MODEL_NAME}"
     )
-    results_file = Path(__file__).parent / "results" / f"{run_key}.json"
+    root = Path(__file__).parent
+    run_data_dir = root / "run_data" / args.benchmark / f"{run_key}_start_at_{run_start}"
+    results_file = root / "results" / args.benchmark / f"{run_key}.json"
 
-    tasks = load_tasks()
+    enc_name, key_material = BENCHMARK_CONFIG[args.benchmark]
+    tasks = load_tasks(enc_name, key_material)
     if args.tasks:
         tasks = tasks[: args.tasks]
     sem = asyncio.Semaphore(MAX_CONCURRENT)
