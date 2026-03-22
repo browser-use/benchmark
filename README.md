@@ -34,7 +34,7 @@
 
 ## Stealth Bench V1
 
-**71 tasks for evaluating browser stealth across anti-bot protections**
+**80 tasks for evaluating browser stealth across anti-bot protections**
 
 <picture>
   <source media="(prefers-color-scheme: light)" srcset="stealth_bench/official_plots/accuracy_by_browser_light.png">
@@ -51,6 +51,8 @@
 Read more in our [blog post](https://browser-use.com/posts/stealth-benchmark).
 
 ### Running the Stealth Benchmark
+
+`run_eval.py` defaults to **Stealth Bench** (`Stealth_Bench_V1.enc`). Pass **`--benchmark bu`** to run [BU Bench](#bu-bench-v1) instead.
 
 **1. Install dependencies**
 ```bash
@@ -84,6 +86,8 @@ uv run python run_eval.py --browser <provider>
 
 Available providers: `browser-use-cloud`, `anchor`, `browserbase`, `browserless`, `hyperbrowser`, `onkernel`, `steel`, `local_headful`, `local_headless`
 
+Traces: `run_data/stealth/…`; run summaries: `results/stealth/…`.
+
 **Results and official data:** [`stealth_bench/`](stealth_bench/)
 
 <br/>
@@ -96,16 +100,18 @@ Available providers: `browser-use-cloud`, `anchor`, `browserbase`, `browserless`
 
 **100 hand-selected tasks for evaluating browser automation agents**
 
+`run_eval.py` loads **`BU_Bench_V1.enc`** when you pass **`--benchmark bu`** (default benchmark is [Stealth Bench](#stealth-bench-v1)).
+
 <picture>
-  <source media="(prefers-color-scheme: light)" srcset="official_plots/accuracy_by_model_light.png">
-  <source media="(prefers-color-scheme: dark)" srcset="official_plots/accuracy_by_model_dark.png">
-  <img alt="Accuracy by Model" src="official_plots/accuracy_by_model_light.png" width="100%">
+  <source media="(prefers-color-scheme: light)" srcset="bu_bench/official_plots/accuracy_by_model_light.png">
+  <source media="(prefers-color-scheme: dark)" srcset="bu_bench/official_plots/accuracy_by_model_dark.png">
+  <img alt="Accuracy by Model" src="bu_bench/official_plots/accuracy_by_model_light.png" width="100%">
 </picture>
 
 <picture>
-  <source media="(prefers-color-scheme: light)" srcset="official_plots/accuracy_vs_throughput_light.png">
-  <source media="(prefers-color-scheme: dark)" srcset="official_plots/accuracy_vs_throughput_dark.png">
-  <img alt="Accuracy vs Latency" src="official_plots/accuracy_vs_throughput_light.png" width="100%">
+  <source media="(prefers-color-scheme: light)" srcset="bu_bench/official_plots/accuracy_vs_throughput_light.png">
+  <source media="(prefers-color-scheme: dark)" srcset="bu_bench/official_plots/accuracy_vs_throughput_dark.png">
+  <img alt="Accuracy vs Latency" src="bu_bench/official_plots/accuracy_vs_throughput_light.png" width="100%">
 </picture>
 
 ### Running BU Bench
@@ -125,10 +131,10 @@ cp .env.example .env
 
 **3. Run evaluation**
 ```bash
-uv run python run_eval.py
+uv run python run_eval.py --benchmark bu
 ```
 
-Results are saved to `results/` and detailed traces to `run_data/`.
+Results are saved to `results/bu/` and detailed traces to `run_data/bu/`.
 
 ### Swapping Models
 
