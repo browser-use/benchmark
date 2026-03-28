@@ -4,11 +4,13 @@ Usage:
     uv run python run_eval.py                              # defaults: browser-use-cloud + bu-2-0
     uv run python run_eval.py --browser anchor             # use Anchor Browser provider
     uv run python run_eval.py --browser local_headless     # use local headless Chromium
-    uv run python run_eval.py --tasks 5                    # run only 5 tasks
+    uv run python run_eval.py --tasks 5                    # run first 5 tasks
+    uv run python run_eval.py --task-ids 2 5 12 14         # rerun specific task IDs
+    uv run python run_eval.py --task-ids 29-35             # rerun a range of task IDs
 
 Available browsers: browser-use-cloud (default), anchor, browserbase,
-    browserless, hyperbrowser, local_headful, local_headless, onkernel,
-    rebrowser, steel
+    browserless, driver, hyperbrowser, local_headful, local_headless,
+    onkernel, rebrowser, steel
 """
 
 # Fix for MacOS users using uv without SSL certificate setup
@@ -41,8 +43,11 @@ load_dotenv()
 
 # Judge LLM - always use gemini-2.5-flash for consistent judging across all evaluations
 JUDGE_LLM = ChatGoogle(model="gemini-2.5-flash", api_key=os.getenv("GOOGLE_API_KEY"))
-TASKS_FILE = Path(__file__).parent / "BU_Bench_V1.enc"
-MAX_CONCURRENT = 3
+BENCH_NAMES = {
+    "bu": "BU_Bench_V1",
+    "stealth": "Stealth_Bench_V1",
+}
+MAX_CONCURRENT = 1
 TASK_TIMEOUT = 1800  # 30 minutes max per task
 
 AGENT_FRAMEWORK_NAME = "BrowserUse"
@@ -60,9 +65,10 @@ def encode_screenshots(paths: list[str]) -> list[str]:
     return result
 
 
-def load_tasks() -> list[dict]:
-    key = base64.urlsafe_b64encode(hashlib.sha256(b"BU_Bench_V1").digest())
-    encrypted = base64.b64decode(TASKS_FILE.read_text())
+def load_tasks(bench_name: str) -> list[dict]:
+    tasks_file = Path(__file__).parent / f"{bench_name}.enc"
+    key = base64.urlsafe_b64encode(hashlib.sha256(bench_name.encode()).digest())
+    encrypted = base64.b64decode(tasks_file.read_text())
     return json.loads(Fernet(key).decrypt(encrypted))
 
 
@@ -211,7 +217,13 @@ async def run_task(
 
 
 async def main():
-    parser = argparse.ArgumentParser(description="Run BU_Bench_V1 evaluation")
+    parser = argparse.ArgumentParser(description="Run benchmark evaluation")
+    parser.add_argument(
+        "--bench",
+        default="bu",
+        choices=list(BENCH_NAMES.keys()),
+        help="Benchmark to run: bu (BU_Bench_V1) or stealth (Stealth_Bench_V1) (default: bu)",
+    )
     parser.add_argument(
         "--browser",
         default="browser-use-cloud",
@@ -222,9 +234,18 @@ async def main():
         "--tasks",
         type=int,
         default=None,
-        help="Number of tasks to run (default: all)",
+        help="Number of tasks to run from the start (default: all)",
+    )
+    parser.add_argument(
+        "--task-ids",
+        nargs="+",
+        default=None,
+        help="Specific task IDs to run (e.g. 2 5 12 or 29-35 for ranges)",
     )
     args = parser.parse_args()
+
+    # Resolve bench name
+    bench_name = BENCH_NAMES[args.bench]
 
     # Resolve browser provider (None = use native browser-use-cloud path)
     browser_name = args.browser
@@ -235,15 +256,36 @@ async def main():
 
     # Build run key and paths
     run_start = datetime.now().strftime("%Y%m%d_%H%M%S")
-    run_key = f"{AGENT_FRAMEWORK_NAME}_{AGENT_FRAMEWORK_VERSION}_browser_{browser_name}_model_{MODEL_NAME}"
+    run_key = f"{bench_name}_{AGENT_FRAMEWORK_NAME}_{AGENT_FRAMEWORK_VERSION}_browser_{browser_name}_model_{MODEL_NAME}"
     run_data_dir = (
         Path(__file__).parent / "run_data" / f"{run_key}_start_at_{run_start}"
     )
     results_file = Path(__file__).parent / "results" / f"{run_key}.json"
 
-    tasks = load_tasks()
-    if args.tasks:
-        tasks = tasks[: args.tasks]
+    all_tasks = load_tasks(bench_name)
+
+    # Filter tasks
+    if args.task_ids:
+        # Parse task IDs: supports individual IDs and ranges (e.g. "29-35")
+        selected_ids: set[str] = set()
+        for spec in args.task_ids:
+            if "-" in spec and not spec.startswith("-"):
+                start, end = spec.split("-", 1)
+                for i in range(int(start), int(end) + 1):
+                    selected_ids.add(str(i))
+            else:
+                selected_ids.add(spec)
+        tasks = [t for t in all_tasks if str(t.get("task_id", "")) in selected_ids]
+        if not tasks:
+            print(f"No tasks matched IDs: {selected_ids}")
+            print(f"Available IDs: {[t.get('task_id') for t in all_tasks[:10]]}...")
+            return
+        print(f"Running {len(tasks)} selected task(s): {sorted(selected_ids, key=lambda x: int(x) if x.isdigit() else x)}")
+    elif args.tasks:
+        tasks = all_tasks[: args.tasks]
+    else:
+        tasks = all_tasks
+
     sem = asyncio.Semaphore(MAX_CONCURRENT)
     results = await asyncio.gather(
         *[
