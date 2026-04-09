@@ -1,0 +1,35 @@
+[
+  {
+    "run_start": "20260326_160529",
+    "tasks_completed": 80,
+    "tasks_successful": 69,
+    "total_steps": 1436,
+    "total_duration": 29982.2,
+    "total_cost": 0.0,
+    "tasks_successful_by_category": {
+      "Cloudflare": 17,
+      "reCaptcha": 5,
+      "PerimeterX": 17,
+      "Datadome": 11,
+      "hCaptcha": 3,
+      "GeeTest": 3,
+      "Akamai": 6,
+      "Shape": 1,
+      "Kasada": 1,
+      "Custom Antibot": 5
+    },
+    "tasks_total_by_category": {
+      "Cloudflare": 22,
+      "reCaptcha": 6,
+      "PerimeterX": 18,
+      "Datadome": 13,
+      "hCaptcha": 3,
+      "GeeTest": 4,
+      "Akamai": 6,
+      "Shape": 1,
+      "Kasada": 1,
+      "Temu Slider": 1,
+      "Custom Antibot": 5
+    }
+  }
+]
