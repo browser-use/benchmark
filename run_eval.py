@@ -2,12 +2,12 @@
 
 Usage:
     uv run python run_eval.py                              # defaults: bu benchmark + browser-use-cloud
-    uv run python run_eval.py --benchmark clawbench        # run ClawBench tasks
+    uv run python run_eval.py --benchmark clawbench-lite    # run ClawBench-Lite tasks
     uv run python run_eval.py --browser anchor             # use Anchor Browser provider
     uv run python run_eval.py --browser local_headless     # use local headless Chromium
     uv run python run_eval.py --tasks 5                    # run only 5 tasks
 
-Available benchmarks: bu (default, 100 tasks), clawbench (20 everyday web tasks)
+Available benchmarks: bu (default, 100 tasks), clawbench-lite (20 everyday web tasks)
 Available browsers: browser-use-cloud (default), anchor, browserbase,
     browserless, hyperbrowser, local_headful, local_headless, onkernel,
     rebrowser, steel
@@ -49,10 +49,10 @@ BENCHMARKS = {
         "key_seed": b"BU_Bench_V1",
         "name": "BU_Bench_V1",
     },
-    "clawbench": {
-        "file": Path(__file__).parent / "ClawBench_V1.enc",
-        "key_seed": b"ClawBench_V1",
-        "name": "ClawBench_V1",
+    "clawbench-lite": {
+        "file": Path(__file__).parent / "ClawBench_Lite_V1.enc",
+        "key_seed": b"ClawBench_Lite_V1",
+        "name": "ClawBench_Lite_V1",
     },
 }
 DEFAULT_BENCHMARK = "bu"

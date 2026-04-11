@@ -92,13 +92,13 @@ Available providers: `browser-use-cloud`, `anchor`, `browserbase`, `browserless`
 
 <br/>
 
-## ClawBench V1
+## ClawBench-Lite V1
 
 **20 everyday web tasks from [ClawBench](https://github.com/reacher-z/ClawBench) — real-world actions on live production websites**
 
-ClawBench evaluates whether AI agents can complete the kind of tasks people do every day: booking appointments, creating projects, applying for jobs, writing reviews, and more. These 20 tasks are selected from ClawBench's full 153-task suite and adapted for the browser-use evaluation framework.
+ClawBench-Lite evaluates whether AI agents can complete the kind of tasks people do every day: booking appointments, creating projects, applying for jobs, writing reviews, and more. These 20 tasks are selected from ClawBench's full 153-task suite and adapted for the browser-use evaluation framework.
 
-### Running ClawBench
+### Running ClawBench-Lite
 
 **1. Install dependencies**
 ```bash
@@ -115,10 +115,10 @@ cp .env.example .env
 
 **3. Run evaluation**
 ```bash
-uv run python run_eval.py --benchmark clawbench
+uv run python run_eval.py --benchmark clawbench-lite
 ```
 
-### About ClawBench
+### About ClawBench-Lite
 
 20 tasks spanning 10 categories across 20 live websites:
 
