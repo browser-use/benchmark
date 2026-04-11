@@ -92,6 +92,60 @@ Available providers: `browser-use-cloud`, `anchor`, `browserbase`, `browserless`
 
 <br/>
 
+## ClawBench V1
+
+**20 everyday web tasks from [ClawBench](https://github.com/reacher-z/ClawBench) — real-world actions on live production websites**
+
+ClawBench evaluates whether AI agents can complete the kind of tasks people do every day: booking appointments, creating projects, applying for jobs, writing reviews, and more. These 20 tasks are selected from ClawBench's full 153-task suite and adapted for the browser-use evaluation framework.
+
+### Running ClawBench
+
+**1. Install dependencies**
+```bash
+pip install uv
+uv sync
+```
+
+**2. Set up your `.env`** (see [`.env.example`](.env.example))
+```bash
+cp .env.example .env
+# Fill in BROWSER_USE_API_KEY (required for ChatBrowserUse and cloud browsers)
+# Fill in GOOGLE_API_KEY (required for judge LLM)
+```
+
+**3. Run evaluation**
+```bash
+uv run python run_eval.py --benchmark clawbench
+```
+
+### About ClawBench
+
+20 tasks spanning 10 categories across 20 live websites:
+
+| Category | Tasks | Platforms |
+|----------|-------|-----------|
+| Office & Productivity | 4 | Calendly, Trello, Todoist, Doodle |
+| Travel & Booking | 3 | Airbnb, Booking.com, Booksy |
+| Dev & Tech | 2 | GitHub, LeetCode |
+| Education | 2 | Coursera, Semantic Scholar |
+| Entertainment | 2 | Goodreads, Eventbrite |
+| Job Search | 2 | Indeed, TaskRabbit |
+| Rating & Reviews | 2 | G2, TripAdvisor |
+| Creation & Setup | 2 | Mailchimp, Airtable |
+| Pet Care | 1 | Rover |
+
+All tasks target live production websites (not sandboxed clones). Each task requires multi-step browser interaction: navigating, filling forms, clicking through workflows, and reaching a final confirmation or submission step.
+
+Tasks are encrypted to prevent data contamination. Please do not publish the tasks in plaintext.
+
+> **Paper:** [ClawBench: Can AI Agents Complete Everyday Online Tasks?](https://claw-bench.com) (COLM 2026)
+
+<br/>
+
+---
+
+<br/>
+
 ## BU Bench V1
 
 **100 hand-selected tasks for evaluating browser automation agents**
@@ -182,6 +236,18 @@ Important: The task set is stored in base64 encoding to prevent data contaminati
 <br/>
 
 ## Attributions
+
+### ClawBench
+Apache 2.0 License | https://github.com/reacher-z/ClawBench
+```bibtex
+@inproceedings{zhang2026clawbench,
+  title     = {ClawBench: Can AI Agents Complete Everyday Online Tasks?},
+  author    = {Yuxuan Zhang and Yubo Wang and Yipeng Zhu and Penghui Du and Junwen Miao and Xuan Lu and Wendong Xu and Yunzhuo Hao and Songcheng Cai and Xiaochen Wang and Huaisong Zhang and Xian Wu and Yi Lu and Minyi Lei and Kai Zou and Huifeng Yin and Ping Nie and Liang Chen and Dongfu Jiang and Wenhu Chen and Kelsey R. Allen},
+  booktitle = {Conference on Language Modeling (COLM)},
+  year      = {2026},
+  url       = {https://claw-bench.com}
+}
+```
 
 ### WebBench
 MIT License | https://webbench.ai/
