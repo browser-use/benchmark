@@ -1,11 +1,13 @@
 """Main benchmark evaluation script.
 
 Usage:
-    uv run python run_eval.py                              # defaults: browser-use-cloud + bu-2-0
+    uv run python run_eval.py                              # defaults: bu benchmark + browser-use-cloud
+    uv run python run_eval.py --benchmark clawbench-lite    # run ClawBench-Lite tasks
     uv run python run_eval.py --browser anchor             # use Anchor Browser provider
     uv run python run_eval.py --browser local_headless     # use local headless Chromium
     uv run python run_eval.py --tasks 5                    # run only 5 tasks
 
+Available benchmarks: bu (default, 100 tasks), clawbench-lite (20 everyday web tasks)
 Available browsers: browser-use-cloud (default), anchor, browserbase,
     browserless, hyperbrowser, local_headful, local_headless, onkernel,
     rebrowser, steel
@@ -41,7 +43,19 @@ load_dotenv()
 
 # Judge LLM - always use gemini-2.5-flash for consistent judging across all evaluations
 JUDGE_LLM = ChatGoogle(model="gemini-2.5-flash", api_key=os.getenv("GOOGLE_API_KEY"))
-TASKS_FILE = Path(__file__).parent / "BU_Bench_V1.enc"
+BENCHMARKS = {
+    "bu": {
+        "file": Path(__file__).parent / "BU_Bench_V1.enc",
+        "key_seed": b"BU_Bench_V1",
+        "name": "BU_Bench_V1",
+    },
+    "clawbench-lite": {
+        "file": Path(__file__).parent / "ClawBench_Lite_V1.enc",
+        "key_seed": b"ClawBench_Lite_V1",
+        "name": "ClawBench_Lite_V1",
+    },
+}
+DEFAULT_BENCHMARK = "bu"
 MAX_CONCURRENT = 3
 TASK_TIMEOUT = 1800  # 30 minutes max per task
 
@@ -60,9 +74,10 @@ def encode_screenshots(paths: list[str]) -> list[str]:
     return result
 
 
-def load_tasks() -> list[dict]:
-    key = base64.urlsafe_b64encode(hashlib.sha256(b"BU_Bench_V1").digest())
-    encrypted = base64.b64decode(TASKS_FILE.read_text())
+def load_tasks(benchmark: str = DEFAULT_BENCHMARK) -> list[dict]:
+    bench = BENCHMARKS[benchmark]
+    key = base64.urlsafe_b64encode(hashlib.sha256(bench["key_seed"]).digest())
+    encrypted = base64.b64decode(bench["file"].read_text())
     return json.loads(Fernet(key).decrypt(encrypted))
 
 
@@ -211,7 +226,13 @@ async def run_task(
 
 
 async def main():
-    parser = argparse.ArgumentParser(description="Run BU_Bench_V1 evaluation")
+    parser = argparse.ArgumentParser(description="Run benchmark evaluation")
+    parser.add_argument(
+        "--benchmark",
+        default=DEFAULT_BENCHMARK,
+        choices=list(BENCHMARKS.keys()),
+        help=f"Benchmark to run (default: {DEFAULT_BENCHMARK})",
+    )
     parser.add_argument(
         "--browser",
         default="browser-use-cloud",
@@ -234,14 +255,15 @@ async def main():
         browser_provider = get_provider(browser_name)
 
     # Build run key and paths
+    bench_name = BENCHMARKS[args.benchmark]["name"]
     run_start = datetime.now().strftime("%Y%m%d_%H%M%S")
-    run_key = f"{AGENT_FRAMEWORK_NAME}_{AGENT_FRAMEWORK_VERSION}_browser_{browser_name}_model_{MODEL_NAME}"
+    run_key = f"{AGENT_FRAMEWORK_NAME}_{AGENT_FRAMEWORK_VERSION}_browser_{browser_name}_model_{MODEL_NAME}_bench_{bench_name}"
     run_data_dir = (
         Path(__file__).parent / "run_data" / f"{run_key}_start_at_{run_start}"
     )
     results_file = Path(__file__).parent / "results" / f"{run_key}.json"
 
-    tasks = load_tasks()
+    tasks = load_tasks(args.benchmark)
     if args.tasks:
         tasks = tasks[: args.tasks]
     sem = asyncio.Semaphore(MAX_CONCURRENT)
