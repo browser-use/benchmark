@@ -10,7 +10,7 @@ import json
 from dotenv import load_dotenv
 from browser_use import ChatGoogle
 from browser_use.llm import ChatBrowserUse, ChatOpenAI, ChatAnthropic
-from run_eval import load_tasks, run_task
+from run_eval import load_tasks, run_task, BENCHMARKS, DEFAULT_BENCHMARK
 
 load_dotenv()
 
@@ -43,9 +43,9 @@ MODELS = {
 }
 
 
-async def run_batch(model_name: str, start: int, end: int, parallel: int = 3, tracking_id: str = None, run_start: str = None) -> dict:
+async def run_batch(model_name: str, start: int, end: int, parallel: int = 3, tracking_id: str = None, run_start: str = None, benchmark: str = DEFAULT_BENCHMARK) -> dict:
     """Run tasks[start:end] with given model. Returns results summary."""
-    tasks = interleave(load_tasks())[start:end]
+    tasks = interleave(load_tasks(benchmark))[start:end]
     llm = MODELS[model_name]()
     sem = asyncio.Semaphore(parallel)
     
@@ -76,9 +76,10 @@ def main():
     parser.add_argument("--tracking-id", required=True, help="UUID for orchestrator matching")
     parser.add_argument("--run-start", required=True, help="Run start timestamp for aggregation")
     parser.add_argument("--output", required=True, help="Output file path for results JSON")
+    parser.add_argument("--benchmark", default=DEFAULT_BENCHMARK, choices=list(BENCHMARKS.keys()), help=f"Benchmark to run (default: {DEFAULT_BENCHMARK})")
     args = parser.parse_args()
-    
-    result = asyncio.run(run_batch(args.model, args.start, args.end, args.parallel, args.tracking_id, args.run_start))
+
+    result = asyncio.run(run_batch(args.model, args.start, args.end, args.parallel, args.tracking_id, args.run_start, args.benchmark))
     with open(args.output, "w") as f:
         json.dump(result, f, indent=2)
 
