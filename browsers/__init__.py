@@ -21,6 +21,7 @@ PROVIDERS = [
     "anchor",
     "browserbase",
     "browserless",
+    "driver",
     "hyperbrowser",
     "local_headful",
     "local_headless",
