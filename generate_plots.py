@@ -21,19 +21,27 @@ EXPECTED_TASKS = 100
 
 MODEL_CATEGORIES: dict[str, str] = {
     "bu-ultra": "cloud",
-    "ChatBrowserUse-2": "hybrid",
+    "bcode-claude-opus-4-7": "browser-harness",
 }
 
 DISPLAY_NAMES: dict[str, str] = {
-    "bu-ultra": "Browser Use\nCloud (bu-ultra)",
+    "bu-ultra": "Cloud\nbu-ultra",
     "ChatBrowserUse-2": "OSS +\nBU LLM",
     "gemini-3-1-pro-preview": "gemini-3-1-pro",
+    "grok-4.20-openrouter": "grok-4.20",
+    "qwen3.6-plus-openrouter": "qwen3.6-plus",
+    "kimi-k2.6-fireworks": "kimi-k2.6",
+    "deepseek-v4-pro-fireworks": "deepseek-v4-pro",
+    "bcode-claude-opus-4-7": "bcode\nopus-4-7",
+    "claude-sonnet-4-6-cch": "ClaudeCode\nsonnet-4-6",
+    "claude-opus-4-6-cch": "ClaudeCode\nopus-4-6",
+    "claude-opus-4-7-cch": "ClaudeCode\nopus-4-7",
 }
 
 CATEGORY_LABELS: dict[str, str] = {
     "cloud": "Cloud",
-    "hybrid": "OSS + Cloud LLM",
-    "oss": "Open Source",
+    "browser-harness": "Browser Harness (OSS)",
+    "oss": "Old Harness (OSS)",
 }
 
 
@@ -46,16 +54,35 @@ def display_name(model: str) -> str:
 
 
 def wrap_label(label: str) -> str:
-    """Wrap long labels onto multiple lines at natural break points."""
+    """Plot-only label normalization.
+
+    If label already contains a newline, treat it as an explicit override.
+    Otherwise: split at the end of the leading alphabetic word and remove
+    exactly one connecting dash from the remainder (the first dash that
+    joins the leading word to whatever follows). Other dashes — typically
+    inside dash-separated version numbers — are preserved.
+
+    Examples:
+        "gpt-5.5"        -> "gpt\\n5.5"
+        "qwen3.6-plus"   -> "qwen\\n3.6plus"
+        "claude-opus-4-7"-> "claude\\nopus-4-7"
+        "gemini-3-1-pro" -> "gemini\\n3-1-pro"
+    """
     if "\n" in label:
         return label
-    parts = label.split("-")
-    if len(parts) <= 2:
+    i = 0
+    while i < len(label) and label[i].isalpha():
+        i += 1
+    if i == 0 or i == len(label):
         return label
-    mid = len(parts) // 2
-    top = "-".join(parts[:mid])
-    bottom = "-".join(parts[mid:])
-    return f"{top}-\n{bottom}"
+    head = label[:i]
+    rest = label[i:]
+    dash = rest.find("-")
+    if dash != -1:
+        rest = rest[:dash] + rest[dash + 1 :]
+    if not rest:
+        return label
+    return f"{head}\n{rest}"
 
 
 @dataclass
@@ -91,7 +118,7 @@ DARK = Theme(
 
 CATEGORY_COLOR_ATTR: dict[str, str] = {
     "cloud": "primary",
-    "hybrid": "secondary",
+    "browser-harness": "secondary",
     "oss": "muted",
 }
 
@@ -170,7 +197,7 @@ def add_category_legend(ax, theme: Theme):
             color=getattr(theme, CATEGORY_COLOR_ATTR[cat]),
             label=CATEGORY_LABELS[cat],
         )
-        for cat in ["cloud", "hybrid", "oss"]
+        for cat in ["cloud", "browser-harness", "oss"]
     ]
     legend = ax.legend(
         handles=patches,

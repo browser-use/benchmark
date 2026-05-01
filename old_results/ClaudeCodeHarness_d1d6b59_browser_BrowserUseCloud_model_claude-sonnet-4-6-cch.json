@@ -1,0 +1,26 @@
+[
+  {
+    "run_start": "20260421_023035_0",
+    "tasks_completed": 99,
+    "tasks_successful": 69,
+    "total_steps": 3813,
+    "total_duration": 55844.59,
+    "total_cost": 80.4714
+  },
+  {
+    "run_start": "20260421_194530_0",
+    "tasks_completed": 100,
+    "tasks_successful": 61,
+    "total_steps": 12090,
+    "total_duration": 47999.74,
+    "total_cost": 94.4919
+  },
+  {
+    "run_start": "20260422_160700_0",
+    "tasks_completed": 100,
+    "tasks_successful": 65,
+    "total_steps": 10621,
+    "total_duration": 39505.97,
+    "total_cost": 79.7669
+  }
+]
