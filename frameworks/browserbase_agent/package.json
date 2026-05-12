@@ -1,0 +1,9 @@
+﻿{
+  "name": "benchmark-browserbase-agent-executor",
+  "private": true,
+  "type": "module",
+  "description": "Node executor for the browserbase-agent eval framework: drives Stagehand SDK against Browserbase cloud. Pinned to a Stagehand version that has the opus-4-7 temperature fix (PRs #2006/#2018, shipped in client 3.4.0).",
+  "dependencies": {
+    "@browserbasehq/stagehand": "3.4.0"
+  }
+}

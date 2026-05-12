@@ -1,0 +1,8 @@
+﻿{
+  "name": "benchmark-stagehand-executor",
+  "private": true,
+  "type": "commonjs",
+  "dependencies": {
+    "@browserbasehq/stagehand": "^2.0.0"
+  }
+}
