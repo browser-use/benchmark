@@ -5,3 +5,6 @@ __pycache__/
 run_data/
 DESIGN.MD
 results/
+BU_Bench_V1.json
+Stealth_Bench_V1.json
+benchmarks/*.json

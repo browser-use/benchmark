@@ -130,6 +130,24 @@ uv run python run_eval.py
 
 Results are saved to `results/` and detailed traces to `run_data/`.
 
+### Re-verifying Framework Results
+
+Use `run_framework_eval.py` to rerun BU_Bench_V1 through a framework adapter.
+It decrypts `BU_Bench_V1.enc` in memory and writes local outputs to ignored
+`results/` and `run_data/`.
+
+```bash
+uv run python run_framework_eval.py --list-frameworks
+uv run python run_framework_eval.py --framework browser-use --browser browser-use-cloud --model bu-2-0
+```
+
+See the comment at the top of `run_framework_eval.py` for framework-specific
+setup, options, and examples.
+
+Important: `run_data/` traces include decrypted task text, ground truth, model
+outputs, and screenshots. They are gitignored for local verification only. Do
+not publish or commit them.
+
 ### Swapping Models
 
 Edit `run_eval.py` to change the model:
