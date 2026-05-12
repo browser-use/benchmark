@@ -13,7 +13,7 @@ Hard rules:
     JS
     ```
 - Do not ask the user clarifying questions. If the task is ambiguous, pick the most reasonable interpretation and proceed.
-- Do not edit files outside the current working directory.
+- Do not edit files outside the current working directory, except for the required screenshots under /tmp/shots.
 - When the task is complete, end your final assistant message with exactly one line in this format and nothing after it:
 
 FINAL ANSWER: <your concise answer to the task, on a single line>

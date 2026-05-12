@@ -27,8 +27,6 @@ async function main() {
     process.exit(1);
   }
 
-  const startTime = Date.now();
-
   // TODO: Initialize Stagehand with appropriate env (BROWSERBASE or LOCAL)
   // const stagehand = new Stagehand({
   //   env: browser === "browserbase" ? "BROWSERBASE" : "LOCAL",
@@ -43,20 +41,10 @@ async function main() {
   //
   // await stagehand.close();
 
-  const durationSeconds = (Date.now() - startTime) / 1000;
-
-  // TODO: Map Stagehand result to standard format
-  const output = {
-    final_result: "NOT IMPLEMENTED",
-    steps: [],
-    screenshots_b64: [],
-    num_steps: 0,
-    duration_seconds: durationSeconds,
-    cost: 0,
-  };
-
-  // Print JSON to stdout for the Python wrapper to parse
-  console.log(JSON.stringify(output));
+  throw new Error(
+    `Stagehand executor is not implemented for browser=${browser}. ` +
+      "Use browserbase-agent for Stagehand SDK reverification or implement frameworks/stagehand/executor.js before enabling this adapter."
+  );
 }
 
 main().catch((err) => {

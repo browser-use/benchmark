@@ -148,11 +148,17 @@ def _bu(path: str, method: str, body: dict | None = None) -> dict:
 
 def _start_browser() -> tuple[str, str]:
     """Allocate a browser-use-cloud session. Returns (browser_id, cdp_ws)."""
+    browser_id = None
     info = _bu("/browsers", "POST", {})
-    cdp_ws = json.loads(
-        urllib.request.urlopen(f"{info['cdpUrl']}/json/version", timeout=15).read()
-    )["webSocketDebuggerUrl"]
-    return info["id"], cdp_ws
+    browser_id = info["id"]
+    try:
+        cdp_ws = json.loads(
+            urllib.request.urlopen(f"{info['cdpUrl']}/json/version", timeout=15).read()
+        )["webSocketDebuggerUrl"]
+        return browser_id, cdp_ws
+    except Exception:
+        _stop_browser(browser_id)
+        raise
 
 
 def _stop_browser(browser_id: str | None) -> None:
@@ -274,15 +280,19 @@ async def execute(task_description: str) -> ExecutionResult:
     errors: list[str] = []
     stderr_buf: list[str] = []
 
-    proc = await asyncio.create_subprocess_exec(
-        *cmd,
-        cwd="/tmp",
-        env=env,
-        stdout=asyncio.subprocess.PIPE,
-        stderr=asyncio.subprocess.PIPE,
-        limit=256 * 1024 * 1024,
-    )
-    stderr_task = asyncio.create_task(_drain_stderr(proc, stderr_buf))
+    try:
+        proc = await asyncio.create_subprocess_exec(
+            *cmd,
+            cwd="/tmp",
+            env=env,
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE,
+            limit=256 * 1024 * 1024,
+        )
+        stderr_task = asyncio.create_task(_drain_stderr(proc, stderr_buf))
+    except Exception:
+        _stop_browser(browser_id)
+        raise
 
     try:
         async for raw in _iter_lines(proc.stdout):

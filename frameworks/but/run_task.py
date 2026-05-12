@@ -126,11 +126,17 @@ def _bu(path: str, method: str, body: dict | None = None) -> dict:
 
 def _start_browser() -> tuple[str, str]:
     """Allocate a browser-use-cloud session. Returns (browser_id, cdp_ws)."""
+    browser_id = None
     info = _bu("/browsers", "POST", {})
-    cdp_ws = json.loads(
-        urllib.request.urlopen(f"{info['cdpUrl']}/json/version", timeout=15).read()
-    )["webSocketDebuggerUrl"]
-    return info["id"], cdp_ws
+    browser_id = info["id"]
+    try:
+        cdp_ws = json.loads(
+            urllib.request.urlopen(f"{info['cdpUrl']}/json/version", timeout=15).read()
+        )["webSocketDebuggerUrl"]
+        return browser_id, cdp_ws
+    except Exception:
+        _stop_browser(browser_id)
+        raise
 
 
 def _stop_browser(browser_id: str | None) -> None:
@@ -260,8 +266,12 @@ async def execute(task_description: str) -> ExecutionResult:
     # passing the env var costs nothing on the current version.
     parent_span_context = Laminar.serialize_span_context()
 
-    system_prompt = SYSTEM_PROMPT_PATH.read_text(encoding="utf-8")
-    full_task = f"{system_prompt.strip()}\n\nTask:\n{task_description}"
+    try:
+        system_prompt = SYSTEM_PROMPT_PATH.read_text(encoding="utf-8")
+        full_task = f"{system_prompt.strip()}\n\nTask:\n{task_description}"
+    except Exception:
+        _stop_browser(browser_id)
+        raise
 
     env = {
         **os.environ,
@@ -300,15 +310,19 @@ async def execute(task_description: str) -> ExecutionResult:
     stdout_chunks: list[str] = []
     session_id: str | None = None
 
-    proc = await asyncio.create_subprocess_exec(
-        *cmd,
-        cwd=BUT_PROJECT_DIR,
-        env=env,
-        stdout=asyncio.subprocess.PIPE,
-        stderr=asyncio.subprocess.PIPE,
-        limit=256 * 1024 * 1024,
-    )
-    stderr_task = asyncio.create_task(_drain_stderr(proc, stderr_buf))
+    try:
+        proc = await asyncio.create_subprocess_exec(
+            *cmd,
+            cwd=BUT_PROJECT_DIR,
+            env=env,
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE,
+            limit=256 * 1024 * 1024,
+        )
+        stderr_task = asyncio.create_task(_drain_stderr(proc, stderr_buf))
+    except Exception:
+        _stop_browser(browser_id)
+        raise
 
     try:
         async for raw in _iter_lines(proc.stdout):
@@ -385,7 +399,8 @@ async def execute(task_description: str) -> ExecutionResult:
     if not final_text:
         for event in reversed(events):
             if (event.get("type") or "") in ("assistant.message", "message.assistant"):
-                text = ((event.get("payload") or {}).get("text") or "").strip()
+                payload = event.get("payload") or {}
+                text = (payload.get("text") or payload.get("content") or "").strip()
                 if text:
                     final_text = text
                     break

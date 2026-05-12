@@ -96,11 +96,17 @@ def _bu(path: str, method: str, body: dict | None = None) -> dict:
 
 def _start_browser() -> tuple[str, str]:
     """Allocate a browser-use-cloud session. Returns (browser_id, cdp_ws)."""
+    browser_id = None
     info = _bu("/browsers", "POST", {})
-    cdp_ws = json.loads(
-        urllib.request.urlopen(f"{info['cdpUrl']}/json/version", timeout=15).read()
-    )["webSocketDebuggerUrl"]
-    return info["id"], cdp_ws
+    browser_id = info["id"]
+    try:
+        cdp_ws = json.loads(
+            urllib.request.urlopen(f"{info['cdpUrl']}/json/version", timeout=15).read()
+        )["webSocketDebuggerUrl"]
+        return browser_id, cdp_ws
+    except Exception:
+        _stop_browser(browser_id)
+        raise
 
 
 def _stop_browser(browser_id: str | None) -> None:
@@ -283,8 +289,12 @@ async def execute(task_description: str) -> ExecutionResult:
         "PI_TELEMETRY": "0",
     }
 
-    system_prompt = SYSTEM_PROMPT_FILE.read_text()
-    cmd = _build_pi_cmd(task_description, model_name, thinking, system_prompt)
+    try:
+        system_prompt = SYSTEM_PROMPT_FILE.read_text()
+        cmd = _build_pi_cmd(task_description, model_name, thinking, system_prompt)
+    except Exception:
+        _stop_browser(browser_id)
+        raise
 
     start = time.time()
     steps: list[str] = []
@@ -293,16 +303,19 @@ async def execute(task_description: str) -> ExecutionResult:
     saw_agent_end = False
     stderr_buf: list[str] = []
 
-    proc = await asyncio.create_subprocess_exec(
-        *cmd,
-        cwd=EXTENSIONS_DIR,  # pi loads the package.json `pi.extensions` from CWD
-        env=env,
-        stdout=asyncio.subprocess.PIPE,
-        stderr=asyncio.subprocess.PIPE,
-        limit=256 * 1024 * 1024,
-    )
-
-    stderr_task = asyncio.create_task(_drain_stderr(proc, stderr_buf))
+    try:
+        proc = await asyncio.create_subprocess_exec(
+            *cmd,
+            cwd=EXTENSIONS_DIR,  # pi loads the package.json `pi.extensions` from CWD
+            env=env,
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE,
+            limit=256 * 1024 * 1024,
+        )
+        stderr_task = asyncio.create_task(_drain_stderr(proc, stderr_buf))
+    except Exception:
+        _stop_browser(browser_id)
+        raise
 
     async def _iter_stdout_lines():
         assert proc.stdout is not None

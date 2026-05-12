@@ -13,7 +13,6 @@ The agent loop:
 import asyncio
 import os
 import sys
-import time
 from pathlib import Path
 
 # Add project root to path for sibling imports
@@ -45,8 +44,6 @@ async def execute(task_description: str) -> ExecutionResult:
     4. Loop: parse tool_use blocks, execute actions, screenshot, send tool_result
     5. Collect all steps and final text response
     """
-    start = time.time()
-
     # import anthropic
     # client = anthropic.Anthropic()
     #
@@ -63,15 +60,9 @@ async def execute(task_description: str) -> ExecutionResult:
     #     )
     #     ... execute actions, collect screenshots, break on end_turn ...
 
-    duration = time.time() - start
-
-    return ExecutionResult(
-        final_result="NOT IMPLEMENTED",
-        steps=[],
-        screenshots_b64=[],
-        num_steps=0,
-        duration_seconds=duration,
-        cost=0,
+    raise NotImplementedError(
+        "claude-cua is not implemented in this public verifier. "
+        "Do not enable this adapter until it returns real task traces."
     )
 
 

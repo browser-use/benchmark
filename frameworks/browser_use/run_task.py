@@ -48,28 +48,33 @@ async def execute(
 ) -> ExecutionResult:
     """Run a browser-use agent on the task and return a standardized result."""
     provider = BROWSERS[browser_name]
-    cdp_url = await provider.connect()
-    if cdp_url:
-        browser = Browser(cdp_url=cdp_url)
-    else:
-        headless = getattr(provider, "HEADLESS", True)
-        browser = Browser(headless=headless)
-
-    agent = Agent(
-        task=task_description,
-        llm=llm,
-        browser=browser,
-        use_judge=False,
-        use_vision=use_vision,
-    )
+    browser = None
     try:
+        cdp_url = await provider.connect()
+        if cdp_url:
+            browser = Browser(cdp_url=cdp_url)
+        else:
+            headless = getattr(provider, "HEADLESS", True)
+            browser = Browser(headless=headless)
+
+        agent = Agent(
+            task=task_description,
+            llm=llm,
+            browser=browser,
+            use_judge=False,
+            use_vision=use_vision,
+        )
         history = await agent.run()
     finally:
+        if browser is not None:
+            try:
+                await browser.kill()
+            except Exception:
+                pass
         try:
-            await browser.kill()
+            await provider.disconnect()
         except Exception:
             pass
-        await provider.disconnect()
 
     return ExecutionResult(
         final_result=history.final_result() or "Agent did not return a result",

@@ -116,11 +116,17 @@ def _start_browser(browser_name: str) -> tuple[str, str]:
     """Allocate a browser-use-cloud session. Returns (browser_id, cdp_ws)."""
     if browser_name != "browser-use-cloud":
         raise ValueError(f"Unsupported browser for claude-code-harness-bu-cli: {browser_name}")
+    browser_id = None
     info = _bu("/browsers", "POST", {})
-    cdp_ws = json.loads(
-        urllib.request.urlopen(f"{info['cdpUrl']}/json/version", timeout=15).read()
-    )["webSocketDebuggerUrl"]
-    return info["id"], cdp_ws
+    browser_id = info["id"]
+    try:
+        cdp_ws = json.loads(
+            urllib.request.urlopen(f"{info['cdpUrl']}/json/version", timeout=15).read()
+        )["webSocketDebuggerUrl"]
+        return browser_id, cdp_ws
+    except Exception:
+        _stop_browser(browser_id)
+        raise
 
 
 def _stop_browser(browser_id: str | None) -> None:
@@ -260,17 +266,11 @@ async def _drain_stderr(proc: asyncio.subprocess.Process, buf: list[str]) -> Non
         print(f"[claude-stderr] {s}", flush=True)
 
 
-async def _close_browser_use_sessions() -> None:
-    """Best-effort: tell browser-use to shut down all daemons.
-
-    The browser-use CLI spawns a per-session background daemon (one per
-    `--session` name; default is "default"). `close --all` quits every
-    active session so a leaked daemon does not survive across tasks on the
-    same runner.
-    """
+async def _close_browser_use_session(session_name: str) -> None:
+    """Best-effort: tell browser-use to shut down this task's daemon."""
     try:
         stop_proc = await asyncio.create_subprocess_exec(
-            "browser-use", "close", "--all",
+            "browser-use", "--session", session_name, "close",
             stdout=asyncio.subprocess.DEVNULL,
             stderr=asyncio.subprocess.DEVNULL,
         )
@@ -291,12 +291,15 @@ async def execute(task_description: str) -> ExecutionResult:
     _reset_dir(WORK_DIR)
 
     # Pre-provision a remote browser; pass its WS URL to the agent via env.
-    # The agent runs: browser-use --cdp-url "$BU_CDP_WS" open <url>
+    # The agent runs:
+    # browser-use --session "$BU_SESSION" --cdp-url "$BU_CDP_WS" open <url>
     browser_id, cdp_ws = _start_browser(browser_name)
+    session_name = f"eval-{os.environ.get('TASK_INDEX', '0')}-{os.getpid()}"
 
     env = {
         **os.environ,
         "BU_CDP_WS": cdp_ws,
+        "BU_SESSION": session_name,
         "DISABLE_TELEMETRY": "1",
         "DISABLE_AUTOUPDATER": "1",
         "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
@@ -320,16 +323,20 @@ async def execute(task_description: str) -> ExecutionResult:
     result_errors: list[str] = []
     stderr_buf: list[str] = []
 
-    proc = await asyncio.create_subprocess_exec(
-        *cmd,
-        cwd=str(WORK_DIR),
-        env=env,
-        stdout=asyncio.subprocess.PIPE,
-        stderr=asyncio.subprocess.PIPE,
-        limit=256 * 1024 * 1024,
-    )
-
-    stderr_task = asyncio.create_task(_drain_stderr(proc, stderr_buf))
+    try:
+        proc = await asyncio.create_subprocess_exec(
+            *cmd,
+            cwd=str(WORK_DIR),
+            env=env,
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE,
+            limit=256 * 1024 * 1024,
+        )
+        stderr_task = asyncio.create_task(_drain_stderr(proc, stderr_buf))
+    except Exception:
+        await _close_browser_use_session(session_name)
+        _stop_browser(browser_id)
+        raise
 
     async def _iter_stdout_lines():
         assert proc.stdout is not None
@@ -400,9 +407,7 @@ async def execute(task_description: str) -> ExecutionResult:
                 pass
         if not stderr_task.done():
             stderr_task.cancel()
-        # Best-effort: close any browser-use daemon(s) the agent left running
-        # so they don't leak across tasks on the same runner.
-        await _close_browser_use_sessions()
+        await _close_browser_use_session(session_name)
         _stop_browser(browser_id)
 
     duration = time.time() - start

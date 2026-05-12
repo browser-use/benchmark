@@ -263,30 +263,34 @@ async def execute(task_description: str) -> ExecutionResult:
     # Pre-provision the browser so Codex starts with a live CDP attach.
     _start_browser(browser_name, bu_name)
 
-    # Codex CLI auth: `codex exec` reuses saved auth (~/.codex/auth.json) by
-    # default but accepts `CODEX_API_KEY` env explicitly (the only auth env
-    # supported by `codex exec` per docs). `OPENAI_API_KEY` alone is NOT read
-    # by codex (it's for the OpenAI Python SDK). We mirror the workflow's
-    # OPENAI_API_KEY into CODEX_API_KEY here so the same repo secret unlocks
-    # both bcode (which uses OPENAI_API_KEY directly) and codex-harness.
-    #
-    # PATH: `uv pip install /tmp/browser-harness` puts the `browser-harness`
-    # console_script at /tmp/browser-harness/.venv/bin/browser-harness, but
-    # codex subprocess doesn't inherit the `uv run` PATH boost. Smoke #4
-    # showed the agent self-recovered by prepending the venv dir, but that
-    # cost ~4 steps. Prepend explicitly so the bare `browser-harness` heredoc
-    # in our system prompt + SKILL.md works on the first try.
-    harness_venv_bin = f"{HARNESS_DIR}/.venv/bin"
-    existing_path = os.environ.get("PATH", "")
-    env = {
-        **os.environ,
-        "BU_NAME": bu_name,
-        "CODEX_API_KEY": os.environ.get("CODEX_API_KEY") or os.environ.get("OPENAI_API_KEY", ""),
-        "PATH": f"{harness_venv_bin}:{existing_path}" if existing_path else harness_venv_bin,
-    }
+    try:
+        # Codex CLI auth: `codex exec` reuses saved auth (~/.codex/auth.json) by
+        # default but accepts `CODEX_API_KEY` env explicitly (the only auth env
+        # supported by `codex exec` per docs). `OPENAI_API_KEY` alone is NOT read
+        # by codex (it's for the OpenAI Python SDK). We mirror the workflow's
+        # OPENAI_API_KEY into CODEX_API_KEY here so the same repo secret unlocks
+        # both bcode (which uses OPENAI_API_KEY directly) and codex-harness.
+        #
+        # PATH: `uv pip install /tmp/browser-harness` puts the `browser-harness`
+        # console_script at /tmp/browser-harness/.venv/bin/browser-harness, but
+        # codex subprocess doesn't inherit the `uv run` PATH boost. Smoke #4
+        # showed the agent self-recovered by prepending the venv dir, but that
+        # cost ~4 steps. Prepend explicitly so the bare `browser-harness` heredoc
+        # in our system prompt + SKILL.md works on the first try.
+        harness_venv_bin = f"{HARNESS_DIR}/.venv/bin"
+        existing_path = os.environ.get("PATH", "")
+        env = {
+            **os.environ,
+            "BU_NAME": bu_name,
+            "CODEX_API_KEY": os.environ.get("CODEX_API_KEY") or os.environ.get("OPENAI_API_KEY", ""),
+            "PATH": f"{harness_venv_bin}:{existing_path}" if existing_path else harness_venv_bin,
+        }
 
-    cmd = _build_codex_cmd(model_name, sandbox)
-    prompt = _compose_prompt(task_description)
+        cmd = _build_codex_cmd(model_name, sandbox)
+        prompt = _compose_prompt(task_description)
+    except Exception:
+        _stop_browser(browser_name, bu_name)
+        raise
 
     start = time.time()
     steps: list[str] = []
@@ -299,23 +303,34 @@ async def execute(task_description: str) -> ExecutionResult:
     error_events: list[str] = []
     stderr_buf: list[str] = []
 
-    proc = await asyncio.create_subprocess_exec(
-        *cmd,
-        cwd=HARNESS_DIR,
-        env=env,
-        stdin=asyncio.subprocess.PIPE,
-        stdout=asyncio.subprocess.PIPE,
-        stderr=asyncio.subprocess.PIPE,
-        limit=256 * 1024 * 1024,  # 256 MiB safety cap on line buffer
-    )
+    proc: asyncio.subprocess.Process | None = None
+    try:
+        proc = await asyncio.create_subprocess_exec(
+            *cmd,
+            cwd=HARNESS_DIR,
+            env=env,
+            stdin=asyncio.subprocess.PIPE,
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE,
+            limit=256 * 1024 * 1024,  # 256 MiB safety cap on line buffer
+        )
 
-    # Pipe the prompt in on stdin and close.
-    assert proc.stdin is not None
-    proc.stdin.write(prompt.encode("utf-8"))
-    await proc.stdin.drain()
-    proc.stdin.close()
+        # Pipe the prompt in on stdin and close.
+        assert proc.stdin is not None
+        proc.stdin.write(prompt.encode("utf-8"))
+        await proc.stdin.drain()
+        proc.stdin.close()
 
-    stderr_task = asyncio.create_task(_drain_stderr(proc, stderr_buf))
+        stderr_task = asyncio.create_task(_drain_stderr(proc, stderr_buf))
+    except Exception:
+        if proc is not None and proc.returncode is None:
+            proc.kill()
+            try:
+                await asyncio.wait_for(proc.wait(), timeout=10)
+            except asyncio.TimeoutError:
+                pass
+        _stop_browser(browser_name, bu_name)
+        raise
 
     async def _iter_stdout_lines():
         """Yield one JSONL line at a time. Codex item.completed payloads for

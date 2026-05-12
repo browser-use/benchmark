@@ -5,7 +5,7 @@ Hard rules:
 - A browser daemon is already running under the `BU_NAME` in the environment and is attached to a live browser. Do not start, stop, or restart daemons. Do not call `start_remote_daemon` or `stop_remote_daemon`. Do not run `pkill`.
 - Save every screenshot to `/tmp/shots/step_<N>.png` where N is a zero-padded 3-digit integer starting at 001 and incrementing on each shot (e.g. `screenshot("/tmp/shots/step_001.png")`). Never overwrite a previous screenshot path.
 - Do not ask the user clarifying questions. If the task is ambiguous, pick the most reasonable interpretation and proceed.
-- Do not edit files outside the current working directory.
+- Do not edit files outside the current working directory, except for the required screenshots under /tmp/shots.
 - When the task is complete, end your final assistant message with exactly one line in this format and nothing after it:
 
 FINAL ANSWER: <your concise answer to the task, on a single line>

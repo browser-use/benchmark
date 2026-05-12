@@ -118,11 +118,17 @@ def _bu(path: str, method: str, body: dict | None = None) -> dict:
 
 
 def _start_browser() -> tuple[str, str]:
+    browser_id = None
     info = _bu("/browsers", "POST", {})
-    cdp_ws = json.loads(
-        urllib.request.urlopen(f"{info['cdpUrl']}/json/version", timeout=15).read()
-    )["webSocketDebuggerUrl"]
-    return info["id"], cdp_ws
+    browser_id = info["id"]
+    try:
+        cdp_ws = json.loads(
+            urllib.request.urlopen(f"{info['cdpUrl']}/json/version", timeout=15).read()
+        )["webSocketDebuggerUrl"]
+        return browser_id, cdp_ws
+    except Exception:
+        _stop_browser(browser_id)
+        raise
 
 
 def _stop_browser(browser_id: str | None) -> None:
@@ -190,171 +196,172 @@ async def execute(task_description: str) -> ExecutionResult:
     task_idx = os.environ.get("TASK_INDEX", "0")
 
     browser_id, cdp_ws = _start_browser()
-
-    state_dir = STATE_ROOT / f"task-{task_idx}-{int(time.time() * 1000)}"
-    if state_dir.exists():
-        shutil.rmtree(state_dir)
-    state_dir.mkdir(parents=True)
-
-    parent_span_context = Laminar.serialize_span_context()
-
-    system_prompt = SYSTEM_PROMPT_PATH.read_text(encoding="utf-8")
-    full_task = f"{system_prompt.strip()}\n\nTask:\n{task_description}"
-
-    env = {
-        **os.environ,
-        # The Python worker (spawned by the Rust agent loop) honors BU_CDP_WS
-        # directly via `_ensure_managed_chrome`/`_ensure_cloud_browser` short
-        # circuits. Pass both URL forms for robustness.
-        "BU_CDP_WS": cdp_ws,
-        # Force flush on one-shot CLI runs so OTLP spans actually leave the
-        # process before exit (see docs/README on this branch).
-        "LLM_BROWSER_LAMINAR_FLUSH_ON_FINISH": "1",
-    }
-    if parent_span_context:
-        # Forward-compat: but-rust telemetry doesn't honor this yet, but it
-        # doesn't error on unknown env either.
-        env["LMNR_PARENT_SPAN_CONTEXT"] = parent_span_context
-
-    # `--state-dir` is a TOP-LEVEL arg on the Rust CLI -- must come BEFORE
-    # the subcommand.
-    cmd_run = [
-        BUT_RUST_BIN,
-        "--state-dir", str(state_dir),
-        subcommand,
-        full_task,
-        "--model", model,
-    ]
-
     start = time.time()
-    stdout_buf: list[str] = []
-    stderr_buf: list[str] = []
-
-    proc = await asyncio.create_subprocess_exec(
-        *cmd_run,
-        cwd=BUT_RUST_REPO_DIR,
-        env=env,
-        stdout=asyncio.subprocess.PIPE,
-        stderr=asyncio.subprocess.PIPE,
-        limit=256 * 1024 * 1024,
-    )
-    stdout_task = asyncio.create_task(_read_stream(proc.stdout, "but-rust-stdout", stdout_buf))
-    stderr_task = asyncio.create_task(_read_stream(proc.stderr, "but-rust-stderr", stderr_buf))
-
     try:
-        await proc.wait()
-        await asyncio.wait_for(stdout_task, timeout=10)
-        await asyncio.wait_for(stderr_task, timeout=10)
-    except asyncio.TimeoutError:
-        for t in (stdout_task, stderr_task):
-            if not t.done():
-                t.cancel()
-    finally:
-        if proc.returncode is None:
-            proc.kill()
-            try:
-                await asyncio.wait_for(proc.wait(), timeout=10)
-            except asyncio.TimeoutError:
-                pass
+        state_dir = STATE_ROOT / f"task-{task_idx}-{int(time.time() * 1000)}"
+        if state_dir.exists():
+            shutil.rmtree(state_dir)
+        state_dir.mkdir(parents=True)
 
-    # `run-openai`/etc print the session_id as the final non-empty stdout line.
-    session_id = ""
-    for line in reversed(stdout_buf):
-        line = line.strip()
-        if line and not line.startswith("{"):
-            session_id = line
-            break
+        parent_span_context = Laminar.serialize_span_context()
 
-    if not session_id:
-        _stop_browser(browser_id)
-        raise RuntimeError(
-            f"but-rust: no session_id captured from stdout (exit={proc.returncode}). "
-            f"stderr_tail:\n{chr(10).join(stderr_buf[-50:])[-2000:]}"
+        system_prompt = SYSTEM_PROMPT_PATH.read_text(encoding="utf-8")
+        full_task = f"{system_prompt.strip()}\n\nTask:\n{task_description}"
+
+        env = {
+            **os.environ,
+            # The Python worker (spawned by the Rust agent loop) honors BU_CDP_WS
+            # directly via `_ensure_managed_chrome`/`_ensure_cloud_browser` short
+            # circuits. Pass both URL forms for robustness.
+            "BU_CDP_WS": cdp_ws,
+            # Force flush on one-shot CLI runs so OTLP spans actually leave the
+            # process before exit (see docs/README on this branch).
+            "LLM_BROWSER_LAMINAR_FLUSH_ON_FINISH": "1",
+        }
+        if parent_span_context:
+            # Forward-compat: but-rust telemetry doesn't honor this yet, but it
+            # doesn't error on unknown env either.
+            env["LMNR_PARENT_SPAN_CONTEXT"] = parent_span_context
+
+        # `--state-dir` is a TOP-LEVEL arg on the Rust CLI -- must come BEFORE
+        # the subcommand.
+        cmd_run = [
+            BUT_RUST_BIN,
+            "--state-dir", str(state_dir),
+            subcommand,
+            full_task,
+            "--model", model,
+        ]
+
+        stdout_buf: list[str] = []
+        stderr_buf: list[str] = []
+
+        proc = await asyncio.create_subprocess_exec(
+            *cmd_run,
+            cwd=BUT_RUST_REPO_DIR,
+            env=env,
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE,
+            limit=256 * 1024 * 1024,
         )
+        stdout_task = asyncio.create_task(_read_stream(proc.stdout, "but-rust-stdout", stdout_buf))
+        stderr_task = asyncio.create_task(_read_stream(proc.stderr, "but-rust-stderr", stderr_buf))
 
-    # Dump events for this session.
-    cmd_events = [BUT_RUST_BIN, "--state-dir", str(state_dir), "events", session_id]
-    events_proc = await asyncio.create_subprocess_exec(
-        *cmd_events,
-        cwd=BUT_RUST_REPO_DIR,
-        env=env,
-        stdout=asyncio.subprocess.PIPE,
-        stderr=asyncio.subprocess.PIPE,
-        limit=256 * 1024 * 1024,
-    )
-    events_stdout, events_stderr = await events_proc.communicate()
-    _stop_browser(browser_id)
-    duration = time.time() - start
-
-    events: list[dict] = []
-    for line in events_stdout.decode("utf-8", errors="replace").splitlines():
-        line = line.strip()
-        if not line:
-            continue
         try:
-            events.append(json.loads(line))
-        except json.JSONDecodeError:
-            continue
-
-    steps: list[str] = []
-    final_text = ""
-    total_cost = 0.0
-    errors: list[str] = []
-
-    for event in events:
-        if (s := _format_step_from_event(event)):
-            steps.append(s)
-        etype = event.get("type") or ""
-        payload = event.get("payload") or {}
-        if etype == "session.done":
-            done_result = (payload.get("result") or "").strip()
-            if done_result:
-                final_text = done_result
-        elif etype in ("model.usage", "llm.usage"):
-            cost_usd = payload.get("cost_usd") or payload.get("cost")
-            if cost_usd is not None:
+            await proc.wait()
+            await asyncio.wait_for(stdout_task, timeout=10)
+            await asyncio.wait_for(stderr_task, timeout=10)
+        except asyncio.TimeoutError:
+            for t in (stdout_task, stderr_task):
+                if not t.done():
+                    t.cancel()
+        finally:
+            if proc.returncode is None:
+                proc.kill()
                 try:
-                    total_cost += float(cost_usd)
-                except (TypeError, ValueError):
+                    await asyncio.wait_for(proc.wait(), timeout=10)
+                except asyncio.TimeoutError:
                     pass
-        elif etype in ("tool.failed", "session.failed", "error"):
-            err = payload.get("error") or payload.get("message") or ""
-            if err:
-                errors.append(str(err))
-                print(f"[but-rust-error] {str(err)[:500]}", flush=True)
 
-    if not final_text:
-        for event in reversed(events):
-            if (event.get("type") or "") in ("assistant.message", "message.assistant"):
-                text = ((event.get("payload") or {}).get("text") or "").strip()
-                if text:
-                    final_text = text
-                    break
+        # `run-openai`/etc print the session_id as the final non-empty stdout line.
+        session_id = ""
+        for line in reversed(stdout_buf):
+            line = line.strip()
+            if line and not line.startswith("{"):
+                session_id = line
+                break
 
-    if proc.returncode not in (0, None) and not final_text and not steps:
-        raise RuntimeError(
-            f"but-rust exited with code {proc.returncode} before producing output. "
-            f"stderr_tail:\n{chr(10).join(stderr_buf[-50:])[-2000:]}"
+        if not session_id:
+            raise RuntimeError(
+                f"but-rust: no session_id captured from stdout (exit={proc.returncode}). "
+                f"stderr_tail:\n{chr(10).join(stderr_buf[-50:])[-2000:]}"
+            )
+
+        # Dump events for this session.
+        cmd_events = [BUT_RUST_BIN, "--state-dir", str(state_dir), "events", session_id]
+        events_proc = await asyncio.create_subprocess_exec(
+            *cmd_events,
+            cwd=BUT_RUST_REPO_DIR,
+            env=env,
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE,
+            limit=256 * 1024 * 1024,
         )
+        events_stdout, _events_stderr = await events_proc.communicate()
+        duration = time.time() - start
 
-    answer = (final_text or "").strip()
-    if errors and not answer:
-        final_result = f"[but_rust_error] {errors[0][:500]}"
-    elif errors:
-        final_result = f"[but_rust_error_recovered] {answer}"
-    else:
-        final_result = answer or "[but_rust_no_output]"
+        events: list[dict] = []
+        for line in events_stdout.decode("utf-8", errors="replace").splitlines():
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                events.append(json.loads(line))
+            except json.JSONDecodeError:
+                continue
 
-    screenshots = _collect_screenshots(state_dir, session_id)
+        steps: list[str] = []
+        final_text = ""
+        total_cost = 0.0
+        errors: list[str] = []
 
-    return ExecutionResult(
-        final_result=final_result,
-        steps=steps,
-        screenshots_b64=screenshots,
-        num_steps=len(steps),
-        duration_seconds=duration,
-        cost=total_cost,
-    )
+        for event in events:
+            if (s := _format_step_from_event(event)):
+                steps.append(s)
+            etype = event.get("type") or ""
+            payload = event.get("payload") or {}
+            if etype == "session.done":
+                done_result = (payload.get("result") or "").strip()
+                if done_result:
+                    final_text = done_result
+            elif etype in ("model.usage", "llm.usage"):
+                cost_usd = payload.get("cost_usd") or payload.get("cost")
+                if cost_usd is not None:
+                    try:
+                        total_cost += float(cost_usd)
+                    except (TypeError, ValueError):
+                        pass
+            elif etype in ("tool.failed", "session.failed", "error"):
+                err = payload.get("error") or payload.get("message") or ""
+                if err:
+                    errors.append(str(err))
+                    print(f"[but-rust-error] {str(err)[:500]}", flush=True)
+
+        if not final_text:
+            for event in reversed(events):
+                if (event.get("type") or "") in ("assistant.message", "message.assistant"):
+                    payload = event.get("payload") or {}
+                    text = (payload.get("text") or payload.get("content") or "").strip()
+                    if text:
+                        final_text = text
+                        break
+
+        if proc.returncode not in (0, None) and not final_text and not steps:
+            raise RuntimeError(
+                f"but-rust exited with code {proc.returncode} before producing output. "
+                f"stderr_tail:\n{chr(10).join(stderr_buf[-50:])[-2000:]}"
+            )
+
+        answer = (final_text or "").strip()
+        if errors and not answer:
+            final_result = f"[but_rust_error] {errors[0][:500]}"
+        elif errors:
+            final_result = f"[but_rust_error_recovered] {answer}"
+        else:
+            final_result = answer or "[but_rust_no_output]"
+
+        screenshots = _collect_screenshots(state_dir, session_id)
+
+        return ExecutionResult(
+            final_result=final_result,
+            steps=steps,
+            screenshots_b64=screenshots,
+            num_steps=len(steps),
+            duration_seconds=duration,
+            cost=total_cost,
+        )
+    finally:
+        _stop_browser(browser_id)
 
 
 async def main():

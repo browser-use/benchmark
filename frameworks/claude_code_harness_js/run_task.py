@@ -114,11 +114,17 @@ def _start_browser(browser_name: str) -> tuple[str, str]:
     """Allocate a browser-use-cloud session. Returns (browser_id, cdp_ws)."""
     if browser_name != "browser-use-cloud":
         raise ValueError(f"Unsupported browser for claude-code-harness-js: {browser_name}")
+    browser_id = None
     info = _bu("/browsers", "POST", {})
-    cdp_ws = json.loads(
-        urllib.request.urlopen(f"{info['cdpUrl']}/json/version", timeout=15).read()
-    )["webSocketDebuggerUrl"]
-    return info["id"], cdp_ws
+    browser_id = info["id"]
+    try:
+        cdp_ws = json.loads(
+            urllib.request.urlopen(f"{info['cdpUrl']}/json/version", timeout=15).read()
+        )["webSocketDebuggerUrl"]
+        return browser_id, cdp_ws
+    except Exception:
+        _stop_browser(browser_id)
+        raise
 
 
 def _stop_browser(browser_id: str | None) -> None:
@@ -297,16 +303,19 @@ async def execute(task_description: str) -> ExecutionResult:
     result_errors: list[str] = []
     stderr_buf: list[str] = []
 
-    proc = await asyncio.create_subprocess_exec(
-        *cmd,
-        cwd=str(WORK_DIR),
-        env=env,
-        stdout=asyncio.subprocess.PIPE,
-        stderr=asyncio.subprocess.PIPE,
-        limit=256 * 1024 * 1024,
-    )
-
-    stderr_task = asyncio.create_task(_drain_stderr(proc, stderr_buf))
+    try:
+        proc = await asyncio.create_subprocess_exec(
+            *cmd,
+            cwd=str(WORK_DIR),
+            env=env,
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE,
+            limit=256 * 1024 * 1024,
+        )
+        stderr_task = asyncio.create_task(_drain_stderr(proc, stderr_buf))
+    except Exception:
+        _stop_browser(browser_id)
+        raise
 
     async def _iter_stdout_lines():
         assert proc.stdout is not None

@@ -190,6 +190,8 @@ async def _run_all(args: argparse.Namespace) -> list[dict]:
     if framework_info.repo:
         print(f"Framework repo: {framework_info.repo} ref={args.framework_ref}")
 
+    if args.parallel < 1:
+        raise SystemExit("--parallel must be >= 1")
     semaphore = asyncio.Semaphore(args.parallel)
 
     async def guarded(i: int) -> dict:

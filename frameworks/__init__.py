@@ -306,7 +306,7 @@ async def run_and_judge(
         _maybe_write_local_result(data)
         return data
 
-    except BaseException as e:
+    except Exception as e:
         error_msg = f"{type(e).__name__}: {e}"
         tb = traceback.format_exc()
         print(f"Task {task_id} failed: {error_msg}")
