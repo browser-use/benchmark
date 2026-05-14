@@ -1,4 +1,4 @@
-﻿"""Run a single benchmark task using pi (the @earendil-works/pi-coding-agent CLI)
+"""Run a single benchmark task using pi (the @earendil-works/pi-coding-agent CLI)
 driving browser-harness.
 
 This framework is a near-mirror of `claude_code_harness`, except the coding
@@ -249,19 +249,23 @@ async def execute(task_description: str) -> ExecutionResult:
     # Pre-provision the browser so pi starts with a live CDP attach.
     _start_browser(browser_name, bu_name)
 
-    env = {
-        **os.environ,
-        "BU_NAME": bu_name,
-        "DISABLE_TELEMETRY": "1",
-        # Pi-specific: skip startup network ops so a flaky pi.dev doesn't
-        # block the run, and disable install/update telemetry.
-        "PI_OFFLINE": "1",
-        "PI_SKIP_VERSION_CHECK": "1",
-        "PI_TELEMETRY": "0",
-    }
+    try:
+        env = {
+            **os.environ,
+            "BU_NAME": bu_name,
+            "DISABLE_TELEMETRY": "1",
+            # Pi-specific: skip startup network ops so a flaky pi.dev doesn't
+            # block the run, and disable install/update telemetry.
+            "PI_OFFLINE": "1",
+            "PI_SKIP_VERSION_CHECK": "1",
+            "PI_TELEMETRY": "0",
+        }
 
-    system_prompt = SYSTEM_PROMPT_FILE.read_text()
-    cmd = _build_pi_cmd(task_description, model_name, thinking, system_prompt)
+        system_prompt = SYSTEM_PROMPT_FILE.read_text()
+        cmd = _build_pi_cmd(task_description, model_name, thinking, system_prompt)
+    except Exception:
+        _stop_browser(browser_name, bu_name)
+        raise
 
     start = time.time()
     steps: list[str] = []
@@ -272,16 +276,26 @@ async def execute(task_description: str) -> ExecutionResult:
 
     # pi stream-json lines can be huge (tool results with full page HTML/text).
     # Same workaround as CCH: read raw chunks and split on newlines.
-    proc = await asyncio.create_subprocess_exec(
-        *cmd,
-        cwd=HARNESS_DIR,
-        env=env,
-        stdout=asyncio.subprocess.PIPE,
-        stderr=asyncio.subprocess.PIPE,
-        limit=256 * 1024 * 1024,  # 256 MiB safety cap
-    )
-
-    stderr_task = asyncio.create_task(_drain_stderr(proc, stderr_buf))
+    proc: asyncio.subprocess.Process | None = None
+    try:
+        proc = await asyncio.create_subprocess_exec(
+            *cmd,
+            cwd=HARNESS_DIR,
+            env=env,
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE,
+            limit=256 * 1024 * 1024,  # 256 MiB safety cap
+        )
+        stderr_task = asyncio.create_task(_drain_stderr(proc, stderr_buf))
+    except Exception:
+        if proc is not None and proc.returncode is None:
+            proc.kill()
+            try:
+                await asyncio.wait_for(proc.wait(), timeout=10)
+            except asyncio.TimeoutError:
+                pass
+        _stop_browser(browser_name, bu_name)
+        raise
 
     async def _iter_stdout_lines():
         """Yield one stream-json line at a time, regardless of line length."""
