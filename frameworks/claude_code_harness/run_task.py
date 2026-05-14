@@ -1,4 +1,4 @@
-﻿"""Run a single benchmark task using Claude Code driving browser-harness.
+"""Run a single benchmark task using Claude Code driving browser-harness.
 
 This framework wraps Claude Code (the CLI coding agent) around the browser-harness
 repo: Claude Code owns the agent loop, we just hand it a task and a workdir
@@ -258,17 +258,21 @@ async def execute(task_description: str) -> ExecutionResult:
     # Pre-provision the browser so Claude starts with a live CDP attach.
     _start_browser(browser_name, bu_name)
 
-    env = {
-        **os.environ,
-        "BU_NAME": bu_name,
-        "DISABLE_TELEMETRY": "1",
-        "DISABLE_AUTOUPDATER": "1",
-        "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
-    }
+    try:
+        env = {
+            **os.environ,
+            "BU_NAME": bu_name,
+            "DISABLE_TELEMETRY": "1",
+            "DISABLE_AUTOUPDATER": "1",
+            "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
+        }
 
-    cmd = _build_claude_cmd(
-        task_description, model_name, max_turns, max_budget_usd, use_bare
-    )
+        cmd = _build_claude_cmd(
+            task_description, model_name, max_turns, max_budget_usd, use_bare
+        )
+    except Exception:
+        _stop_browser(browser_name, bu_name)
+        raise
 
     start = time.time()
     steps: list[str] = []
@@ -284,16 +288,26 @@ async def execute(task_description: str) -> ExecutionResult:
     # asyncio StreamReader line buffer is 64 KiB which raises ValueError on
     # long lines, and even a larger limit has a ceiling. Read raw chunks and
     # split on newlines ourselves.
-    proc = await asyncio.create_subprocess_exec(
-        *cmd,
-        cwd=HARNESS_DIR,
-        env=env,
-        stdout=asyncio.subprocess.PIPE,
-        stderr=asyncio.subprocess.PIPE,
-        limit=256 * 1024 * 1024,  # 256 MiB safety cap
-    )
-
-    stderr_task = asyncio.create_task(_drain_stderr(proc, stderr_buf))
+    proc: asyncio.subprocess.Process | None = None
+    try:
+        proc = await asyncio.create_subprocess_exec(
+            *cmd,
+            cwd=HARNESS_DIR,
+            env=env,
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE,
+            limit=256 * 1024 * 1024,  # 256 MiB safety cap
+        )
+        stderr_task = asyncio.create_task(_drain_stderr(proc, stderr_buf))
+    except Exception:
+        if proc is not None and proc.returncode is None:
+            proc.kill()
+            try:
+                await asyncio.wait_for(proc.wait(), timeout=10)
+            except asyncio.TimeoutError:
+                pass
+        _stop_browser(browser_name, bu_name)
+        raise
 
     async def _iter_stdout_lines():
         """Yield one stream-json line at a time, regardless of line length."""
