@@ -84,8 +84,6 @@ uv run python run_eval.py --browser <provider>
 
 Available providers: `browser-use-cloud`, `anchor`, `browserbase`, `browserless`, `hyperbrowser`, `onkernel`, `steel`, `local_headful`, `local_headless`
 
-For long benchmark batches that should keep running after your laptop closes, run them from [Browser Use Box](https://browser-use.com/bux). [Watch the 15-second demo](https://www.tiktok.com/@browser_use/video/7639824093721758989).
-
 **Results and official data:** [`stealth_bench/`](stealth_bench/)
 
 <br/>
