@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Benchmark Eval Viewer</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <header>
+    <h1>Benchmark Eval Viewer</h1>
+    <div id="results-root" class="muted"></div>
+  </header>
+  <main>
+    <aside id="sidebar">
+      <section>
+        <label for="run-select"><strong>Run</strong></label>
+        <select id="run-select"></select>
+      </section>
+      <section>
+        <div class="row">
+          <strong>Tasks</strong>
+          <span id="task-summary" class="muted"></span>
+        </div>
+        <input id="task-filter" type="search" placeholder="Filter by id or prompt…" />
+        <ul id="task-list"></ul>
+      </section>
+    </aside>
+    <section id="detail">
+      <div id="detail-placeholder" class="muted">Select a task to view details.</div>
+      <article id="detail-content" hidden>
+        <header id="detail-header"></header>
+        <section id="judgement-block"></section>
+        <section id="metrics-block"></section>
+        <section id="final-result-block"></section>
+        <section>
+          <h3>Trajectory</h3>
+          <ol id="steps-list"></ol>
+        </section>
+        <section>
+          <h3>Screenshots</h3>
+          <div id="screenshots"></div>
+        </section>
+      </article>
+    </section>
+  </main>
+  <script src="/static/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Scoring</title>
+<style>:root { color-scheme: light dark; }
+body {
+  max-width: 880px; margin: 0 auto; padding: 40px 24px 80px;
+  font: 16px/1.6 -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: #1f2328; background: #ffffff;
+}
+h1, h2, h3, h4 { line-height: 1.25; }
+h1 { font-size: 2em; border-bottom: 1px solid #d0d7de; padding-bottom: 0.3em; }
+h2 { font-size: 1.5em; border-bottom: 1px solid #eaeef2; padding-bottom: 0.3em; margin-top: 2em; }
+h3 { font-size: 1.2em; margin-top: 1.6em; }
+a { color: #0969da; text-decoration: none; }
+a:hover { text-decoration: underline; }
+code { background: #f6f8fa; border-radius: 6px; padding: 0.1em 0.35em; font: 0.92em ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+pre { background: #f6f8fa; border-radius: 8px; padding: 14px 16px; overflow-x: auto; font: 0.9em ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+pre code { background: transparent; padding: 0; }
+blockquote { border-left: 4px solid #d0d7de; color: #57606a; padding: 0 1em; margin: 1em 0; }
+table { border-collapse: collapse; margin: 1em 0; display: block; overflow-x: auto; }
+th, td { border: 1px solid #d0d7de; padding: 6px 12px; }
+th { background: #f6f8fa; text-align: left; }
+hr { border: 0; border-top: 1px solid #d0d7de; margin: 2em 0; }
+.toc { background: #f6f8fa; border: 1px solid #d0d7de; border-radius: 8px; padding: 12px 18px; margin-bottom: 24px; }
+.toc > ul { margin: 0; padding-left: 18px; }
+@media (prefers-color-scheme: dark) {
+  body { color: #e6edf3; background: #0d1117; }
+  h1, h2 { border-color: #30363d; }
+  a { color: #2f81f7; }
+  code, pre { background: #161b22; }
+  th { background: #161b22; }
+  th, td { border-color: #30363d; }
+  blockquote { border-color: #30363d; color: #8b949e; }
+  hr { border-color: #30363d; }
+  .toc { background: #161b22; border-color: #30363d; }
+}</style>
+</head>
+<body>
+<h1 id="how-the-browser-use-benchmark-scores-agents"><a class="toclink" href="#how-the-browser-use-benchmark-scores-agents">How the Browser-Use Benchmark Scores Agents</a></h1>
+<p>This document explains, end-to-end, how the <code>browser-use/benchmark</code> project judges
+an agent run on a single task, where ground truth comes from, and how the final
+score for an evaluation is computed and aggregated.</p>
+<p>All file/line references are to this repo (<code>browser-use/benchmark</code>).</p>
+<hr />
+<h2 id="1-the-dataset-and-ground-truth"><a class="toclink" href="#1-the-dataset-and-ground-truth">1. The dataset and ground truth</a></h2>
+<h3 id="11-where-the-tasks-live"><a class="toclink" href="#11-where-the-tasks-live">1.1 Where the tasks live</a></h3>
+<p>The benchmark suite (<code>BU_Bench_V1</code>) ships as a <strong>single encrypted file</strong>:</p>
+<ul>
+<li><code>BU_Bench_V1.enc</code> at the repo root.</li>
+<li>It is Fernet-encrypted; the key is derived deterministically from the literal
+  string <code>"BU_Bench_V1"</code> via SHA-256, then base64-url-encoded
+  (<code>run_eval.py:64-66</code>):</li>
+</ul>
+<p><code>python
+  def load_tasks() -&gt; list[dict]:
+      key = base64.urlsafe_b64encode(hashlib.sha256(b"BU_Bench_V1").digest())
+      encrypted = base64.b64decode(TASKS_FILE.read_text())
+      return json.loads(Fernet(key).decrypt(encrypted))</code></p>
+<p>The encryption exists to discourage accidental memorization / contamination by
+training crawlers — it is <em>not</em> a security boundary; the code that decrypts it
+is in the repo.</p>
+<h3 id="12-task-schema"><a class="toclink" href="#12-task-schema">1.2 Task schema</a></h3>
+<p>After decryption, <code>load_tasks()</code> returns a <code>list[dict]</code>. Every task has these
+keys (verified by inspecting all 100 tasks):</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+<th>Required</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>task_id</code></td>
+<td>str (UUID)</td>
+<td>yes</td>
+<td>Stable identifier; used as the per-task result filename.</td>
+</tr>
+<tr>
+<td><code>confirmed_task</code></td>
+<td>str</td>
+<td>yes</td>
+<td>The natural-language prompt given to the agent.</td>
+</tr>
+<tr>
+<td><code>category</code></td>
+<td>str</td>
+<td>yes</td>
+<td>Bucket the task belongs to.</td>
+</tr>
+<tr>
+<td><code>answer</code></td>
+<td>str</td>
+<td><strong>optional</strong></td>
+<td>Ground truth. Present on ~40 / 100 tasks.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="13-categories"><a class="toclink" href="#13-categories">1.3 Categories</a></h3>
+<p><code>BU_Bench_V1</code> is exactly <strong>100 tasks</strong>, evenly split into 5 categories of 20:</p>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Count</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GAIA</code></td>
+<td>20</td>
+</tr>
+<tr>
+<td><code>BrowseComp</code></td>
+<td>20</td>
+</tr>
+<tr>
+<td><code>WebBenchREAD</code></td>
+<td>20</td>
+</tr>
+<tr>
+<td><code>OM2W2</code></td>
+<td>20</td>
+</tr>
+<tr>
+<td><code>InteractionTests</code></td>
+<td>20</td>
+</tr>
+</tbody>
+</table>
+<h3 id="14-what-ground-truth-means-here"><a class="toclink" href="#14-what-ground-truth-means-here">1.4 What "ground truth" means here</a></h3>
+<p><code>answer</code> is <strong>not</strong> a strict equality check. It is a freeform string that gets
+embedded into the <strong>judge LLM's prompt</strong> as the authoritative reference, and the
+judge decides whether the agent satisfied it. Two flavours are seen in the
+data:</p>
+<ol>
+<li><strong>Factual answer</strong> — e.g. <code>"6"</code> for <em>"how many of the top 10 highest-grossing
+   worldwide movies are also on the top 10 highest-grossing domestic
+   movies?"</em> The judge compares the agent's <code>final_result</code> against this.</li>
+<li><strong>Criteria / expected outcome</strong> — e.g. <em>"The success popup should show up"</em>
+   or <em>"Google Doc must be created"</em>. The judge looks at the trajectory +
+   screenshots to verify.</li>
+</ol>
+<p>For the ~60 tasks <strong>without</strong> an <code>answer</code>, the judge falls back to a pure
+"task satisfaction" rubric (see §2.3).</p>
+<p>This is documented inside the judge system prompt itself (<code>judge.py:69-77</code>).</p>
+<hr />
+<h2 id="2-the-llm-judge"><a class="toclink" href="#2-the-llm-judge">2. The LLM judge</a></h2>
+<h3 id="21-judge-model"><a class="toclink" href="#21-judge-model">2.1 Judge model</a></h3>
+<p>The judge is <strong>hard-coded</strong> in <code>run_eval.py:43</code>:</p>
+<pre><code class="language-python">JUDGE_LLM = ChatGoogle(model=&quot;gemini-2.5-flash&quot;, api_key=os.getenv(&quot;GOOGLE_API_KEY&quot;))
+</code></pre>
+<blockquote>
+<p>Always Gemini 2.5 Flash, "for consistent judging across all evaluations".
+The agent under test may use any other model; only the judge is fixed.</p>
+</blockquote>
+<h3 id="22-what-the-judge-sees"><a class="toclink" href="#22-what-the-judge-sees">2.2 What the judge sees</a></h3>
+<p>For every task, after the agent finishes, <code>run_eval.py:139-160</code> assembles five
+inputs and hands them to <code>construct_judge_messages()</code> (<code>judge.py:28</code>):</p>
+<table>
+<thead>
+<tr>
+<th>Input</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>task</code></td>
+<td><code>task["confirmed_task"]</code></td>
+</tr>
+<tr>
+<td><code>final_result</code></td>
+<td><code>agent_history.final_result()</code> (or <code>"Agent did not return a result"</code>)</td>
+</tr>
+<tr>
+<td><code>agent_steps</code></td>
+<td><code>agent_history.agent_steps()</code> — formatted per-step strings</td>
+</tr>
+<tr>
+<td><code>ground_truth</code></td>
+<td><code>task.get("answer")</code> (may be <code>None</code>)</td>
+</tr>
+<tr>
+<td><code>screenshots_b64</code></td>
+<td>base64 PNGs from <code>agent_history.screenshot_paths()</code></td>
+</tr>
+</tbody>
+</table>
+<p>Text fields are individually truncated to <strong>40 000 chars</strong> with an
+<code>...[truncated]...</code> marker (<code>judge.py:23-25, 50-53</code>).</p>
+<p>Screenshots are <strong>deduplicated</strong> preserving order, then the <strong>last
+<code>max_images=10</code> unique</strong> ones are sent (<code>judge.py:55-58</code>):</p>
+<pre><code class="language-python">seen = set()
+unique = [s for s in reversed(screenshots_b64) if s not in seen and not seen.add(s)]
+selected = list(reversed(unique[:max_images]))
+</code></pre>
+<p>The system prompt is built dynamically: a "GROUND TRUTH VALIDATION (HIGHEST
+PRIORITY)" section is <strong>only added when <code>ground_truth</code> is non-empty</strong>
+(<code>judge.py:67-77</code>). The user prompt likewise interpolates a <code>&lt;ground_truth&gt;…
+&lt;/ground_truth&gt;</code> block conditionally (<code>judge.py:166-172</code>).</p>
+<h3 id="23-the-rubric-system-prompt"><a class="toclink" href="#23-the-rubric-system-prompt">2.3 The rubric (system prompt)</a></h3>
+<p>The judge's evaluation framework is fully spelled out in <code>judge.py:79-150</code>.
+Summarized:</p>
+<ol>
+<li><strong>Ground truth (when present) is absolute</strong> — verdict MUST be <code>false</code> if it
+   is not satisfied.</li>
+<li>Then, in this order of importance: Task Satisfaction → Output Quality →
+   Tool Effectiveness → Agent Reasoning → Browser Handling.</li>
+<li><strong>Verdict is strictly binary</strong> — <code>true</code> only if the task was completed as
+   requested with no fabricated content; <code>false</code> for any partial completion.</li>
+<li><strong>Auto-fail conditions</strong> include: blocked by captcha, missing auth, wrong
+   output format, infinite loops, browser crash, page not loaded, agent
+   calling <code>done</code> before completing all key points, or fabricating content
+   not present in the screenshot/page.</li>
+<li><strong>Two side-channel flags</strong> are also requested from the judge:
+   - <code>impossible_task</code> — task was fundamentally unachievable (broken site,
+     auth required without credentials, etc.). Conservative — bad agent
+     decisions don't count.
+   - <code>reached_captcha</code> — captcha/bot detection appeared in screenshots or
+     errors.</li>
+</ol>
+<h3 id="24-structured-output"><a class="toclink" href="#24-structured-output">2.4 Structured output</a></h3>
+<p>The judge response is parsed into this Pydantic model (<code>judge.py:14-20</code>):</p>
+<pre><code class="language-python">class JudgementResult(BaseModel):
+    reasoning: str | None
+    verdict: bool
+    failure_reason: str | None
+    impossible_task: bool = False
+    reached_captcha: bool = False
+</code></pre>
+<p>It is requested via the LLM's structured-output mode in <code>run_eval.py:158-161</code>:</p>
+<pre><code class="language-python">response = await JUDGE_LLM.ainvoke(
+    judge_messages, output_format=JudgementResult
+)
+judgement: JudgementResult = response.completion
+</code></pre>
+<p>So the JSON schema is enforced by the LLM client, not by post-hoc parsing of
+free text.</p>
+<hr />
+<h2 id="3-per-task-score"><a class="toclink" href="#3-per-task-score">3. Per-task score</a></h2>
+<p><code>run_eval.py:163</code>:</p>
+<pre><code class="language-python">score = 1 if judgement.verdict else 0
+</code></pre>
+<p>That's it: <strong>every task is worth 0 or 1</strong>. There is no partial credit, no
+weighting per category, and <code>impossible_task</code> / <code>reached_captcha</code> are
+<strong>recorded but do not affect the score</strong>.</p>
+<h3 id="31-other-failure-paths-that-yield-score-0"><a class="toclink" href="#31-other-failure-paths-that-yield-score-0">3.1 Other failure paths that yield <code>score = 0</code></a></h3>
+<ul>
+<li>Per-task <code>asyncio</code> timeout of <strong>1800 seconds = 30 minutes</strong>
+  (<code>TASK_TIMEOUT</code>, <code>run_eval.py:46, 117-129</code>).</li>
+<li>Any uncaught exception inside <code>run_task</code> (<code>run_eval.py:198-210</code>): the
+  traceback is recorded and <code>score=0</code> is returned.</li>
+</ul>
+<p>In both cases the judge never runs.</p>
+<h3 id="32-per-task-artifact"><a class="toclink" href="#32-per-task-artifact">3.2 Per-task artifact</a></h3>
+<p>For every task, a JSON file is written to
+<code>run_data/&lt;run_key&gt;_start_at_&lt;timestamp&gt;/&lt;task_id&gt;.json</code>
+(<code>run_eval.py:168-187</code>):</p>
+<pre><code class="language-json">{
+  &quot;agent_trace&quot;: {
+    &quot;agent_task&quot;: &quot;...&quot;,
+    &quot;final_result&quot;: &quot;...&quot;,
+    &quot;agent_steps&quot;: [&quot;Step 1: ...&quot;, &quot;Step 2: ...&quot;],
+    &quot;ground_truth&quot;: &quot;...&quot; | null,
+    &quot;screenshots_b64&quot;: [&quot;&lt;base64&gt;&quot;, ...]
+  },
+  &quot;metrics&quot;: { &quot;steps&quot;: &lt;int&gt;, &quot;duration&quot;: &lt;float&gt;, &quot;cost&quot;: &lt;float&gt; },
+  &quot;judgement&quot;: {
+    &quot;reasoning&quot;: &quot;...&quot;,
+    &quot;verdict&quot;: true|false,
+    &quot;failure_reason&quot;: &quot;...&quot;,
+    &quot;impossible_task&quot;: false,
+    &quot;reached_captcha&quot;: false
+  }
+}
+</code></pre>
+<p>These are exactly the files the local viewer (<code>viewer/serve.py</code>) renders.</p>
+<hr />
+<h2 id="4-per-run-aggregate-score"><a class="toclink" href="#4-per-run-aggregate-score">4. Per-run aggregate score</a></h2>
+<p>After every task in a run has been judged, <code>run_eval.py:257-276</code> aggregates
+the results and <strong>appends</strong> one row to <code>results/&lt;run_key&gt;.json</code>:</p>
+<pre><code class="language-python">successful   = sum(1 for r in results if r.get(&quot;score&quot;) == 1)
+total_steps  = sum(r.get(&quot;steps&quot;, 0)    for r in results)
+total_duration = sum(r.get(&quot;duration&quot;, 0) for r in results)
+total_cost   = sum(r.get(&quot;cost&quot;, 0)     for r in results)
+...
+runs.append({
+    &quot;run_start&quot;: run_start,
+    &quot;tasks_completed&quot;: len(results),
+    &quot;tasks_successful&quot;: successful,
+    &quot;total_steps&quot;:   total_steps,
+    &quot;total_duration&quot;: total_duration,
+    &quot;total_cost&quot;:    total_cost,
+})
+</code></pre>
+<p>So one <strong>"run"</strong> = one row, identified by start timestamp; one <strong><code>results/*.json</code>
+file</strong> holds the list of all runs ever recorded for that
+<code>(framework, version, browser, model)</code> tuple.</p>
+<h3 id="41-run-level-success-rate"><a class="toclink" href="#41-run-level-success-rate">4.1 Run-level success rate</a></h3>
+<p>A run's headline number is simply:</p>
+<blockquote>
+<p><strong>accuracy = <code>tasks_successful / tasks_completed</code></strong></p>
+</blockquote>
+<p>(<code>generate_plots.py:147-152</code>)</p>
+<p>Reported either as a fraction (0.0–1.0) or a percentage (×100, see
+<code>generate_plots.py:227, 317</code>).</p>
+<h3 id="42-concurrency-fairness-notes"><a class="toclink" href="#42-concurrency-fairness-notes">4.2 Concurrency / fairness notes</a></h3>
+<ul>
+<li>Tasks run in parallel with <code>asyncio.Semaphore(MAX_CONCURRENT=3)</code>
+  (<code>run_eval.py:45, 247</code>). The score is unaffected, but throughput is.</li>
+<li>No retries: if a task errors or times out it is a permanent 0 for that run.</li>
+</ul>
+<hr />
+<h2 id="5-multi-run-aggregate-the-published-leaderboard"><a class="toclink" href="#5-multi-run-aggregate-the-published-leaderboard">5. Multi-run aggregate (the published leaderboard)</a></h2>
+<p><code>generate_plots.py</code> consumes <code>official_results/*.json</code>. The model name is
+parsed from the filename suffix after <code>_model_</code>
+(<code>generate_plots.py:136</code>):</p>
+<pre><code class="language-python">model = f.stem.split(&quot;_model_&quot;)[-1]
+</code></pre>
+<h3 id="51-run-filtering"><a class="toclink" href="#51-run-filtering">5.1 Run filtering</a></h3>
+<p>Only runs that completed <strong>all 100 tasks</strong> are kept
+(<code>generate_plots.py:20, 138</code>):</p>
+<pre><code class="language-python">EXPECTED_TASKS = 100
+valid = [r for r in runs if r[&quot;tasks_completed&quot;] == EXPECTED_TASKS]
+</code></pre>
+<p>Partial / aborted runs are dropped (with a warning). This guards against
+optimistic averages when an agent crashed early on the hard tasks.</p>
+<h3 id="52-bootstrap-confidence-intervals"><a class="toclink" href="#52-bootstrap-confidence-intervals">5.2 Bootstrap confidence intervals</a></h3>
+<p>For each model, the per-run accuracies (and tasks-per-hour) are summarized
+with <strong>percentile bootstrap</strong> at 95% (<code>generate_plots.py:163-174</code>):</p>
+<pre><code class="language-python">N_BOOTSTRAP = 1000
+
+def bootstrap_ci(values, n=N_BOOTSTRAP):
+    arr = np.array(values)
+    means = [np.mean(np.random.choice(arr, size=len(arr), replace=True))
+             for _ in range(n)]
+    return float(np.mean(arr)), float(np.percentile(means, 2.5)), float(np.percentile(means, 97.5))
+</code></pre>
+<p>Reported as <code>mean</code>, <code>err_lo = mean - p2.5</code>, <code>err_hi = p97.5 - mean</code>
+(<code>generate_plots.py:222-229, 308-322</code>).</p>
+<p>Note this is a CI <strong>over runs of the same model</strong>, not over tasks. With only a
+handful of runs the interval is wide; it captures judge / browser variance, not
+task-level statistical power.</p>
+<h3 id="53-tasks-per-hour"><a class="toclink" href="#53-tasks-per-hour">5.3 Tasks-per-hour</a></h3>
+<p>A throughput metric, used as the secondary axis on the speed-vs-accuracy plot
+(<code>generate_plots.py:155-160</code>):</p>
+<pre><code class="language-python">3600 * r[&quot;tasks_completed&quot;] / r[&quot;total_duration&quot;]
+</code></pre>
+<p>Cost (<code>total_cost</code>) is recorded but not currently plotted.</p>
+<hr />
+<h2 id="6-end-to-end-summary"><a class="toclink" href="#6-end-to-end-summary">6. End-to-end summary</a></h2>
+<pre><code>                ┌──────────────────────┐
+                │ BU_Bench_V1.enc      │
+                │  (100 tasks; Fernet) │
+                └──────────┬───────────┘
+                           │  load_tasks()
+                           ▼
+              ┌─────────────────────────┐
+              │ for each task (≤3 in    │
+              │ parallel, ≤30 min each) │
+              └──────────┬──────────────┘
+                         ▼
+        ┌───────────────────────────────────┐
+        │ Agent runs in chosen browser/LLM  │
+        │ → final_result, steps, screenshots│
+        └──────────┬────────────────────────┘
+                   ▼
+        ┌─────────────────────────────────────┐
+        │ Judge: Gemini 2.5 Flash             │
+        │ inputs: task, final_result,         │
+        │   steps (≤40k chars each),          │
+        │   last 10 unique screenshots,       │
+        │   ground_truth (if any)             │
+        │ output: JudgementResult (verdict…)  │
+        └──────────┬──────────────────────────┘
+                   ▼
+        score = 1 if verdict else 0
+                   │
+                   ▼
+     write run_data/&lt;run&gt;/&lt;task_id&gt;.json
+                   │
+                   ▼
+     aggregate → append row to results/&lt;run&gt;.json
+       { tasks_completed, tasks_successful,
+         total_steps, total_duration, total_cost }
+                   │
+                   ▼
+   generate_plots.py:
+     - drop runs where tasks_completed ≠ 100
+     - per-model: accuracy = successful / completed
+     - bootstrap 95% CI over runs
+</code></pre>
+<h3 id="tldr"><a class="toclink" href="#tldr">TL;DR</a></h3>
+<ul>
+<li><strong>Ground truth</strong> is an optional freeform <code>answer</code> string on ~40% of tasks,
+  embedded into the judge's prompt — not a string-equality check.</li>
+<li><strong>Per-task score</strong> is binary (<code>0</code> or <code>1</code>), produced by <strong>Gemini 2.5 Flash</strong>
+  acting as a vision+text judge over the task, the trajectory, up to 10
+  deduped screenshots, and (when present) the ground truth.</li>
+<li><strong>Per-run score</strong> is <code>tasks_successful / tasks_completed</code>.</li>
+<li><strong>Leaderboard score</strong> is the <strong>mean of run accuracies</strong> for a model, with a
+  <strong>percentile bootstrap 95% CI</strong> (n=1000) — restricted to runs that
+  completed all 100 tasks.</li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,836 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Browser-Use Benchmark — Core Scoring Flows</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --fg: #1f2328;
+    --muted: #57606a;
+    --border: #d0d7de;
+    --card: #f6f8fa;
+    --blue: #0969da;     /* executable / event flow */
+    --green: #1a7f37;    /* success / continuation */
+    --amber: #9a6700;    /* waiting / manual */
+    --red:   #cf222e;    /* rejection / error */
+    --purple:#8250df;    /* validation / routing */
+    --blue-bg: #ddf4ff;
+    --green-bg: #dafbe1;
+    --amber-bg: #fff8c5;
+    --red-bg:  #ffebe9;
+    --purple-bg:#fbefff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0d1117; --fg: #e6edf3; --muted: #8b949e;
+      --border: #30363d; --card: #161b22;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--bg); color: var(--fg); }
+  body {
+    font: 16px/1.55 -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    padding: 32px 24px 80px;
+  }
+  .wrap { max-width: 1200px; margin: 0 auto; }
+  header.title h1 { margin: 0 0 6px; font-size: 28px; }
+  header.title .meta { color: var(--muted); font-size: 13px; }
+  header.title .meta code { background: var(--card); padding: 2px 6px; border-radius: 4px; }
+  nav.toc {
+    background: var(--card); border: 1px solid var(--border); border-radius: 8px;
+    padding: 14px 18px; margin: 22px 0 28px;
+  }
+  nav.toc strong { display: block; margin-bottom: 6px; font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+  nav.toc ol { margin: 0; padding-left: 22px; }
+  nav.toc a { color: var(--blue); text-decoration: none; }
+  nav.toc a:hover { text-decoration: underline; }
+  section.flow {
+    background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+    padding: 22px 26px; margin: 28px 0;
+  }
+  section.flow > h2 { margin: 0 0 4px; font-size: 22px; }
+  section.flow > h2 .id { display: inline-block; padding: 2px 10px; margin-right: 10px;
+    border-radius: 999px; font-size: 12px; font-weight: 700; color: #fff; background: var(--blue);
+    vertical-align: middle;
+  }
+  section.flow > .lead { color: var(--muted); margin: 0 0 16px; font-size: 14px; }
+  section.flow h3 { margin: 22px 0 10px; font-size: 15px; }
+  section.flow p { margin: 0 0 12px; }
+  .diagram {
+    background: var(--bg); border: 1px solid var(--border); border-radius: 8px;
+    padding: 12px; overflow-x: auto; margin: 6px 0 16px;
+  }
+  .diagram svg { display: block; margin: 0 auto; max-width: 100%; height: auto; }
+  table { border-collapse: collapse; width: 100%; margin: 8px 0 14px; font-size: 14px; }
+  th, td { border: 1px solid var(--border); padding: 7px 10px; text-align: left; vertical-align: top; }
+  th { background: var(--bg); }
+  code { background: var(--bg); border: 1px solid var(--border); padding: 1px 5px; border-radius: 4px; font: 0.92em ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  pre {
+    background: var(--bg); border: 1px solid var(--border); border-radius: 6px;
+    padding: 12px 14px; overflow-x: auto;
+    font: 12.5px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    margin: 0 0 14px;
+  }
+  pre code { background: transparent; border: 0; padding: 0; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 880px) { .grid-2 { grid-template-columns: 1fr; } }
+  .legend {
+    display: flex; flex-wrap: wrap; gap: 10px; font-size: 12px; color: var(--muted);
+    margin: 4px 0 14px;
+  }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .legend .sw { display: inline-block; width: 12px; height: 12px; border-radius: 3px; border: 1px solid var(--border); }
+  .callout {
+    border-left: 4px solid var(--blue); background: var(--bg);
+    padding: 10px 14px; border-radius: 0 6px 6px 0; margin: 10px 0 14px; font-size: 14px;
+  }
+  .callout.warn { border-left-color: var(--amber); }
+  .callout.fail { border-left-color: var(--red); }
+  .callout.ok   { border-left-color: var(--green); }
+  footer { color: var(--muted); font-size: 12px; margin-top: 40px; text-align: center; }
+
+  /* SVG token styling */
+  svg .lane { fill: var(--card); stroke: var(--border); }
+  svg .laneLabel { font: 600 12px sans-serif; fill: var(--muted); }
+  svg .box { stroke-width: 1.5; rx: 6; ry: 6; }
+  svg .boxText { font: 12px sans-serif; fill: var(--fg); }
+  svg .boxTitle { font: 700 12px sans-serif; fill: var(--fg); }
+  svg .blue   { fill: var(--blue-bg); stroke: var(--blue); }
+  svg .green  { fill: var(--green-bg); stroke: var(--green); }
+  svg .amber  { fill: var(--amber-bg); stroke: var(--amber); }
+  svg .red    { fill: var(--red-bg); stroke: var(--red); }
+  svg .purple { fill: var(--purple-bg); stroke: var(--purple); }
+  svg .arrowLine { stroke: var(--fg); stroke-width: 1.5; fill: none; }
+  svg .arrowText { font: 11px sans-serif; fill: var(--fg); }
+  svg .branchLabel { font: italic 11px sans-serif; fill: var(--muted); }
+  svg .titleText { font: 700 14px sans-serif; fill: var(--fg); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="title">
+  <h1>Browser-Use Benchmark — Core Scoring Flows</h1>
+  <div class="meta">
+    Source: <code>benchmark/docs/scoring.md</code>
+    · Code refs: <code>benchmark/run_eval.py</code>, <code>benchmark/judge.py</code>, <code>benchmark/generate_plots.py</code>
+  </div>
+</header>
+
+<nav class="toc" aria-label="Contents">
+  <strong>Contents</strong>
+  <ol>
+    <li><a href="#overview">Architecture overview</a></li>
+    <li><a href="#f1">F1 — Dataset load (Fernet decrypt)</a></li>
+    <li><a href="#f2">F2 — Per-task evaluation (happy path)</a></li>
+    <li><a href="#f3">F3 — Judge message construction</a></li>
+    <li><a href="#f4">F4 — Failure / timeout branch</a></li>
+    <li><a href="#f5">F5 — Per-run aggregation</a></li>
+    <li><a href="#f6">F6 — Leaderboard aggregation (multi-run)</a></li>
+  </ol>
+</nav>
+
+<div class="legend">
+  <span><span class="sw" style="background: var(--blue-bg); border-color: var(--blue)"></span> executable / event</span>
+  <span><span class="sw" style="background: var(--green-bg); border-color: var(--green)"></span> success / continuation</span>
+  <span><span class="sw" style="background: var(--amber-bg); border-color: var(--amber)"></span> waiting / manual</span>
+  <span><span class="sw" style="background: var(--red-bg); border-color: var(--red)"></span> rejection / error</span>
+  <span><span class="sw" style="background: var(--purple-bg); border-color: var(--purple)"></span> validation / routing</span>
+</div>
+
+<!-- ============ OVERVIEW ============ -->
+<section class="flow" id="overview">
+  <h2>Architecture overview</h2>
+  <p class="lead">High-level data flow across the five subsystems that turn an encrypted task file into a leaderboard number.</p>
+  <div class="diagram">
+    <svg viewBox="0 0 1140 320" role="img" aria-label="Architecture overview">
+      <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
+        </marker>
+      </defs>
+      <text x="570" y="22" text-anchor="middle" class="titleText">Encrypted dataset → Agent → Judge → Run row → Leaderboard</text>
+
+      <!-- Boxes -->
+      <rect class="box purple" x="20"  y="60"  width="170" height="80"/>
+      <text x="105" y="92"  class="boxTitle" text-anchor="middle">Dataset</text>
+      <text x="105" y="110" class="boxText"  text-anchor="middle">BU_Bench_V1.enc</text>
+      <text x="105" y="126" class="boxText"  text-anchor="middle">Fernet · 100 tasks</text>
+
+      <rect class="box blue" x="230" y="60"  width="180" height="80"/>
+      <text x="320" y="92"  class="boxTitle" text-anchor="middle">Agent runner</text>
+      <text x="320" y="110" class="boxText"  text-anchor="middle">run_eval.run_task()</text>
+      <text x="320" y="126" class="boxText"  text-anchor="middle">≤3 parallel · 30 min cap</text>
+
+      <rect class="box blue" x="230" y="180" width="180" height="80"/>
+      <text x="320" y="212" class="boxTitle" text-anchor="middle">Browser provider</text>
+      <text x="320" y="230" class="boxText"  text-anchor="middle">cloud / local / CDP</text>
+      <text x="320" y="246" class="boxText"  text-anchor="middle">browsers/&lt;provider&gt;</text>
+
+      <rect class="box amber" x="450" y="60" width="200" height="80"/>
+      <text x="550" y="92"  class="boxTitle" text-anchor="middle">LLM Judge</text>
+      <text x="550" y="110" class="boxText"  text-anchor="middle">Gemini 2.5 Flash</text>
+      <text x="550" y="126" class="boxText"  text-anchor="middle">JudgementResult schema</text>
+
+      <rect class="box green" x="690" y="60" width="200" height="80"/>
+      <text x="790" y="92"  class="boxTitle" text-anchor="middle">Per-task artifact</text>
+      <text x="790" y="110" class="boxText"  text-anchor="middle">run_data/&lt;run&gt;/&lt;id&gt;.json</text>
+      <text x="790" y="126" class="boxText"  text-anchor="middle">trace + metrics + judgement</text>
+
+      <rect class="box green" x="930" y="60" width="190" height="80"/>
+      <text x="1025" y="92"  class="boxTitle" text-anchor="middle">Run row</text>
+      <text x="1025" y="110" class="boxText"  text-anchor="middle">results/&lt;run_key&gt;.json</text>
+      <text x="1025" y="126" class="boxText"  text-anchor="middle">tasks_successful / total</text>
+
+      <rect class="box purple" x="690" y="200" width="430" height="80"/>
+      <text x="905" y="232" class="boxTitle" text-anchor="middle">Leaderboard</text>
+      <text x="905" y="250" class="boxText"  text-anchor="middle">generate_plots.py · drop runs ≠ 100 tasks</text>
+      <text x="905" y="266" class="boxText"  text-anchor="middle">mean accuracy + bootstrap 95% CI (n=1000)</text>
+
+      <!-- Arrows -->
+      <g style="color: var(--fg)">
+        <path class="arrowLine" d="M190,100 L228,100" marker-end="url(#arrow)"/>
+        <path class="arrowLine" d="M320,140 L320,178" marker-end="url(#arrow)"/>
+        <path class="arrowLine" d="M410,100 L448,100" marker-end="url(#arrow)"/>
+        <path class="arrowLine" d="M650,100 L688,100" marker-end="url(#arrow)"/>
+        <path class="arrowLine" d="M890,100 L928,100" marker-end="url(#arrow)"/>
+        <path class="arrowLine" d="M1025,140 L1025,170 L905,170 L905,198" marker-end="url(#arrow)"/>
+      </g>
+
+      <text x="209" y="92"  class="arrowText" text-anchor="middle">load</text>
+      <text x="429" y="92"  class="arrowText" text-anchor="middle">trace</text>
+      <text x="669" y="92"  class="arrowText" text-anchor="middle">verdict</text>
+      <text x="909" y="92"  class="arrowText" text-anchor="middle">score</text>
+      <text x="330" y="170" class="arrowText">CDP / launch</text>
+    </svg>
+  </div>
+  <table>
+    <thead><tr><th>Component</th><th>File</th><th>Responsibility</th></tr></thead>
+    <tbody>
+      <tr><td>Dataset</td><td><code>BU_Bench_V1.enc</code></td><td>Encrypted Fernet blob of 100 task dicts.</td></tr>
+      <tr><td>Agent runner</td><td><code>run_eval.py</code></td><td>Decrypts dataset, fans out tasks (≤3 in parallel), enforces 30-min timeout, persists trace.</td></tr>
+      <tr><td>Browser provider</td><td><code>browsers/*.py</code></td><td>Returns a Browser handle (cloud session, local Chromium, or CDP URL).</td></tr>
+      <tr><td>LLM judge</td><td><code>judge.py</code></td><td>Builds judge prompt + screenshots; constrains output to <code>JudgementResult</code>.</td></tr>
+      <tr><td>Leaderboard</td><td><code>generate_plots.py</code></td><td>Filters complete runs, computes mean accuracy with bootstrap CI per model.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ============ F1 ============ -->
+<section class="flow" id="f1">
+  <h2><span class="id">F1</span>Dataset load (Fernet decrypt)</h2>
+  <p class="lead">How the 100 benchmark tasks (and their optional ground-truth answers) are produced from <code>BU_Bench_V1.enc</code>.</p>
+
+  <div class="diagram">
+    <svg viewBox="0 0 1140 220" role="img" aria-label="Dataset load flow">
+      <defs>
+        <marker id="arrow1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
+        </marker>
+      </defs>
+      <text x="570" y="22" text-anchor="middle" class="titleText">load_tasks() · run_eval.py:64–66</text>
+
+      <rect class="box purple" x="20"  y="70" width="170" height="80"/>
+      <text x="105" y="100" class="boxTitle" text-anchor="middle">BU_Bench_V1.enc</text>
+      <text x="105" y="118" class="boxText"  text-anchor="middle">base64-wrapped</text>
+      <text x="105" y="134" class="boxText"  text-anchor="middle">Fernet ciphertext</text>
+
+      <rect class="box blue" x="230" y="70" width="190" height="80"/>
+      <text x="325" y="100" class="boxTitle" text-anchor="middle">Derive key</text>
+      <text x="325" y="118" class="boxText"  text-anchor="middle">SHA-256(b"BU_Bench_V1")</text>
+      <text x="325" y="134" class="boxText"  text-anchor="middle">→ urlsafe_b64encode</text>
+
+      <rect class="box blue" x="460" y="70" width="190" height="80"/>
+      <text x="555" y="100" class="boxTitle" text-anchor="middle">Fernet.decrypt</text>
+      <text x="555" y="118" class="boxText"  text-anchor="middle">→ JSON bytes</text>
+      <text x="555" y="134" class="boxText"  text-anchor="middle">→ list[dict]</text>
+
+      <rect class="box green" x="690" y="70" width="200" height="80"/>
+      <text x="790" y="100" class="boxTitle" text-anchor="middle">Tasks (n=100)</text>
+      <text x="790" y="118" class="boxText"  text-anchor="middle">task_id · confirmed_task</text>
+      <text x="790" y="134" class="boxText"  text-anchor="middle">category · answer?</text>
+
+      <rect class="box amber" x="930" y="70" width="190" height="80"/>
+      <text x="1025" y="100" class="boxTitle" text-anchor="middle">Optional slice</text>
+      <text x="1025" y="118" class="boxText"  text-anchor="middle">--tasks N → tasks[:N]</text>
+      <text x="1025" y="134" class="boxText"  text-anchor="middle">(skips trailing tasks)</text>
+
+      <g style="color: var(--fg)">
+        <path class="arrowLine" d="M190,110 L228,110" marker-end="url(#arrow1)"/>
+        <path class="arrowLine" d="M420,110 L458,110" marker-end="url(#arrow1)"/>
+        <path class="arrowLine" d="M650,110 L688,110" marker-end="url(#arrow1)"/>
+        <path class="arrowLine" d="M890,110 L928,110" marker-end="url(#arrow1)"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="grid-2">
+    <div>
+      <h3>Task schema (decrypted)</h3>
+      <table>
+        <thead><tr><th>Field</th><th>Type</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><code>task_id</code></td><td>str (UUID)</td><td>Used as the per-task result filename.</td></tr>
+          <tr><td><code>confirmed_task</code></td><td>str</td><td>The natural-language prompt.</td></tr>
+          <tr><td><code>category</code></td><td>str</td><td>One of 5 buckets (20 tasks each).</td></tr>
+          <tr><td><code>answer</code></td><td>str <em>(optional)</em></td><td>Ground truth — present on ~40/100. Freeform; consumed by the judge prompt.</td></tr>
+        </tbody>
+      </table>
+      <h3>Categories (5 × 20)</h3>
+      <table>
+        <thead><tr><th>Category</th><th>Count</th></tr></thead>
+        <tbody>
+          <tr><td><code>GAIA</code></td><td>20</td></tr>
+          <tr><td><code>BrowseComp</code></td><td>20</td></tr>
+          <tr><td><code>WebBenchREAD</code></td><td>20</td></tr>
+          <tr><td><code>OM2W2</code></td><td>20</td></tr>
+          <tr><td><code>InteractionTests</code></td><td>20</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <h3>Payload — task without ground truth</h3>
+<pre><code>{
+  "task_id": "66c6641b-f949-46a2-8bcc-6d9dd388b534",
+  "confirmed_task": "Browse the list of active Q&amp;A communities on https://stackexchange.com and list the names of the top 5 communities by current activity.\nwebsite: https://stackexchange.com",
+  "category": "WebBenchREAD"
+}</code></pre>
+      <h3>Payload — task with ground truth</h3>
+<pre><code>{
+  "task_id": "5a0c2db3-a687-4dfe-b7e7-22d01eae23f6",
+  "confirmed_task": "According to Box Office Mojo's 2020 Worldwide Box Office list, how many of the top 10 highest-grossing worldwide movies are also on the top 10 highest-grossing domestic movies? Your answer should be a numerical integer value.",
+  "category": "GAIA",
+  "answer": "6"
+}</code></pre>
+      <div class="callout warn">The "encryption" is not a security boundary — the key derivation is hardcoded in the same repo. Its purpose is to prevent accidental training-data contamination by web crawlers.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ F2 ============ -->
+<section class="flow" id="f2">
+  <h2><span class="id">F2</span>Per-task evaluation (happy path)</h2>
+  <p class="lead">One task, end-to-end: agent runs in a browser, trace is captured, judge produces a verdict, binary score is written.</p>
+
+  <div class="diagram">
+    <svg viewBox="0 0 1140 460" role="img" aria-label="Per-task evaluation flow">
+      <defs>
+        <marker id="arrow2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
+        </marker>
+      </defs>
+
+      <!-- Lanes -->
+      <rect class="lane" x="10"   y="40" width="220" height="410"/>
+      <rect class="lane" x="240"  y="40" width="240" height="410"/>
+      <rect class="lane" x="490"  y="40" width="220" height="410"/>
+      <rect class="lane" x="720"  y="40" width="200" height="410"/>
+      <rect class="lane" x="930"  y="40" width="200" height="410"/>
+      <text x="120"  y="58" class="laneLabel" text-anchor="middle">Orchestrator (run_eval)</text>
+      <text x="360"  y="58" class="laneLabel" text-anchor="middle">Browser provider</text>
+      <text x="600"  y="58" class="laneLabel" text-anchor="middle">Agent (browser_use)</text>
+      <text x="820"  y="58" class="laneLabel" text-anchor="middle">Judge (Gemini 2.5 Flash)</text>
+      <text x="1030" y="58" class="laneLabel" text-anchor="middle">Disk</text>
+
+      <!-- Steps -->
+      <rect class="box blue"   x="30"  y="80"  width="180" height="46"/>
+      <text x="120" y="98"  class="boxTitle" text-anchor="middle">acquire semaphore</text>
+      <text x="120" y="114" class="boxText"  text-anchor="middle">≤ MAX_CONCURRENT=3</text>
+
+      <rect class="box purple" x="260" y="80"  width="200" height="46"/>
+      <text x="360" y="98"  class="boxTitle" text-anchor="middle">create_browser()</text>
+      <text x="360" y="114" class="boxText"  text-anchor="middle">cloud · local · CDP url</text>
+
+      <rect class="box blue"   x="510" y="80"  width="180" height="46"/>
+      <text x="600" y="98"  class="boxTitle" text-anchor="middle">Agent(task, llm, browser)</text>
+      <text x="600" y="114" class="boxText"  text-anchor="middle">.run()</text>
+
+      <rect class="box amber"  x="510" y="150" width="180" height="46"/>
+      <text x="600" y="168" class="boxTitle" text-anchor="middle">asyncio.wait_for</text>
+      <text x="600" y="184" class="boxText"  text-anchor="middle">TASK_TIMEOUT = 1800s</text>
+
+      <rect class="box green"  x="510" y="220" width="180" height="60"/>
+      <text x="600" y="240" class="boxTitle" text-anchor="middle">agent_history</text>
+      <text x="600" y="256" class="boxText"  text-anchor="middle">steps · duration · cost</text>
+      <text x="600" y="270" class="boxText"  text-anchor="middle">screenshots · final_result</text>
+
+      <rect class="box blue"   x="30"  y="220" width="200" height="60"/>
+      <text x="130" y="240" class="boxTitle" text-anchor="middle">construct_judge_messages</text>
+      <text x="130" y="256" class="boxText"  text-anchor="middle">task + trace +</text>
+      <text x="130" y="270" class="boxText"  text-anchor="middle">ground_truth + images</text>
+
+      <rect class="box amber"  x="740" y="220" width="170" height="60"/>
+      <text x="825" y="240" class="boxTitle" text-anchor="middle">JUDGE_LLM.ainvoke</text>
+      <text x="825" y="256" class="boxText"  text-anchor="middle">output_format=</text>
+      <text x="825" y="270" class="boxText"  text-anchor="middle">JudgementResult</text>
+
+      <rect class="box green"  x="30"  y="320" width="200" height="46"/>
+      <text x="130" y="338" class="boxTitle" text-anchor="middle">score = 1 if verdict else 0</text>
+      <text x="130" y="354" class="boxText"  text-anchor="middle">(strictly binary)</text>
+
+      <rect class="box green"  x="950" y="320" width="160" height="60"/>
+      <text x="1030" y="340" class="boxTitle" text-anchor="middle">write</text>
+      <text x="1030" y="356" class="boxText"  text-anchor="middle">run_data/&lt;run&gt;/</text>
+      <text x="1030" y="370" class="boxText"  text-anchor="middle">&lt;task_id&gt;.json</text>
+
+      <rect class="box blue"   x="30"  y="395" width="200" height="40"/>
+      <text x="130" y="420" class="boxTitle" text-anchor="middle">return per-task result dict</text>
+
+      <!-- Arrows -->
+      <g style="color: var(--fg)">
+        <path class="arrowLine" d="M210,103 L258,103" marker-end="url(#arrow2)"/>
+        <path class="arrowLine" d="M460,103 L508,103" marker-end="url(#arrow2)"/>
+        <path class="arrowLine" d="M600,126 L600,148" marker-end="url(#arrow2)"/>
+        <path class="arrowLine" d="M600,196 L600,218" marker-end="url(#arrow2)"/>
+        <path class="arrowLine" d="M508,250 L232,250" marker-end="url(#arrow2)"/>
+        <path class="arrowLine" d="M230,250 L738,250" marker-end="url(#arrow2)"/>
+        <path class="arrowLine" d="M825,280 L825,295 L130,295 L130,318" marker-end="url(#arrow2)"/>
+        <path class="arrowLine" d="M230,343 L948,343" marker-end="url(#arrow2)"/>
+        <path class="arrowLine" d="M130,366 L130,393" marker-end="url(#arrow2)"/>
+      </g>
+
+      <text x="234" y="98" class="arrowText">task</text>
+      <text x="485" y="98" class="arrowText">browser</text>
+      <text x="615" y="142" class="arrowText" class="branchLabel">happy path</text>
+      <text x="370" y="245" class="arrowText">trace</text>
+      <text x="485" y="245" class="arrowText">+ ground_truth</text>
+      <text x="500" y="291" class="arrowText" class="branchLabel">judgement</text>
+      <text x="560" y="340" class="arrowText">trace + metrics + judgement</text>
+    </svg>
+  </div>
+
+  <h3>Per-task output (excerpt) — <code>run_data/&lt;run&gt;/&lt;task_id&gt;.json</code></h3>
+<pre><code>{
+  "agent_trace": {
+    "agent_task": "...",
+    "final_result": "...",
+    "agent_steps": ["Step 1: ...", "Step 2: ..."],
+    "ground_truth": "..." | null,
+    "screenshots_b64": ["&lt;base64 PNG&gt;", "..."]
+  },
+  "metrics":   { "steps": 3, "duration": 16.05, "cost": 0.0 },
+  "judgement": {
+    "reasoning": "...",
+    "verdict": true,
+    "failure_reason": "",
+    "impossible_task": false,
+    "reached_captcha": false
+  }
+}</code></pre>
+
+  <div class="callout ok"><strong>Binary scoring:</strong> there is no partial credit. <code>impossible_task</code> and <code>reached_captcha</code> are diagnostic flags only — they do <em>not</em> change the score.</div>
+</section>
+
+<!-- ============ F3 ============ -->
+<section class="flow" id="f3">
+  <h2><span class="id">F3</span>Judge message construction</h2>
+  <p class="lead">Exactly what the judge LLM sees, and how inputs are shaped before invocation (<code>judge.py:28–198</code>).</p>
+
+  <div class="diagram">
+    <svg viewBox="0 0 1140 360" role="img" aria-label="Judge message construction">
+      <defs>
+        <marker id="arrow3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
+        </marker>
+      </defs>
+
+      <!-- Inputs (left column) -->
+      <rect class="box blue" x="20" y="50" width="200" height="40"/>
+      <text x="120" y="75" class="boxText" text-anchor="middle"><tspan class="boxTitle">task</tspan> (confirmed_task)</text>
+
+      <rect class="box blue" x="20" y="100" width="200" height="40"/>
+      <text x="120" y="125" class="boxText" text-anchor="middle"><tspan class="boxTitle">final_result</tspan></text>
+
+      <rect class="box blue" x="20" y="150" width="200" height="40"/>
+      <text x="120" y="175" class="boxText" text-anchor="middle"><tspan class="boxTitle">agent_steps</tspan> (joined)</text>
+
+      <rect class="box blue" x="20" y="200" width="200" height="40"/>
+      <text x="120" y="225" class="boxText" text-anchor="middle"><tspan class="boxTitle">ground_truth?</tspan></text>
+
+      <rect class="box blue" x="20" y="250" width="200" height="40"/>
+      <text x="120" y="275" class="boxText" text-anchor="middle"><tspan class="boxTitle">screenshots_b64</tspan> (list)</text>
+
+      <!-- Transforms (middle) -->
+      <rect class="box purple" x="270" y="60"  width="240" height="80"/>
+      <text x="390" y="86"  class="boxTitle" text-anchor="middle">_truncate_text(max=40000)</text>
+      <text x="390" y="104" class="boxText"  text-anchor="middle">tail replaced with</text>
+      <text x="390" y="120" class="boxText"  text-anchor="middle">"...[truncated]..."</text>
+
+      <rect class="box purple" x="270" y="170" width="240" height="60"/>
+      <text x="390" y="192" class="boxTitle" text-anchor="middle">conditional ground-truth block</text>
+      <text x="390" y="210" class="boxText"  text-anchor="middle">injected into system + user prompt</text>
+
+      <rect class="box purple" x="270" y="250" width="240" height="80"/>
+      <text x="390" y="276" class="boxTitle" text-anchor="middle">dedupe + tail(10)</text>
+      <text x="390" y="294" class="boxText"  text-anchor="middle">unique screenshots, preserve order,</text>
+      <text x="390" y="310" class="boxText"  text-anchor="middle">keep last max_images=10</text>
+
+      <!-- Messages (right) -->
+      <rect class="box amber" x="560" y="80" width="240" height="80"/>
+      <text x="680" y="106" class="boxTitle" text-anchor="middle">SystemMessage</text>
+      <text x="680" y="124" class="boxText"  text-anchor="middle">rubric + auto-fail rules +</text>
+      <text x="680" y="140" class="boxText"  text-anchor="middle">JSON response schema</text>
+
+      <rect class="box amber" x="560" y="200" width="240" height="100"/>
+      <text x="680" y="226" class="boxTitle" text-anchor="middle">UserMessage</text>
+      <text x="680" y="244" class="boxText"  text-anchor="middle">&lt;task&gt; · &lt;ground_truth&gt;? ·</text>
+      <text x="680" y="260" class="boxText"  text-anchor="middle">&lt;agent_trajectory&gt; · &lt;final_result&gt;</text>
+      <text x="680" y="280" class="boxText"  text-anchor="middle">+ ≤10 image parts (data: PNGs)</text>
+
+      <!-- Judge -->
+      <rect class="box red"   x="850" y="80" width="270" height="100"/>
+      <text x="985" y="108" class="boxTitle" text-anchor="middle">JUDGE_LLM.ainvoke</text>
+      <text x="985" y="126" class="boxText"  text-anchor="middle">Gemini 2.5 Flash</text>
+      <text x="985" y="144" class="boxText"  text-anchor="middle">output_format=JudgementResult</text>
+      <text x="985" y="162" class="boxText"  text-anchor="middle">→ schema-enforced JSON</text>
+
+      <rect class="box green" x="850" y="210" width="270" height="100"/>
+      <text x="985" y="236" class="boxTitle" text-anchor="middle">JudgementResult</text>
+      <text x="985" y="254" class="boxText"  text-anchor="middle">reasoning · verdict · failure_reason</text>
+      <text x="985" y="272" class="boxText"  text-anchor="middle">impossible_task · reached_captcha</text>
+
+      <g style="color: var(--fg)">
+        <path class="arrowLine" d="M220,70  L268,70"  marker-end="url(#arrow3)"/>
+        <path class="arrowLine" d="M220,120 L268,120" marker-end="url(#arrow3)"/>
+        <path class="arrowLine" d="M220,170 L268,170" marker-end="url(#arrow3)"/>
+        <path class="arrowLine" d="M220,220 L268,200" marker-end="url(#arrow3)"/>
+        <path class="arrowLine" d="M220,270 L268,290" marker-end="url(#arrow3)"/>
+        <path class="arrowLine" d="M510,100 L558,100" marker-end="url(#arrow3)"/>
+        <path class="arrowLine" d="M510,200 L558,240" marker-end="url(#arrow3)"/>
+        <path class="arrowLine" d="M510,290 L558,260" marker-end="url(#arrow3)"/>
+        <path class="arrowLine" d="M800,130 L848,130" marker-end="url(#arrow3)"/>
+        <path class="arrowLine" d="M800,250 L848,250" marker-end="url(#arrow3)"/>
+        <path class="arrowLine" d="M985,180 L985,208" marker-end="url(#arrow3)"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="grid-2">
+    <div>
+      <h3>Rubric (system prompt) — priority order</h3>
+      <ol>
+        <li><strong>Ground truth (when present)</strong> — absolute precedence; verdict <code>false</code> if not satisfied.</li>
+        <li><strong>Task Satisfaction</strong> — did the user's goal happen?</li>
+        <li><strong>Output Quality</strong> — format / completeness match.</li>
+        <li><strong>Tool Effectiveness</strong> — % tools that succeeded.</li>
+        <li><strong>Agent Reasoning</strong> — planning, decisions.</li>
+        <li><strong>Browser Handling</strong> — crashes, page loads, captchas force a very low score.</li>
+      </ol>
+      <h3>Auto-fail conditions</h3>
+      <ul>
+        <li>Captcha / missing auth.</li>
+        <li>Wrong / missing output format.</li>
+        <li>Infinite loop or severe technical failure.</li>
+        <li>Browser crash or page never loaded.</li>
+        <li>Critical user requirement ignored.</li>
+        <li>Agent called <code>done</code> before completing all key points.</li>
+        <li>Agent fabricated content not in screenshot / DOM.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Response schema (Pydantic) — <code>JudgementResult</code></h3>
+<pre><code>class JudgementResult(BaseModel):
+    reasoning: str | None
+    verdict: bool                    # the score (1/0)
+    failure_reason: str | None
+    impossible_task: bool = False    # diagnostic only
+    reached_captcha: bool = False    # diagnostic only</code></pre>
+      <h3>Conditional ground-truth block (injected into system prompt)</h3>
+<pre><code>**GROUND TRUTH VALIDATION (HIGHEST PRIORITY):**
+The &lt;ground_truth&gt; section contains verified correct information for this task.
+This can be:
+- Evaluation criteria (e.g. "Must extract exactly 5 items")
+- Factual answers (e.g. "6", "Paris")
+- Expected outcomes (e.g. "Google Doc must be created")
+The ground truth takes ABSOLUTE precedence over all other evaluation
+criteria. If the ground truth is not satisfied by the agent's execution
+and final response, the verdict MUST be false.</code></pre>
+      <div class="callout">All four text inputs are independently truncated to <strong>40 000 chars</strong>; only the <strong>last 10 unique</strong> screenshots are sent.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ F4 ============ -->
+<section class="flow" id="f4">
+  <h2><span class="id">F4</span>Failure / timeout branch</h2>
+  <p class="lead">What happens when an agent doesn't reach the judge — the judge never runs and the task scores <code>0</code> automatically.</p>
+
+  <div class="diagram">
+    <svg viewBox="0 0 1140 320" role="img" aria-label="Failure / timeout flow">
+      <defs>
+        <marker id="arrow4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
+        </marker>
+      </defs>
+
+      <rect class="box blue" x="30" y="60" width="200" height="60"/>
+      <text x="130" y="86"  class="boxTitle" text-anchor="middle">run_task() begins</text>
+      <text x="130" y="104" class="boxText"  text-anchor="middle">agent.run() awaited inside</text>
+      <text x="130" y="118" class="boxText"  text-anchor="middle">asyncio.wait_for(...)</text>
+
+      <rect class="box purple" x="280" y="60" width="200" height="60"/>
+      <text x="380" y="86"  class="boxTitle" text-anchor="middle">decision</text>
+      <text x="380" y="104" class="boxText"  text-anchor="middle">timeout? · exception?</text>
+      <text x="380" y="118" class="boxText"  text-anchor="middle">otherwise: happy path</text>
+
+      <!-- Happy -->
+      <rect class="box green" x="530" y="20" width="220" height="60"/>
+      <text x="640" y="46"  class="boxTitle" text-anchor="middle">happy path → F2</text>
+      <text x="640" y="64"  class="boxText"  text-anchor="middle">judge runs, returns verdict</text>
+
+      <!-- Timeout -->
+      <rect class="box amber" x="530" y="100" width="220" height="60"/>
+      <text x="640" y="126" class="boxTitle" text-anchor="middle">TimeoutError (1800s)</text>
+      <text x="640" y="144" class="boxText"  text-anchor="middle">browser.stop() · provider.disconnect()</text>
+
+      <!-- Exception -->
+      <rect class="box red"   x="530" y="180" width="220" height="60"/>
+      <text x="640" y="206" class="boxTitle" text-anchor="middle">uncaught Exception</text>
+      <text x="640" y="224" class="boxText"  text-anchor="middle">traceback recorded</text>
+
+      <!-- Result -->
+      <rect class="box red"   x="800" y="100" width="300" height="60"/>
+      <text x="950" y="126" class="boxTitle" text-anchor="middle">return result dict</text>
+      <text x="950" y="144" class="boxText"  text-anchor="middle">score=0 · judge never invoked · no trace JSON</text>
+
+      <g style="color: var(--fg)">
+        <path class="arrowLine" d="M230,90  L278,90"  marker-end="url(#arrow4)"/>
+        <path class="arrowLine" d="M480,80  L528,50"  marker-end="url(#arrow4)"/>
+        <path class="arrowLine" d="M480,100 L528,130" marker-end="url(#arrow4)"/>
+        <path class="arrowLine" d="M480,120 L528,210" marker-end="url(#arrow4)"/>
+        <path class="arrowLine" d="M750,130 L798,130" marker-end="url(#arrow4)"/>
+        <path class="arrowLine" d="M750,210 L800,160" marker-end="url(#arrow4)"/>
+      </g>
+      <text x="485" y="48"  class="branchLabel">no error</text>
+      <text x="485" y="142" class="branchLabel">timeout</text>
+      <text x="485" y="200" class="branchLabel">exception</text>
+    </svg>
+  </div>
+
+  <div class="grid-2">
+    <div>
+      <h3>Timeout return payload</h3>
+<pre><code>{
+  "task_id": "...",
+  "score": 0,
+  "steps": 0,
+  "duration": 1800,
+  "cost": 0,
+  "error": "Task timed out after 1800s"
+}</code></pre>
+      <div class="callout warn">Per-task ceiling: <strong><code>TASK_TIMEOUT = 1800</code> seconds (30 min)</strong>. No retries: a timed-out task is a permanent 0 for the run.</div>
+    </div>
+    <div>
+      <h3>Exception return payload</h3>
+<pre><code>{
+  "task_id": "...",
+  "score": 0,
+  "steps": 0,
+  "duration": 0,
+  "cost": 0,
+  "error": "&lt;ErrorType&gt;: &lt;message&gt;",
+  "traceback": "..."
+}</code></pre>
+      <div class="callout fail">In both failure paths the per-task <code>run_data/&lt;task_id&gt;.json</code> trace file is <em>not</em> written, so the local viewer will not list a failed task — it appears only in the aggregate run row as a missing success.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ F5 ============ -->
+<section class="flow" id="f5">
+  <h2><span class="id">F5</span>Per-run aggregation</h2>
+  <p class="lead">After all tasks for a run complete, one row is <strong>appended</strong> to the model's results history file.</p>
+
+  <div class="diagram">
+    <svg viewBox="0 0 1140 280" role="img" aria-label="Per-run aggregation flow">
+      <defs>
+        <marker id="arrow5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
+        </marker>
+      </defs>
+
+      <rect class="box blue" x="20" y="60" width="220" height="80"/>
+      <text x="130" y="92"  class="boxTitle" text-anchor="middle">per-task results list</text>
+      <text x="130" y="110" class="boxText"  text-anchor="middle">[{score, steps,</text>
+      <text x="130" y="126" class="boxText"  text-anchor="middle">duration, cost}, ...]</text>
+
+      <rect class="box purple" x="280" y="60" width="220" height="80"/>
+      <text x="390" y="86"  class="boxTitle" text-anchor="middle">aggregate</text>
+      <text x="390" y="104" class="boxText"  text-anchor="middle">sum(score==1) · sum(steps)</text>
+      <text x="390" y="120" class="boxText"  text-anchor="middle">sum(duration) · sum(cost)</text>
+
+      <rect class="box green" x="540" y="60" width="240" height="80"/>
+      <text x="660" y="86"  class="boxTitle" text-anchor="middle">build run row</text>
+      <text x="660" y="104" class="boxText"  text-anchor="middle">run_start · tasks_completed</text>
+      <text x="660" y="120" class="boxText"  text-anchor="middle">tasks_successful · totals</text>
+
+      <rect class="box amber" x="820" y="60" width="200" height="80"/>
+      <text x="920" y="86"  class="boxTitle" text-anchor="middle">read existing file</text>
+      <text x="920" y="104" class="boxText"  text-anchor="middle">results/&lt;run_key&gt;.json</text>
+      <text x="920" y="120" class="boxText"  text-anchor="middle">(empty list if missing)</text>
+
+      <rect class="box green" x="540" y="180" width="240" height="80"/>
+      <text x="660" y="206" class="boxTitle" text-anchor="middle">append + write back</text>
+      <text x="660" y="224" class="boxText"  text-anchor="middle">runs.append(new_row)</text>
+      <text x="660" y="240" class="boxText"  text-anchor="middle">json.dumps(runs, indent=2)</text>
+
+      <g style="color: var(--fg)">
+        <path class="arrowLine" d="M240,100 L278,100" marker-end="url(#arrow5)"/>
+        <path class="arrowLine" d="M500,100 L538,100" marker-end="url(#arrow5)"/>
+        <path class="arrowLine" d="M780,100 L818,100" marker-end="url(#arrow5)"/>
+        <path class="arrowLine" d="M920,140 L920,160 L660,160 L660,178" marker-end="url(#arrow5)"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="grid-2">
+    <div>
+      <h3>Run row schema</h3>
+      <table>
+        <thead><tr><th>Field</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td><code>run_start</code></td><td>Timestamp <code>YYYYMMDD_HHMMSS</code>; identifies the run.</td></tr>
+          <tr><td><code>tasks_completed</code></td><td>Number of task results returned (incl. timeouts &amp; exceptions).</td></tr>
+          <tr><td><code>tasks_successful</code></td><td>Count of <code>score == 1</code>.</td></tr>
+          <tr><td><code>total_steps</code></td><td>Sum of agent step counts across all tasks.</td></tr>
+          <tr><td><code>total_duration</code></td><td>Sum of per-task wall-clock duration (seconds).</td></tr>
+          <tr><td><code>total_cost</code></td><td>Sum of per-task LLM cost (USD).</td></tr>
+        </tbody>
+      </table>
+      <div class="callout"><strong>Run-level accuracy</strong> = <code>tasks_successful / tasks_completed</code> (computed downstream by <code>generate_plots.py</code>, not stored here).</div>
+    </div>
+    <div>
+      <h3>Example <code>results/&lt;run_key&gt;.json</code> contents</h3>
+<pre><code>[
+  {
+    "run_start": "20260603_114154",
+    "tasks_completed": 100,
+    "tasks_successful": 67,
+    "total_steps":   1542,
+    "total_duration": 9871.2,
+    "total_cost":    4.83
+  },
+  {
+    "run_start": "20260604_081200",
+    "tasks_completed": 100,
+    "tasks_successful": 65,
+    "total_steps":   1488,
+    "total_duration": 9550.7,
+    "total_cost":    4.71
+  }
+]</code></pre>
+      <p>File name format: <code>&lt;Framework&gt;_&lt;Version&gt;_browser_&lt;browser&gt;_model_&lt;model&gt;.json</code> — the model is parsed back out of the filename suffix after <code>_model_</code> by <code>generate_plots.py</code>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ F6 ============ -->
+<section class="flow" id="f6">
+  <h2><span class="id">F6</span>Leaderboard aggregation (multi-run)</h2>
+  <p class="lead">How <code>generate_plots.py</code> turns the per-model history files in <code>official_results/</code> into the published mean accuracy with a 95% bootstrap CI.</p>
+
+  <div class="diagram">
+    <svg viewBox="0 0 1140 360" role="img" aria-label="Leaderboard aggregation flow">
+      <defs>
+        <marker id="arrow6" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
+        </marker>
+      </defs>
+
+      <rect class="box blue" x="20" y="60" width="220" height="80"/>
+      <text x="130" y="92"  class="boxTitle" text-anchor="middle">official_results/*.json</text>
+      <text x="130" y="110" class="boxText"  text-anchor="middle">one file per</text>
+      <text x="130" y="126" class="boxText"  text-anchor="middle">(framework, browser, model)</text>
+
+      <rect class="box purple" x="280" y="60" width="220" height="80"/>
+      <text x="390" y="86"  class="boxTitle" text-anchor="middle">filter runs</text>
+      <text x="390" y="104" class="boxText"  text-anchor="middle">drop where</text>
+      <text x="390" y="120" class="boxText"  text-anchor="middle">tasks_completed ≠ 100</text>
+
+      <rect class="box red" x="540" y="20" width="220" height="50"/>
+      <text x="650" y="42" class="boxTitle" text-anchor="middle">incomplete runs → discarded</text>
+      <text x="650" y="58" class="boxText"  text-anchor="middle">"Skipped N incomplete runs"</text>
+
+      <rect class="box blue" x="540" y="100" width="220" height="80"/>
+      <text x="650" y="126" class="boxTitle" text-anchor="middle">compute_accuracies</text>
+      <text x="650" y="144" class="boxText"  text-anchor="middle">accs = [successful/completed</text>
+      <text x="650" y="160" class="boxText"  text-anchor="middle">for r in runs]</text>
+
+      <rect class="box amber" x="800" y="100" width="220" height="80"/>
+      <text x="910" y="126" class="boxTitle" text-anchor="middle">bootstrap_ci(accs, n=1000)</text>
+      <text x="910" y="144" class="boxText"  text-anchor="middle">mean · percentile 2.5 · 97.5</text>
+      <text x="910" y="160" class="boxText"  text-anchor="middle">resample with replacement</text>
+
+      <rect class="box blue" x="540" y="220" width="220" height="80"/>
+      <text x="650" y="246" class="boxTitle" text-anchor="middle">compute_tasks_per_hour</text>
+      <text x="650" y="264" class="boxText"  text-anchor="middle">3600 × completed</text>
+      <text x="650" y="280" class="boxText"  text-anchor="middle">÷ total_duration</text>
+
+      <rect class="box green" x="800" y="220" width="320" height="80"/>
+      <text x="960" y="246" class="boxTitle" text-anchor="middle">per-model data point</text>
+      <text x="960" y="264" class="boxText"  text-anchor="middle">{ name, mean%, err_lo, err_hi, tph, ... }</text>
+      <text x="960" y="280" class="boxText"  text-anchor="middle">→ bar / scatter plots in official_plots/</text>
+
+      <g style="color: var(--fg)">
+        <path class="arrowLine" d="M240,100 L278,100" marker-end="url(#arrow6)"/>
+        <path class="arrowLine" d="M500,80  L538,50"  marker-end="url(#arrow6)"/>
+        <path class="arrowLine" d="M500,120 L538,140" marker-end="url(#arrow6)"/>
+        <path class="arrowLine" d="M760,140 L798,140" marker-end="url(#arrow6)"/>
+        <path class="arrowLine" d="M650,180 L650,218" marker-end="url(#arrow6)"/>
+        <path class="arrowLine" d="M760,260 L798,260" marker-end="url(#arrow6)"/>
+        <path class="arrowLine" d="M910,180 L910,200 L960,200 L960,218" marker-end="url(#arrow6)"/>
+      </g>
+      <text x="485" y="50"  class="branchLabel">partial</text>
+      <text x="485" y="136" class="branchLabel">complete</text>
+    </svg>
+  </div>
+
+  <div class="grid-2">
+    <div>
+      <h3>Decision matrix</h3>
+      <table>
+        <thead><tr><th>Condition</th><th>Effect on leaderboard</th></tr></thead>
+        <tbody>
+          <tr><td><code>tasks_completed</code> &lt; 100</td><td>Run discarded with warning.</td></tr>
+          <tr><td><code>tasks_completed</code> = 100, all <code>score=0</code></td><td>Run kept; contributes 0.0 accuracy.</td></tr>
+          <tr><td>Only 1 valid run for a model</td><td>Bootstrap CI degenerates (mean = single value).</td></tr>
+          <tr><td>≥ 2 valid runs</td><td>Bootstrap 95% CI reflects judge / browser variance across runs.</td></tr>
+          <tr><td><code>total_duration</code> = 0</td><td>Tasks-per-hour row skipped to avoid div-by-zero.</td></tr>
+        </tbody>
+      </table>
+      <div class="callout warn"><strong>Bootstrap CI is over runs, not tasks.</strong> With few runs the interval can be wide; it does <em>not</em> represent task-level statistical power.</div>
+    </div>
+    <div>
+      <h3>Bootstrap CI (95%, percentile method)</h3>
+<pre><code>def bootstrap_ci(values, n=1000):
+    arr = np.array(values)
+    means = [np.mean(np.random.choice(arr,
+                                      size=len(arr),
+                                      replace=True))
+             for _ in range(n)]
+    return (float(np.mean(arr)),
+            float(np.percentile(means, 2.5)),
+            float(np.percentile(means, 97.5)))</code></pre>
+      <h3>Per-model output (illustrative)</h3>
+<pre><code>{
+  "name": "bu-2-0",
+  "mean":   66.7,      // % across N valid runs
+  "err_lo":  2.1,      // mean - p2.5  (in pct points)
+  "err_hi":  2.4,      // p97.5 - mean
+  "tph":    36.4,      // tasks per hour
+  "tph_lo":  1.1,
+  "tph_hi":  1.3
+}</code></pre>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Generated from <code>benchmark/docs/scoring.md</code>. Code references: <code>benchmark/judge.py</code>, <code>benchmark/run_eval.py</code>, <code>benchmark/generate_plots.py</code>.
+</footer>
+
+</div>
+</body>
+</html>
