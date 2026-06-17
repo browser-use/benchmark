@@ -36,18 +36,39 @@ from browser_use import Agent, Browser, ChatGoogle
 from browser_use.llm import ChatBrowserUse
 from browsers import PROVIDERS, get_provider
 from judge import construct_judge_messages, JudgementResult
+from llms import ChatZAI
 
 load_dotenv()
 
 # Judge LLM - always use gemini-2.5-flash for consistent judging across all evaluations
 JUDGE_LLM = ChatGoogle(model="gemini-2.5-flash", api_key=os.getenv("GOOGLE_API_KEY"))
-TASKS_FILE = Path(__file__).parent / "BU_Bench_V1.enc"
+DEFAULT_BENCHMARK = "BU_Bench_V1"
+BENCHMARKS = {
+    "BU_Bench_V1": Path(__file__).parent / "BU_Bench_V1.enc",
+    "Stealth_Bench_V1": Path(__file__).parent / "Stealth_Bench_V1.enc",
+}
 MAX_CONCURRENT = 3
 TASK_TIMEOUT = 1800  # 30 minutes max per task
 
 AGENT_FRAMEWORK_NAME = "BrowserUse"
 AGENT_FRAMEWORK_VERSION = "0.11.5"
 MODEL_NAME = "bu-2-0"
+ZAI_BASE_URL = os.getenv("ZAI_BASE_URL") or "https://api.z.ai/api/coding/paas/v4"
+
+MODELS = {
+    "bu-2-0": lambda: ChatBrowserUse(model="bu-2-0"),
+    "GLM-5.1": lambda: ChatZAI(
+        model="glm-5.1",
+        api_key=os.getenv("ZAI_API_KEY"),
+        base_url=ZAI_BASE_URL,
+        reasoning_effort=None,
+    ),
+    "GLM-5.2": lambda: ChatZAI(
+        model="glm-5.2",
+        api_key=os.getenv("ZAI_API_KEY"),
+        base_url=ZAI_BASE_URL,
+    ),
+}
 
 
 def encode_screenshots(paths: list[str]) -> list[str]:
@@ -60,9 +81,9 @@ def encode_screenshots(paths: list[str]) -> list[str]:
     return result
 
 
-def load_tasks() -> list[dict]:
-    key = base64.urlsafe_b64encode(hashlib.sha256(b"BU_Bench_V1").digest())
-    encrypted = base64.b64decode(TASKS_FILE.read_text())
+def load_tasks(benchmark: str = DEFAULT_BENCHMARK) -> list[dict]:
+    key = base64.urlsafe_b64encode(hashlib.sha256(benchmark.encode()).digest())
+    encrypted = base64.b64decode(BENCHMARKS[benchmark].read_text())
     return json.loads(Fernet(key).decrypt(encrypted))
 
 
@@ -211,7 +232,13 @@ async def run_task(
 
 
 async def main():
-    parser = argparse.ArgumentParser(description="Run BU_Bench_V1 evaluation")
+    parser = argparse.ArgumentParser(description="Run benchmark evaluation")
+    parser.add_argument(
+        "--benchmark",
+        default=DEFAULT_BENCHMARK,
+        choices=list(BENCHMARKS.keys()),
+        help=f"Benchmark to run (default: {DEFAULT_BENCHMARK})",
+    )
     parser.add_argument(
         "--browser",
         default="browser-use-cloud",
@@ -224,6 +251,12 @@ async def main():
         default=None,
         help="Number of tasks to run (default: all)",
     )
+    parser.add_argument(
+        "--model",
+        default=MODEL_NAME,
+        choices=list(MODELS.keys()),
+        help=f"Model to use (default: {MODEL_NAME})",
+    )
     args = parser.parse_args()
 
     # Resolve browser provider (None = use native browser-use-cloud path)
@@ -232,23 +265,37 @@ async def main():
         browser_provider = None
     else:
         browser_provider = get_provider(browser_name)
+    model_name = args.model
+    llm = MODELS[model_name]()
+    stealth = (
+        bool(browser_provider)
+        and getattr(browser_provider, "STEALTH_CAPABLE", False)
+        and browser_provider.stealth_enabled()
+    )
 
     # Build run key and paths
     run_start = datetime.now().strftime("%Y%m%d_%H%M%S")
-    run_key = f"{AGENT_FRAMEWORK_NAME}_{AGENT_FRAMEWORK_VERSION}_browser_{browser_name}_model_{MODEL_NAME}"
+    if args.benchmark == DEFAULT_BENCHMARK:
+        run_key = f"{AGENT_FRAMEWORK_NAME}_{AGENT_FRAMEWORK_VERSION}_browser_{browser_name}_model_{model_name}"
+    else:
+        run_key = f"{args.benchmark}_browser_{browser_name}_model_{model_name}"
     run_data_dir = (
         Path(__file__).parent / "run_data" / f"{run_key}_start_at_{run_start}"
     )
     results_file = Path(__file__).parent / "results" / f"{run_key}.json"
 
-    tasks = load_tasks()
+    tasks = load_tasks(args.benchmark)
     if args.tasks:
         tasks = tasks[: args.tasks]
     sem = asyncio.Semaphore(MAX_CONCURRENT)
     results = await asyncio.gather(
         *[
             run_task(
-                t, sem, browser_provider=browser_provider, run_data_dir=run_data_dir
+                t,
+                sem,
+                browser_provider=browser_provider,
+                llm=llm,
+                run_data_dir=run_data_dir,
             )
             for t in tasks
         ]
@@ -266,6 +313,10 @@ async def main():
     runs.append(
         {
             "run_start": run_start,
+            "benchmark": args.benchmark,
+            "browser": browser_name,
+            "model": model_name,
+            "stealth": stealth,
             "tasks_completed": len(results),
             "tasks_successful": successful,
             "total_steps": total_steps,
