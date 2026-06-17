@@ -67,6 +67,33 @@ def load_tasks() -> list[dict]:
     return json.loads(Fernet(key).decrypt(encrypted))
 
 
+def write_task_trace(
+    run_data_dir: Path | None,
+    task_id: str,
+    *,
+    agent_trace: dict,
+    metrics: dict,
+    judgement: dict | None = None,
+    error: str | None = None,
+    traceback_text: str | None = None,
+) -> None:
+    if not run_data_dir:
+        return
+    payload = {
+        "agent_trace": agent_trace,
+        "metrics": metrics,
+    }
+    if judgement is not None:
+        payload["judgement"] = judgement
+    if error is not None:
+        payload["error"] = error
+    if traceback_text is not None:
+        payload["traceback"] = traceback_text
+
+    run_data_dir.mkdir(parents=True, exist_ok=True)
+    (run_data_dir / f"{task_id}.json").write_text(json.dumps(payload, indent=2))
+
+
 async def create_browser(browser_provider) -> Browser:
     """Create a Browser instance from a provider module.
 
@@ -99,11 +126,37 @@ async def run_task(
         run_data_dir: Directory for trace output.
     """
     async with semaphore:
+        stealth = (
+            bool(browser_provider)
+            and getattr(browser_provider, "STEALTH_CAPABLE", False)
+            and browser_provider.stealth_enabled()
+        )
+        provider_session_id = None
+        browser = None
+        provider_disconnected = False
+
+        async def cleanup_browser() -> None:
+            nonlocal provider_disconnected
+            if browser is not None:
+                try:
+                    await asyncio.wait_for(browser.stop(), timeout=15)
+                except Exception as e:
+                    print(f"Browser cleanup warning: {type(e).__name__}: {e}")
+            if browser_provider and not provider_disconnected:
+                try:
+                    await browser_provider.disconnect()
+                except Exception as e:
+                    print(f"Provider cleanup warning: {type(e).__name__}: {e}")
+                finally:
+                    provider_disconnected = True
+
         try:
             task_id = task.get("task_id", "unknown")
             print(f"Running task: {task_id}")
 
             browser = await create_browser(browser_provider)
+            if browser_provider and hasattr(browser_provider, "current_session_id"):
+                provider_session_id = browser_provider.current_session_id()
 
             # To swap model: replace ChatBrowserUse() with your LLM (e.g. ChatOpenAI, ChatAnthropic)
             # You can use any OpenAI API compatible model by changing base_url. You can use ollama too. See https://docs.browser-use.com/supported-models for info
@@ -118,21 +171,33 @@ async def run_task(
                     agent.run(), timeout=TASK_TIMEOUT
                 )
             except asyncio.TimeoutError:
-                await browser.stop()
-                if browser_provider:
-                    await browser_provider.disconnect()
                 print(f"Task {task_id} timed out after {TASK_TIMEOUT}s")
+                write_task_trace(
+                    run_data_dir,
+                    str(task_id),
+                    agent_trace={
+                        "agent_task": task["confirmed_task"],
+                        "final_result": None,
+                        "agent_steps": [],
+                        "ground_truth": task.get("answer"),
+                        "screenshots_b64": [],
+                        "provider_session_id": provider_session_id,
+                    },
+                    metrics={"steps": 0, "duration": TASK_TIMEOUT, "cost": 0},
+                    error=f"Task timed out after {TASK_TIMEOUT}s",
+                )
                 return {
                     "task_id": task_id,
+                    "stealth": stealth,
+                    "provider_session_id": provider_session_id,
                     "score": 0,
                     "steps": 0,
                     "duration": TASK_TIMEOUT,
                     "cost": 0,
                     "error": f"Task timed out after {TASK_TIMEOUT}s",
                 }
-
-            if browser_provider:
-                await browser_provider.disconnect()
+            finally:
+                await cleanup_browser()
 
             # Collect task metrics from agent history
             steps = agent_history.number_of_steps()
@@ -169,28 +234,27 @@ async def run_task(
             )
 
             # Save trace to run_data/
-            run_data_dir.mkdir(parents=True, exist_ok=True)
             trace = {
                 "agent_task": agent_task,
                 "final_result": final_result,
                 "agent_steps": agent_steps,
                 "ground_truth": ground_truth,
                 "screenshots_b64": screenshots_b64,
+                "provider_session_id": provider_session_id,
             }
             metrics = {"steps": steps, "duration": duration, "cost": cost}
-            (run_data_dir / f"{task_id}.json").write_text(
-                json.dumps(
-                    {
-                        "agent_trace": trace,
-                        "metrics": metrics,
-                        "judgement": judgement.model_dump(),
-                    },
-                    indent=2,
-                )
+            write_task_trace(
+                run_data_dir,
+                str(task_id),
+                agent_trace=trace,
+                metrics=metrics,
+                judgement=judgement.model_dump(),
             )
 
             return {
                 "task_id": task_id,
+                "stealth": stealth,
+                "provider_session_id": provider_session_id,
                 "score": score,
                 "steps": steps,
                 "duration": duration,
@@ -199,11 +263,29 @@ async def run_task(
             }
 
         except Exception as e:
+            await cleanup_browser()
             error_type = type(e).__name__
             error_msg = f"{error_type}: {e}"
             print(f"Task {task.get('task_id', 'unknown')} failed: {error_msg}")
+            write_task_trace(
+                run_data_dir,
+                str(task.get("task_id", "unknown")),
+                agent_trace={
+                    "agent_task": task.get("confirmed_task"),
+                    "final_result": None,
+                    "agent_steps": [],
+                    "ground_truth": task.get("answer"),
+                    "screenshots_b64": [],
+                    "provider_session_id": provider_session_id,
+                },
+                metrics={"steps": 0, "duration": 0, "cost": 0},
+                error=error_msg,
+                traceback_text=traceback.format_exc(),
+            )
             return {
                 "task_id": task.get("task_id"),
+                "stealth": stealth,
+                "provider_session_id": provider_session_id,
                 "score": 0,
                 "steps": 0,
                 "duration": 0,
