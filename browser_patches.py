@@ -44,37 +44,86 @@ def install_remote_typing_fallback(timeout: float = 20.0) -> None:
         value_script = """
             function(newValue, shouldClear) {
                 const element = this;
-                if (!element) return null;
+                if (!element) {
+                    return { ok: false, error: 'No element was resolved' };
+                }
 
-                element.focus();
-                const nextValue = shouldClear
-                    ? newValue
-                    : ((element.value !== undefined ? element.value : element.textContent) || '') + newValue;
+                function describe(target) {
+                    const tag = target.tagName ? target.tagName.toLowerCase() : 'unknown';
+                    const id = target.id ? `#${target.id}` : '';
+                    const name = target.getAttribute && target.getAttribute('name')
+                        ? `[name="${target.getAttribute('name')}"]`
+                        : '';
+                    return `${tag}${id}${name}`;
+                }
 
-                if (element.value !== undefined) {
-                    const proto = element instanceof HTMLTextAreaElement
+                function dispatchTextEvents(target, insertedText, inputType) {
+                    try {
+                        target.dispatchEvent(new InputEvent('input', {
+                            bubbles: true,
+                            cancelable: true,
+                            data: insertedText,
+                            inputType
+                        }));
+                    } catch (_) {
+                        target.dispatchEvent(new Event('input', {
+                            bubbles: true,
+                            cancelable: true
+                        }));
+                    }
+                    target.dispatchEvent(new Event('change', {
+                        bubbles: true,
+                        cancelable: true
+                    }));
+                }
+
+                function setNativeValue(target, value) {
+                    const proto = target instanceof HTMLTextAreaElement
                         ? HTMLTextAreaElement.prototype
                         : HTMLInputElement.prototype;
                     const desc = Object.getOwnPropertyDescriptor(proto, 'value');
                     if (desc && desc.set) {
-                        desc.set.call(element, nextValue);
+                        desc.set.call(target, value);
                     } else {
-                        element.value = nextValue;
+                        target.value = value;
                     }
-                } else if (element.isContentEditable) {
-                    element.textContent = nextValue;
-                } else {
-                    element.textContent = nextValue;
                 }
 
-                element.dispatchEvent(new InputEvent('input', {
-                    bubbles: true,
-                    cancelable: true,
-                    data: newValue,
-                    inputType: 'insertText'
-                }));
-                element.dispatchEvent(new Event('change', { bubbles: true, cancelable: true }));
-                return element.value !== undefined ? element.value : element.textContent;
+                element.focus();
+                const inputType = shouldClear ? 'insertReplacementText' : 'insertText';
+
+                if (element instanceof HTMLInputElement || element instanceof HTMLTextAreaElement) {
+                    const nextValue = shouldClear ? newValue : `${element.value || ''}${newValue}`;
+                    setNativeValue(element, nextValue);
+                    dispatchTextEvents(element, newValue, inputType);
+                    return {
+                        ok: true,
+                        target: describe(element),
+                        value: nextValue,
+                        valueLength: nextValue.length
+                    };
+                }
+
+                if (element instanceof HTMLElement && element.isContentEditable) {
+                    if (shouldClear) {
+                        element.textContent = '';
+                    }
+                    element.append(document.createTextNode(newValue));
+                    dispatchTextEvents(element, newValue, inputType);
+                    const nextValue = element.textContent || '';
+                    return {
+                        ok: true,
+                        target: describe(element),
+                        value: nextValue,
+                        valueLength: nextValue.length
+                    };
+                }
+
+                return {
+                    ok: false,
+                    target: describe(element),
+                    error: `Element is not text-editable: ${describe(element)}`
+                };
             }
         """
         set_result = await cdp_session.cdp_client.send.Runtime.callFunctionOn(
@@ -90,9 +139,19 @@ def install_remote_typing_fallback(timeout: float = 20.0) -> None:
             session_id=cdp_session.session_id,
         )
 
-        metadata: dict[str, Any] = {"typing_fallback": "direct_dom"}
+        value_result = set_result.get("result", {}).get("value") or {}
+        if not value_result.get("ok"):
+            raise RuntimeError(
+                value_result.get("error") or "Direct DOM typing fallback failed"
+            )
+
+        metadata: dict[str, Any] = {
+            "typing_fallback": "direct_dom",
+            "target": value_result.get("target"),
+            "value_length": value_result.get("valueLength"),
+        }
         if not event.is_sensitive:
-            metadata["actual_value"] = set_result.get("result", {}).get("value")
+            metadata["actual_value"] = value_result.get("value")
         return metadata
 
     async def patched_on_type(self: Any, event: Any) -> dict | None:
