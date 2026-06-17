@@ -28,6 +28,7 @@ logging.basicConfig(
 import argparse
 import asyncio
 import base64, hashlib, json, traceback
+import signal
 from datetime import datetime
 from pathlib import Path
 from cryptography.fernet import Fernet
@@ -92,6 +93,12 @@ def write_task_trace(
 
     run_data_dir.mkdir(parents=True, exist_ok=True)
     (run_data_dir / f"{task_id}.json").write_text(json.dumps(payload, indent=2))
+
+
+def write_run_state(run_data_dir: Path, state: dict) -> None:
+    state["updated_at"] = datetime.now().isoformat(timespec="seconds")
+    run_data_dir.mkdir(parents=True, exist_ok=True)
+    (run_data_dir / "run_state.json").write_text(json.dumps(state, indent=2))
 
 
 async def create_browser(browser_provider) -> Browser:
@@ -164,6 +171,7 @@ async def run_task(
                 task=task["confirmed_task"],
                 llm=llm or ChatBrowserUse(model="bu-2-0"),
                 browser=browser,
+                enable_signal_handler=False,
             )
 
             try:
@@ -293,6 +301,9 @@ async def run_task(
                 "error": error_msg,
                 "traceback": traceback.format_exc(),
             }
+        except asyncio.CancelledError:
+            await cleanup_browser()
+            raise
 
 
 async def main():
@@ -329,15 +340,114 @@ async def main():
     tasks = load_tasks()
     if args.tasks:
         tasks = tasks[: args.tasks]
+    run_state = {
+        "run_start": run_start,
+        "status": "running",
+        "browser": browser_name,
+        "model": MODEL_NAME,
+        "max_concurrent": MAX_CONCURRENT,
+        "task_timeout": TASK_TIMEOUT,
+        "total_tasks": len(tasks),
+        "completed_tasks": 0,
+        "successful_tasks": 0,
+        "failed_tasks": 0,
+        "pending_tasks": len(tasks),
+        "task_results": [],
+    }
+    write_run_state(run_data_dir, run_state)
+
+    stop_event = asyncio.Event()
+    loop = asyncio.get_running_loop()
+
+    def request_stop(signame: str) -> None:
+        if not stop_event.is_set():
+            print(f"\n{signame} received. Cancelling active tasks and cleaning up...")
+            run_state["status"] = "stopping"
+            run_state["stop_signal"] = signame
+            write_run_state(run_data_dir, run_state)
+            stop_event.set()
+
+    for sig in (signal.SIGINT, signal.SIGTERM):
+        try:
+            loop.add_signal_handler(sig, request_stop, sig.name)
+        except NotImplementedError:
+            pass
+
     sem = asyncio.Semaphore(MAX_CONCURRENT)
-    results = await asyncio.gather(
-        *[
-            run_task(
-                t, sem, browser_provider=browser_provider, run_data_dir=run_data_dir
+    task_handles = [
+        asyncio.create_task(
+            run_task(t, sem, browser_provider=browser_provider, run_data_dir=run_data_dir),
+            name=f"task-{t.get('task_id', 'unknown')}",
+        )
+        for t in tasks
+    ]
+    pending = set(task_handles)
+    results = []
+
+    try:
+        while pending:
+            if stop_event.is_set():
+                for task_handle in pending:
+                    task_handle.cancel()
+                break
+
+            done, pending = await asyncio.wait(
+                pending, timeout=5, return_when=asyncio.FIRST_COMPLETED
             )
-            for t in tasks
-        ]
-    )
+            for task_handle in done:
+                try:
+                    result = task_handle.result()
+                except asyncio.CancelledError:
+                    continue
+                except Exception as e:
+                    result = {
+                        "task_id": task_handle.get_name().removeprefix("task-"),
+                        "score": 0,
+                        "steps": 0,
+                        "duration": 0,
+                        "cost": 0,
+                        "error": f"{type(e).__name__}: {e}",
+                    }
+                results.append(result)
+                run_state["completed_tasks"] = len(results)
+                run_state["successful_tasks"] = sum(
+                    1 for r in results if r.get("score") == 1
+                )
+                run_state["failed_tasks"] = sum(
+                    1 for r in results if r.get("score") == 0
+                )
+                run_state["pending_tasks"] = len(tasks) - len(results)
+                run_state["task_results"] = [
+                    {
+                        "task_id": r.get("task_id"),
+                        "stealth": r.get("stealth", False),
+                        "provider_session_id": r.get("provider_session_id"),
+                        "score": r.get("score"),
+                        "steps": r.get("steps", 0),
+                        "duration": r.get("duration", 0),
+                        "cost": r.get("cost", 0),
+                        "error": r.get("error"),
+                    }
+                    for r in results
+                ]
+                write_run_state(run_data_dir, run_state)
+
+        if stop_event.is_set():
+            await asyncio.gather(*pending, return_exceptions=True)
+            run_state["status"] = "interrupted"
+            run_state["pending_tasks"] = len(tasks) - len(results)
+            write_run_state(run_data_dir, run_state)
+            print(
+                f"Run interrupted: {len(results)}/{len(tasks)} tasks completed. "
+                f"Partial state saved to {run_data_dir / 'run_state.json'}"
+            )
+            return
+    finally:
+        for sig in (signal.SIGINT, signal.SIGTERM):
+            try:
+                loop.remove_signal_handler(sig)
+            except NotImplementedError:
+                pass
 
     # Aggregate metrics
     successful = sum(1 for r in results if r.get("score") == 1)
@@ -359,6 +469,15 @@ async def main():
         }
     )
     results_file.write_text(json.dumps(runs, indent=2))
+    run_state["status"] = "completed"
+    run_state["completed_tasks"] = len(results)
+    run_state["successful_tasks"] = successful
+    run_state["failed_tasks"] = len(results) - successful
+    run_state["pending_tasks"] = 0
+    run_state["total_steps"] = total_steps
+    run_state["total_duration"] = total_duration
+    run_state["total_cost"] = total_cost
+    write_run_state(run_data_dir, run_state)
 
     print(
         f"Run complete: {successful}/{len(results)} tasks successful, {total_steps} steps, {total_duration:.1f}s, ${total_cost:.2f}"
