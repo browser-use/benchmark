@@ -327,6 +327,11 @@ async def main():
         default=None,
         help="Number of tasks to run (default: all)",
     )
+    parser.add_argument(
+        "--task-ids",
+        default=None,
+        help="Comma-separated task IDs to run (default: all). Applied after --tasks.",
+    )
     args = parser.parse_args()
 
     # Resolve browser provider (None = use native browser-use-cloud path)
@@ -347,6 +352,9 @@ async def main():
     tasks = load_tasks()
     if args.tasks:
         tasks = tasks[: args.tasks]
+    if args.task_ids:
+        wanted = {int(x) for x in args.task_ids.split(",") if x.strip()}
+        tasks = [t for t in tasks if t.get("task_id") in wanted]
     run_state = {
         "run_start": run_start,
         "status": "running",
