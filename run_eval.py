@@ -163,10 +163,8 @@ async def run_task(
             print(f"Running task: {task_id}")
 
             try:
-                browser = await asyncio.wait_for(
-                    create_browser(browser_provider),
-                    timeout=PROVIDER_SETUP_TIMEOUT,
-                )
+                async with asyncio.timeout(PROVIDER_SETUP_TIMEOUT):
+                    browser = await create_browser(browser_provider)
             except asyncio.TimeoutError as e:
                 raise TimeoutError(
                     f"Browser setup timed out after {PROVIDER_SETUP_TIMEOUT}s"
