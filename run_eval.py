@@ -398,7 +398,16 @@ async def main():
                 try:
                     result = task_handle.result()
                 except asyncio.CancelledError:
-                    continue
+                    if stop_event.is_set():
+                        continue
+                    result = {
+                        "task_id": task_handle.get_name().removeprefix("task-"),
+                        "score": 0,
+                        "steps": 0,
+                        "duration": 0,
+                        "cost": 0,
+                        "error": "CancelledError: task cancelled unexpectedly",
+                    }
                 except Exception as e:
                     result = {
                         "task_id": task_handle.get_name().removeprefix("task-"),
