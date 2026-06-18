@@ -71,6 +71,14 @@ MODELS = {
 }
 
 
+def build_run_key(benchmark: str, browser_name: str, model_name: str) -> str:
+    agent_key = f"{AGENT_FRAMEWORK_NAME}_{AGENT_FRAMEWORK_VERSION}"
+    run_key = f"{agent_key}_browser_{browser_name}_model_{model_name}"
+    if benchmark == DEFAULT_BENCHMARK:
+        return run_key
+    return f"{benchmark}_{run_key}"
+
+
 def encode_screenshots(paths: list[str]) -> list[str]:
     """Encode screenshot files to base64. Skips files that don't exist."""
     result = []
@@ -275,10 +283,7 @@ async def main():
 
     # Build run key and paths
     run_start = datetime.now().strftime("%Y%m%d_%H%M%S")
-    if args.benchmark == DEFAULT_BENCHMARK:
-        run_key = f"{AGENT_FRAMEWORK_NAME}_{AGENT_FRAMEWORK_VERSION}_browser_{browser_name}_model_{model_name}"
-    else:
-        run_key = f"{args.benchmark}_browser_{browser_name}_model_{model_name}"
+    run_key = build_run_key(args.benchmark, browser_name, model_name)
     run_data_dir = (
         Path(__file__).parent / "run_data" / f"{run_key}_start_at_{run_start}"
     )
@@ -314,6 +319,8 @@ async def main():
         {
             "run_start": run_start,
             "benchmark": args.benchmark,
+            "agent_framework_name": AGENT_FRAMEWORK_NAME,
+            "agent_framework_version": AGENT_FRAMEWORK_VERSION,
             "browser": browser_name,
             "model": model_name,
             "stealth": stealth,
