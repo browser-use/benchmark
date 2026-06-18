@@ -46,7 +46,7 @@ JUDGE_LLM = ChatGoogle(model="gemini-2.5-flash", api_key=os.getenv("GOOGLE_API_K
 TASKS_FILE = Path(__file__).parent / "BU_Bench_V1.enc"
 MAX_CONCURRENT = 3
 TASK_TIMEOUT = 1800  # 30 minutes max per task
-PROVIDER_SETUP_TIMEOUT = 300  # 5 minutes max to create/connect a browser
+PROVIDER_SETUP_TIMEOUT = 120  # 2 minutes max to create/connect a browser
 
 AGENT_FRAMEWORK_NAME = "BrowserUse"
 AGENT_FRAMEWORK_VERSION = "0.13.1"
