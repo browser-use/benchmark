@@ -22,8 +22,8 @@ os.environ["BROWSER_USE_SETUP_LOGGING"] = (
     "false"  # Must be set before importing browser_use
 )
 logging.basicConfig(
-    level=logging.CRITICAL
-)  # Suppress all logs including shutdown warnings
+    level=getattr(logging, os.getenv("RUN_EVAL_LOG_LEVEL", "CRITICAL"))
+)  # Suppress all logs by default; raise via RUN_EVAL_LOG_LEVEL=INFO/DEBUG for diagnosis
 
 import argparse
 import asyncio
