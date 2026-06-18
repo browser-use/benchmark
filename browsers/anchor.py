@@ -5,16 +5,20 @@ Requires: ANCHORBROWSER_API_KEY env var.
 """
 
 import os
+from contextvars import ContextVar
 
 import httpx
 
 from browsers import retry_on_429
 
-_session_id: str | None = None
+_session_id: ContextVar[str | None] = ContextVar("anchor_session_id", default=None)
+
+
+def current_session_id() -> str | None:
+    return _session_id.get()
 
 
 async def connect() -> str:
-    global _session_id
     api_key = os.environ["ANCHORBROWSER_API_KEY"]
 
     async def _create():
@@ -40,18 +44,21 @@ async def connect() -> str:
             return resp.json()
 
     data = await retry_on_429(_create)
-    _session_id = data["data"]["id"]
-    return f"wss://connect.anchorbrowser.io?apiKey={api_key}&sessionId={_session_id}"
+    session_id = data["data"]["id"]
+    _session_id.set(session_id)
+    return f"wss://connect.anchorbrowser.io?apiKey={api_key}&sessionId={session_id}"
 
 
 async def disconnect() -> None:
-    global _session_id
-    if not _session_id:
+    session_id = _session_id.get()
+    if not session_id:
         return
-    async with httpx.AsyncClient() as client:
-        await client.delete(
-            f"https://api.anchorbrowser.io/v1/sessions/{_session_id}",
-            headers={"anchor-api-key": os.environ["ANCHORBROWSER_API_KEY"]},
-            timeout=30,
-        )
-    _session_id = None
+    try:
+        async with httpx.AsyncClient() as client:
+            await client.delete(
+                f"https://api.anchorbrowser.io/v1/sessions/{session_id}",
+                headers={"anchor-api-key": os.environ["ANCHORBROWSER_API_KEY"]},
+                timeout=30,
+            )
+    finally:
+        _session_id.set(None)

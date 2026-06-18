@@ -1,14 +1,19 @@
 import os
+from contextvars import ContextVar
 
 import httpx
 
 from browsers import retry_on_429
 
-_sessions: list[str] = []
+_session_id: ContextVar[str | None] = ContextVar("driver_session_id", default=None)
 
 CDP_PROXY_URL = os.environ.get("CDP_PROXY_URL", "https://bu-compat.driver.dev").rstrip(
     "/"
 )
+
+
+def current_session_id() -> str | None:
+    return _session_id.get()
 
 
 async def connect() -> str:
@@ -24,14 +29,14 @@ async def connect() -> str:
             return resp.json()
 
     data = await retry_on_429(_create)
-    _sessions.append(data["data"]["sessionId"])
+    _session_id.set(data["data"]["sessionId"])
     return data["data"]["cdpUrl"]
 
 
 async def disconnect() -> None:
-    if not _sessions:
+    session_id = _session_id.get()
+    if not session_id:
         return
-    session_id = _sessions.pop()
     try:
         async with httpx.AsyncClient() as client:
             await client.delete(
@@ -41,3 +46,5 @@ async def disconnect() -> None:
             )
     except Exception:
         pass  # Best effort cleanup
+    finally:
+        _session_id.set(None)

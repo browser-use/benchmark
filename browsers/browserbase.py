@@ -5,17 +5,20 @@ Requires: BROWSERBASE_API_KEY, BROWSERBASE_PROJECT_ID env vars.
 """
 
 import os
+from contextvars import ContextVar
 
 import httpx
 
 from browsers import retry_on_429
 
-_session_id: str | None = None
+_session_id: ContextVar[str | None] = ContextVar("browserbase_session_id", default=None)
+
+
+def current_session_id() -> str | None:
+    return _session_id.get()
 
 
 async def connect() -> str:
-    global _session_id
-
     async def _create():
         async with httpx.AsyncClient() as client:
             resp = await client.post(
@@ -32,19 +35,21 @@ async def connect() -> str:
             return resp.json()
 
     data = await retry_on_429(_create)
-    _session_id = data["id"]
+    _session_id.set(data["id"])
     return data["connectUrl"]
 
 
 async def disconnect() -> None:
-    global _session_id
-    if not _session_id:
+    session_id = _session_id.get()
+    if not session_id:
         return
-    async with httpx.AsyncClient() as client:
-        await client.post(
-            f"https://api.browserbase.com/v1/sessions/{_session_id}",
-            headers={"X-BB-API-Key": os.environ["BROWSERBASE_API_KEY"]},
-            json={"status": "REQUEST_RELEASE"},
-            timeout=30,
-        )
-    _session_id = None
+    try:
+        async with httpx.AsyncClient() as client:
+            await client.post(
+                f"https://api.browserbase.com/v1/sessions/{session_id}",
+                headers={"X-BB-API-Key": os.environ["BROWSERBASE_API_KEY"]},
+                json={"status": "REQUEST_RELEASE"},
+                timeout=30,
+            )
+    finally:
+        _session_id.set(None)
