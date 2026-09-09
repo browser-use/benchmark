@@ -36,13 +36,11 @@
 
 **200 web tasks scored against weighted findings rubrics**
 
-<picture>
-  <source media="(prefers-color-scheme: light)" srcset="official_plots/bu_bench_v2_light.png">
-  <source media="(prefers-color-scheme: dark)" srcset="official_plots/bu_bench_v2_dark.png">
-  <img alt="BU Bench V2 - Mean score against cost per task" src="official_plots/bu_bench_v2_light.png" width="100%">
-</picture>
+<img alt="BU Bench V2 - Mean rubric score by model and cost per task, including GPT-6 Astra" src="official_plots/bu_bench_v2_astra.jpg" width="100%">
 
 Results are from an earlier 60-task cut of this benchmark.
+
+**Tasks:** [BU Bench V2 task set](BU_Bench_V2.enc) (200 tasks, encrypted).
 
 <br/>
 
@@ -65,6 +63,8 @@ Results are from an earlier 60-task cut of this benchmark.
   <source media="(prefers-color-scheme: dark)" srcset="stealth_bench/official_plots/category_heatmap_dark.png">
   <img alt="Stealth Bench - Category Heatmap" src="stealth_bench/official_plots/category_heatmap_light.png" width="100%">
 </picture>
+
+**Tasks:** [Stealth Bench V1 task set](Stealth_Bench_V1.enc) (80 tasks, encrypted; the plots use a 71-task subset).
 
 Read more in our [blog post](https://browser-use.com/posts/stealth-benchmark).
 
@@ -137,6 +137,8 @@ Available providers: `browser-use-cloud`, `anchor`, `browserbase`, `browserless`
   <source media="(prefers-color-scheme: dark)" srcset="official_plots/browser_harness_by_model_dark.png">
   <img alt="BU Bench V1 Comparing Models for BrowserCode" src="official_plots/browser_harness_by_model_light.png" width="100%">
 </picture>
+
+**Tasks:** [BU Bench V1 task set](BU_Bench_V1.enc) (100 tasks, encrypted; shared by all three comparisons above).
 
 ### Running BU Bench
 
@@ -238,6 +240,8 @@ The [Online-Mind2Web](https://github.com/OSU-NLP-Group/Online-Mind2Web) benchmar
   <source media="(prefers-color-scheme: dark)" srcset="online-mind2web/official_plots/success_rate_dark.png">
   <img alt="Online-Mind2Web Success Rate" src="online-mind2web/official_plots/success_rate_light.png" width="100%">
 </picture>
+
+**Tasks:** [Official Online-Mind2Web dataset](https://huggingface.co/datasets/osunlp/Online-Mind2Web) (300 tasks; Hugging Face access required).
 
 <br/>
 
