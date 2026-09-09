@@ -42,6 +42,8 @@ Results are from an earlier 60-task cut of this benchmark.
 
 **Tasks:** [BU Bench V2 task set](BU_Bench_V2.enc) (200 tasks, encrypted).
 
+The tasks are encrypted to keep their text out of web crawlers and model training data.
+
 <br/>
 
 ---
@@ -65,6 +67,8 @@ Results are from an earlier 60-task cut of this benchmark.
 </picture>
 
 **Tasks:** [Stealth Bench V1 task set](Stealth_Bench_V1.enc) (80 tasks, encrypted; the plots use a 71-task subset).
+
+The tasks are encrypted to keep their text out of web crawlers and model training data.
 
 Read more in our [blog post](https://browser-use.com/posts/stealth-benchmark).
 
@@ -140,6 +144,8 @@ Available providers: `browser-use-cloud`, `anchor`, `browserbase`, `browserless`
 
 **Tasks:** [BU Bench V1 task set](BU_Bench_V1.enc) (100 tasks, encrypted; shared by all three comparisons above).
 
+The tasks are encrypted to keep their text out of web crawlers and model training data.
+
 ### Running BU Bench
 
 **1. Install dependencies**
@@ -214,7 +220,7 @@ WebBench, Mind2Web 2, and BrowseComp are released under the MIT license. GAIA ha
 
 Tasks were hand-selected for difficulty and verified to be achievable. Each task has been validated to confirm it can be completed successfully.
 
-Important: The task set is stored in base64 encoding to prevent data contamination in LLM training. Please do not publish the tasks in plaintext or use them in model training data.
+Important: The task set is encrypted and base64 encoded to keep its text out of web crawlers and model training data. Please do not publish the tasks in plaintext or use them in model training data.
 
 #### Task Format
 
