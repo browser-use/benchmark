@@ -22,12 +22,13 @@ os.environ["BROWSER_USE_SETUP_LOGGING"] = (
     "false"  # Must be set before importing browser_use
 )
 logging.basicConfig(
-    level=logging.CRITICAL
-)  # Suppress all logs including shutdown warnings
+    level=getattr(logging, os.getenv("RUN_EVAL_LOG_LEVEL", "CRITICAL"))
+)  # Suppress all logs by default; raise via RUN_EVAL_LOG_LEVEL=INFO/DEBUG for diagnosis
 
 import argparse
 import asyncio
 import base64, hashlib, json, traceback
+import signal
 from datetime import datetime
 from pathlib import Path
 from cryptography.fernet import Fernet
@@ -35,6 +36,7 @@ from dotenv import load_dotenv
 from browser_use import Agent, Browser, ChatGoogle
 from browser_use.llm import ChatBrowserUse
 from browsers import PROVIDERS, get_provider
+from browser_patches import install_remote_typing_fallback
 from judge import construct_judge_messages, JudgementResult
 
 load_dotenv()
@@ -44,9 +46,10 @@ JUDGE_LLM = ChatGoogle(model="gemini-2.5-flash", api_key=os.getenv("GOOGLE_API_K
 TASKS_FILE = Path(__file__).parent / "BU_Bench_V1.enc"
 MAX_CONCURRENT = 3
 TASK_TIMEOUT = 1800  # 30 minutes max per task
+PROVIDER_SETUP_TIMEOUT = 120  # 2 minutes max to create/connect a browser
 
 AGENT_FRAMEWORK_NAME = "BrowserUse"
-AGENT_FRAMEWORK_VERSION = "0.11.5"
+AGENT_FRAMEWORK_VERSION = "0.13.1"
 MODEL_NAME = "bu-2-0"
 
 
@@ -66,6 +69,39 @@ def load_tasks() -> list[dict]:
     return json.loads(Fernet(key).decrypt(encrypted))
 
 
+def write_task_trace(
+    run_data_dir: Path | None,
+    task_id: str,
+    *,
+    agent_trace: dict,
+    metrics: dict,
+    judgement: dict | None = None,
+    error: str | None = None,
+    traceback_text: str | None = None,
+) -> None:
+    if not run_data_dir:
+        return
+    payload = {
+        "agent_trace": agent_trace,
+        "metrics": metrics,
+    }
+    if judgement is not None:
+        payload["judgement"] = judgement
+    if error is not None:
+        payload["error"] = error
+    if traceback_text is not None:
+        payload["traceback"] = traceback_text
+
+    run_data_dir.mkdir(parents=True, exist_ok=True)
+    (run_data_dir / f"{task_id}.json").write_text(json.dumps(payload, indent=2))
+
+
+def write_run_state(run_data_dir: Path, state: dict) -> None:
+    state["updated_at"] = datetime.now().isoformat(timespec="seconds")
+    run_data_dir.mkdir(parents=True, exist_ok=True)
+    (run_data_dir / "run_state.json").write_text(json.dumps(state, indent=2))
+
+
 async def create_browser(browser_provider) -> Browser:
     """Create a Browser instance from a provider module.
 
@@ -75,6 +111,8 @@ async def create_browser(browser_provider) -> Browser:
     """
     if browser_provider is None:
         return Browser(use_cloud=True, cloud_timeout=30)
+    if getattr(browser_provider, "REMOTE_TYPING_FALLBACK", False):
+        install_remote_typing_fallback()
     cdp_url = await browser_provider.connect()
     if cdp_url is None:
         return Browser(headless=getattr(browser_provider, "HEADLESS", True))
@@ -96,11 +134,43 @@ async def run_task(
         run_data_dir: Directory for trace output.
     """
     async with semaphore:
+        stealth = (
+            bool(browser_provider)
+            and getattr(browser_provider, "STEALTH_CAPABLE", False)
+            and browser_provider.stealth_enabled()
+        )
+        provider_session_id = None
+        browser = None
+        provider_disconnected = False
+
+        async def cleanup_browser() -> None:
+            nonlocal provider_disconnected
+            if browser is not None:
+                try:
+                    await asyncio.wait_for(browser.stop(), timeout=15)
+                except Exception as e:
+                    print(f"Browser cleanup warning: {type(e).__name__}: {e}")
+            if browser_provider and not provider_disconnected:
+                try:
+                    await browser_provider.disconnect()
+                except Exception as e:
+                    print(f"Provider cleanup warning: {type(e).__name__}: {e}")
+                finally:
+                    provider_disconnected = True
+
         try:
             task_id = task.get("task_id", "unknown")
             print(f"Running task: {task_id}")
 
-            browser = await create_browser(browser_provider)
+            try:
+                async with asyncio.timeout(PROVIDER_SETUP_TIMEOUT):
+                    browser = await create_browser(browser_provider)
+            except asyncio.TimeoutError as e:
+                raise TimeoutError(
+                    f"Browser setup timed out after {PROVIDER_SETUP_TIMEOUT}s"
+                ) from e
+            if browser_provider and hasattr(browser_provider, "current_session_id"):
+                provider_session_id = browser_provider.current_session_id()
 
             # To swap model: replace ChatBrowserUse() with your LLM (e.g. ChatOpenAI, ChatAnthropic)
             # You can use any OpenAI API compatible model by changing base_url. You can use ollama too. See https://docs.browser-use.com/supported-models for info
@@ -108,6 +178,7 @@ async def run_task(
                 task=task["confirmed_task"],
                 llm=llm or ChatBrowserUse(model="bu-2-0"),
                 browser=browser,
+                enable_signal_handler=False,
             )
 
             try:
@@ -115,21 +186,33 @@ async def run_task(
                     agent.run(), timeout=TASK_TIMEOUT
                 )
             except asyncio.TimeoutError:
-                await browser.stop()
-                if browser_provider:
-                    await browser_provider.disconnect()
                 print(f"Task {task_id} timed out after {TASK_TIMEOUT}s")
+                write_task_trace(
+                    run_data_dir,
+                    str(task_id),
+                    agent_trace={
+                        "agent_task": task["confirmed_task"],
+                        "final_result": None,
+                        "agent_steps": [],
+                        "ground_truth": task.get("answer"),
+                        "screenshots_b64": [],
+                        "provider_session_id": provider_session_id,
+                    },
+                    metrics={"steps": 0, "duration": TASK_TIMEOUT, "cost": 0},
+                    error=f"Task timed out after {TASK_TIMEOUT}s",
+                )
                 return {
                     "task_id": task_id,
+                    "stealth": stealth,
+                    "provider_session_id": provider_session_id,
                     "score": 0,
                     "steps": 0,
                     "duration": TASK_TIMEOUT,
                     "cost": 0,
                     "error": f"Task timed out after {TASK_TIMEOUT}s",
                 }
-
-            if browser_provider:
-                await browser_provider.disconnect()
+            finally:
+                await cleanup_browser()
 
             # Collect task metrics from agent history
             steps = agent_history.number_of_steps()
@@ -166,28 +249,27 @@ async def run_task(
             )
 
             # Save trace to run_data/
-            run_data_dir.mkdir(parents=True, exist_ok=True)
             trace = {
                 "agent_task": agent_task,
                 "final_result": final_result,
                 "agent_steps": agent_steps,
                 "ground_truth": ground_truth,
                 "screenshots_b64": screenshots_b64,
+                "provider_session_id": provider_session_id,
             }
             metrics = {"steps": steps, "duration": duration, "cost": cost}
-            (run_data_dir / f"{task_id}.json").write_text(
-                json.dumps(
-                    {
-                        "agent_trace": trace,
-                        "metrics": metrics,
-                        "judgement": judgement.model_dump(),
-                    },
-                    indent=2,
-                )
+            write_task_trace(
+                run_data_dir,
+                str(task_id),
+                agent_trace=trace,
+                metrics=metrics,
+                judgement=judgement.model_dump(),
             )
 
             return {
                 "task_id": task_id,
+                "stealth": stealth,
+                "provider_session_id": provider_session_id,
                 "score": score,
                 "steps": steps,
                 "duration": duration,
@@ -196,11 +278,29 @@ async def run_task(
             }
 
         except Exception as e:
+            await cleanup_browser()
             error_type = type(e).__name__
             error_msg = f"{error_type}: {e}"
             print(f"Task {task.get('task_id', 'unknown')} failed: {error_msg}")
+            write_task_trace(
+                run_data_dir,
+                str(task.get("task_id", "unknown")),
+                agent_trace={
+                    "agent_task": task.get("confirmed_task"),
+                    "final_result": None,
+                    "agent_steps": [],
+                    "ground_truth": task.get("answer"),
+                    "screenshots_b64": [],
+                    "provider_session_id": provider_session_id,
+                },
+                metrics={"steps": 0, "duration": 0, "cost": 0},
+                error=error_msg,
+                traceback_text=traceback.format_exc(),
+            )
             return {
                 "task_id": task.get("task_id"),
+                "stealth": stealth,
+                "provider_session_id": provider_session_id,
                 "score": 0,
                 "steps": 0,
                 "duration": 0,
@@ -208,6 +308,9 @@ async def run_task(
                 "error": error_msg,
                 "traceback": traceback.format_exc(),
             }
+        except asyncio.CancelledError:
+            await cleanup_browser()
+            raise
 
 
 async def main():
@@ -223,6 +326,11 @@ async def main():
         type=int,
         default=None,
         help="Number of tasks to run (default: all)",
+    )
+    parser.add_argument(
+        "--task-ids",
+        default=None,
+        help="Comma-separated task IDs to run (default: all). Applied after --tasks.",
     )
     args = parser.parse_args()
 
@@ -244,15 +352,127 @@ async def main():
     tasks = load_tasks()
     if args.tasks:
         tasks = tasks[: args.tasks]
+    if args.task_ids:
+        wanted = {int(x) for x in args.task_ids.split(",") if x.strip()}
+        tasks = [t for t in tasks if t.get("task_id") in wanted]
+    run_state = {
+        "run_start": run_start,
+        "status": "running",
+        "browser": browser_name,
+        "model": MODEL_NAME,
+        "max_concurrent": MAX_CONCURRENT,
+        "task_timeout": TASK_TIMEOUT,
+        "provider_setup_timeout": PROVIDER_SETUP_TIMEOUT,
+        "total_tasks": len(tasks),
+        "completed_tasks": 0,
+        "successful_tasks": 0,
+        "failed_tasks": 0,
+        "pending_tasks": len(tasks),
+        "task_results": [],
+    }
+    write_run_state(run_data_dir, run_state)
+
+    stop_event = asyncio.Event()
+    loop = asyncio.get_running_loop()
+
+    def request_stop(signame: str) -> None:
+        if not stop_event.is_set():
+            print(f"\n{signame} received. Cancelling active tasks and cleaning up...")
+            run_state["status"] = "stopping"
+            run_state["stop_signal"] = signame
+            write_run_state(run_data_dir, run_state)
+            stop_event.set()
+
+    for sig in (signal.SIGINT, signal.SIGTERM):
+        try:
+            loop.add_signal_handler(sig, request_stop, sig.name)
+        except NotImplementedError:
+            pass
+
     sem = asyncio.Semaphore(MAX_CONCURRENT)
-    results = await asyncio.gather(
-        *[
-            run_task(
-                t, sem, browser_provider=browser_provider, run_data_dir=run_data_dir
+    task_handles = [
+        asyncio.create_task(
+            run_task(t, sem, browser_provider=browser_provider, run_data_dir=run_data_dir),
+            name=f"task-{t.get('task_id', 'unknown')}",
+        )
+        for t in tasks
+    ]
+    pending = set(task_handles)
+    results = []
+
+    try:
+        while pending:
+            if stop_event.is_set():
+                for task_handle in pending:
+                    task_handle.cancel()
+                break
+
+            done, pending = await asyncio.wait(
+                pending, timeout=5, return_when=asyncio.FIRST_COMPLETED
             )
-            for t in tasks
-        ]
-    )
+            for task_handle in done:
+                try:
+                    result = task_handle.result()
+                except asyncio.CancelledError:
+                    if stop_event.is_set():
+                        continue
+                    result = {
+                        "task_id": task_handle.get_name().removeprefix("task-"),
+                        "score": 0,
+                        "steps": 0,
+                        "duration": 0,
+                        "cost": 0,
+                        "error": "CancelledError: task cancelled unexpectedly",
+                    }
+                except Exception as e:
+                    result = {
+                        "task_id": task_handle.get_name().removeprefix("task-"),
+                        "score": 0,
+                        "steps": 0,
+                        "duration": 0,
+                        "cost": 0,
+                        "error": f"{type(e).__name__}: {e}",
+                    }
+                results.append(result)
+                run_state["completed_tasks"] = len(results)
+                run_state["successful_tasks"] = sum(
+                    1 for r in results if r.get("score") == 1
+                )
+                run_state["failed_tasks"] = sum(
+                    1 for r in results if r.get("score") == 0
+                )
+                run_state["pending_tasks"] = len(tasks) - len(results)
+                run_state["task_results"] = [
+                    {
+                        "task_id": r.get("task_id"),
+                        "stealth": r.get("stealth", False),
+                        "provider_session_id": r.get("provider_session_id"),
+                        "score": r.get("score"),
+                        "steps": r.get("steps", 0),
+                        "duration": r.get("duration", 0),
+                        "cost": r.get("cost", 0),
+                        "error": r.get("error"),
+                    }
+                    for r in results
+                ]
+                write_run_state(run_data_dir, run_state)
+
+        if stop_event.is_set():
+            await asyncio.gather(*pending, return_exceptions=True)
+            run_state["status"] = "interrupted"
+            run_state["pending_tasks"] = len(tasks) - len(results)
+            write_run_state(run_data_dir, run_state)
+            print(
+                f"Run interrupted: {len(results)}/{len(tasks)} tasks completed. "
+                f"Partial state saved to {run_data_dir / 'run_state.json'}"
+            )
+            return
+    finally:
+        for sig in (signal.SIGINT, signal.SIGTERM):
+            try:
+                loop.remove_signal_handler(sig)
+            except NotImplementedError:
+                pass
 
     # Aggregate metrics
     successful = sum(1 for r in results if r.get("score") == 1)
@@ -274,6 +494,15 @@ async def main():
         }
     )
     results_file.write_text(json.dumps(runs, indent=2))
+    run_state["status"] = "completed"
+    run_state["completed_tasks"] = len(results)
+    run_state["successful_tasks"] = successful
+    run_state["failed_tasks"] = len(results) - successful
+    run_state["pending_tasks"] = 0
+    run_state["total_steps"] = total_steps
+    run_state["total_duration"] = total_duration
+    run_state["total_cost"] = total_cost
+    write_run_state(run_data_dir, run_state)
 
     print(
         f"Run complete: {successful}/{len(results)} tasks successful, {total_steps} steps, {total_duration:.1f}s, ${total_cost:.2f}"

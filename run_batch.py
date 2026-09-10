@@ -63,7 +63,18 @@ async def run_batch(model_name: str, start: int, end: int, parallel: int = 3, tr
         "total_steps": sum(r.get("steps", 0) for r in results),
         "total_duration": sum(r.get("duration", 0) for r in results),
         "total_cost": sum(r.get("cost", 0) for r in results),
-        "task_results": [{"task_id": r["task_id"], "score": r["score"], "steps": r.get("steps", 0), "duration": r.get("duration", 0), "cost": r.get("cost", 0)} for r in results]
+        "task_results": [
+            {
+                "task_id": r["task_id"],
+                "stealth": r.get("stealth", False),
+                "provider_session_id": r.get("provider_session_id"),
+                "score": r["score"],
+                "steps": r.get("steps", 0),
+                "duration": r.get("duration", 0),
+                "cost": r.get("cost", 0),
+            }
+            for r in results
+        ],
     }
 
 
