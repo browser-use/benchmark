@@ -36,13 +36,43 @@
 
 **200 web tasks scored against weighted findings rubrics**
 
-<img alt="BU Bench V2 - Mean rubric score by model and cost per task, including GPT-6 Astra" src="official_plots/bu_bench_v2_astra.jpg" width="100%">
+| Evaluation set | Tasks | File |
+| --- | ---: | --- |
+| Full BU Bench V2 | 200 | [BU_Bench_V2.enc](BU_Bench_V2.enc) |
+| BU Bench V2 — 55-task subset | 55 | [BU_Bench_V2_55.json](BU_Bench_V2_55.json) (task IDs only) |
 
-Results are from an earlier 60-task cut of this benchmark.
+The 55-task subset selects public IDs `bu2-001` through `bu2-055` from the full release. It is the public overlap with the original 60-task benchmark; five original tasks were omitted and the remaining tasks were renumbered. Use the public IDs in the subset file, not the first 55 historical IDs.
 
-**Tasks:** [BU Bench V2 task set](BU_Bench_V2.enc) (200 tasks, encrypted).
+Tasks, rubrics and weights live once, in the encrypted 200-task release. `BU_Bench_V2_55.json` pins that file's SHA-256 and lists the subset IDs; it does not contain a second dataset. Label scores with the set used: **200 tasks**, **55-task subset**, or **legacy 60 tasks**.
 
-The tasks are encrypted to keep their text out of web crawlers and model training data.
+The tasks are encrypted to keep their text out of web crawlers and model training data. Please do not publish decrypted tasks or rubrics in plaintext or use them for model training.
+
+<details>
+<summary>Select the 55-task subset</summary>
+
+After decrypting `BU_Bench_V2.enc` into a Python object named `benchmark`:
+
+```python
+import hashlib
+import json
+from pathlib import Path
+
+subset = json.loads(Path("BU_Bench_V2_55.json").read_text())
+assert hashlib.sha256(Path(subset["source"]).read_bytes()).hexdigest() == subset["source_sha256"]
+by_id = {task["id"]: task for task in benchmark["tasks"]}
+tasks = [by_id[task_id] for task_id in subset["task_ids"]]
+assert len(tasks) == subset["task_count"]
+```
+
+This selects evaluation records, including the judge's rubric and weights. Pass only the task instructions to the evaluated agent; keep the rubric and weights for the judge.
+
+</details>
+
+### Historical results — 60 tasks
+
+<img alt="Legacy 60-task BU Bench V2 results - Mean rubric score by model and cost per task, including GPT-6 Astra" src="official_plots/bu_bench_v2_astra.jpg" width="100%">
+
+These results use the earlier 60-task set, not the full 200-task release or the 55-task subset. Compare model scores only on the same task set.
 
 <br/>
 
