@@ -106,8 +106,8 @@ class RevisionTests(unittest.TestCase):
                 artifact
             ).hexdigest()
             (root / "rubric_revision.json").write_text(json.dumps(manifest))
-        with self.assertRaisesRegex(ValueError, "Weight change"):
-            validate_revision(root)
+            with self.assertRaisesRegex(ValueError, "Unapproved task field change"):
+                validate_revision(root)
 
     def test_duplicate_task_ids_rejected_before_indexing(self):
         with tempfile.TemporaryDirectory() as directory:
