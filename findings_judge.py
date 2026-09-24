@@ -1,24 +1,24 @@
 """Findings judge: the scoring method for BU Bench V2.
 
-This is the prompt and scoring arithmetic used to produce the reported results.
-It is the default judge in run_eval.py; evaluation.py provides the LLM adapter.
+This implements the findings method behind the reported results, with the public
+runner's current evidence-handling corrections. It is the default judge in
+run_eval.py; evaluation.py provides the LLM adapter and records source hashes.
 
 The judge emits one finding per rubric item (met / violated / not_assessable,
 each with evidence) and never emits a score. Valuation happens in code from the
 task's weights, so re-weighting a rubric never requires re-judging a run.
 
-Each BU Bench V2 task carries its own `rubric` and `weights` inline, and both
-are frozen: `weights` keys are exactly the item ids the rubric defines, and they
-sum to 100.
+Each versioned BU Bench V2 task carries its own `rubric` and `weights` inline:
+`weights` keys are exactly the item ids the rubric defines, and they sum to 100.
 
 Infrastructure differences from the internal implementation:
   - image selection: internally, screenshots are fitted to a byte budget shared
     with the prompt text. The public runner samples up to 50 unique screenshots
     evenly across the run; this prompt builder passes those through in order.
   - LLM calls, SDK retries, and local JSON traces are handled by the public runner.
-The rubric rules, section layout, truncation caps, and scoring are identical to
-what produced the published numbers. Screenshot timing describes the supplying
-harness (Browser Use history stores the state before each action).
+Historical results must be interpreted using their original dataset and judge
+versions. Screenshot timing describes the supplying framework (Browser Use
+history stores the state before each action).
 """
 
 from typing import Literal
