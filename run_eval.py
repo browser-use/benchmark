@@ -41,7 +41,7 @@ from evaluation import (
 load_dotenv()
 
 MAX_CONCURRENT = 3
-TASK_TIMEOUT = 1800
+TASK_TIMEOUT = 3600
 AGENT_FRAMEWORK_NAME = "BrowserUse"
 AGENT_FRAMEWORK_VERSION = version("browser-use")
 MODEL_NAME = "bu-2-0"
