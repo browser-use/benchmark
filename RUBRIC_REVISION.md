@@ -1,10 +1,10 @@
 # BU Bench V2 rubric revision candidate
 
-**Revision:** `2026-09-24-access-outcomes-draft-2`
+**Revision:** `2026-09-24-access-outcomes-draft-3`
 **Status:** draft contract corrections; original partner runs have not been regraded.
 
 The previous release contains task/rubric conflicts. A change of judge model alone
-cannot resolve them. This candidate corrects nine task contracts without changing
+cannot resolve them. This candidate corrects seven task contracts without changing
 the 200-task population, item IDs, weights, or global scoring/penalty policy.
 
 | Task | Candidate correction | Remaining validation |
@@ -14,20 +14,26 @@ the 200-task population, item IDs, weights, or global scoring/penalty policy.
 | `bu2-048` | Evaluate the declared final table with supporting ledger/conflict files; clipped supporting content is not proof of a missing annotation. | The harness must actually supply full files; this dataset edit cannot repair an artifact mount or truncated prompt. |
 | `bu2-088` | Remove the conflicting numeric range from the task; request the named committee section and its source-backed range. | Revised instructions require a new attempt for a comparable benchmark result. |
 | `bu2-113` | State explicitly that all storefront-listed variants, including sold-out variants, are in scope. | Prospective clarification: do not retroactively punish a reasonable reading of the old task. |
-| `bu2-171` | Honor evidenced unavailable fields in the two criteria totaling 34 points. | Check positive and negative access cases; this does not prove every reported 66% run was correct. |
-| `bu2-185` | Separate a genuine blocked/failed-load outcome from an inspectable page with no player. | Compare against complete traces showing genuine blocks, unsupported block claims, and accessible pages. |
 | `bu2-053` | A blocked external lookup does not complete property reconciliation; an accessible no-match or uncertain result remains valid. | Saved-trace review pending; no new judge calls. |
 | `bu2-187` | An observed block is incomplete work, not missing judge evidence; no delivered listings fails the required cohort size. | Saved-trace review pending; no new judge calls. |
 
-The September 24 follow-up changes only these last two rubrics. All 200 task
-instructions and weights remain unchanged from the preceding revision. Explicit
-blocked-result alternatives, including tasks 001, 171 and 185, remain valid.
-The short system rule now respects alternatives permitted by the task; it does
-not override them. No score cap or new scoring machinery is introduced.
+The September 24 follow-up corrects rubrics 053/187 and restores the original
+August 25 task objects for 171/185, reverting their changes from PR #32:
+
+- AliExpress 171 again requires actual seller/feedback and shipping/delivery
+  values for the two acquisition items totaling 34 points.
+- Reuters 185 no longer has the added blocked/failed-load branch that could
+  satisfy every applicable item without observing playback.
+
+All 200 task instructions and weights remain unchanged from the preceding
+revision. Accurate failure reporting remains valid, but does not itself earn
+credit for required work left undone. The short system rule makes that distinction;
+other task-specific alternatives remain unchanged. No score cap or new scoring
+machinery is introduced. Historical scores have not been regraded.
 
 The `bu2-029`, `bu2-088`, and `bu2-113` instructions change. Their old traces can
 help review the proposed semantics but are not fresh executions of the new tasks.
-The other six edits concern rubric interpretation. Rejudging saved evidence must
+The other four edits concern rubric interpretation. Rejudging saved evidence must
 still record both rubric versions; historical published results are unchanged.
 
 ## Deferred issues
@@ -57,13 +63,14 @@ uv run python review_rubric_revision.py
 uv run python review_rubric_revision.py --write-private-diffs
 ```
 
-The second command writes nine plaintext diffs for local review and copies the
-15 synthetic review cases as `review-cases.private.enc` into ignored
+The second command writes seven plaintext diffs for local review and copies the
+11 synthetic review cases as `review-cases.private.enc` into ignored
 `run_data/rubric-review/`. The diffs contain task/rubric text and must stay local;
-the 15 existing encrypted cases cover the earlier seven corrections and specify
-expected semantic judgments, not measured model accuracy. The two new rubric
-changes are explicitly marked pending saved-trace review; no cases were added. Run the existing cases against the candidate judge and review
-the new corrections on saved traces before release. Never commit or publish the diffs.
+the 11 retained encrypted cases cover the five remaining earlier corrections.
+They specify expected semantic judgments, not measured model accuracy. The two new rubric
+changes are explicitly marked pending saved-trace review; no cases were added.
+The four cases for the reverted 171/185 changes were removed from this candidate. Run the existing cases against the candidate judge and
+review the new corrections on saved traces before release. Never commit or publish the diffs.
 
 For a partner comparison, freeze the exact task/rubric revision, task IDs, judge
 model/reasoning, evidence files, screenshot policy, tool set, and runtime limits.

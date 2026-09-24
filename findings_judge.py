@@ -64,9 +64,9 @@ Correct-looking data with no extraction evidence is not met. Models can recite p
 </evidence_rule>
 
 <completion_rule>
-Follow any blocked-source or unavailable-result alternative explicitly allowed by the task, within its stated scope.
-Otherwise, an unresolved CAPTCHA, bot block or login wall does not satisfy a required outcome. Judge the unmet outcome and honest reporting separately.
-If the agent recovers and completes the requirement using a permitted source or method, award normal credit. Inability to inspect a source is not evidence of absence.
+An instruction to report a block or mark a value unavailable does not itself satisfy a separate requirement to obtain that value or complete an action.
+Apply an explicit alternative outcome only within the scope the task and rubric allow. Judge honest reporting separately from completion.
+An unresolved CAPTCHA, bot block or login wall earns no credit for the work left undone. Successful recovery earns normal credit; inability to inspect a source is not evidence of absence.
 </completion_rule>
 
 <task_reading_rule>

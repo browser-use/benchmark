@@ -1,5 +1,5 @@
 {
-  "revision": "2026-09-24-access-outcomes-draft-2",
+  "revision": "2026-09-24-access-outcomes-draft-3",
   "status": "draft_not_regraded",
   "base_commit": "421390ea7fa4708f3d89d7695f9a16debb861daf",
   "base_encrypted_sha256": "fe0fc1eede3197d9eaffd42af3ac7b11cc15743d401e95496f3eb03f0d023a0e",
@@ -31,24 +31,6 @@
       "after_task_sha256": "71d1a6c5073fb15332b2d1ed4277a2fac36981ca486a228dbe91df5e1e5036e9",
       "before_rubric_sha256": "32e1594d2c5385135e654266b4e1d514889c803282c1b89e264d08f4a7c2bf58",
       "after_rubric_sha256": "5eccccd75def9017bc6171a2b00cbf201383713c6ca26d9b23a88b3dc5f85a8c"
-    },
-    {
-      "task_id": "bu2-171",
-      "summary": "Honor the task-permitted evidenced-unavailable branch in the two criteria totaling 34 points.",
-      "task_changed": false,
-      "before_task_sha256": "be69f504d3141d3f8c8a92389b973af7c57de932097cb260b42177b4ae04f801",
-      "after_task_sha256": "be69f504d3141d3f8c8a92389b973af7c57de932097cb260b42177b4ae04f801",
-      "before_rubric_sha256": "8b855fdf62d3e3d31935ac2bc978cc86dc4386af4b8bc1d1d1437f81cf3a20d5",
-      "after_rubric_sha256": "7272d62781dcb1e1c53145d79a6a915630ce154d18d3b87497ba161db13f6d0b"
-    },
-    {
-      "task_id": "bu2-185",
-      "summary": "Distinguish evidenced blocked access from an inspectable page with no player; honor the task-permitted blocked outcome.",
-      "task_changed": false,
-      "before_task_sha256": "162f44ed2f8269824ecb9696783b08328265761e7ea826feea22092ffb942c36",
-      "after_task_sha256": "162f44ed2f8269824ecb9696783b08328265761e7ea826feea22092ffb942c36",
-      "before_rubric_sha256": "2820f3c00db846389b72b90b45785d364dcd15b532aea05dd07151ae4d1b0a4f",
-      "after_rubric_sha256": "f8e8e8443aaaebf945d4d46ad739c1de861f2ad3acdaa8a739512639600620eb"
     },
     {
       "task_id": "bu2-029",
@@ -107,7 +89,23 @@
       "issue": "Pin budgets and demonstrate feasibility; strategy/runtime difference alone does not prove rubric error."
     }
   ],
-  "candidate_encrypted_sha256": "fcf3ed69e86de7ebe688e31db4e09dab0ad5ff9d3280e3d00cda08acff9318c1",
-  "previous_revision": "2026-09-23-rubric-contract-draft-1",
-  "previous_encrypted_sha256": "fe9ce279176fd965c9a658928a8d7562338c90934e5b4a330b4995bbfc150370"
+  "candidate_encrypted_sha256": "e2feef1123c569e3f0470871bc94ac9da1b9ca3dcb6f1975d2e4a2f960a9b673",
+  "previous_revision": "2026-09-24-access-outcomes-draft-2",
+  "previous_encrypted_sha256": "fcf3ed69e86de7ebe688e31db4e09dab0ad5ff9d3280e3d00cda08acff9318c1",
+  "reverted_changes": [
+    {
+      "task_id": "bu2-171",
+      "reverted_from_pr": 32,
+      "restored_from": "snapshots/BU_Bench_V2_2026-08-25.enc",
+      "rubric_sha256": "8b855fdf62d3e3d31935ac2bc978cc86dc4386af4b8bc1d1d1437f81cf3a20d5",
+      "reason": "Restore acquisition requirements; reporting an access failure is not completion."
+    },
+    {
+      "task_id": "bu2-185",
+      "reverted_from_pr": 32,
+      "restored_from": "snapshots/BU_Bench_V2_2026-08-25.enc",
+      "rubric_sha256": "2820f3c00db846389b72b90b45785d364dcd15b532aea05dd07151ae4d1b0a4f",
+      "reason": "Restore acquisition requirements; reporting an access failure is not completion."
+    }
+  ]
 }

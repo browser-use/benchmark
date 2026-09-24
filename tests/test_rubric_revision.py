@@ -23,8 +23,6 @@ class RevisionTests(unittest.TestCase):
             "bu2-053",
             "bu2-088",
             "bu2-113",
-            "bu2-171",
-            "bu2-185",
             "bu2-187",
         }
         self.assertEqual({c["task_id"] for c in manifest["changes"]}, expected)
@@ -43,7 +41,7 @@ class RevisionTests(unittest.TestCase):
             }
             self.assertTrue(changed_fields <= allowed)
             self.assertEqual(after[task_id]["weights"], before[task_id]["weights"])
-        self.assertEqual(len(cases["cases"]), 15)
+        self.assertEqual(len(cases["cases"]), 11)
         self.assertEqual(manifest["status"], "draft_not_regraded")
 
     def test_original_artifact_is_exact_published_snapshot(self):
@@ -67,7 +65,7 @@ class RevisionTests(unittest.TestCase):
         )
         self.assertEqual(
             candidate["source_sha256"],
-            "fcf3ed69e86de7ebe688e31db4e09dab0ad5ff9d3280e3d00cda08acff9318c1",
+            "e2feef1123c569e3f0470871bc94ac9da1b9ca3dcb6f1975d2e4a2f960a9b673",
         )
         self.assertEqual(
             historical["source_sha256"],
@@ -94,7 +92,7 @@ class RevisionTests(unittest.TestCase):
                 "snapshots/BU_Bench_V2_2026-08-25.enc",
             ):
                 shutil.copy2(ROOT / name, root / name)
-            task = after["bu2-171"]
+            task = after["bu2-014"]
             key = next(iter(task["weights"]))
             task["weights"][key] += 1
             manifest = json.loads((root / "rubric_revision.json").read_text())
