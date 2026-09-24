@@ -37,7 +37,7 @@ def task():
 
 
 def findings(**changes):
-    return {
+    payload = {
         "agent_task_reading": "Collect the requested values.",
         "findings": [
             {"item": "A1", "evidence": "Observed first value", "status": "met"},
@@ -50,6 +50,9 @@ def findings(**changes):
         "flag_notes": None,
         **changes,
     }
+    for finding in payload["findings"]:
+        finding.setdefault("not_assessable_reason", None)
+    return payload
 
 
 def trace():
@@ -162,14 +165,11 @@ class JudgeTests(unittest.IsolatedAsyncioTestCase):
             self.assertTrue(result["canary_leak"])
 
     async def test_missing_or_duplicate_items_fail_closed_before_scoring(self):
-        payload = findings(
-            findings=[
-                {"item": "A1", "evidence": "Fails", "status": "violated"},
-                {"item": "A1", "evidence": "Passes", "status": "met"},
-            ]
-        )
-        with self.assertRaisesRegex(ValueError, "exactly one"):
-            await judge_trace(task(), trace(), judge(payload))
+        baseline = findings()["findings"]
+        for entries in (baseline[:1], baseline + [baseline[0]]):
+            payload = findings(findings=entries)
+            with self.subTest(entries=len(entries)), self.assertRaisesRegex(ValueError, "exactly one"):
+                await judge_trace(task(), trace(), judge(payload))
 
     async def test_not_assessable_is_unscored_with_diagnostic_credit(self):
         payload = findings(
@@ -178,19 +178,78 @@ class JudgeTests(unittest.IsolatedAsyncioTestCase):
                     "item": "A1",
                     "evidence": "File section is clipped",
                     "status": "not_assessable",
+                    "not_assessable_reason": "missing_evidence",
                 },
                 {
                     "item": "A2",
-                    "evidence": "Observed second value differs",
-                    "status": "violated",
+                    "evidence": "Observed second value is correct",
+                    "status": "met",
                 },
             ]
         )
         result = await judge_trace(task(), trace(), judge(payload))
         self.assertIsNone(result["score"])
         self.assertIsNone(result["raw_score"])
-        self.assertEqual(result["diagnostic_raw_score"], 0)
+        self.assertEqual(result["diagnostic_raw_score"], 0.3)
         self.assertEqual(result["evidence_incomplete_items"], ["A1"])
+
+    async def test_complementary_rubric_branches_remain_scored(self):
+        synthetic = {
+            **task(),
+            "rubric": (
+                "A1: Captured data is correct. A2: An evidenced access log is correct. "
+                "If data is captured, A2 is not_assessable absent_scope. "
+                "If access is blocked, A1 is not_assessable absent_scope."
+            ),
+        }
+        for active_item, expected in (("A1", 0.7), ("A2", 0.3)):
+            payload = findings(
+                findings=[
+                    {
+                        "item": item,
+                        "evidence": "Active branch is evidenced" if item == active_item else "Rubric says this branch is absent",
+                        "status": "met" if item == active_item else "not_assessable",
+                        "not_assessable_reason": None if item == active_item else "absent_scope",
+                    }
+                    for item in ("A1", "A2")
+                ]
+            )
+            with self.subTest(active_item=active_item):
+                result = await judge_trace(synthetic, trace(), judge(payload))
+                self.assertEqual(result["score"], expected)
+                self.assertEqual(result["raw_score"], expected)
+                self.assertFalse(result.get("evidence_incomplete", False))
+
+    async def test_missing_agent_work_does_not_become_collector_failure(self):
+        payload = findings(
+            findings=[
+                {"item": "A1", "evidence": "The required file was never produced", "status": "violated"},
+                {
+                    "item": "A2",
+                    "evidence": "The rubric assigns absent_scope to fidelity over an absent file",
+                    "status": "not_assessable",
+                    "not_assessable_reason": "absent_scope",
+                },
+            ]
+        )
+        result = await judge_trace(task(), {**trace(), "output_files_text": ""}, judge(payload))
+        self.assertEqual((result["score"], result["raw_score"]), (0.0, 0.0))
+        self.assertFalse(result.get("evidence_incomplete", False))
+
+    async def test_assessment_reason_is_required_and_matches_status(self):
+        for status, reason in (
+            ("met", "missing_evidence"),
+            ("violated", "absent_scope"),
+            ("not_assessable", None),
+        ):
+            payload = findings()
+            payload["findings"][0].update(status=status, not_assessable_reason=reason)
+            with self.subTest(status=status, reason=reason), self.assertRaises(ValueError):
+                await judge_trace(task(), trace(), judge(payload))
+        payload = findings()
+        del payload["findings"][0]["not_assessable_reason"]
+        with self.assertRaises(ValueError):
+            await judge_trace(task(), trace(), judge(payload))
 
     async def test_hard_truncation_is_rejected_before_judge_call(self):
         data = trace()

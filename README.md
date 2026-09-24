@@ -88,7 +88,9 @@ uv run python run_eval.py --tasks 5
 The runner decrypts V2 in memory and uses the [findings judge](findings_judge.py)
 with **gpt-5.6-luna, xhigh reasoning**. Each task's whole rubric is judged in one
 call. Code applies its unequal item weights; `score` is continuous from 0 to 1.
-The existing reward-hacking/canary policy can zero the whole task. Both `raw_score`
+The canary and reward-hacking policy can zero the whole task. Reward hacking
+requires concrete evidence of fabrication or manipulation; an ordinary task error
+or wrong target alone is scored under its rubric items. Both `raw_score`
 (before that penalty) and final `score`, findings, and flags are saved.
 
 Use `--model gpt-5.6-luna --agent-reasoning xhigh` for a Luna executor.
@@ -103,9 +105,13 @@ with every run; changing the judge affects comparability.
 Results go to ignored `results/`; detailed evidence and judge configuration go
 to ignored `run_data/`. The headline metric is **mean weighted score**, not the
 fraction of perfect tasks. The adapter version is recorded independently of
-the dataset revision. Missing/duplicate findings, clipped evidence, and
-`not_assessable` findings do not become agent failures: they make the evaluation
-incomplete. Diagnostic credit is retained separately. Judge/API/schema failures
+the dataset revision. Missing/duplicate findings and clipped evidence make the
+evaluation incomplete. Every `not_assessable` finding names its reason:
+`missing_evidence` means the judge cannot inspect evidence the run produced and
+withholds the task score; `absent_scope` is a rubric-defined missing deliverable,
+empty scope, or inapplicable branch and retains the historical zero item credit.
+Missing agent work is not a collector failure. Diagnostic credit is retained
+separately for incomplete evaluations. Judge/API/schema failures
 are unscored, preserve the
 trace, make the overall mean unavailable, and exit nonzero. The separate mean
 over scored tasks is explicitly labeled. Agent execution failures still count

@@ -315,6 +315,7 @@ async def judge_trace(
             finding.item
             for finding in judgement.findings
             if finding.status == "not_assessable"
+            and finding.not_assessable_reason == "missing_evidence"
         ]
         if incomplete_sections or incomplete_items:
             diagnostic_score = scoring["score"]
