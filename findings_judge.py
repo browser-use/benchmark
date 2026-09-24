@@ -76,7 +76,7 @@ Write the evidence first, then the status.
 - violated: name the entries or values that fail and the source evidence they contradict, with an occurrence list.
 - not_assessable: use only for evidence the judge cannot see, or an absent scope/branch that the rubric explicitly defines as not assessable. It is not a soft violated.
 For each finding set not_assessable_reason:
-- missing_evidence: the run produced or observed the relevant evidence, but the judge cannot inspect it because the collector omitted it or the supplied content is clipped. Name the missing artifact or section.
+- missing_evidence: the run produced or observed evidence needed to decide this item, but the judge cannot inspect it because the collector omitted it or the supplied content is clipped. Name the missing artifact or section and explain why the remaining evidence cannot settle the item. Clipping alone does not make an item not_assessable: use the final output, files, screenshots, and visible trajectory to judge it whenever they suffice.
 - absent_scope: the rubric explicitly uses not_assessable for work the agent did not produce, an empty scope, or an inapplicable terminal branch. Cite that rubric rule and the observed absence. This earns no item credit; it is not a collector failure.
 - null: required for met and violated.
 Missing agent work alone is never missing_evidence. Judge omitted work as violated unless the rubric explicitly assigns absent_scope.

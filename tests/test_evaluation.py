@@ -17,6 +17,10 @@ import run_batch
 import run_eval
 from evaluation import (
     FILES_MAX_CHARS,
+    FINAL_RESULT_MAX_CHARS,
+    RUBRIC_MAX_CHARS,
+    TASK_MAX_CHARS,
+    TRAJECTORY_MAX_CHARS,
     create_judge,
     judge_trace,
     load_tasks,
@@ -259,22 +263,36 @@ class JudgeTests(unittest.IsolatedAsyncioTestCase):
         with self.assertRaises(ValueError):
             await judge_trace(task(), trace(), judge(payload))
 
-    async def test_hard_truncation_is_rejected_before_judge_call(self):
-        data = trace()
-        data["output_files_text"] = "x" * (FILES_MAX_CHARS + 1)
-        llm = judge()
-        result = await judge_trace(task(), data, llm)
-        self.assertIsNone(result["score"])
-        self.assertEqual(result["evidence_incomplete_sections"], ["files"])
-        llm.ainvoke.assert_not_awaited()
+    async def test_clipped_judging_question_is_rejected_before_judge_call(self):
+        for field, section, limit in (
+            ("confirmed_task", "task", TASK_MAX_CHARS),
+            ("rubric", "rubric", RUBRIC_MAX_CHARS),
+        ):
+            with self.subTest(section=section):
+                data = task()
+                data[field] += "x" * limit
+                llm = judge()
+                result = await judge_trace(data, trace(), llm)
+                self.assertIsNone(result["score"])
+                self.assertEqual(result["evidence_incomplete_sections"], [section])
+                llm.ainvoke.assert_not_awaited()
 
-    async def test_trajectory_truncation_is_unscored_but_diagnostic_is_preserved(self):
-        data = trace()
-        data["agent_steps"] = ["x" * 700001]
-        result = await judge_trace(task(), data, judge())
-        self.assertIsNone(result["score"])
-        self.assertEqual(result["evidence_incomplete_sections"], ["trajectory"])
-        self.assertEqual(result["diagnostic_raw_score"], 0.7)
+    async def test_clipped_agent_evidence_retains_assessable_score_and_findings(self):
+        for field, section, value in (
+            ("agent_steps", "trajectory", ["x" * (TRAJECTORY_MAX_CHARS + 1)]),
+            ("output_files_text", "files", "x" * (FILES_MAX_CHARS + 1)),
+            ("final_result", "final_result", "x" * (FINAL_RESULT_MAX_CHARS + 1)),
+        ):
+            with self.subTest(section=section):
+                data = {**trace(), field: value}
+                llm = judge()
+                result = await judge_trace(task(), data, llm)
+                llm.ainvoke.assert_awaited_once()
+                self.assertEqual(result["score"], 0.7)
+                self.assertEqual(result["raw_score"], 0.7)
+                self.assertEqual(result["evidence_clipped_sections"], [section])
+                self.assertEqual(result["judgement"]["findings"], findings()["findings"])
+                self.assertFalse(result.get("evidence_incomplete", False))
 
     async def test_unknown_item_fails_schema(self):
         payload = findings(
@@ -345,13 +363,13 @@ class JudgeTests(unittest.IsolatedAsyncioTestCase):
 
 
 class RunnerTests(unittest.IsolatedAsyncioTestCase):
-    async def run_fake(self, directory=None, llm=None, timeout=False):
+    async def run_fake(self, directory=None, llm=None, timeout=False, clipped=False):
         history = SimpleNamespace(
             number_of_steps=lambda: 2,
             total_duration_seconds=lambda: 3.0,
             usage=SimpleNamespace(total_cost=0.01),
             final_result=lambda: "Done",
-            agent_steps=lambda: ["Read source"],
+            agent_steps=lambda: ["x" * (TRAJECTORY_MAX_CHARS + 1) if clipped else "Read source"],
             screenshot_paths=lambda: [],
         )
         agent = SimpleNamespace(
@@ -403,6 +421,20 @@ class RunnerTests(unittest.IsolatedAsyncioTestCase):
         result = await self.run_fake(timeout=True)
         self.assertEqual(result["score"], 0.7)
         self.assertIn("timed out", result["execution_error"])
+
+    async def test_clipped_run_is_saved_and_counted_with_a_warning(self):
+        with tempfile.TemporaryDirectory() as directory, patch("builtins.print") as output:
+            result = await self.run_fake(Path(directory), clipped=True)
+            artifact = json.loads((Path(directory) / "synthetic-001.json").read_text())
+        self.assertEqual(result["status"], "judged")
+        self.assertEqual(artifact["score"], 0.7)
+        self.assertEqual(artifact["evidence_clipped_sections"], ["trajectory"])
+        self.assertTrue(any("warning: clipped trajectory" in str(call) for call in output.call_args_list))
+        summary = summarize_results([result])
+        self.assertEqual(summary["mean_score"], 0.7)
+        self.assertEqual(summary["tasks_scored"], 1)
+        self.assertEqual(summary["tasks_unscored"], 0)
+        self.assertEqual(summary["tasks_with_clipped_evidence"], 1)
 
     async def test_weighted_aggregation_and_unscored_denominator(self):
         result = await self.run_fake()

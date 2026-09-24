@@ -188,6 +188,9 @@ async def run_task(
             save_task(run_data_dir, task_id, {**artifact, **result})
             phase = "judge"
             result.update(await judge_trace(task, trace, judge_llm, benchmark))
+            if result.get("evidence_clipped_sections"):
+                sections = ", ".join(result["evidence_clipped_sections"])
+                print(f"Task {task_id}: warning: clipped {sections}; judged on available evidence")
             if result["score"] is None:
                 result["status"] = "evidence_incomplete"
                 print(f"Task {task_id}: evidence incomplete; no benchmark score")
@@ -242,6 +245,9 @@ def summarize_results(results: list[dict]) -> dict:
         "judge_errors": sum(r["status"] == "judge_error" for r in results),
         "evidence_incomplete": sum(
             r["status"] == "evidence_incomplete" for r in results
+        ),
+        "tasks_with_clipped_evidence": sum(
+            bool(r.get("evidence_clipped_sections")) for r in results
         ),
         "execution_errors": sum(
             r["status"] == "execution_error" or "execution_error" in r for r in results
@@ -379,6 +385,11 @@ async def main():
     else:
         print(
             f"Incomplete evaluation: {summary['tasks_unscored']} unscored tasks; see {run_data_dir}"
+        )
+    if summary["tasks_with_clipped_evidence"]:
+        print(
+            f"Evidence warning: {summary['tasks_with_clipped_evidence']} tasks "
+            "were judged with clipped evidence; see their findings and clipped sections."
         )
     print(f"Results: {results_file}")
     if summary["tasks_unscored"]:
