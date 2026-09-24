@@ -156,7 +156,8 @@ def construct_findings_judge_messages(
 		trajectory = '\n'.join(agent_steps)
 		screenshots_note = (
 			'{n} screenshots from execution are attached below in chronological order. '
-			f'They were captured {screenshot_timing} browser actions.'
+			f'They were captured {screenshot_timing} browser actions. '
+			'Image ordinals are not trajectory step numbers; no exact step mapping is available.'
 		)
 	else:
 		# Number the steps so screenshot labels ([step N]) can be located.
@@ -221,8 +222,20 @@ rubrics/{task_id}.md
 		content_parts.append(ContentPartTextParam(text=label))
 		content_parts.append(image)
 
+	system_prompt = FINDINGS_SYSTEM_PROMPT.replace('after browser actions', f'{screenshot_timing} browser actions')
+	if screenshot_steps is None:
+		system_prompt = system_prompt.replace(
+			'Labels tie each image to a step.',
+			'Image labels give chronological ordinals only, not trajectory step numbers. '
+			'Do not infer an exact action-to-image mapping from an image ordinal.',
+		)
+		system_prompt = system_prompt.replace(
+			"If a step's claim and its screenshot disagree, trust the screenshot.",
+			'An image corroborates only the state it visibly shows. Without an explicit step mapping, '
+			'do not infer that it precedes or follows a specific action.',
+		)
 	return [
-		SystemMessage(content=FINDINGS_SYSTEM_PROMPT.replace('after browser actions', f'{screenshot_timing} browser actions')),
+		SystemMessage(content=system_prompt),
 		UserMessage(content=content_parts),
 	]
 

@@ -133,6 +133,9 @@ class JudgeTests(unittest.IsolatedAsyncioTestCase):
         messages = llm.ainvoke.call_args.args[0]
         self.assertIn("before browser actions", messages[0].content)
         self.assertNotIn("after browser actions", messages[0].content)
+        self.assertIn("not trajectory step numbers", messages[0].content)
+        self.assertNotIn("Labels tie each image to a step", messages[0].content)
+        self.assertIn("no exact step mapping", messages[1].content[0].text)
         content = messages[1].content
         self.assertIn(task()["rubric"], content[0].text)
         self.assertIn(trace()["output_files_text"], content[0].text)

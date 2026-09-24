@@ -2,7 +2,7 @@
 
 import unittest
 from unittest.mock import patch
-from run_eval import create_agent_model, parse_args, select_tasks
+from run_eval import create_agent_model, create_judge, parse_args, select_tasks
 
 
 class RunnerConfigurationTests(unittest.TestCase):
@@ -10,7 +10,7 @@ class RunnerConfigurationTests(unittest.TestCase):
         args = parse_args(
             [
                 "--model",
-                "gpt-5.6-luna",
+                "gpt-6-astra",
                 "--agent-reasoning",
                 "xhigh",
                 "--max-steps",
@@ -22,13 +22,16 @@ class RunnerConfigurationTests(unittest.TestCase):
                 "bu2-185",
             ]
         )
-        self.assertEqual(args.model, "gpt-5.6-luna")
+        self.assertEqual(args.model, "gpt-6-astra")
         self.assertIsNone(args.judge_model)
         self.assertEqual(args.max_steps, 200)
         self.assertEqual(args.task_ids, ["bu2-171", "bu2-185"])
         with patch.dict("os.environ", {"OPENAI_API_KEY": "synthetic"}):
             llm = create_agent_model(args.model, args.agent_reasoning)
-        self.assertEqual(llm.model, "gpt-5.6-luna")
+            judge = create_judge(args.benchmark, args.judge_model, args.judge_reasoning)
+        self.assertEqual(llm.model, "gpt-6-astra")
+        self.assertEqual(judge.model, "gpt-5.6-luna")
+        self.assertEqual(judge.reasoning_effort, "xhigh")
         self.assertEqual(llm.reasoning_effort, "xhigh")
         self.assertEqual(llm.max_completion_tokens, 32768)
 
