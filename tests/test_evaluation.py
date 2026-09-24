@@ -221,6 +221,14 @@ class JudgeTests(unittest.IsolatedAsyncioTestCase):
                 self.assertFalse(result.get("evidence_incomplete", False))
 
     async def test_missing_agent_work_does_not_become_collector_failure(self):
+        synthetic = {
+            **task(),
+            "rubric": (
+                "A1: The required report file was produced. "
+                "A2: Report values match the source; when no report exists, "
+                "this fidelity scope is not_assessable with absent_scope."
+            ),
+        }
         payload = findings(
             findings=[
                 {"item": "A1", "evidence": "The required file was never produced", "status": "violated"},
@@ -232,7 +240,7 @@ class JudgeTests(unittest.IsolatedAsyncioTestCase):
                 },
             ]
         )
-        result = await judge_trace(task(), {**trace(), "output_files_text": ""}, judge(payload))
+        result = await judge_trace(synthetic, {**trace(), "output_files_text": ""}, judge(payload))
         self.assertEqual((result["score"], result["raw_score"]), (0.0, 0.0))
         self.assertFalse(result.get("evidence_incomplete", False))
 

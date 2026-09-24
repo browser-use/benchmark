@@ -105,8 +105,9 @@ with every run; changing the judge affects comparability.
 Results go to ignored `results/`; detailed evidence and judge configuration go
 to ignored `run_data/`. The headline metric is **mean weighted score**, not the
 fraction of perfect tasks. The adapter version is recorded independently of
-the dataset revision. Missing/duplicate findings and clipped evidence make the
-evaluation incomplete. Every `not_assessable` finding names its reason:
+the dataset revision. Missing/duplicate findings are judge errors; clipped evidence
+produces `evidence_incomplete`. Both withhold the score and exit nonzero.
+Every `not_assessable` finding names its reason:
 `missing_evidence` means the judge cannot inspect evidence the run produced and
 withholds the task score; `absent_scope` is a rubric-defined missing deliverable,
 empty scope, or inapplicable branch and retains the historical zero item credit.
