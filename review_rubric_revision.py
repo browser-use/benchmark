@@ -22,6 +22,18 @@ def decrypt(path: Path, key_name: str) -> dict:
     return json.loads(Fernet(key).decrypt(base64.b64decode(path.read_bytes())))
 
 
+def index_tasks(tasks: list[dict], label: str) -> dict[str, dict]:
+    """Index tasks only after validating the raw population and IDs."""
+    if len(tasks) != 200:
+        raise ValueError(f"{label} task population changed")
+    ids = [task.get("id") for task in tasks]
+    if any(not task_id for task_id in ids):
+        raise ValueError(f"{label} task has no ID")
+    if len(ids) != len(set(ids)):
+        raise ValueError(f"{label} task IDs are not unique")
+    return {task["id"]: task for task in tasks}
+
+
 def validate_revision(root: Path = ROOT) -> tuple[dict, dict, dict, dict]:
     manifest = json.loads((root / "rubric_revision.json").read_text())
     base_path = root / "snapshots/BU_Bench_V2_2026-08-25.enc"
@@ -35,10 +47,10 @@ def validate_revision(root: Path = ROOT) -> tuple[dict, dict, dict, dict]:
     original = decrypt(base_path, "BU_Bench_V2")
     candidate = decrypt(candidate_path, "BU_Bench_V2")
     cases = decrypt(root / "BU_Bench_V2_review_cases.enc", "BU_Bench_V2_review_cases")
-    before = {task["id"]: task for task in original["tasks"]}
-    after = {task["id"]: task for task in candidate["tasks"]}
+    before = index_tasks(original["tasks"], "Base")
+    after = index_tasks(candidate["tasks"], "Candidate")
     changes = {change["task_id"]: change for change in manifest["changes"]}
-    if len(after) != 200 or set(before) != set(after):
+    if set(before) != set(after):
         raise ValueError("Task population or IDs changed")
     if (
         candidate["revision"] != manifest["revision"]
@@ -52,6 +64,14 @@ def validate_revision(root: Path = ROOT) -> tuple[dict, dict, dict, dict]:
                 raise ValueError(f"Unlisted task change: {task_id}")
             continue
         change = changes[task_id]
+        missing = object()
+        changed_fields = {
+            key
+            for key in set(old) | set(task)
+            if old.get(key, missing) != task.get(key, missing)
+        }
+        if not changed_fields <= {"task", "rubric", "task_sha", "rubric_sha", "revision"}:
+            raise ValueError(f"Unapproved task field change: {task_id}")
         if task["weights"] != old["weights"] or sum(task["weights"].values()) != 100:
             raise ValueError(f"Weight change: {task_id}")
         if task["canary"] != old["canary"] or task["canary"] in task["task"]:
@@ -107,9 +127,12 @@ def main():
                     )
                 )
             (output / f"{task_id}.diff").write_text("".join(diff))
-        (output / "review-cases.private.json").write_text(json.dumps(cases, indent=2))
+        (output / "review-cases.private.enc").write_bytes(
+            (ROOT / "BU_Bench_V2_review_cases.enc").read_bytes()
+        )
         print(
-            f"Private diffs and cases written to ignored {output}. Do not publish them."
+            f"Private plaintext diffs and encrypted review cases written to ignored {output}. "
+            "Do not publish the diffs."
         )
 
 

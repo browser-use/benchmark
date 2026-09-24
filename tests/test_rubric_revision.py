@@ -31,11 +31,13 @@ class RevisionTests(unittest.TestCase):
             {"bu2-029", "bu2-088", "bu2-113"},
         )
         allowed = {"task", "rubric", "task_sha", "rubric_sha", "revision"}
+        missing = object()
         for task_id in after:
             changed_fields = {
                 key
                 for key in set(before[task_id]) | set(after[task_id])
-                if before[task_id].get(key) != after[task_id].get(key)
+                if before[task_id].get(key, missing)
+                != after[task_id].get(key, missing)
             }
             self.assertTrue(changed_fields <= allowed)
             self.assertEqual(after[task_id]["weights"], before[task_id]["weights"])
@@ -104,7 +106,40 @@ class RevisionTests(unittest.TestCase):
                 artifact
             ).hexdigest()
             (root / "rubric_revision.json").write_text(json.dumps(manifest))
-            with self.assertRaisesRegex(ValueError, "Weight change"):
+        with self.assertRaisesRegex(ValueError, "Weight change"):
+            validate_revision(root)
+
+    def test_duplicate_task_ids_rejected_before_indexing(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "snapshots").mkdir()
+            for name in (
+                "rubric_revision.json",
+                "BU_Bench_V2_review_cases.enc",
+                "snapshots/BU_Bench_V2_2026-08-25.enc",
+            ):
+                shutil.copy2(ROOT / name, root / name)
+            candidate = json.loads(
+                Fernet(
+                    base64.urlsafe_b64encode(hashlib.sha256(b"BU_Bench_V2").digest())
+                ).decrypt(base64.b64decode((ROOT / "BU_Bench_V2.enc").read_bytes()))
+            )
+            candidate["tasks"].append(candidate["tasks"][0])
+            fernet = Fernet(
+                base64.urlsafe_b64encode(hashlib.sha256(b"BU_Bench_V2").digest())
+            )
+            artifact = base64.b64encode(
+                fernet.encrypt(json.dumps(candidate).encode())
+            )
+            (root / "BU_Bench_V2.enc").write_bytes(artifact)
+            manifest = json.loads((root / "rubric_revision.json").read_text())
+            manifest["candidate_encrypted_sha256"] = hashlib.sha256(
+                artifact
+            ).hexdigest()
+            (root / "rubric_revision.json").write_text(
+                json.dumps(manifest, indent=2)
+            )
+            with self.assertRaisesRegex(ValueError, "Candidate task population"):
                 validate_revision(root)
 
 

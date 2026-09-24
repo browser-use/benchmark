@@ -49,11 +49,12 @@ uv run python review_rubric_revision.py
 uv run python review_rubric_revision.py --write-private-diffs
 ```
 
-The second command writes all seven readable diffs and 15 encrypted-at-rest
-synthetic review cases into ignored `run_data/rubric-review/`. These cases specify
-expected semantic judgments, not measured model accuracy. Run them against the
-candidate judge and have reviewers adjudicate disagreements before release.
-Never commit or publish those plaintext files.
+The second command writes seven plaintext diffs for local review and copies the
+15 synthetic review cases as `review-cases.private.enc` into ignored
+`run_data/rubric-review/`. The diffs contain task/rubric text and must stay local;
+the encrypted cases specify expected semantic judgments, not measured model
+accuracy. Run them against the candidate judge and have reviewers adjudicate
+disagreements before release. Never commit or publish the diffs.
 
 For a partner comparison, freeze the exact task/rubric revision, task IDs, judge
 model/reasoning, evidence files, screenshot policy, tool set, and runtime limits.
