@@ -1,5 +1,5 @@
 {
-  "revision": "2026-09-23-rubric-contract-draft-1",
+  "revision": "2026-09-24-access-outcomes-draft-2",
   "status": "draft_not_regraded",
   "base_commit": "421390ea7fa4708f3d89d7695f9a16debb861daf",
   "base_encrypted_sha256": "fe0fc1eede3197d9eaffd42af3ac7b11cc15743d401e95496f3eb03f0d023a0e",
@@ -67,6 +67,26 @@
       "after_task_sha256": "d247a016b4da4b80e958004dc4048122824ec907722fbae28f90d492a9dc9aec",
       "before_rubric_sha256": "954a041d871f5461c8c5dda4a1e5cfbc9e6f9c0618d577e5aeb174db6f69e51f",
       "after_rubric_sha256": "1df511a39955787849b4f83d438f37f3e2ed193a1a523d6d75b99db63e6e712f"
+    },
+    {
+      "task_id": "bu2-053",
+      "summary": "Require an accessible external lookup for reconciliation; a blocked attempt alone is not accepted.",
+      "task_changed": false,
+      "before_task_sha256": "f41f79fd6fe7b355f78c4413c052c314d65f47cd8d68cd329ca4d80f7213ee14",
+      "after_task_sha256": "f41f79fd6fe7b355f78c4413c052c314d65f47cd8d68cd329ca4d80f7213ee14",
+      "before_rubric_sha256": "3f1790e00fa48f86f1efc80f4e1dce6967a18105f438fbcdeaf3a5296adbf480",
+      "after_rubric_sha256": "39872c6bb7de737f469c33e2ae9b6de760e5b003961fe84130f0a51dca89295d",
+      "review_status": "pending_saved_trace_review"
+    },
+    {
+      "task_id": "bu2-187",
+      "summary": "Separate blocked unfinished work from missing judge evidence; zero delivered listings fails the required cohort size.",
+      "task_changed": false,
+      "before_task_sha256": "8430354fc281f72fadd5a5d540ce1345e19270409bf29e10c3a87f439e2facfe",
+      "after_task_sha256": "8430354fc281f72fadd5a5d540ce1345e19270409bf29e10c3a87f439e2facfe",
+      "before_rubric_sha256": "6f84496a32e5d885253810079090239519b377d02badc36ee509350fb1479886",
+      "after_rubric_sha256": "a7d479aefabfa0193cca178e7dd762d4f779b26dc892bfcf402f42e28f992c3b",
+      "review_status": "pending_saved_trace_review"
     }
   ],
   "deferred": [
@@ -87,5 +107,7 @@
       "issue": "Pin budgets and demonstrate feasibility; strategy/runtime difference alone does not prove rubric error."
     }
   ],
-  "candidate_encrypted_sha256": "fe9ce279176fd965c9a658928a8d7562338c90934e5b4a330b4995bbfc150370"
+  "candidate_encrypted_sha256": "fcf3ed69e86de7ebe688e31db4e09dab0ad5ff9d3280e3d00cda08acff9318c1",
+  "previous_revision": "2026-09-23-rubric-contract-draft-1",
+  "previous_encrypted_sha256": "fe9ce279176fd965c9a658928a8d7562338c90934e5b4a330b4995bbfc150370"
 }

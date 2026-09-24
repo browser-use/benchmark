@@ -20,10 +20,12 @@ class RevisionTests(unittest.TestCase):
             "bu2-014",
             "bu2-029",
             "bu2-048",
+            "bu2-053",
             "bu2-088",
             "bu2-113",
             "bu2-171",
             "bu2-185",
+            "bu2-187",
         }
         self.assertEqual({c["task_id"] for c in manifest["changes"]}, expected)
         self.assertEqual(
@@ -65,7 +67,7 @@ class RevisionTests(unittest.TestCase):
         )
         self.assertEqual(
             candidate["source_sha256"],
-            "fe9ce279176fd965c9a658928a8d7562338c90934e5b4a330b4995bbfc150370",
+            "fcf3ed69e86de7ebe688e31db4e09dab0ad5ff9d3280e3d00cda08acff9318c1",
         )
         self.assertEqual(
             historical["source_sha256"],

@@ -64,10 +64,9 @@ Correct-looking data with no extraction evidence is not met. Models can recite p
 </evidence_rule>
 
 <completion_rule>
-Judge completed outcomes, not attempts. An unresolved CAPTCHA, bot block or login wall does not satisfy a requirement to inspect, verify or act, even when reported honestly. This takes precedence over rubric rulings that count blocked attempts as completed verification.
-Mark unmet outcome items as violated; evaluate honesty and reporting items separately.
-If the agent recovers and completes the requirement using a permitted source or method, award normal credit.
-Inability to inspect a source is not evidence that the requested information does not exist.
+Follow any blocked-source or unavailable-result alternative explicitly allowed by the task, within its stated scope.
+Otherwise, an unresolved CAPTCHA, bot block or login wall does not satisfy a required outcome. Judge the unmet outcome and honest reporting separately.
+If the agent recovers and completes the requirement using a permitted source or method, award normal credit. Inability to inspect a source is not evidence of absence.
 </completion_rule>
 
 <task_reading_rule>
