@@ -101,6 +101,9 @@ or wrong target alone is scored under its rubric items. Both `raw_score`
 Use `--model gpt-5.6-luna --agent-reasoning xhigh` for a Luna executor.
 `--task-ids bu2-171 bu2-185` selects exact cases; `--max-steps`,
 `--task-timeout` (seconds), and `--concurrency` set explicit execution limits.
+The default execution limits are **1 hour (3,600 seconds) per task** and
+**100 steps**, whichever is reached first. The Browser Use Cloud session timeout
+matches the selected task timeout.
 Use `--judge-model` and `--judge-reasoning` to override the OpenAI judge settings,
 or `--browser local_headless` to use local Chromium (install it first with
 `uv run browser-use install`). The selected model must support images and

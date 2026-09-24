@@ -41,7 +41,7 @@ from evaluation import (
 load_dotenv()
 
 MAX_CONCURRENT = 3
-TASK_TIMEOUT = 1800
+TASK_TIMEOUT = 3600
 AGENT_FRAMEWORK_NAME = "BrowserUse"
 AGENT_FRAMEWORK_VERSION = version("browser-use")
 MODEL_NAME = "bu-2-0"
@@ -294,7 +294,12 @@ def parse_args(argv=None):
     parser.add_argument(
         "--task-ids", nargs="+", help="Exact task IDs, in execution order"
     )
-    parser.add_argument("--task-timeout", type=int, default=TASK_TIMEOUT)
+    parser.add_argument(
+        "--task-timeout",
+        type=int,
+        default=TASK_TIMEOUT,
+        help="Per-task execution timeout in seconds (default: %(default)s; 1 hour)",
+    )
     parser.add_argument("--max-steps", type=int, default=100)
     parser.add_argument("--concurrency", type=int, default=MAX_CONCURRENT)
     args = parser.parse_args(argv)
