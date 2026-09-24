@@ -1,30 +1,29 @@
 """Findings judge: the scoring method for BU Bench V2.
 
-Published for transparency. This is the prompt and the scoring arithmetic used
-to produce the reported results; it is NOT wired into run_eval.py, and the LLM
-call plumbing is not included. Treat it as the specification, not a runnable
-verifier.
+This implements the findings method behind the reported results, with the public
+runner's current evidence-handling corrections. It is the default judge in
+run_eval.py; evaluation.py provides the LLM adapter and records source hashes.
 
 The judge emits one finding per rubric item (met / violated / not_assessable,
 each with evidence) and never emits a score. Valuation happens in code from the
 task's weights, so re-weighting a rubric never requires re-judging a run.
 
-Each BU Bench V2 task carries its own `rubric` and `weights` inline, and both
-are frozen: `weights` keys are exactly the item ids the rubric defines, and they
-sum to 100.
+Each versioned BU Bench V2 task carries its own `rubric` and `weights` inline:
+`weights` keys are exactly the item ids the rubric defines, and they sum to 100.
 
-Two divergences from the internal implementation, both infrastructure rather
-than method:
+Infrastructure differences from the internal implementation:
   - image selection: internally, screenshots are fitted to a byte budget shared
-    with the prompt text. Here they are passed through in order.
-  - the LLM call, retries, and tracing are omitted.
-The system prompt, the section layout, the truncation caps, and the scoring are
-identical to what produced the published numbers.
+    with the prompt text. The public runner samples up to 50 unique screenshots
+    evenly across the run; this prompt builder passes those through in order.
+  - LLM calls, SDK retries, and local JSON traces are handled by the public runner.
+Historical results must be interpreted using their original dataset and judge
+versions. Screenshot timing describes the supplying framework (Browser Use
+history stores the state before each action).
 """
 
 from typing import Literal
 
-from pydantic import BaseModel, create_model
+from pydantic import BaseModel, create_model, model_validator
 from browser_use.llm.messages import (
 	BaseMessage,
 	ContentPartImageParam,
@@ -75,7 +74,12 @@ Report exactly one finding for every item in the rubric, in rubric order. Never 
 Write the evidence first, then the status.
 - met: every requirement inside the item holds, with corroborating evidence. Cite the steps or values that corroborate it.
 - violated: name the entries or values that fail and the source evidence they contradict, with an occurrence list.
-- not_assessable: the evidence YOU cannot see (clipped file, missing section). Say exactly what was missing. It is not a soft violated.
+- not_assessable: use only for evidence the judge cannot see, or an absent scope/branch that the rubric explicitly defines as not assessable. It is not a soft violated.
+For each finding set not_assessable_reason:
+- missing_evidence: the run produced or observed the relevant evidence, but the judge cannot inspect it because the collector omitted it or the supplied content is clipped. Name the missing artifact or section.
+- absent_scope: the rubric explicitly uses not_assessable for work the agent did not produce, an empty scope, or an inapplicable terminal branch. Cite that rubric rule and the observed absence. This earns no item credit; it is not a collector failure.
+- null: required for met and violated.
+Missing agent work alone is never missing_evidence. Judge omitted work as violated unless the rubric explicitly assigns absent_scope.
 An item is met only if it is flawless over its whole scope. Do not average within an item. Do not let one item's failure change another item's finding.
 </findings_rule>
 
@@ -88,7 +92,7 @@ Observations are never scored. Do not restate item findings or the task reading 
 Set these independently of the findings:
 - infra_error: the run died from infrastructure outside the agent's control (browser or tunnel death, harness crash, site down for everyone). Anti-bot walls and login walls are not infra errors.
 - pii_present: the run involved real personal data beyond the standard test persona.
-- reward_hacking_suspected: the agent tried to game the task or the judging process, including fabricating deliverable content.
+- reward_hacking_suspected: require concrete trace evidence of evidence fabrication or manipulation aimed at gaming the task or judge, such as invented source records, falsified screenshots, or an undisclosed overlay presented as native evidence. Cite the specific fabricated or manipulated evidence in flag_notes. A wrong target, ordinary task error, unsupported claim, or incorrect summary alone is insufficient; grade those under the relevant rubric items. Do not infer intent merely from failure. Respect explicit rubric rulings that price a defect once: an off-scope substitution priced by one item must not trigger a global penalty without separate concrete evidence of fabrication or manipulation.
 - flag_notes: one or two sentences when any flag is set, else null.
 </flags>
 """
@@ -106,6 +110,13 @@ FILES_MAX_CHARS = 600_000
 _MODEL_CACHE: dict[tuple[str, ...], type[BaseModel]] = {}
 
 
+def _validate_assessment_reason(finding):
+	is_unassessable = finding.status == 'not_assessable'
+	if is_unassessable != (finding.not_assessable_reason is not None):
+		raise ValueError('not_assessable requires a reason; met and violated require null')
+	return finding
+
+
 def findings_result_model(item_ids: tuple[str, ...]) -> type[BaseModel]:
 	"""Structured-output schema with the item enum pinned to THIS task's rubric.
 
@@ -119,6 +130,10 @@ def findings_result_model(item_ids: tuple[str, ...]) -> type[BaseModel]:
 			item=(Literal[item_ids], ...),
 			evidence=(str, ...),
 			status=(Literal['met', 'violated', 'not_assessable'], ...),
+			not_assessable_reason=(Literal['missing_evidence', 'absent_scope'] | None, ...),
+			__validators__={
+				'reason_matches_status': model_validator(mode='after')(_validate_assessment_reason),
+			},
 		)
 		_MODEL_CACHE[item_ids] = create_model(
 			'FindingsResult',
@@ -151,17 +166,22 @@ def construct_findings_judge_messages(
 	website: str | None = None,
 	output_files_text: str | None = None,
 	screenshot_steps: list[int] | None = None,
+	screenshot_timing: Literal['before', 'after'] = 'after',
 ) -> list[BaseMessage]:
 	if screenshot_steps is None:
 		trajectory = '\n'.join(agent_steps)
-		screenshots_note = '{n} screenshots from execution are attached below in chronological order.'
+		screenshots_note = (
+			'{n} screenshots from execution are attached below in chronological order. '
+			f'They were captured {screenshot_timing} browser actions. '
+			'Image ordinals are not trajectory step numbers; no exact step mapping is available.'
+		)
 	else:
 		# Number the steps so screenshot labels ([step N]) can be located.
 		trajectory = '\n'.join(f'[step {i}] {s}' for i, s in enumerate(agent_steps, start=1))
 		screenshots_note = (
 			'{n} screenshots are attached below in chronological order. They were captured '
-			'automatically by the harness immediately after browser actions (not chosen by the '
-			'agent); each is labeled with the trajectory step it follows. Identical consecutive '
+			f'automatically by the harness immediately {screenshot_timing} browser actions (not chosen by the '
+			'agent); each is labeled with its trajectory step. Identical consecutive '
 			'frames were removed.'
 		)
 
@@ -214,12 +234,24 @@ rubrics/{task_id}.md
 		if step is None:
 			label = f'Screenshot {index} of {len(screenshots_b64)}. Chronological order.'
 		else:
-			label = f'Screenshot {index} of {len(screenshots_b64)}, captured immediately after [step {step}].'
+			label = f'Screenshot {index} of {len(screenshots_b64)}, captured immediately {screenshot_timing} [step {step}].'
 		content_parts.append(ContentPartTextParam(text=label))
 		content_parts.append(image)
 
+	system_prompt = FINDINGS_SYSTEM_PROMPT.replace('after browser actions', f'{screenshot_timing} browser actions')
+	if screenshot_steps is None:
+		system_prompt = system_prompt.replace(
+			'Labels tie each image to a step.',
+			'Image labels give chronological ordinals only, not trajectory step numbers. '
+			'Do not infer an exact action-to-image mapping from an image ordinal.',
+		)
+		system_prompt = system_prompt.replace(
+			"If a step's claim and its screenshot disagree, trust the screenshot.",
+			'An image corroborates only the state it visibly shows. Without an explicit step mapping, '
+			'do not infer that it precedes or follows a specific action.',
+		)
 	return [
-		SystemMessage(content=FINDINGS_SYSTEM_PROMPT),
+		SystemMessage(content=system_prompt),
 		UserMessage(content=content_parts),
 	]
 
@@ -227,9 +259,10 @@ rubrics/{task_id}.md
 def score(task: dict, judgement: BaseModel, agent_texts: list[str] | None = None) -> dict:
 	"""Turn findings into a score. The LLM never sees weights and never scores.
 
-	score = met weight / total weight. An item missing from the judge output
-	earns nothing, and not_assessable earns nothing -- it means the evidence was
-	unreadable, which is not partial credit.
+	score = met weight / total weight. This historical arithmetic assigns no
+	credit to missing or not_assessable items. The public adapter separately
+	rejects incomplete findings and withholds scores for missing judge evidence;
+	rubric-defined absent scopes retain their historical zero item credit.
 	"""
 	weights: dict[str, int] = task['weights']
 

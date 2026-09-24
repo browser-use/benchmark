@@ -1,80 +1,109 @@
-"""Main benchmark evaluation script.
+"""Run BU Bench V2 with the weighted findings judge by default.
 
-Usage:
-    uv run python run_eval.py                              # defaults: browser-use-cloud + bu-2-0
-    uv run python run_eval.py --browser anchor             # use Anchor Browser provider
-    uv run python run_eval.py --browser local_headless     # use local headless Chromium
-    uv run python run_eval.py --tasks 5                    # run only 5 tasks
-
-Available browsers: browser-use-cloud (default), anchor, browserbase,
-    browserless, hyperbrowser, local_headful, local_headless, onkernel,
-    rebrowser, steel
+uv run python run_eval.py --tasks 5
+uv run python run_eval.py --browser local_headless
+uv run python run_eval.py --benchmark BU_Bench_V1  # legacy binary judge
 """
-
-# Fix for MacOS users using uv without SSL certificate setup
-import certifi, os
-
-os.environ.setdefault("SSL_CERT_FILE", certifi.where())
-
-import logging
-
-os.environ["BROWSER_USE_SETUP_LOGGING"] = (
-    "false"  # Must be set before importing browser_use
-)
-logging.basicConfig(
-    level=logging.CRITICAL
-)  # Suppress all logs including shutdown warnings
 
 import argparse
 import asyncio
-import base64, hashlib, json, traceback
-from datetime import datetime
+import base64
+import hashlib
+import json
+import logging
+import os
+import traceback
+from datetime import datetime, timezone
+from importlib.metadata import version
 from pathlib import Path
-from cryptography.fernet import Fernet
+
+import certifi
+
+os.environ.setdefault("SSL_CERT_FILE", certifi.where())
+os.environ["BROWSER_USE_SETUP_LOGGING"] = "false"  # Before importing browser_use
+logging.basicConfig(level=logging.CRITICAL)
+
+from browser_use import Agent, Browser
+from browser_use.llm import ChatBrowserUse, ChatOpenAI
 from dotenv import load_dotenv
-from browser_use import Agent, Browser, ChatGoogle
-from browser_use.llm import ChatBrowserUse
+
 from browsers import PROVIDERS, get_provider
-from judge import construct_judge_messages, JudgementResult
+from evaluation import (
+    BENCHMARKS,
+    DEFAULT_BENCHMARK,
+    create_judge,
+    judge_config,
+    judge_trace,
+    load_tasks,
+    validate_findings_task,
+)
 
 load_dotenv()
 
-# Judge LLM - always use gemini-2.5-flash for consistent judging across all evaluations
-JUDGE_LLM = ChatGoogle(model="gemini-2.5-flash", api_key=os.getenv("GOOGLE_API_KEY"))
-TASKS_FILE = Path(__file__).parent / "BU_Bench_V1.enc"
 MAX_CONCURRENT = 3
-TASK_TIMEOUT = 1800  # 30 minutes max per task
-
+TASK_TIMEOUT = 1800
 AGENT_FRAMEWORK_NAME = "BrowserUse"
-AGENT_FRAMEWORK_VERSION = "0.11.5"
+AGENT_FRAMEWORK_VERSION = version("browser-use")
 MODEL_NAME = "bu-2-0"
 
 
+def create_agent_model(model: str = MODEL_NAME, reasoning: str = "xhigh"):
+    if model == "bu-2-0":
+        return ChatBrowserUse(model=model)
+    if not os.getenv("OPENAI_API_KEY"):
+        raise ValueError("OPENAI_API_KEY is required for the selected agent model")
+    return ChatOpenAI(
+        model=model,
+        reasoning_effort=reasoning,
+        max_completion_tokens=32768,
+        temperature=None,
+        frequency_penalty=None,
+        timeout=300,
+        max_retries=2,
+    )
+
+
+def select_tasks(
+    tasks: list[dict], task_ids: list[str] | None = None, limit: int | None = None
+):
+    if task_ids:
+        by_id = {task["task_id"]: task for task in tasks}
+        unknown = set(task_ids) - by_id.keys()
+        if unknown or len(task_ids) != len(set(task_ids)):
+            raise ValueError("Task IDs must be unique and present in the dataset")
+        tasks = [by_id[task_id] for task_id in task_ids]
+    return tasks[:limit] if limit is not None else tasks
+
+
 def encode_screenshots(paths: list[str]) -> list[str]:
-    """Encode screenshot files to base64. Skips files that don't exist."""
-    result = []
-    for p in paths:
-        path = Path(p)
-        if path.exists():
-            result.append(base64.b64encode(path.read_bytes()).decode())
-    return result
+    return [
+        base64.b64encode(Path(p).read_bytes()).decode()
+        for p in paths
+        if Path(p).is_file()
+    ]
 
 
-def load_tasks() -> list[dict]:
-    key = base64.urlsafe_b64encode(hashlib.sha256(b"BU_Bench_V1").digest())
-    encrypted = base64.b64decode(TASKS_FILE.read_text())
-    return json.loads(Fernet(key).decrypt(encrypted))
+def collect_output_files(agent) -> str:
+    """Collect source text of files managed by this agent, including PDF/DOCX."""
+    fs = agent.file_system
+    return "\n\n".join(
+        f"--- {name} ---\n{fs.get_file(name).read()}" for name in fs.list_files()
+    )
 
 
-async def create_browser(browser_provider) -> Browser:
-    """Create a Browser instance from a provider module.
+def save_task(run_data_dir: Path | None, task_id: str, payload: dict) -> None:
+    if run_data_dir is not None:
+        run_data_dir.mkdir(parents=True, exist_ok=True)
+        (run_data_dir / f"{task_id}.json").write_text(json.dumps(payload, indent=2))
 
-    browser-use-cloud uses the native use_cloud=True path.
-    Local providers launch browser-use's built-in Chromium.
-    All other providers return a CDP URL for Browser(cdp_url=...).
-    """
+
+async def create_browser(
+    browser_provider, timeout_seconds: int = TASK_TIMEOUT
+) -> Browser:
     if browser_provider is None:
-        return Browser(use_cloud=True, cloud_timeout=30)
+        return Browser(
+            use_cloud=True, cloud_timeout=max(1, (timeout_seconds + 59) // 60)
+        )
     cdp_url = await browser_provider.connect()
     if cdp_url is None:
         return Browser(headless=getattr(browser_provider, "HEADLESS", True))
@@ -86,198 +115,274 @@ async def run_task(
     semaphore: asyncio.Semaphore,
     browser_provider=None,
     llm=None,
-    run_data_dir: Path = None,
+    run_data_dir: Path | None = None,
+    *,
+    benchmark: str = DEFAULT_BENCHMARK,
+    judge_llm=None,
+    task_timeout: int = TASK_TIMEOUT,
+    max_steps: int = 100,
 ) -> dict:
-    """Run a single task. Returns result dict with score (0 on failure).
-
-    Args:
-        browser_provider: Browser provider module (None = browser-use-cloud).
-        llm: LLM to use. Defaults to ChatBrowserUse().
-        run_data_dir: Directory for trace output.
-    """
+    """Execute and judge one task, retaining evidence if judging fails."""
     async with semaphore:
+        task_id = task.get("task_id", "unknown")
+        browser = None
+        phase = "setup"
+        result = {
+            "task_id": task_id,
+            "score": None,
+            "raw_score": None,
+            "steps": 0,
+            "duration": 0,
+            "cost": 0,
+        }
+        artifact = {"benchmark": benchmark}
         try:
-            task_id = task.get("task_id", "unknown")
+            if benchmark == DEFAULT_BENCHMARK:
+                validate_findings_task(task)
+            judge_llm = judge_llm or create_judge(benchmark)
+            artifact["judge_config"] = judge_config(benchmark, judge_llm)
             print(f"Running task: {task_id}")
-
-            browser = await create_browser(browser_provider)
-
-            # To swap model: replace ChatBrowserUse() with your LLM (e.g. ChatOpenAI, ChatAnthropic)
-            # You can use any OpenAI API compatible model by changing base_url. You can use ollama too. See https://docs.browser-use.com/supported-models for info
+            browser = await create_browser(
+                browser_provider, timeout_seconds=task_timeout
+            )
             agent = Agent(
                 task=task["confirmed_task"],
-                llm=llm or ChatBrowserUse(model="bu-2-0"),
+                llm=llm or ChatBrowserUse(model=MODEL_NAME),
                 browser=browser,
+                use_judge=False,  # Only the benchmark judge evaluates the run.
             )
-
+            phase = "execution"
             try:
-                agent_history = await asyncio.wait_for(
-                    agent.run(), timeout=TASK_TIMEOUT
+                history = await asyncio.wait_for(
+                    agent.run(max_steps=max_steps), timeout=task_timeout
                 )
             except asyncio.TimeoutError:
-                await browser.stop()
-                if browser_provider:
-                    await browser_provider.disconnect()
-                print(f"Task {task_id} timed out after {TASK_TIMEOUT}s")
-                return {
-                    "task_id": task_id,
-                    "score": 0,
-                    "steps": 0,
-                    "duration": TASK_TIMEOUT,
-                    "cost": 0,
-                    "error": f"Task timed out after {TASK_TIMEOUT}s",
-                }
+                # Preserve and judge partial work instead of discarding its evidence.
+                history = agent.history
+                result["execution_error"] = f"Task timed out after {task_timeout}s"
 
-            if browser_provider:
-                await browser_provider.disconnect()
-
-            # Collect task metrics from agent history
-            steps = agent_history.number_of_steps()
-            duration = agent_history.total_duration_seconds()
-            cost = agent_history.usage.total_cost if agent_history.usage else 0
-
-            # Collect judge inputs from agent history
-            agent_task = task["confirmed_task"]
-            final_result = (
-                agent_history.final_result() or "Agent did not return a result"
+            result.update(
+                steps=history.number_of_steps(),
+                duration=history.total_duration_seconds(),
+                cost=history.usage.total_cost if history.usage else 0,
             )
-            agent_steps = agent_history.agent_steps()
-            ground_truth = task.get("answer")
-            screenshots_b64 = encode_screenshots(
-                [p for p in agent_history.screenshot_paths() if p is not None]
-            )
-
-            # Run judge
-            judge_messages = construct_judge_messages(
-                task=agent_task,
-                final_result=final_result,
-                agent_steps=agent_steps,
-                ground_truth=ground_truth,
-                screenshots_b64=screenshots_b64,
-            )
-            response = await JUDGE_LLM.ainvoke(
-                judge_messages, output_format=JudgementResult
-            )
-            judgement: JudgementResult = response.completion
-
-            score = 1 if judgement.verdict else 0
-            print(
-                f"Task {task_id} completed: score={score}, verdict={judgement.verdict}"
-            )
-
-            # Save trace to run_data/
-            run_data_dir.mkdir(parents=True, exist_ok=True)
+            phase = "evidence"
             trace = {
-                "agent_task": agent_task,
-                "final_result": final_result,
-                "agent_steps": agent_steps,
-                "ground_truth": ground_truth,
-                "screenshots_b64": screenshots_b64,
+                "agent_task": task["confirmed_task"],
+                "final_result": history.final_result()
+                or "Agent did not return a result",
+                "agent_steps": history.agent_steps(),
+                "ground_truth": task.get("answer"),
+                "screenshots_b64": encode_screenshots(
+                    [p for p in history.screenshot_paths() if p is not None]
+                ),
+                "output_files_text": collect_output_files(agent),
             }
-            metrics = {"steps": steps, "duration": duration, "cost": cost}
-            (run_data_dir / f"{task_id}.json").write_text(
-                json.dumps(
-                    {
-                        "agent_trace": trace,
-                        "metrics": metrics,
-                        "judgement": judgement.model_dump(),
-                    },
-                    indent=2,
-                )
+            artifact.update(
+                agent_trace=trace,
+                metrics={key: result[key] for key in ("steps", "duration", "cost")},
+                # Retained locally to allow re-judging the exact task version.
+                task=task,
             )
+            result["status"] = "awaiting_judge"
+            save_task(run_data_dir, task_id, {**artifact, **result})
+            phase = "judge"
+            result.update(await judge_trace(task, trace, judge_llm, benchmark))
+            if result["score"] is None:
+                result["status"] = "evidence_incomplete"
+                print(f"Task {task_id}: evidence incomplete; no benchmark score")
+            else:
+                result["status"] = "judged"
+                print(
+                    "Task",
+                    task_id,
+                    "raw=",
+                    result["raw_score"],
+                    "final=",
+                    result["score"],
+                )
+        except Exception as exc:
+            # A broken judge/configuration is not an agent score of zero.
+            result.update(
+                status=f"{phase}_error",
+                error=f"{type(exc).__name__}: {exc}",
+                traceback=traceback.format_exc(),
+            )
+            if phase == "execution":
+                result.update(score=0.0, raw_score=0.0)
+            print(f"Task {task_id}: {result['status']}: {result['error']}")
+        finally:
+            cleanup_errors = []
+            if browser is not None:
+                try:
+                    await browser.stop()
+                except Exception as exc:
+                    cleanup_errors.append(f"browser: {exc}")
+            if browser_provider is not None:
+                try:
+                    await browser_provider.disconnect()
+                except Exception as exc:
+                    cleanup_errors.append(f"provider: {exc}")
+            if cleanup_errors:
+                result["cleanup_errors"] = cleanup_errors
+        save_task(run_data_dir, task_id, {**artifact, **result})
+        return result
 
-            return {
-                "task_id": task_id,
-                "score": score,
-                "steps": steps,
-                "duration": duration,
-                "cost": cost,
-                "judgement": judgement.model_dump(),
-            }
 
-        except Exception as e:
-            error_type = type(e).__name__
-            error_msg = f"{error_type}: {e}"
-            print(f"Task {task.get('task_id', 'unknown')} failed: {error_msg}")
-            return {
-                "task_id": task.get("task_id"),
-                "score": 0,
-                "steps": 0,
-                "duration": 0,
-                "cost": 0,
-                "error": error_msg,
-                "traceback": traceback.format_exc(),
-            }
+def summarize_results(results: list[dict]) -> dict:
+    scored = [r for r in results if r["score"] is not None]
+    complete = len(scored) == len(results)
+    mean = sum(r["score"] for r in scored) / len(scored) if scored else None
+    raw_mean = sum(r["raw_score"] for r in scored) / len(scored) if scored else None
+    return {
+        "tasks_completed": len(results),
+        "tasks_scored": len(scored),
+        "tasks_unscored": len(results) - len(scored),
+        "tasks_successful": sum(r["score"] == 1 for r in scored),
+        "judge_errors": sum(r["status"] == "judge_error" for r in results),
+        "evidence_incomplete": sum(
+            r["status"] == "evidence_incomplete" for r in results
+        ),
+        "execution_errors": sum(
+            r["status"] == "execution_error" or "execution_error" in r for r in results
+        ),
+        "mean_score": mean if complete else None,
+        "mean_raw_score": raw_mean if complete else None,
+        "mean_score_scored_tasks": mean,
+        "mean_raw_score_scored_tasks": raw_mean,
+        "rh_zeroed": sum(bool(r.get("rh_zeroed")) for r in results),
+        "total_steps": sum(r["steps"] for r in results),
+        "total_duration": sum(r["duration"] for r in results),
+        "total_cost": sum(r["cost"] for r in results),
+    }
 
 
-async def main():
-    parser = argparse.ArgumentParser(description="Run BU_Bench_V1 evaluation")
+def parse_args(argv=None):
+    parser = argparse.ArgumentParser(
+        description="Run BU Bench V2 with the findings judge (default)"
+    )
     parser.add_argument(
         "--browser",
         default="browser-use-cloud",
         choices=["browser-use-cloud"] + PROVIDERS,
-        help="Browser provider (default: browser-use-cloud)",
+    )
+    parser.add_argument("--benchmark", default=DEFAULT_BENCHMARK, choices=BENCHMARKS)
+    parser.add_argument(
+        "--tasks", type=int, default=None, help="Number of tasks (default: all)"
     )
     parser.add_argument(
-        "--tasks",
-        type=int,
-        default=None,
-        help="Number of tasks to run (default: all)",
+        "--judge-model",
+        help="Override judge model (default: gpt-5.6-luna for V2; gemini-2.5-flash for V1)",
     )
-    args = parser.parse_args()
-
-    # Resolve browser provider (None = use native browser-use-cloud path)
-    browser_name = args.browser
-    if browser_name == "browser-use-cloud":
-        browser_provider = None
-    else:
-        browser_provider = get_provider(browser_name)
-
-    # Build run key and paths
-    run_start = datetime.now().strftime("%Y%m%d_%H%M%S")
-    run_key = f"{AGENT_FRAMEWORK_NAME}_{AGENT_FRAMEWORK_VERSION}_browser_{browser_name}_model_{MODEL_NAME}"
-    run_data_dir = (
-        Path(__file__).parent / "run_data" / f"{run_key}_start_at_{run_start}"
+    parser.add_argument(
+        "--judge-reasoning",
+        default="xhigh",
+        choices=["none", "minimal", "low", "medium", "high", "xhigh"],
+        help="Reasoning effort for the V2 OpenAI judge",
     )
-    results_file = Path(__file__).parent / "results" / f"{run_key}.json"
+    parser.add_argument(
+        "--model",
+        default=MODEL_NAME,
+        choices=["bu-2-0", "gpt-5.6-luna", "gpt-6-astra"],
+        help="Executor model; separate from --judge-model",
+    )
+    parser.add_argument(
+        "--agent-reasoning",
+        default="xhigh",
+        choices=["none", "minimal", "low", "medium", "high", "xhigh"],
+    )
+    parser.add_argument(
+        "--task-ids", nargs="+", help="Exact task IDs, in execution order"
+    )
+    parser.add_argument("--task-timeout", type=int, default=TASK_TIMEOUT)
+    parser.add_argument("--max-steps", type=int, default=100)
+    parser.add_argument("--concurrency", type=int, default=MAX_CONCURRENT)
+    args = parser.parse_args(argv)
+    if min(args.task_timeout, args.max_steps, args.concurrency) < 1:
+        parser.error("Timeout, max steps, and concurrency must be positive")
+    if args.tasks is not None and args.tasks < 1:
+        parser.error("--tasks must be positive")
+    return args
 
-    tasks = load_tasks()
-    if args.tasks:
-        tasks = tasks[: args.tasks]
-    sem = asyncio.Semaphore(MAX_CONCURRENT)
+
+async def main():
+    args = parse_args()
+    tasks = select_tasks(load_tasks(args.benchmark), args.task_ids, args.tasks)
+    # Fail on missing judge credentials before launching any browser sessions.
+    judge_llm = create_judge(args.benchmark, args.judge_model, args.judge_reasoning)
+    config = judge_config(args.benchmark, judge_llm)
+    agent_llm = create_agent_model(args.model, args.agent_reasoning)
+    browser_provider = (
+        None if args.browser == "browser-use-cloud" else get_provider(args.browser)
+    )
+    run_start = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S_%f")
+    run_key = f"{args.benchmark}_{AGENT_FRAMEWORK_NAME}_{AGENT_FRAMEWORK_VERSION}_browser_{args.browser}_model_{args.model}"
+    root = Path(__file__).parent
+    run_data_dir = root / "run_data" / f"{run_key}_start_at_{run_start}"
+    results_file = root / "results" / f"{run_key}.json"
+    run_config = {
+        "benchmark": args.benchmark,
+        "runner_source_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+        "dataset_sha256": hashlib.sha256(
+            (root / f"{args.benchmark}.enc").read_bytes()
+        ).hexdigest(),
+        "judge": config,
+        "agent_model": args.model,
+        "agent_reasoning": getattr(agent_llm, "reasoning_effort", None),
+        "agent_max_completion_tokens": getattr(
+            agent_llm, "max_completion_tokens", None
+        ),
+        "task_ids": [t["task_id"] for t in tasks],
+        "agent_framework_version": AGENT_FRAMEWORK_VERSION,
+        "task_timeout_seconds": args.task_timeout,
+        "max_steps": args.max_steps,
+        "max_concurrent": args.concurrency,
+    }
+    run_data_dir.mkdir(parents=True)
+    (run_data_dir / "config.json").write_text(json.dumps(run_config, indent=2))
+    print(
+        f"{args.benchmark}: {len(tasks)} tasks, judge={config['type']} / {config['model']} / {config['reasoning_effort']}"
+    )
+    sem = asyncio.Semaphore(args.concurrency)
     results = await asyncio.gather(
         *[
             run_task(
-                t, sem, browser_provider=browser_provider, run_data_dir=run_data_dir
+                t,
+                sem,
+                browser_provider=browser_provider,
+                run_data_dir=run_data_dir,
+                benchmark=args.benchmark,
+                judge_llm=judge_llm,
+                llm=agent_llm,
+                task_timeout=args.task_timeout,
+                max_steps=args.max_steps,
             )
             for t in tasks
         ]
     )
-
-    # Aggregate metrics
-    successful = sum(1 for r in results if r.get("score") == 1)
-    total_steps = sum(r.get("steps", 0) for r in results)
-    total_duration = sum(r.get("duration", 0) for r in results)
-    total_cost = sum(r.get("cost", 0) for r in results)
-
-    # Save results (append to existing runs)
+    summary = summarize_results(results)
     results_file.parent.mkdir(parents=True, exist_ok=True)
     runs = json.loads(results_file.read_text()) if results_file.exists() else []
     runs.append(
         {
             "run_start": run_start,
-            "tasks_completed": len(results),
-            "tasks_successful": successful,
-            "total_steps": total_steps,
-            "total_duration": total_duration,
-            "total_cost": total_cost,
+            "config": run_config,
+            **summary,
+            "task_results": results,
         }
     )
     results_file.write_text(json.dumps(runs, indent=2))
-
-    print(
-        f"Run complete: {successful}/{len(results)} tasks successful, {total_steps} steps, {total_duration:.1f}s, ${total_cost:.2f}"
-    )
+    if summary["mean_score"] is not None:
+        print(
+            f"Mean weighted score: {summary['mean_score']:.2%} (raw: {summary['mean_raw_score']:.2%})"
+        )
+    else:
+        print(
+            f"Incomplete evaluation: {summary['tasks_unscored']} unscored tasks; see {run_data_dir}"
+        )
+    print(f"Results: {results_file}")
+    if summary["tasks_unscored"]:
+        raise SystemExit(1)
 
 
 if __name__ == "__main__":

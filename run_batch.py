@@ -45,11 +45,12 @@ MODELS = {
 
 async def run_batch(model_name: str, start: int, end: int, parallel: int = 3, tracking_id: str = None, run_start: str = None) -> dict:
     """Run tasks[start:end] with given model. Returns results summary."""
-    tasks = interleave(load_tasks())[start:end]
+    # This legacy orchestrator balances five V1 categories of twenty tasks.
+    tasks = interleave(load_tasks("BU_Bench_V1"))[start:end]
     llm = MODELS[model_name]()
     sem = asyncio.Semaphore(parallel)
     
-    results = await asyncio.gather(*[run_task(t, sem, llm=llm, run_data_dir=None) for t in tasks])
+    results = await asyncio.gather(*[run_task(t, sem, llm=llm, run_data_dir=None, benchmark="BU_Bench_V1") for t in tasks])
     
     # Aggregate
     return {

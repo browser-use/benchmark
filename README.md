@@ -74,6 +74,61 @@ This selects evaluation records, including the judge's rubric and weights. Pass 
 
 These results use the earlier 60-task set, not the full 200-task release or the 55-task subset. Compare model scores only on the same task set.
 
+### Running BU Bench V2 (default)
+
+```bash
+uv sync --frozen
+cp .env.example .env
+# Set BROWSER_USE_API_KEY for the agent and cloud browser.
+# Set OPENAI_API_KEY for the findings judge.
+uv run python run_eval.py --tasks 5
+# Omit --tasks to run all 200 tasks.
+```
+
+The runner decrypts V2 in memory and uses the [findings judge](findings_judge.py)
+with **gpt-5.6-luna, xhigh reasoning**. Each task's whole rubric is judged in one
+call. Code applies its unequal item weights; `score` is continuous from 0 to 1.
+The canary and reward-hacking policy can zero the whole task. Reward hacking
+requires concrete evidence of fabrication or manipulation; an ordinary task error
+or wrong target alone is scored under its rubric items. Both `raw_score`
+(before that penalty) and final `score`, findings, and flags are saved.
+
+Use `--model gpt-5.6-luna --agent-reasoning xhigh` for a Luna executor.
+`--task-ids bu2-171 bu2-185` selects exact cases; `--max-steps`,
+`--task-timeout` (seconds), and `--concurrency` set explicit execution limits.
+Use `--judge-model` and `--judge-reasoning` to override the OpenAI judge settings,
+or `--browser local_headless` to use local Chromium (install it first with
+`uv run browser-use install`). The selected model must support images and
+structured output. `OPENAI_API_KEY` must have access to it. OpenAI-compatible gateways can be selected with `OPENAI_BASE_URL`; the run records the endpoint host. Overrides are recorded
+with every run; changing the judge affects comparability.
+
+Results go to ignored `results/`; detailed evidence and judge configuration go
+to ignored `run_data/`. The headline metric is **mean weighted score**, not the
+fraction of perfect tasks. The adapter version is recorded independently of
+the dataset revision. Missing/duplicate findings are judge errors; clipped evidence
+produces `evidence_incomplete`. Both withhold the score and exit nonzero.
+Every `not_assessable` finding names its reason:
+`missing_evidence` means the judge cannot inspect evidence the run produced and
+withholds the task score; `absent_scope` is a rubric-defined missing deliverable,
+empty scope, or inapplicable branch and retains the historical zero item credit.
+Missing agent work is not a collector failure. Diagnostic credit is retained
+separately for incomplete evaluations. Judge/API/schema failures
+are unscored, preserve the
+trace, make the overall mean unavailable, and exit nonzero. The separate mean
+over scored tasks is explicitly labeled. Agent execution failures still count
+as zero; timed-out runs are judged on their partial evidence.
+
+By default this runner uses Browser Use 0.11.5 / `bu-2-0`, a 30-minute limit and 100 steps.
+It supplies tool results, final output, text from the agent's managed files, and
+up to 50 unique screenshots sampled across the run within a byte budget. Downloaded binary files and
+files created outside the agent's managed filesystem are not extracted. This
+is a runnable public harness, not a reproduction of the published 60-task
+BrowserCode setup: the executor, task cohort, limits, and image selection differ.
+Weights and reward-hacking penalties are unchanged. Incomplete evidence is withheld from headline scores; do not compare this handling to historical scores without regrading.
+
+Local traces contain decrypted tasks, rubrics, screenshots, and deliverables.
+Do not publish or commit them. Offline runner tests: `uv run python -m unittest discover -s tests`.
+
 <br/>
 
 ---
@@ -117,21 +172,9 @@ cp .env.example .env
 # Fill in the API key for the browser provider you want to test
 ```
 
-**3. Decrypt the task set**
+**3. Run the evaluation** (decrypts in memory; uses the legacy binary judge)
 ```bash
-python -c "
-import base64, hashlib, json
-from cryptography.fernet import Fernet
-key = base64.urlsafe_b64encode(hashlib.sha256(b'Stealth_Bench_V1').digest())
-tasks = json.loads(Fernet(key).decrypt(base64.b64decode(open('Stealth_Bench_V1.enc').read())))
-print(f'Loaded {len(tasks)} tasks')
-json.dump(tasks, open('Stealth_Bench_V1.json', 'w'), indent=2)
-"
-```
-
-**4. Run the evaluation**
-```bash
-uv run python run_eval.py --browser <provider>
+uv run python run_eval.py --benchmark Stealth_Bench_V1 --browser <provider>
 ```
 
 Available providers: `browser-use-cloud`, `anchor`, `browserbase`, `browserless`, `hyperbrowser`, `onkernel`, `steel`, `local_headful`, `local_headless`
@@ -176,7 +219,7 @@ Available providers: `browser-use-cloud`, `anchor`, `browserbase`, `browserless`
 
 The tasks are encrypted to keep their text out of web crawlers and model training data.
 
-### Running BU Bench
+### Running BU Bench V1 (legacy)
 
 **1. Install dependencies**
 ```bash
@@ -193,7 +236,7 @@ cp .env.example .env
 
 **3. Run evaluation**
 ```bash
-uv run python run_eval.py
+uv run python run_eval.py --benchmark BU_Bench_V1
 ```
 
 Results are saved to `results/` and detailed traces to `run_data/`.
@@ -203,6 +246,8 @@ Results are saved to `results/` and detailed traces to `run_data/`.
 Use `run_framework_eval.py` to rerun BU_Bench_V1 through a framework adapter.
 It decrypts `BU_Bench_V1.enc` in memory and writes local outputs to ignored
 `results/` and `run_data/`.
+The framework adapters and `run_batch.py` retain the legacy V1 binary judge;
+use `run_eval.py` for V2 findings judging.
 
 ```bash
 uv run python run_framework_eval.py --list-frameworks
