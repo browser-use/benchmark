@@ -72,6 +72,8 @@ def validate_revision(root: Path = ROOT) -> tuple[dict, dict, dict, dict]:
         }
         if not changed_fields <= {"task", "rubric", "task_sha", "rubric_sha", "revision"}:
             raise ValueError(f"Unapproved task field change: {task_id}")
+        if task.get("revision") != manifest["revision"]:
+            raise ValueError(f"Task revision mismatch: {task_id}")
         if task["weights"] != old["weights"] or sum(task["weights"].values()) != 100:
             raise ValueError(f"Weight change: {task_id}")
         if task["canary"] != old["canary"] or task["canary"] in task["task"]:
