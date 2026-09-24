@@ -121,7 +121,9 @@ task score. A clipped task instruction or rubric also withholds the score becaus
 the judging question is incomplete. `absent_scope` is a rubric-defined missing deliverable,
 empty scope, or inapplicable branch and retains the historical zero item credit.
 Missing agent work is not a collector failure. Diagnostic credit is retained
-separately for incomplete evaluations. Judge/API/schema failures
+separately for incomplete evaluations. Any unscored task, including missing
+required evidence or clipped instructions/rubrics, makes the full-set mean
+unavailable and the run exit nonzero. Judge/API/schema failures
 are unscored, preserve the
 trace, make the overall mean unavailable, and exit nonzero. The separate mean
 over scored tasks is explicitly labeled. Agent execution failures still count

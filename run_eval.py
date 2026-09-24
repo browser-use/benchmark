@@ -190,7 +190,7 @@ async def run_task(
             result.update(await judge_trace(task, trace, judge_llm, benchmark))
             if result.get("evidence_clipped_sections"):
                 sections = ", ".join(result["evidence_clipped_sections"])
-                print(f"Task {task_id}: warning: clipped {sections}; judged on available evidence")
+                print(f"Task {task_id}: warning: clipped {sections}")
             if result["score"] is None:
                 result["status"] = "evidence_incomplete"
                 print(f"Task {task_id}: evidence incomplete; no benchmark score")
@@ -389,7 +389,7 @@ async def main():
     if summary["tasks_with_clipped_evidence"]:
         print(
             f"Evidence warning: {summary['tasks_with_clipped_evidence']} tasks "
-            "were judged with clipped evidence; see their findings and clipped sections."
+            "had clipped evidence; see their findings and clipped sections."
         )
     print(f"Results: {results_file}")
     if summary["tasks_unscored"]:

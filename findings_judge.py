@@ -76,7 +76,7 @@ Write the evidence first, then the status.
 - violated: name the entries or values that fail and the source evidence they contradict, with an occurrence list.
 - not_assessable: use only for evidence the judge cannot see, or an absent scope/branch that the rubric explicitly defines as not assessable. It is not a soft violated.
 For each finding set not_assessable_reason:
-- missing_evidence: the run produced or observed evidence needed to decide this item, but the judge cannot inspect it because the collector omitted it or the supplied content is clipped. Name the missing artifact or section and explain why the remaining evidence cannot settle the item. Clipping alone does not make an item not_assessable: use the final output, files, screenshots, and visible trajectory to judge it whenever they suffice.
+- missing_evidence: the run produced or observed evidence needed to decide this item, but the judge cannot inspect it because the collector omitted it or the supplied content is clipped. Name the missing artifact or section and explain why the remaining evidence cannot settle the item. Clipping alone does not make an item not_assessable: use the final output, files, screenshots, and visible trajectory to judge it whenever they suffice. The existing <evidence_rule> still applies: correct-looking source data or a claim of completion without surviving extraction evidence does not earn credit.
 - absent_scope: the rubric explicitly uses not_assessable for work the agent did not produce, an empty scope, or an inapplicable terminal branch. Cite that rubric rule and the observed absence. This earns no item credit; it is not a collector failure.
 - null: required for met and violated.
 Missing agent work alone is never missing_evidence. Judge omitted work as violated unless the rubric explicitly assigns absent_scope.
@@ -97,9 +97,9 @@ Set these independently of the findings:
 </flags>
 """
 
-# Caps applied per section before the prompt is assembled. Trajectories are the
-# dominant cost; long tool results are clipped in the middle so the start and
-# the end of each survive.
+# Caps applied per section before the prompt is assembled. The concatenated
+# trajectory is clipped in the middle, retaining its beginning and end. Cuts
+# can fall within individual steps or tool results.
 TASK_MAX_CHARS = 40_000
 WEBSITE_MAX_CHARS = 4_000
 RUBRIC_MAX_CHARS = 100_000
