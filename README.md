@@ -126,7 +126,7 @@ trace, make the overall mean unavailable, and exit nonzero. The separate mean
 over scored tasks is explicitly labeled. Agent execution failures still count
 as zero; timed-out runs are judged on their partial evidence.
 
-By default this runner uses Browser Use 0.11.5 / `bu-2-0`, a 30-minute limit and 100 steps.
+By default this runner uses Browser Use 0.11.5 / `bu-2-0`, a one-hour limit and 100 steps.
 It supplies tool results, final output, text from the agent's managed files, and
 up to 50 unique screenshots sampled across the run within a byte budget. Downloaded binary files and
 files created outside the agent's managed filesystem are not extracted. This
