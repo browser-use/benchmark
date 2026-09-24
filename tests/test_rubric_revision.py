@@ -62,8 +62,16 @@ class RevisionTests(unittest.TestCase):
             hashlib.sha256(candidate_source.read_bytes()).hexdigest(),
         )
         self.assertEqual(
+            candidate["source_sha256"],
+            "fe9ce279176fd965c9a658928a8d7562338c90934e5b4a330b4995bbfc150370",
+        )
+        self.assertEqual(
             historical["source_sha256"],
             hashlib.sha256(historical_source.read_bytes()).hexdigest(),
+        )
+        self.assertEqual(
+            historical["source_sha256"],
+            "fe0fc1eede3197d9eaffd42af3ac7b11cc15743d401e95496f3eb03f0d023a0e",
         )
         self.assertEqual(
             candidate["task_ids"],
