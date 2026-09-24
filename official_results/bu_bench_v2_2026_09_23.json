@@ -1,0 +1,682 @@
+{
+  "benchmark": "Browser Use Benchmark v2",
+  "snapshot_date": "2026-09-23",
+  "cohort": "Historical 60-task cut",
+  "score_definition": "Mean final weighted findings rubric credit on a 0-100 scale after judge penalties; not task success rate.",
+  "cost_definition": "Mean recorded agent cost for the selected task results. Historical API prices/routes/cache usage; excludes separate judge, browser infrastructure, and discarded recovery attempts.",
+  "caveats": [
+    "Historical runs across dates and providers, not a controlled same-day comparison.",
+    "MiMo direct thinking runs pinned; alternate provider/output-cap runs are separate experiments.",
+    "Original costed points preserved from the Sept 23 plot; MiMo Flash/Pro and Mercury added.",
+    "No confidence intervals; small score differences do not establish a reliable ranking.",
+    "The 200-task benchmark and incomplete runs are excluded."
+  ],
+  "models": [
+    {
+      "name": "GPT-6 Astra medium",
+      "family": "OpenAI",
+      "n": 60,
+      "score": 80.63333333333334,
+      "cost_usd": 8.867206283333333,
+      "evaluation_ids": [
+        "ff095d67-1044-4d02-a126-5e6cbca8822a",
+        "ba653764-318b-4666-bd5b-2749e9a39ed8",
+        "8544fd8e-bb9b-4414-9e53-304261d3ddb7",
+        "95ee5515-c329-4a03-9c26-8c571a46339f",
+        "f1a409ce-e709-4650-9eea-39fa0b289c43"
+      ],
+      "project_id": "b657f811-13a7-4dae-a67a-91445a567f24",
+      "cohort_note": "Ordered continuation/recovery/regrading runs replace matching tasks; each task counted once.",
+      "number": 1,
+      "sources": [
+        "https://lmnr.ai/project/b657f811-13a7-4dae-a67a-91445a567f24/evaluations/ff095d67-1044-4d02-a126-5e6cbca8822a",
+        "https://lmnr.ai/project/b657f811-13a7-4dae-a67a-91445a567f24/evaluations/ba653764-318b-4666-bd5b-2749e9a39ed8",
+        "https://lmnr.ai/project/b657f811-13a7-4dae-a67a-91445a567f24/evaluations/8544fd8e-bb9b-4414-9e53-304261d3ddb7",
+        "https://lmnr.ai/project/b657f811-13a7-4dae-a67a-91445a567f24/evaluations/95ee5515-c329-4a03-9c26-8c571a46339f",
+        "https://lmnr.ai/project/b657f811-13a7-4dae-a67a-91445a567f24/evaluations/f1a409ce-e709-4650-9eea-39fa0b289c43"
+      ]
+    },
+    {
+      "name": "GPT-6 Sol medium",
+      "family": "OpenAI",
+      "n": 60,
+      "score": 66.85,
+      "cost_usd": 1.2027994166666667,
+      "evaluation_ids": [
+        "7a2dd2fb-6b76-4498-b513-30635857ca98",
+        "77e9fdaa-d4f5-4972-bc5c-481746244d50"
+      ],
+      "project_id": "b657f811-13a7-4dae-a67a-91445a567f24",
+      "recovery_replacements": 1,
+      "number": 2,
+      "sources": [
+        "https://lmnr.ai/project/b657f811-13a7-4dae-a67a-91445a567f24/evaluations/7a2dd2fb-6b76-4498-b513-30635857ca98",
+        "https://lmnr.ai/project/b657f811-13a7-4dae-a67a-91445a567f24/evaluations/77e9fdaa-d4f5-4972-bc5c-481746244d50"
+      ]
+    },
+    {
+      "name": "Claude Opus 5.5",
+      "family": "Anthropic",
+      "n": 60,
+      "score": 59.4,
+      "cost_usd": 4.214918616666667,
+      "evaluation_ids": [
+        "b5647bac-aecd-4af7-85c2-e6dbeb873b21"
+      ],
+      "project_id": "b657f811-13a7-4dae-a67a-91445a567f24",
+      "recovery_replacements": 0,
+      "number": 3,
+      "sources": [
+        "https://lmnr.ai/project/b657f811-13a7-4dae-a67a-91445a567f24/evaluations/b5647bac-aecd-4af7-85c2-e6dbeb873b21"
+      ]
+    },
+    {
+      "name": "GPT-6 Luna xhigh",
+      "family": "OpenAI",
+      "n": 60,
+      "score": 57.55,
+      "cost_usd": 0.18953225,
+      "evaluation_ids": [
+        "c8c5d72a-fb50-4172-a838-c4b56a4e6a2f",
+        "05a7c06d-1d9d-4176-b6d6-f25cb62f3af3"
+      ],
+      "project_id": "b657f811-13a7-4dae-a67a-91445a567f24",
+      "recovery_replacements": 1,
+      "number": 4,
+      "sources": [
+        "https://lmnr.ai/project/b657f811-13a7-4dae-a67a-91445a567f24/evaluations/c8c5d72a-fb50-4172-a838-c4b56a4e6a2f",
+        "https://lmnr.ai/project/b657f811-13a7-4dae-a67a-91445a567f24/evaluations/05a7c06d-1d9d-4176-b6d6-f25cb62f3af3"
+      ]
+    },
+    {
+      "name": "Claude Fable 5.1 high",
+      "family": "Anthropic",
+      "n": 60,
+      "score": 56.233333333333334,
+      "cost_usd": 8.110557666666667,
+      "evaluation_ids": [
+        "9e6203d1-fe81-4b3b-98c2-a4c94fcefb1e",
+        "e55ae932-75b3-41d8-abc4-b4f9ad869517",
+        "0aeacfe5-48d4-4e63-bc2c-2995548eb8cc"
+      ],
+      "project_id": "b657f811-13a7-4dae-a67a-91445a567f24",
+      "cohort_note": "Ordered continuation/recovery/regrading runs replace matching tasks; each task counted once.",
+      "number": 5,
+      "sources": [
+        "https://lmnr.ai/project/b657f811-13a7-4dae-a67a-91445a567f24/evaluations/9e6203d1-fe81-4b3b-98c2-a4c94fcefb1e",
+        "https://lmnr.ai/project/b657f811-13a7-4dae-a67a-91445a567f24/evaluations/e55ae932-75b3-41d8-abc4-b4f9ad869517",
+        "https://lmnr.ai/project/b657f811-13a7-4dae-a67a-91445a567f24/evaluations/0aeacfe5-48d4-4e63-bc2c-2995548eb8cc"
+      ]
+    },
+    {
+      "name": "GPT-6 Luna high",
+      "family": "OpenAI",
+      "n": 60,
+      "score": 53.95,
+      "cost_usd": 0.1547484,
+      "evaluation_ids": [
+        "60ac2602-8df2-405c-95ad-3a0b99251f5c"
+      ],
+      "project_id": "b657f811-13a7-4dae-a67a-91445a567f24",
+      "recovery_replacements": 0,
+      "number": 6,
+      "sources": [
+        "https://lmnr.ai/project/b657f811-13a7-4dae-a67a-91445a567f24/evaluations/60ac2602-8df2-405c-95ad-3a0b99251f5c"
+      ]
+    },
+    {
+      "name": "Claude Opus 5",
+      "family": "Anthropic",
+      "n": 60,
+      "score": 50.53333333333333,
+      "cost_usd": 7.3706738375,
+      "evaluation_ids": [
+        "27f3faa2-68a4-40d4-9f33-6756f3c91e08"
+      ],
+      "project_id": "502a9d52-2725-4410-9a58-e469aa10fd12",
+      "source_format": "legacy score / metrics.cost; frozen published cohort",
+      "number": 7,
+      "sources": [
+        "https://lmnr.ai/project/502a9d52-2725-4410-9a58-e469aa10fd12/evaluations/27f3faa2-68a4-40d4-9f33-6756f3c91e08"
+      ]
+    },
+    {
+      "name": "GPT-6 Luna medium",
+      "family": "OpenAI",
+      "n": 60,
+      "score": 50.3,
+      "cost_usd": 0.12648466666666666,
+      "evaluation_ids": [
+        "c137d6cc-9350-456f-9d9a-212dff6e3ccf"
+      ],
+      "project_id": "b657f811-13a7-4dae-a67a-91445a567f24",
+      "recovery_replacements": 0,
+      "number": 8,
+      "sources": [
+        "https://lmnr.ai/project/b657f811-13a7-4dae-a67a-91445a567f24/evaluations/c137d6cc-9350-456f-9d9a-212dff6e3ccf"
+      ]
+    },
+    {
+      "name": "GPT-5.6 Sol xhigh",
+      "family": "OpenAI",
+      "n": 60,
+      "score": 49.06666666666667,
+      "cost_usd": 7.803157195833334,
+      "evaluation_ids": [
+        "caf5758b-0fef-4183-8ac8-df9f2e820497"
+      ],
+      "project_id": "502a9d52-2725-4410-9a58-e469aa10fd12",
+      "source_format": "legacy score / metrics.cost; frozen published cohort",
+      "number": 9,
+      "sources": [
+        "https://lmnr.ai/project/502a9d52-2725-4410-9a58-e469aa10fd12/evaluations/caf5758b-0fef-4183-8ac8-df9f2e820497"
+      ]
+    },
+    {
+      "name": "DeepSeek V4.1 Flash max",
+      "family": "DeepSeek",
+      "n": 60,
+      "score": 47.88333333333333,
+      "cost_usd": 0.26276373333333347,
+      "raw_score": 58.416666666666664,
+      "zeroed": 11,
+      "median_duration_seconds": 1908.8585,
+      "evaluation_ids": [
+        "718ac694-c215-4f7f-9712-5468a14c79d0"
+      ],
+      "project_id": "b657f811-13a7-4dae-a67a-91445a567f24",
+      "added": false,
+      "number": 10,
+      "sources": [
+        "https://lmnr.ai/project/b657f811-13a7-4dae-a67a-91445a567f24/evaluations/718ac694-c215-4f7f-9712-5468a14c79d0"
+      ]
+    },
+    {
+      "name": "DeepSeek V4.1 Flash high",
+      "family": "DeepSeek",
+      "n": 60,
+      "score": 41.46666666666667,
+      "cost_usd": 0.15239166666666668,
+      "evaluation_ids": [
+        "3779fbc8-7ef6-4fef-9e7a-3b53dc32c598"
+      ],
+      "project_id": "b657f811-13a7-4dae-a67a-91445a567f24",
+      "added": false,
+      "number": 11,
+      "sources": [
+        "https://lmnr.ai/project/b657f811-13a7-4dae-a67a-91445a567f24/evaluations/3779fbc8-7ef6-4fef-9e7a-3b53dc32c598"
+      ]
+    },
+    {
+      "name": "GPT-5.6 Luna xhigh",
+      "family": "OpenAI",
+      "n": 60,
+      "score": 41.166666666666664,
+      "cost_usd": 0.35812028433333337,
+      "evaluation_ids": [
+        "d7fbccfc-03ad-428e-85c2-f280f88cc642"
+      ],
+      "project_id": "502a9d52-2725-4410-9a58-e469aa10fd12",
+      "source_format": "legacy score / metrics.cost; frozen published cohort",
+      "number": 12,
+      "sources": [
+        "https://lmnr.ai/project/502a9d52-2725-4410-9a58-e469aa10fd12/evaluations/d7fbccfc-03ad-428e-85c2-f280f88cc642"
+      ]
+    },
+    {
+      "name": "GPT-6 Luna low",
+      "family": "OpenAI",
+      "n": 60,
+      "score": 40.68333333333334,
+      "cost_usd": 0.018376383333333333,
+      "evaluation_ids": [
+        "7e0f52fd-fe88-4f97-a950-f5f229b70ba6"
+      ],
+      "project_id": "b657f811-13a7-4dae-a67a-91445a567f24",
+      "recovery_replacements": 0,
+      "number": 13,
+      "sources": [
+        "https://lmnr.ai/project/b657f811-13a7-4dae-a67a-91445a567f24/evaluations/7e0f52fd-fe88-4f97-a950-f5f229b70ba6"
+      ]
+    },
+    {
+      "name": "Grok 4.7 high",
+      "family": "xAI",
+      "n": 60,
+      "score": 39.93333333333333,
+      "cost_usd": 5.724175466666667,
+      "evaluation_ids": [
+        "0c3e75ea-330e-4565-bf41-b35e2d02bd3f",
+        "4a77f05a-befd-417d-980b-ad72fffb9ba9"
+      ],
+      "project_id": "b657f811-13a7-4dae-a67a-91445a567f24",
+      "cohort_note": "Ordered continuation/recovery/regrading runs replace matching tasks; each task counted once.",
+      "number": 14,
+      "sources": [
+        "https://lmnr.ai/project/b657f811-13a7-4dae-a67a-91445a567f24/evaluations/0c3e75ea-330e-4565-bf41-b35e2d02bd3f",
+        "https://lmnr.ai/project/b657f811-13a7-4dae-a67a-91445a567f24/evaluations/4a77f05a-befd-417d-980b-ad72fffb9ba9"
+      ]
+    },
+    {
+      "name": "GPT-5.6 Sol default",
+      "family": "OpenAI",
+      "n": 60,
+      "score": 38.45,
+      "cost_usd": 2.714604029166667,
+      "evaluation_ids": [
+        "49ce6a8a-230b-45ee-8e5e-d9e294f5697f"
+      ],
+      "project_id": "502a9d52-2725-4410-9a58-e469aa10fd12",
+      "source_format": "legacy score / metrics.cost; frozen published cohort",
+      "number": 15,
+      "sources": [
+        "https://lmnr.ai/project/502a9d52-2725-4410-9a58-e469aa10fd12/evaluations/49ce6a8a-230b-45ee-8e5e-d9e294f5697f"
+      ]
+    },
+    {
+      "name": "DeepSeek V4.1 Flash low",
+      "family": "DeepSeek",
+      "n": 60,
+      "score": 38.166666666666664,
+      "cost_usd": 0.13841965,
+      "evaluation_ids": [
+        "9d7d300a-4b57-45ec-ac66-bda32d0e93b6"
+      ],
+      "project_id": "b657f811-13a7-4dae-a67a-91445a567f24",
+      "added": false,
+      "number": 16,
+      "sources": [
+        "https://lmnr.ai/project/b657f811-13a7-4dae-a67a-91445a567f24/evaluations/9d7d300a-4b57-45ec-ac66-bda32d0e93b6"
+      ]
+    },
+    {
+      "name": "GLM 5.3 FlashX max",
+      "family": "Z.AI",
+      "n": 60,
+      "score": 38.11666666666667,
+      "cost_usd": 0.6281941666666667,
+      "evaluation_ids": [
+        "eefab356-4813-4574-9905-6b5704ca3594"
+      ],
+      "project_id": "b657f811-13a7-4dae-a67a-91445a567f24",
+      "added": false,
+      "number": 17,
+      "sources": [
+        "https://lmnr.ai/project/b657f811-13a7-4dae-a67a-91445a567f24/evaluations/eefab356-4813-4574-9905-6b5704ca3594"
+      ]
+    },
+    {
+      "name": "MiMo V2.6 Flash thinking",
+      "family": "Xiaomi",
+      "n": 60,
+      "score": 37.63333333333333,
+      "cost_usd": 0.10040696666666665,
+      "raw_score": 48.266666666666666,
+      "zeroed": 13,
+      "median_duration_seconds": 1169.029,
+      "evaluation_ids": [
+        "b48cdda5-3bdf-4812-a44d-dfb8ec00dac0"
+      ],
+      "project_id": "b657f811-13a7-4dae-a67a-91445a567f24",
+      "added": true,
+      "number": 18,
+      "sources": [
+        "https://lmnr.ai/project/b657f811-13a7-4dae-a67a-91445a567f24/evaluations/b48cdda5-3bdf-4812-a44d-dfb8ec00dac0"
+      ]
+    },
+    {
+      "name": "MiMo V2.6 Pro thinking",
+      "family": "Xiaomi",
+      "n": 60,
+      "score": 37.06666666666667,
+      "cost_usd": 0.2333482333333334,
+      "raw_score": 48.38333333333333,
+      "zeroed": 17,
+      "median_duration_seconds": 1009.9604999999999,
+      "evaluation_ids": [
+        "762fbf94-f1f6-4d3e-9c19-32fe9199a261"
+      ],
+      "project_id": "b657f811-13a7-4dae-a67a-91445a567f24",
+      "added": true,
+      "number": 19,
+      "sources": [
+        "https://lmnr.ai/project/b657f811-13a7-4dae-a67a-91445a567f24/evaluations/762fbf94-f1f6-4d3e-9c19-32fe9199a261"
+      ]
+    },
+    {
+      "name": "Kimi K3",
+      "family": "Moonshot",
+      "n": 60,
+      "score": 36.6,
+      "cost_usd": 4.11552724,
+      "evaluation_ids": [
+        "3dcffb68-d76d-43b8-9718-107bc471cc3b"
+      ],
+      "project_id": "502a9d52-2725-4410-9a58-e469aa10fd12",
+      "source_format": "legacy score / metrics.cost; frozen published cohort",
+      "number": 20,
+      "sources": [
+        "https://lmnr.ai/project/502a9d52-2725-4410-9a58-e469aa10fd12/evaluations/3dcffb68-d76d-43b8-9718-107bc471cc3b"
+      ]
+    },
+    {
+      "name": "GPT-5.5",
+      "family": "OpenAI",
+      "n": 60,
+      "score": 34.9,
+      "cost_usd": 2.3631693,
+      "evaluation_ids": [
+        "8fbb88f6-52a6-4627-bff4-462cff7decf3"
+      ],
+      "project_id": "502a9d52-2725-4410-9a58-e469aa10fd12",
+      "source_format": "legacy score / metrics.cost; frozen published cohort",
+      "number": 21,
+      "sources": [
+        "https://lmnr.ai/project/502a9d52-2725-4410-9a58-e469aa10fd12/evaluations/8fbb88f6-52a6-4627-bff4-462cff7decf3"
+      ]
+    },
+    {
+      "name": "Qwen3.8 Max",
+      "family": "Qwen",
+      "n": 60,
+      "score": 33.6,
+      "cost_usd": 3.0273403458333337,
+      "evaluation_ids": [
+        "36a84057-fe32-4aa1-91e0-72c93a4cc01e"
+      ],
+      "project_id": "502a9d52-2725-4410-9a58-e469aa10fd12",
+      "source_format": "legacy score / metrics.cost; frozen published cohort",
+      "number": 22,
+      "sources": [
+        "https://lmnr.ai/project/502a9d52-2725-4410-9a58-e469aa10fd12/evaluations/36a84057-fe32-4aa1-91e0-72c93a4cc01e"
+      ]
+    },
+    {
+      "name": "Grok 4.5",
+      "family": "xAI",
+      "n": 60,
+      "score": 33.03333333333333,
+      "cost_usd": 1.15309032,
+      "evaluation_ids": [
+        "28135351-86d7-434b-b499-5c73d552dfb9"
+      ],
+      "project_id": "502a9d52-2725-4410-9a58-e469aa10fd12",
+      "source_format": "legacy score / metrics.cost; frozen published cohort",
+      "number": 23,
+      "sources": [
+        "https://lmnr.ai/project/502a9d52-2725-4410-9a58-e469aa10fd12/evaluations/28135351-86d7-434b-b499-5c73d552dfb9"
+      ]
+    },
+    {
+      "name": "GLM 5.3 Flash max",
+      "family": "Z.AI",
+      "n": 60,
+      "score": 32.333333333333336,
+      "cost_usd": 0.5433758,
+      "evaluation_ids": [
+        "ac7b8b69-af4f-4e86-8242-3e36a2218115"
+      ],
+      "project_id": "b657f811-13a7-4dae-a67a-91445a567f24",
+      "number": 24,
+      "sources": [
+        "https://lmnr.ai/project/b657f811-13a7-4dae-a67a-91445a567f24/evaluations/ac7b8b69-af4f-4e86-8242-3e36a2218115"
+      ]
+    },
+    {
+      "name": "GPT-6 Luna none",
+      "family": "OpenAI",
+      "n": 60,
+      "score": 31.75,
+      "cost_usd": 0.07684865,
+      "evaluation_ids": [
+        "37895d46-294b-4d7c-be54-f0dcf6d88d8e"
+      ],
+      "project_id": "b657f811-13a7-4dae-a67a-91445a567f24",
+      "recovery_replacements": 0,
+      "number": 25,
+      "sources": [
+        "https://lmnr.ai/project/b657f811-13a7-4dae-a67a-91445a567f24/evaluations/37895d46-294b-4d7c-be54-f0dcf6d88d8e"
+      ]
+    },
+    {
+      "name": "GPT-5.6 Terra",
+      "family": "OpenAI",
+      "n": 60,
+      "score": 31.516666666666666,
+      "cost_usd": 0.41662209,
+      "evaluation_ids": [
+        "b69abf84-742f-4dfc-8ed5-f6c258f109ad"
+      ],
+      "project_id": "502a9d52-2725-4410-9a58-e469aa10fd12",
+      "source_format": "legacy score / metrics.cost; frozen published cohort",
+      "number": 26,
+      "sources": [
+        "https://lmnr.ai/project/502a9d52-2725-4410-9a58-e469aa10fd12/evaluations/b69abf84-742f-4dfc-8ed5-f6c258f109ad"
+      ]
+    },
+    {
+      "name": "Grok 4.6",
+      "family": "xAI",
+      "n": 60,
+      "score": 31.183333333333334,
+      "cost_usd": 3.934024266666667,
+      "evaluation_ids": [
+        "e3b8da9c-b048-40f4-92b3-af71ac3d10b9"
+      ],
+      "project_id": "502a9d52-2725-4410-9a58-e469aa10fd12",
+      "source_format": "legacy score / metrics.cost; frozen published cohort",
+      "number": 27,
+      "sources": [
+        "https://lmnr.ai/project/502a9d52-2725-4410-9a58-e469aa10fd12/evaluations/e3b8da9c-b048-40f4-92b3-af71ac3d10b9"
+      ]
+    },
+    {
+      "name": "DeepSeek V4.1 Flash none",
+      "family": "DeepSeek",
+      "n": 60,
+      "score": 29.05,
+      "cost_usd": 0.11757063333333333,
+      "evaluation_ids": [
+        "f24dc7be-1ec8-4f20-9450-5547a5b25bb0"
+      ],
+      "project_id": "b657f811-13a7-4dae-a67a-91445a567f24",
+      "added": false,
+      "number": 28,
+      "sources": [
+        "https://lmnr.ai/project/b657f811-13a7-4dae-a67a-91445a567f24/evaluations/f24dc7be-1ec8-4f20-9450-5547a5b25bb0"
+      ]
+    },
+    {
+      "name": "GLM 5.3",
+      "family": "Z.AI",
+      "n": 60,
+      "score": 28.05,
+      "cost_usd": 2.808979114,
+      "evaluation_ids": [
+        "7f91b61d-c73c-44dc-9527-f6f2c5f0aa34"
+      ],
+      "project_id": "502a9d52-2725-4410-9a58-e469aa10fd12",
+      "source_format": "legacy score / metrics.cost; frozen published cohort",
+      "number": 29,
+      "sources": [
+        "https://lmnr.ai/project/502a9d52-2725-4410-9a58-e469aa10fd12/evaluations/7f91b61d-c73c-44dc-9527-f6f2c5f0aa34"
+      ]
+    },
+    {
+      "name": "GLM 5.3 Flash default",
+      "family": "Z.AI",
+      "n": 60,
+      "score": 28.033333333333335,
+      "cost_usd": 0.11415670733333333,
+      "evaluation_ids": [
+        "77f4469b-9096-4f8e-b857-107aaa002419"
+      ],
+      "project_id": "502a9d52-2725-4410-9a58-e469aa10fd12",
+      "source_format": "legacy score / metrics.cost; frozen published cohort",
+      "number": 30,
+      "sources": [
+        "https://lmnr.ai/project/502a9d52-2725-4410-9a58-e469aa10fd12/evaluations/77f4469b-9096-4f8e-b857-107aaa002419"
+      ]
+    },
+    {
+      "name": "GLM 5.2",
+      "family": "Z.AI",
+      "n": 60,
+      "score": 27.9,
+      "cost_usd": 1.48496001248,
+      "evaluation_ids": [
+        "050db52c-80c1-481a-8ad5-062c501842f9"
+      ],
+      "project_id": "502a9d52-2725-4410-9a58-e469aa10fd12",
+      "source_format": "legacy score / metrics.cost; frozen published cohort",
+      "number": 31,
+      "sources": [
+        "https://lmnr.ai/project/502a9d52-2725-4410-9a58-e469aa10fd12/evaluations/050db52c-80c1-481a-8ad5-062c501842f9"
+      ]
+    },
+    {
+      "name": "Claude Opus 4.8",
+      "family": "Anthropic",
+      "n": 60,
+      "score": 27.2,
+      "cost_usd": 4.269702254166667,
+      "evaluation_ids": [
+        "ca4168f0-5b9c-40f6-a254-7b90c86f2338"
+      ],
+      "project_id": "502a9d52-2725-4410-9a58-e469aa10fd12",
+      "source_format": "legacy score / metrics.cost; frozen published cohort",
+      "number": 32,
+      "sources": [
+        "https://lmnr.ai/project/502a9d52-2725-4410-9a58-e469aa10fd12/evaluations/ca4168f0-5b9c-40f6-a254-7b90c86f2338"
+      ]
+    },
+    {
+      "name": "DeepSeek V4 Pro",
+      "family": "DeepSeek",
+      "n": 60,
+      "score": 23.433333333333334,
+      "cost_usd": 1.0064134384433334,
+      "evaluation_ids": [
+        "ef5681d6-49a4-4cbb-be3b-c15ba319784d"
+      ],
+      "project_id": "502a9d52-2725-4410-9a58-e469aa10fd12",
+      "source_format": "legacy score / metrics.cost; frozen published cohort",
+      "number": 33,
+      "sources": [
+        "https://lmnr.ai/project/502a9d52-2725-4410-9a58-e469aa10fd12/evaluations/ef5681d6-49a4-4cbb-be3b-c15ba319784d"
+      ]
+    },
+    {
+      "name": "DeepSeek V4 Flash 0731",
+      "family": "DeepSeek",
+      "n": 60,
+      "score": 19.633333333333333,
+      "cost_usd": 0.14879154033333333,
+      "evaluation_ids": [
+        "ba4aee72-5998-4f8f-8133-a917946f4313"
+      ],
+      "project_id": "502a9d52-2725-4410-9a58-e469aa10fd12",
+      "source_format": "legacy score / metrics.cost; frozen published cohort",
+      "number": 34,
+      "sources": [
+        "https://lmnr.ai/project/502a9d52-2725-4410-9a58-e469aa10fd12/evaluations/ba4aee72-5998-4f8f-8133-a917946f4313"
+      ]
+    },
+    {
+      "name": "Qwen3.8 27B",
+      "family": "Qwen",
+      "n": 60,
+      "score": 17.8,
+      "cost_usd": 0.6887538908333333,
+      "evaluation_ids": [
+        "d5478cfa-bedd-491a-ab60-d109278744bb"
+      ],
+      "project_id": "502a9d52-2725-4410-9a58-e469aa10fd12",
+      "source_format": "legacy score / metrics.cost; frozen published cohort",
+      "number": 35,
+      "sources": [
+        "https://lmnr.ai/project/502a9d52-2725-4410-9a58-e469aa10fd12/evaluations/d5478cfa-bedd-491a-ab60-d109278744bb"
+      ]
+    },
+    {
+      "name": "GPT-5.6 Luna default",
+      "family": "OpenAI",
+      "n": 60,
+      "score": 16.05,
+      "cost_usd": 0.05563189733333333,
+      "evaluation_ids": [
+        "b46a3338-b903-4e21-86b9-32d35f70b19d"
+      ],
+      "project_id": "502a9d52-2725-4410-9a58-e469aa10fd12",
+      "source_format": "legacy score / metrics.cost; frozen published cohort",
+      "number": 36,
+      "sources": [
+        "https://lmnr.ai/project/502a9d52-2725-4410-9a58-e469aa10fd12/evaluations/b46a3338-b903-4e21-86b9-32d35f70b19d"
+      ]
+    },
+    {
+      "name": "MiniMax M3",
+      "family": "MiniMax",
+      "n": 60,
+      "score": 11.816666666666666,
+      "cost_usd": 0.883116569,
+      "evaluation_ids": [
+        "e654c4b8-97c1-4bed-93c3-3d0a37d56d08"
+      ],
+      "project_id": "502a9d52-2725-4410-9a58-e469aa10fd12",
+      "source_format": "legacy score / metrics.cost; frozen published cohort",
+      "number": 37,
+      "sources": [
+        "https://lmnr.ai/project/502a9d52-2725-4410-9a58-e469aa10fd12/evaluations/e654c4b8-97c1-4bed-93c3-3d0a37d56d08"
+      ]
+    },
+    {
+      "name": "Gemini 3.7 Flash",
+      "family": "Google",
+      "n": 60,
+      "score": 9.583333333333334,
+      "cost_usd": 0.99757554875,
+      "evaluation_ids": [
+        "1b41f5e9-8516-4dfb-8e0d-5203fb47c64b"
+      ],
+      "project_id": "502a9d52-2725-4410-9a58-e469aa10fd12",
+      "source_format": "legacy score / metrics.cost; frozen published cohort",
+      "number": 38,
+      "sources": [
+        "https://lmnr.ai/project/502a9d52-2725-4410-9a58-e469aa10fd12/evaluations/1b41f5e9-8516-4dfb-8e0d-5203fb47c64b"
+      ]
+    },
+    {
+      "name": "Gemini 3.1 Pro",
+      "family": "Google",
+      "n": 60,
+      "score": 6.883333333333334,
+      "cost_usd": 0.96471654,
+      "evaluation_ids": [
+        "594af203-bdf1-46a3-9d3b-e342024b169b"
+      ],
+      "project_id": "502a9d52-2725-4410-9a58-e469aa10fd12",
+      "source_format": "legacy score / metrics.cost; frozen published cohort",
+      "number": 39,
+      "sources": [
+        "https://lmnr.ai/project/502a9d52-2725-4410-9a58-e469aa10fd12/evaluations/594af203-bdf1-46a3-9d3b-e342024b169b"
+      ]
+    },
+    {
+      "name": "Mercury 2.5 (diffusion)",
+      "family": "Inception",
+      "n": 60,
+      "score": 5.1,
+      "cost_usd": 0.049479333333333334,
+      "evaluation_ids": [
+        "5e41944c-8b12-4f0a-9184-7b2d96bb7c86"
+      ],
+      "project_id": "b657f811-13a7-4dae-a67a-91445a567f24",
+      "added": true,
+      "number": 40,
+      "sources": [
+        "https://lmnr.ai/project/b657f811-13a7-4dae-a67a-91445a567f24/evaluations/5e41944c-8b12-4f0a-9184-7b2d96bb7c86"
+      ]
+    }
+  ]
+}

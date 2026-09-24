@@ -36,9 +36,17 @@
 
 **200 web tasks scored against weighted findings rubrics**
 
-<img alt="BU Bench V2 - Mean rubric score by model and cost per task, including GPT-6 Astra" src="official_plots/bu_bench_v2_astra.jpg" width="100%">
+<picture>
+  <source media="(prefers-color-scheme: light)" srcset="official_plots/bu_bench_v2_mimo_light.png">
+  <source media="(prefers-color-scheme: dark)" srcset="official_plots/bu_bench_v2_mimo_dark.png">
+  <img alt="BU Bench V2 - Final findings score and recorded cost per task for 40 model configurations, including Xiaomi MiMo Flash and Pro and Mercury 2.5" src="official_plots/bu_bench_v2_mimo_light.png" width="100%">
+</picture>
 
-Results are from an earlier 60-task cut of this benchmark.
+Results are from an earlier **60-task cut**, not the current 200-task set. Scores are mean weighted rubric credit after judge penalties, not task success percentages. These are historical API runs with different dates and settings; small differences do not establish a reliable ranking. Recorded costs cover the selected agent task results and exclude judge, infrastructure and discarded recovery attempts.
+
+The September 23, 2026 snapshot preserves the existing plotted cohorts and their continuation/recovery replacements, and adds **Xiaomi MiMo V2.6 Flash**, **MiMo V2.6 Pro**, and **Mercury 2.5**. MiMo's direct API thinking runs are used; its smaller 9B distilled checkpoint has not been evaluated here.
+
+[Aggregate results and source evaluation IDs](official_results/bu_bench_v2_2026_09_23.json) · [CSV](official_results/bu_bench_v2_2026_09_23.csv) · [Cohort notes and plot reproduction](official_results/bu_bench_v2_2026_09_23.md)
 
 **Tasks:** [BU Bench V2 task set](BU_Bench_V2.enc) (200 tasks, encrypted).
 

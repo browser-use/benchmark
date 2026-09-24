@@ -1,0 +1,1409 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1440pt" height="864pt" viewBox="0 0 1440 864" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-09-23</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 864
+L 1440 864
+L 1440 0
+L 0 0
+z
+" style="fill: #fafbfd"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 83.52 721.44
+L 853.92 721.44
+L 853.92 117.504
+L 83.52 117.504
+z
+" style="fill: #fafbfd"/>
+   </g>
+   <g id="line2d_1">
+    <path d="M 120.678277 475.738704
+L 327.776911 417.660192
+L 349.428731 395.616528
+L 371.196404 373.874832
+L 569.576853 317.708784
+L 784.045943 234.466272
+" clip-path="url(#pd26b90fc81)" style="fill: none; stroke-dasharray: 4,5; stroke-dashoffset: 0; stroke: #536377; stroke-opacity: 0.55"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_2">
+      <path d="M 129.767808 721.44
+L 129.767808 117.504
+" clip-path="url(#pd26b90fc81)" style="fill: none; stroke: #dbe2eb; stroke-width: 0.65; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_3"/>
+     <g id="text_1">
+      <text style="font-size: 10px; font-family: 'Geist Mono'; text-anchor: middle; fill: #536377" x="129.767808" y="739.49" transform="rotate(-0 129.767808 739.49)">$0.02</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_4">
+      <path d="M 228.138555 721.44
+L 228.138555 117.504
+" clip-path="url(#pd26b90fc81)" style="fill: none; stroke: #dbe2eb; stroke-width: 0.65; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_5"/>
+     <g id="text_2">
+      <text style="font-size: 10px; font-family: 'Geist Mono'; text-anchor: middle; fill: #536377" x="228.138555" y="739.49" transform="rotate(-0 228.138555 739.49)">$0.05</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_6">
+      <path d="M 302.553153 721.44
+L 302.553153 117.504
+" clip-path="url(#pd26b90fc81)" style="fill: none; stroke: #dbe2eb; stroke-width: 0.65; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_7"/>
+     <g id="text_3">
+      <text style="font-size: 10px; font-family: 'Geist Mono'; text-anchor: middle; fill: #536377" x="302.553153" y="739.49" transform="rotate(-0 302.553153 739.49)">$0.1</text>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_8">
+      <path d="M 376.967751 721.44
+L 376.967751 117.504
+" clip-path="url(#pd26b90fc81)" style="fill: none; stroke: #dbe2eb; stroke-width: 0.65; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_9"/>
+     <g id="text_4">
+      <text style="font-size: 10px; font-family: 'Geist Mono'; text-anchor: middle; fill: #536377" x="376.967751" y="739.49" transform="rotate(-0 376.967751 739.49)">$0.2</text>
+     </g>
+    </g>
+    <g id="xtick_5">
+     <g id="line2d_10">
+      <path d="M 475.338499 721.44
+L 475.338499 117.504
+" clip-path="url(#pd26b90fc81)" style="fill: none; stroke: #dbe2eb; stroke-width: 0.65; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_11"/>
+     <g id="text_5">
+      <text style="font-size: 10px; font-family: 'Geist Mono'; text-anchor: middle; fill: #536377" x="475.338499" y="739.49" transform="rotate(-0 475.338499 739.49)">$0.5</text>
+     </g>
+    </g>
+    <g id="xtick_6">
+     <g id="line2d_12">
+      <path d="M 549.753096 721.44
+L 549.753096 117.504
+" clip-path="url(#pd26b90fc81)" style="fill: none; stroke: #dbe2eb; stroke-width: 0.65; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_13"/>
+     <g id="text_6">
+      <text style="font-size: 10px; font-family: 'Geist Mono'; text-anchor: middle; fill: #536377" x="549.753096" y="739.49" transform="rotate(-0 549.753096 739.49)">$1</text>
+     </g>
+    </g>
+    <g id="xtick_7">
+     <g id="line2d_14">
+      <path d="M 624.167694 721.44
+L 624.167694 117.504
+" clip-path="url(#pd26b90fc81)" style="fill: none; stroke: #dbe2eb; stroke-width: 0.65; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_15"/>
+     <g id="text_7">
+      <text style="font-size: 10px; font-family: 'Geist Mono'; text-anchor: middle; fill: #536377" x="624.167694" y="739.49" transform="rotate(-0 624.167694 739.49)">$2</text>
+     </g>
+    </g>
+    <g id="xtick_8">
+     <g id="line2d_16">
+      <path d="M 722.538442 721.44
+L 722.538442 117.504
+" clip-path="url(#pd26b90fc81)" style="fill: none; stroke: #dbe2eb; stroke-width: 0.65; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_17"/>
+     <g id="text_8">
+      <text style="font-size: 10px; font-family: 'Geist Mono'; text-anchor: middle; fill: #536377" x="722.538442" y="739.49" transform="rotate(-0 722.538442 739.49)">$5</text>
+     </g>
+    </g>
+    <g id="xtick_9">
+     <g id="line2d_18">
+      <path d="M 796.95304 721.44
+L 796.95304 117.504
+" clip-path="url(#pd26b90fc81)" style="fill: none; stroke: #dbe2eb; stroke-width: 0.65; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_19"/>
+     <g id="text_9">
+      <text style="font-size: 10px; font-family: 'Geist Mono'; text-anchor: middle; fill: #536377" x="796.95304" y="739.49" transform="rotate(-0 796.95304 739.49)">$10</text>
+     </g>
+    </g>
+    <g id="xtick_10"/>
+    <g id="xtick_11"/>
+    <g id="xtick_12"/>
+    <g id="xtick_13"/>
+    <g id="xtick_14"/>
+    <g id="xtick_15"/>
+    <g id="xtick_16"/>
+    <g id="xtick_17"/>
+    <g id="xtick_18"/>
+    <g id="xtick_19"/>
+    <g id="xtick_20"/>
+    <g id="xtick_21"/>
+    <g id="xtick_22"/>
+    <g id="xtick_23"/>
+    <g id="xtick_24"/>
+    <g id="xtick_25"/>
+    <g id="xtick_26"/>
+    <g id="xtick_27"/>
+    <g id="text_10">
+     <text style="font-size: 11px; font-family: 'Geist Mono'; text-anchor: middle; fill: #172331" x="468.72" y="767.495" transform="rotate(-0 468.72 767.495)">Recorded agent cost per task (USD, log scale)</text>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_20">
+      <path d="M 83.52 721.44
+L 853.92 721.44
+" clip-path="url(#pd26b90fc81)" style="fill: none; stroke: #dbe2eb; stroke-width: 0.65; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_21"/>
+     <g id="text_11">
+      <text style="font-size: 10px; font-family: 'Geist Mono'; text-anchor: end; fill: #536377" x="75.52" y="726.465" transform="rotate(-0 75.52 726.465)">0</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_22">
+      <path d="M 83.52 661.0464
+L 853.92 661.0464
+" clip-path="url(#pd26b90fc81)" style="fill: none; stroke: #dbe2eb; stroke-width: 0.65; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_23"/>
+     <g id="text_12">
+      <text style="font-size: 10px; font-family: 'Geist Mono'; text-anchor: end; fill: #536377" x="75.52" y="666.0714" transform="rotate(-0 75.52 666.0714)">10</text>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_24">
+      <path d="M 83.52 600.6528
+L 853.92 600.6528
+" clip-path="url(#pd26b90fc81)" style="fill: none; stroke: #dbe2eb; stroke-width: 0.65; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_25"/>
+     <g id="text_13">
+      <text style="font-size: 10px; font-family: 'Geist Mono'; text-anchor: end; fill: #536377" x="75.52" y="605.6778" transform="rotate(-0 75.52 605.6778)">20</text>
+     </g>
+    </g>
+    <g id="ytick_4">
+     <g id="line2d_26">
+      <path d="M 83.52 540.2592
+L 853.92 540.2592
+" clip-path="url(#pd26b90fc81)" style="fill: none; stroke: #dbe2eb; stroke-width: 0.65; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_27"/>
+     <g id="text_14">
+      <text style="font-size: 10px; font-family: 'Geist Mono'; text-anchor: end; fill: #536377" x="75.52" y="545.2842" transform="rotate(-0 75.52 545.2842)">30</text>
+     </g>
+    </g>
+    <g id="ytick_5">
+     <g id="line2d_28">
+      <path d="M 83.52 479.8656
+L 853.92 479.8656
+" clip-path="url(#pd26b90fc81)" style="fill: none; stroke: #dbe2eb; stroke-width: 0.65; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_29"/>
+     <g id="text_15">
+      <text style="font-size: 10px; font-family: 'Geist Mono'; text-anchor: end; fill: #536377" x="75.52" y="484.8906" transform="rotate(-0 75.52 484.8906)">40</text>
+     </g>
+    </g>
+    <g id="ytick_6">
+     <g id="line2d_30">
+      <path d="M 83.52 419.472
+L 853.92 419.472
+" clip-path="url(#pd26b90fc81)" style="fill: none; stroke: #dbe2eb; stroke-width: 0.65; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_31"/>
+     <g id="text_16">
+      <text style="font-size: 10px; font-family: 'Geist Mono'; text-anchor: end; fill: #536377" x="75.52" y="424.497" transform="rotate(-0 75.52 424.497)">50</text>
+     </g>
+    </g>
+    <g id="ytick_7">
+     <g id="line2d_32">
+      <path d="M 83.52 359.0784
+L 853.92 359.0784
+" clip-path="url(#pd26b90fc81)" style="fill: none; stroke: #dbe2eb; stroke-width: 0.65; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_33"/>
+     <g id="text_17">
+      <text style="font-size: 10px; font-family: 'Geist Mono'; text-anchor: end; fill: #536377" x="75.52" y="364.1034" transform="rotate(-0 75.52 364.1034)">60</text>
+     </g>
+    </g>
+    <g id="ytick_8">
+     <g id="line2d_34">
+      <path d="M 83.52 298.6848
+L 853.92 298.6848
+" clip-path="url(#pd26b90fc81)" style="fill: none; stroke: #dbe2eb; stroke-width: 0.65; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_35"/>
+     <g id="text_18">
+      <text style="font-size: 10px; font-family: 'Geist Mono'; text-anchor: end; fill: #536377" x="75.52" y="303.7098" transform="rotate(-0 75.52 303.7098)">70</text>
+     </g>
+    </g>
+    <g id="ytick_9">
+     <g id="line2d_36">
+      <path d="M 83.52 238.2912
+L 853.92 238.2912
+" clip-path="url(#pd26b90fc81)" style="fill: none; stroke: #dbe2eb; stroke-width: 0.65; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_37"/>
+     <g id="text_19">
+      <text style="font-size: 10px; font-family: 'Geist Mono'; text-anchor: end; fill: #536377" x="75.52" y="243.3162" transform="rotate(-0 75.52 243.3162)">80</text>
+     </g>
+    </g>
+    <g id="ytick_10">
+     <g id="line2d_38">
+      <path d="M 83.52 177.8976
+L 853.92 177.8976
+" clip-path="url(#pd26b90fc81)" style="fill: none; stroke: #dbe2eb; stroke-width: 0.65; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_39"/>
+     <g id="text_20">
+      <text style="font-size: 10px; font-family: 'Geist Mono'; text-anchor: end; fill: #536377" x="75.52" y="182.9226" transform="rotate(-0 75.52 182.9226)">90</text>
+     </g>
+    </g>
+    <g id="ytick_11">
+     <g id="line2d_40">
+      <path d="M 83.52 117.504
+L 853.92 117.504
+" clip-path="url(#pd26b90fc81)" style="fill: none; stroke: #dbe2eb; stroke-width: 0.65; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_41"/>
+     <g id="text_21">
+      <text style="font-size: 10px; font-family: 'Geist Mono'; text-anchor: end; fill: #536377" x="75.52" y="122.529" transform="rotate(-0 75.52 122.529)">100</text>
+     </g>
+    </g>
+    <g id="text_22">
+     <text style="font-size: 11px; font-family: 'Geist Mono'; text-anchor: middle; fill: #172331" x="40.275" y="419.472" transform="rotate(-90 40.275 419.472)">Mean final findings score / 100</text>
+    </g>
+   </g>
+   <g id="PathCollection_1">
+    <path d="M 302.989176 501.904719
+C 305.04343 501.904719 307.013824 501.088555 308.466402 499.635978
+C 309.918979 498.1834 310.735143 496.213006 310.735143 494.158752
+C 310.735143 492.104498 309.918979 490.134104 308.466402 488.681526
+C 307.013824 487.228949 305.04343 486.412785 302.989176 486.412785
+C 300.934922 486.412785 298.964528 487.228949 297.51195 488.681526
+C 296.059373 490.134104 295.243209 492.104498 295.243209 494.158752
+C 295.243209 496.213006 296.059373 498.1834 297.51195 499.635978
+C 298.964528 501.088555 300.934922 501.904719 302.989176 501.904719
+L 302.989176 501.904719
+z
+" clip-path="url(#pd26b90fc81)" style="fill: none; stroke: #bd5800"/>
+   </g>
+   <g id="PathCollection_2">
+    <path d="M 393.523849 505.327023
+C 395.578103 505.327023 397.548497 504.510859 399.001074 503.058282
+C 400.453652 501.605704 401.269816 499.63531 401.269816 497.581056
+C 401.269816 495.526802 400.453652 493.556408 399.001074 492.10383
+C 397.548497 490.651253 395.578103 489.835089 393.523849 489.835089
+C 391.469594 489.835089 389.4992 490.651253 388.046623 492.10383
+C 386.594046 493.556408 385.777882 495.526802 385.777882 497.581056
+C 385.777882 499.63531 386.594046 501.605704 388.046623 503.058282
+C 389.4992 504.510859 391.469594 505.327023 393.523849 505.327023
+L 393.523849 505.327023
+z
+" clip-path="url(#pd26b90fc81)" style="fill: none; stroke: #bd5800"/>
+   </g>
+   <g id="PathCollection_3">
+    <path d="M 227.014744 698.385231
+C 229.068998 698.385231 231.039392 697.569067 232.491969 696.11649
+C 233.944546 694.663912 234.76071 692.693518 234.76071 690.639264
+C 234.76071 688.58501 233.944546 686.614616 232.491969 685.162038
+C 231.039392 683.709461 229.068998 682.893297 227.014744 682.893297
+C 224.960489 682.893297 222.990095 683.709461 221.537518 685.162038
+C 220.084941 686.614616 219.268777 688.58501 219.268777 690.639264
+C 219.268777 692.693518 220.084941 694.663912 221.537518 696.11649
+C 222.990095 697.569067 224.960489 698.385231 227.014744 698.385231
+L 227.014744 698.385231
+z
+" clip-path="url(#pd26b90fc81)" style="fill: none; stroke: #963ca1"/>
+   </g>
+   <g id="text_23">
+    <text style="font-size: 9px; font-family: 'Geist Mono'; text-anchor: start; fill: #536377" x="102.78" y="135.62208" transform="rotate(-0 102.78 135.62208)">Higher + further left is better</text>
+   </g>
+   <g id="text_24">
+    <text style="font-size: 9px; font-family: 'Geist Mono'; text-anchor: start; fill: #536377" x="102.78" y="790.89264" transform="rotate(-0 102.78 790.89264)">Numbers match the table. Rings mark added models.</text>
+   </g>
+   <g id="PathCollection_4">
+    <defs>
+     <path id="m4448c6c891" d="M 0 6.123724
+C 1.624031 6.123724 3.181764 5.47849 4.330127 4.330127
+C 5.47849 3.181764 6.123724 1.624031 6.123724 0
+C 6.123724 -1.624031 5.47849 -3.181764 4.330127 -4.330127
+C 3.181764 -5.47849 1.624031 -6.123724 0 -6.123724
+C -1.624031 -6.123724 -3.181764 -5.47849 -4.330127 -4.330127
+C -5.47849 -3.181764 -6.123724 -1.624031 -6.123724 0
+C -6.123724 1.624031 -5.47849 3.181764 -4.330127 4.330127
+C -3.181764 5.47849 -1.624031 6.123724 0 6.123724
+z
+" style="stroke: #fafbfd; stroke-width: 1.2"/>
+    </defs>
+    <g clip-path="url(#pd26b90fc81)">
+     <use xlink:href="#m4448c6c891" x="784.045943" y="234.466272" style="fill: #365ec0; stroke: #fafbfd; stroke-width: 1.2"/>
+    </g>
+   </g>
+   <g id="PathCollection_5">
+    <g clip-path="url(#pd26b90fc81)">
+     <use xlink:href="#m4448c6c891" x="569.576853" y="317.708784" style="fill: #365ec0; stroke: #fafbfd; stroke-width: 1.2"/>
+    </g>
+   </g>
+   <g id="PathCollection_6">
+    <defs>
+     <path id="m2b2502c997" d="M 0 4.690416
+C 1.243913 4.690416 2.437046 4.196204 3.316625 3.316625
+C 4.196204 2.437046 4.690416 1.243913 4.690416 0
+C 4.690416 -1.243913 4.196204 -2.437046 3.316625 -3.316625
+C 2.437046 -4.196204 1.243913 -4.690416 0 -4.690416
+C -1.243913 -4.690416 -2.437046 -4.196204 -3.316625 -3.316625
+C -4.196204 -2.437046 -4.690416 -1.243913 -4.690416 0
+C -4.690416 1.243913 -4.196204 2.437046 -3.316625 3.316625
+C -2.437046 4.196204 -1.243913 4.690416 0 4.690416
+z
+" style="stroke: #fafbfd; stroke-width: 1.2"/>
+    </defs>
+    <g clip-path="url(#pd26b90fc81)">
+     <use xlink:href="#m2b2502c997" x="704.20095" y="362.702016" style="fill: #935832; stroke: #fafbfd; stroke-width: 1.2"/>
+    </g>
+   </g>
+   <g id="PathCollection_7">
+    <g clip-path="url(#pd26b90fc81)">
+     <use xlink:href="#m4448c6c891" x="371.196404" y="373.874832" style="fill: #365ec0; stroke: #fafbfd; stroke-width: 1.2"/>
+    </g>
+   </g>
+   <g id="PathCollection_8">
+    <g clip-path="url(#pd26b90fc81)">
+     <use xlink:href="#m2b2502c997" x="774.470382" y="381.826656" style="fill: #935832; stroke: #fafbfd; stroke-width: 1.2"/>
+    </g>
+   </g>
+   <g id="PathCollection_9">
+    <g clip-path="url(#pd26b90fc81)">
+     <use xlink:href="#m4448c6c891" x="349.428731" y="395.616528" style="fill: #365ec0; stroke: #fafbfd; stroke-width: 1.2"/>
+    </g>
+   </g>
+   <g id="PathCollection_10">
+    <g clip-path="url(#pd26b90fc81)">
+     <use xlink:href="#m2b2502c997" x="764.200825" y="416.251008" style="fill: #935832; stroke: #fafbfd; stroke-width: 1.2"/>
+    </g>
+   </g>
+   <g id="PathCollection_11">
+    <g clip-path="url(#pd26b90fc81)">
+     <use xlink:href="#m4448c6c891" x="327.776911" y="417.660192" style="fill: #365ec0; stroke: #fafbfd; stroke-width: 1.2"/>
+    </g>
+   </g>
+   <g id="PathCollection_12">
+    <defs>
+     <path id="m93249ce898" d="M 0 4.690416
+C 1.243913 4.690416 2.437046 4.196204 3.316625 3.316625
+C 4.196204 2.437046 4.690416 1.243913 4.690416 0
+C 4.690416 -1.243913 4.196204 -2.437046 3.316625 -3.316625
+C 2.437046 -4.196204 1.243913 -4.690416 0 -4.690416
+C -1.243913 -4.690416 -2.437046 -4.196204 -3.316625 -3.316625
+C -4.196204 -2.437046 -4.690416 -1.243913 -4.690416 0
+C -4.690416 1.243913 -4.196204 2.437046 -3.316625 3.316625
+C -2.437046 4.196204 -1.243913 4.690416 0 4.690416
+z
+" style="stroke: #fafbfd; stroke-width: 1.2"/>
+    </defs>
+    <g clip-path="url(#pd26b90fc81)">
+     <use xlink:href="#m93249ce898" x="770.322278" y="425.108736" style="fill: #365ec0; stroke: #fafbfd; stroke-width: 1.2"/>
+    </g>
+   </g>
+   <g id="PathCollection_13">
+    <defs>
+     <path id="m3687b3b88d" d="M 0 6.123724
+C 1.624031 6.123724 3.181764 5.47849 4.330127 4.330127
+C 5.47849 3.181764 6.123724 1.624031 6.123724 0
+C 6.123724 -1.624031 5.47849 -3.181764 4.330127 -4.330127
+C 3.181764 -5.47849 1.624031 -6.123724 0 -6.123724
+C -1.624031 -6.123724 -3.181764 -5.47849 -4.330127 -4.330127
+C -5.47849 -3.181764 -6.123724 -1.624031 -6.123724 0
+C -6.123724 1.624031 -5.47849 3.181764 -4.330127 4.330127
+C -3.181764 5.47849 -1.624031 6.123724 0 6.123724
+z
+" style="stroke: #fafbfd; stroke-width: 1.2"/>
+    </defs>
+    <g clip-path="url(#pd26b90fc81)">
+     <use xlink:href="#m3687b3b88d" x="406.269702" y="432.255312" style="fill: #087b66; stroke: #fafbfd; stroke-width: 1.2"/>
+    </g>
+   </g>
+   <g id="PathCollection_14">
+    <defs>
+     <path id="ma628234775" d="M 0 4.690416
+C 1.243913 4.690416 2.437046 4.196204 3.316625 3.316625
+C 4.196204 2.437046 4.690416 1.243913 4.690416 0
+C 4.690416 -1.243913 4.196204 -2.437046 3.316625 -3.316625
+C 2.437046 -4.196204 1.243913 -4.690416 0 -4.690416
+C -1.243913 -4.690416 -2.437046 -4.196204 -3.316625 -3.316625
+C -4.196204 -2.437046 -4.690416 -1.243913 -4.690416 0
+C -4.690416 1.243913 -4.196204 2.437046 -3.316625 3.316625
+C -2.437046 4.196204 -1.243913 4.690416 0 4.690416
+z
+" style="stroke: #fafbfd; stroke-width: 1.2"/>
+    </defs>
+    <g clip-path="url(#pd26b90fc81)">
+     <use xlink:href="#ma628234775" x="347.781156" y="471.007872" style="fill: #087b66; stroke: #fafbfd; stroke-width: 1.2"/>
+    </g>
+   </g>
+   <g id="PathCollection_15">
+    <g clip-path="url(#pd26b90fc81)">
+     <use xlink:href="#m93249ce898" x="439.509071" y="472.81968" style="fill: #365ec0; stroke: #fafbfd; stroke-width: 1.2"/>
+    </g>
+   </g>
+   <g id="PathCollection_16">
+    <g clip-path="url(#pd26b90fc81)">
+     <use xlink:href="#m4448c6c891" x="120.678277" y="475.738704" style="fill: #365ec0; stroke: #fafbfd; stroke-width: 1.2"/>
+    </g>
+   </g>
+   <g id="PathCollection_17">
+    <defs>
+     <path id="m3b9f77ce8f" d="M 0 4.690416
+C 1.243913 4.690416 2.437046 4.196204 3.316625 3.316625
+C 4.196204 2.437046 4.690416 1.243913 4.690416 0
+C 4.690416 -1.243913 4.196204 -2.437046 3.316625 -3.316625
+C 2.437046 -4.196204 1.243913 -4.690416 0 -4.690416
+C -1.243913 -4.690416 -2.437046 -4.196204 -3.316625 -3.316625
+C -4.196204 -2.437046 -4.690416 -1.243913 -4.690416 0
+C -4.690416 1.243913 -4.196204 2.437046 -3.316625 3.316625
+C -2.437046 4.196204 -1.243913 4.690416 0 4.690416
+z
+" style="stroke: #fafbfd; stroke-width: 1.2"/>
+    </defs>
+    <g clip-path="url(#pd26b90fc81)">
+     <use xlink:href="#m3b9f77ce8f" x="737.059692" y="480.268224" style="fill: #536377; stroke: #fafbfd; stroke-width: 1.2"/>
+    </g>
+   </g>
+   <g id="PathCollection_18">
+    <g clip-path="url(#pd26b90fc81)">
+     <use xlink:href="#m93249ce898" x="656.965316" y="489.226608" style="fill: #365ec0; stroke: #fafbfd; stroke-width: 1.2"/>
+    </g>
+   </g>
+   <g id="PathCollection_19">
+    <g clip-path="url(#pd26b90fc81)">
+     <use xlink:href="#ma628234775" x="337.457228" y="490.93776" style="fill: #087b66; stroke: #fafbfd; stroke-width: 1.2"/>
+    </g>
+   </g>
+   <g id="PathCollection_20">
+    <g clip-path="url(#pd26b90fc81)">
+     <use xlink:href="#m3b9f77ce8f" x="499.84192" y="491.239728" style="fill: #536377; stroke: #fafbfd; stroke-width: 1.2"/>
+    </g>
+   </g>
+   <g id="PathCollection_21">
+    <defs>
+     <path id="mc198a96ea8" d="M 0 6.123724
+C 1.624031 6.123724 3.181764 5.47849 4.330127 4.330127
+C 5.47849 3.181764 6.123724 1.624031 6.123724 0
+C 6.123724 -1.624031 5.47849 -3.181764 4.330127 -4.330127
+C 3.181764 -5.47849 1.624031 -6.123724 0 -6.123724
+C -1.624031 -6.123724 -3.181764 -5.47849 -4.330127 -4.330127
+C -5.47849 -3.181764 -6.123724 -1.624031 -6.123724 0
+C -6.123724 1.624031 -5.47849 3.181764 -4.330127 4.330127
+C -3.181764 5.47849 -1.624031 6.123724 0 6.123724
+z
+" style="stroke: #fafbfd; stroke-width: 1.2"/>
+    </defs>
+    <g clip-path="url(#pd26b90fc81)">
+     <use xlink:href="#mc198a96ea8" x="302.989176" y="494.158752" style="fill: #bd5800; stroke: #fafbfd; stroke-width: 1.2"/>
+    </g>
+   </g>
+   <g id="PathCollection_22">
+    <g clip-path="url(#pd26b90fc81)">
+     <use xlink:href="#mc198a96ea8" x="393.523849" y="497.581056" style="fill: #bd5800; stroke: #fafbfd; stroke-width: 1.2"/>
+    </g>
+   </g>
+   <g id="PathCollection_23">
+    <g clip-path="url(#pd26b90fc81)">
+     <use xlink:href="#m3b9f77ce8f" x="701.63904" y="500.399424" style="fill: #536377; stroke: #fafbfd; stroke-width: 1.2"/>
+    </g>
+   </g>
+   <g id="PathCollection_24">
+    <g clip-path="url(#pd26b90fc81)">
+     <use xlink:href="#m93249ce898" x="642.080999" y="510.666336" style="fill: #365ec0; stroke: #fafbfd; stroke-width: 1.2"/>
+    </g>
+   </g>
+   <g id="PathCollection_25">
+    <g clip-path="url(#pd26b90fc81)">
+     <use xlink:href="#m3b9f77ce8f" x="668.67141" y="518.517504" style="fill: #536377; stroke: #fafbfd; stroke-width: 1.2"/>
+    </g>
+   </g>
+   <g id="PathCollection_26">
+    <g clip-path="url(#pd26b90fc81)">
+     <use xlink:href="#m3b9f77ce8f" x="565.045707" y="521.939808" style="fill: #536377; stroke: #fafbfd; stroke-width: 1.2"/>
+    </g>
+   </g>
+   <g id="PathCollection_27">
+    <g clip-path="url(#pd26b90fc81)">
+     <use xlink:href="#m3b9f77ce8f" x="484.269904" y="526.16736" style="fill: #536377; stroke: #fafbfd; stroke-width: 1.2"/>
+    </g>
+   </g>
+   <g id="PathCollection_28">
+    <g clip-path="url(#pd26b90fc81)">
+     <use xlink:href="#m93249ce898" x="274.282439" y="529.69032" style="fill: #365ec0; stroke: #fafbfd; stroke-width: 1.2"/>
+    </g>
+   </g>
+   <g id="PathCollection_29">
+    <g clip-path="url(#pd26b90fc81)">
+     <use xlink:href="#m93249ce898" x="455.753413" y="531.099504" style="fill: #365ec0; stroke: #fafbfd; stroke-width: 1.2"/>
+    </g>
+   </g>
+   <g id="PathCollection_30">
+    <g clip-path="url(#pd26b90fc81)">
+     <use xlink:href="#m3b9f77ce8f" x="696.796778" y="533.112624" style="fill: #536377; stroke: #fafbfd; stroke-width: 1.2"/>
+    </g>
+   </g>
+   <g id="PathCollection_31">
+    <g clip-path="url(#pd26b90fc81)">
+     <use xlink:href="#ma628234775" x="319.931027" y="545.996592" style="fill: #087b66; stroke: #fafbfd; stroke-width: 1.2"/>
+    </g>
+   </g>
+   <g id="PathCollection_32">
+    <g clip-path="url(#pd26b90fc81)">
+     <use xlink:href="#m3b9f77ce8f" x="660.634263" y="552.035952" style="fill: #536377; stroke: #fafbfd; stroke-width: 1.2"/>
+    </g>
+   </g>
+   <g id="PathCollection_33">
+    <g clip-path="url(#pd26b90fc81)">
+     <use xlink:href="#m3b9f77ce8f" x="316.767504" y="552.136608" style="fill: #536377; stroke: #fafbfd; stroke-width: 1.2"/>
+    </g>
+   </g>
+   <g id="PathCollection_34">
+    <g clip-path="url(#pd26b90fc81)">
+     <use xlink:href="#m3b9f77ce8f" x="592.200975" y="552.941856" style="fill: #536377; stroke: #fafbfd; stroke-width: 1.2"/>
+    </g>
+   </g>
+   <g id="PathCollection_35">
+    <g clip-path="url(#pd26b90fc81)">
+     <use xlink:href="#m2b2502c997" x="705.587345" y="557.169408" style="fill: #935832; stroke: #fafbfd; stroke-width: 1.2"/>
+    </g>
+   </g>
+   <g id="PathCollection_36">
+    <g clip-path="url(#pd26b90fc81)">
+     <use xlink:href="#ma628234775" x="550.439429" y="579.917664" style="fill: #087b66; stroke: #fafbfd; stroke-width: 1.2"/>
+    </g>
+   </g>
+   <g id="PathCollection_37">
+    <g clip-path="url(#pd26b90fc81)">
+     <use xlink:href="#ma628234775" x="345.214484" y="602.867232" style="fill: #087b66; stroke: #fafbfd; stroke-width: 1.2"/>
+    </g>
+   </g>
+   <g id="PathCollection_38">
+    <g clip-path="url(#pd26b90fc81)">
+     <use xlink:href="#m3b9f77ce8f" x="509.722542" y="613.939392" style="fill: #536377; stroke: #fafbfd; stroke-width: 1.2"/>
+    </g>
+   </g>
+   <g id="PathCollection_39">
+    <g clip-path="url(#pd26b90fc81)">
+     <use xlink:href="#m93249ce898" x="239.597229" y="624.508272" style="fill: #365ec0; stroke: #fafbfd; stroke-width: 1.2"/>
+    </g>
+   </g>
+   <g id="PathCollection_40">
+    <g clip-path="url(#pd26b90fc81)">
+     <use xlink:href="#m3b9f77ce8f" x="536.408757" y="650.074896" style="fill: #536377; stroke: #fafbfd; stroke-width: 1.2"/>
+    </g>
+   </g>
+   <g id="PathCollection_41">
+    <g clip-path="url(#pd26b90fc81)">
+     <use xlink:href="#m3b9f77ce8f" x="549.492497" y="663.5628" style="fill: #536377; stroke: #fafbfd; stroke-width: 1.2"/>
+    </g>
+   </g>
+   <g id="PathCollection_42">
+    <g clip-path="url(#pd26b90fc81)">
+     <use xlink:href="#m3b9f77ce8f" x="545.896709" y="679.869072" style="fill: #536377; stroke: #fafbfd; stroke-width: 1.2"/>
+    </g>
+   </g>
+   <g id="PathCollection_43">
+    <defs>
+     <path id="m8465c90140" d="M 0 6.123724
+C 1.624031 6.123724 3.181764 5.47849 4.330127 4.330127
+C 5.47849 3.181764 6.123724 1.624031 6.123724 0
+C 6.123724 -1.624031 5.47849 -3.181764 4.330127 -4.330127
+C 3.181764 -5.47849 1.624031 -6.123724 0 -6.123724
+C -1.624031 -6.123724 -3.181764 -5.47849 -4.330127 -4.330127
+C -5.47849 -3.181764 -6.123724 -1.624031 -6.123724 0
+C -6.123724 1.624031 -5.47849 3.181764 -4.330127 4.330127
+C -3.181764 5.47849 -1.624031 6.123724 0 6.123724
+z
+" style="stroke: #fafbfd; stroke-width: 1.2"/>
+    </defs>
+    <g clip-path="url(#pd26b90fc81)">
+     <use xlink:href="#m8465c90140" x="227.014744" y="690.639264" style="fill: #963ca1; stroke: #fafbfd; stroke-width: 1.2"/>
+    </g>
+   </g>
+   <g id="text_25">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'Geist Mono'; text-anchor: middle; fill: #fafbfd" x="784.045943" y="236.809272" transform="rotate(-0 784.045943 236.809272)">1</text>
+   </g>
+   <g id="text_26">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'Geist Mono'; text-anchor: middle; fill: #fafbfd" x="569.576853" y="320.051784" transform="rotate(-0 569.576853 320.051784)">2</text>
+   </g>
+   <g id="text_27">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'Geist Mono'; text-anchor: middle; fill: #fafbfd" x="704.20095" y="365.045016" transform="rotate(-0 704.20095 365.045016)">3</text>
+   </g>
+   <g id="text_28">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'Geist Mono'; text-anchor: middle; fill: #fafbfd" x="371.196404" y="376.217832" transform="rotate(-0 371.196404 376.217832)">4</text>
+   </g>
+   <g id="text_29">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'Geist Mono'; text-anchor: middle; fill: #fafbfd" x="774.470382" y="384.169656" transform="rotate(-0 774.470382 384.169656)">5</text>
+   </g>
+   <g id="text_30">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'Geist Mono'; text-anchor: middle; fill: #fafbfd" x="349.428731" y="397.959528" transform="rotate(-0 349.428731 397.959528)">6</text>
+   </g>
+   <g id="text_31">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'Geist Mono'; text-anchor: middle; fill: #fafbfd" x="764.200825" y="418.594008" transform="rotate(-0 764.200825 418.594008)">7</text>
+   </g>
+   <g id="text_32">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'Geist Mono'; text-anchor: middle; fill: #fafbfd" x="327.776911" y="420.003192" transform="rotate(-0 327.776911 420.003192)">8</text>
+   </g>
+   <g id="text_33">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'Geist Mono'; text-anchor: middle; fill: #fafbfd" x="770.322278" y="427.451736" transform="rotate(-0 770.322278 427.451736)">9</text>
+   </g>
+   <g id="text_34">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'Geist Mono'; text-anchor: middle; fill: #fafbfd" x="406.269702" y="434.598312" transform="rotate(-0 406.269702 434.598312)">10</text>
+   </g>
+   <g id="text_35">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'Geist Mono'; text-anchor: middle; fill: #fafbfd" x="347.781156" y="473.350872" transform="rotate(-0 347.781156 473.350872)">11</text>
+   </g>
+   <g id="text_36">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'Geist Mono'; text-anchor: middle; fill: #fafbfd" x="439.509071" y="475.16268" transform="rotate(-0 439.509071 475.16268)">12</text>
+   </g>
+   <g id="text_37">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'Geist Mono'; text-anchor: middle; fill: #fafbfd" x="120.678277" y="478.081704" transform="rotate(-0 120.678277 478.081704)">13</text>
+   </g>
+   <g id="text_38">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'Geist Mono'; text-anchor: middle; fill: #fafbfd" x="737.059692" y="482.611224" transform="rotate(-0 737.059692 482.611224)">14</text>
+   </g>
+   <g id="text_39">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'Geist Mono'; text-anchor: middle; fill: #fafbfd" x="656.965316" y="491.569608" transform="rotate(-0 656.965316 491.569608)">15</text>
+   </g>
+   <g id="text_40">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'Geist Mono'; text-anchor: middle; fill: #fafbfd" x="337.457228" y="493.28076" transform="rotate(-0 337.457228 493.28076)">16</text>
+   </g>
+   <g id="text_41">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'Geist Mono'; text-anchor: middle; fill: #fafbfd" x="499.84192" y="493.582728" transform="rotate(-0 499.84192 493.582728)">17</text>
+   </g>
+   <g id="text_42">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'Geist Mono'; text-anchor: middle; fill: #fafbfd" x="302.989176" y="496.501752" transform="rotate(-0 302.989176 496.501752)">18</text>
+   </g>
+   <g id="text_43">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'Geist Mono'; text-anchor: middle; fill: #fafbfd" x="393.523849" y="499.924056" transform="rotate(-0 393.523849 499.924056)">19</text>
+   </g>
+   <g id="text_44">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'Geist Mono'; text-anchor: middle; fill: #fafbfd" x="701.63904" y="502.742424" transform="rotate(-0 701.63904 502.742424)">20</text>
+   </g>
+   <g id="text_45">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'Geist Mono'; text-anchor: middle; fill: #fafbfd" x="642.080999" y="513.009336" transform="rotate(-0 642.080999 513.009336)">21</text>
+   </g>
+   <g id="text_46">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'Geist Mono'; text-anchor: middle; fill: #fafbfd" x="668.67141" y="520.860504" transform="rotate(-0 668.67141 520.860504)">22</text>
+   </g>
+   <g id="text_47">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'Geist Mono'; text-anchor: middle; fill: #fafbfd" x="565.045707" y="524.282808" transform="rotate(-0 565.045707 524.282808)">23</text>
+   </g>
+   <g id="text_48">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'Geist Mono'; text-anchor: middle; fill: #fafbfd" x="484.269904" y="528.51036" transform="rotate(-0 484.269904 528.51036)">24</text>
+   </g>
+   <g id="text_49">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'Geist Mono'; text-anchor: middle; fill: #fafbfd" x="274.282439" y="532.03332" transform="rotate(-0 274.282439 532.03332)">25</text>
+   </g>
+   <g id="text_50">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'Geist Mono'; text-anchor: middle; fill: #fafbfd" x="455.753413" y="533.442504" transform="rotate(-0 455.753413 533.442504)">26</text>
+   </g>
+   <g id="text_51">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'Geist Mono'; text-anchor: middle; fill: #fafbfd" x="696.796778" y="535.455624" transform="rotate(-0 696.796778 535.455624)">27</text>
+   </g>
+   <g id="text_52">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'Geist Mono'; text-anchor: middle; fill: #fafbfd" x="319.931027" y="548.339592" transform="rotate(-0 319.931027 548.339592)">28</text>
+   </g>
+   <g id="text_53">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'Geist Mono'; text-anchor: middle; fill: #fafbfd" x="660.634263" y="554.378952" transform="rotate(-0 660.634263 554.378952)">29</text>
+   </g>
+   <g id="text_54">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'Geist Mono'; text-anchor: middle; fill: #fafbfd" x="316.767504" y="554.479608" transform="rotate(-0 316.767504 554.479608)">30</text>
+   </g>
+   <g id="text_55">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'Geist Mono'; text-anchor: middle; fill: #fafbfd" x="592.200975" y="555.284856" transform="rotate(-0 592.200975 555.284856)">31</text>
+   </g>
+   <g id="text_56">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'Geist Mono'; text-anchor: middle; fill: #fafbfd" x="705.587345" y="559.512408" transform="rotate(-0 705.587345 559.512408)">32</text>
+   </g>
+   <g id="text_57">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'Geist Mono'; text-anchor: middle; fill: #fafbfd" x="550.439429" y="582.260664" transform="rotate(-0 550.439429 582.260664)">33</text>
+   </g>
+   <g id="text_58">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'Geist Mono'; text-anchor: middle; fill: #fafbfd" x="345.214484" y="605.210232" transform="rotate(-0 345.214484 605.210232)">34</text>
+   </g>
+   <g id="text_59">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'Geist Mono'; text-anchor: middle; fill: #fafbfd" x="509.722542" y="616.282392" transform="rotate(-0 509.722542 616.282392)">35</text>
+   </g>
+   <g id="text_60">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'Geist Mono'; text-anchor: middle; fill: #fafbfd" x="239.597229" y="626.851272" transform="rotate(-0 239.597229 626.851272)">36</text>
+   </g>
+   <g id="text_61">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'Geist Mono'; text-anchor: middle; fill: #fafbfd" x="536.408757" y="652.417896" transform="rotate(-0 536.408757 652.417896)">37</text>
+   </g>
+   <g id="text_62">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'Geist Mono'; text-anchor: middle; fill: #fafbfd" x="549.492497" y="665.9058" transform="rotate(-0 549.492497 665.9058)">38</text>
+   </g>
+   <g id="text_63">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'Geist Mono'; text-anchor: middle; fill: #fafbfd" x="545.896709" y="682.212072" transform="rotate(-0 545.896709 682.212072)">39</text>
+   </g>
+   <g id="text_64">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'Geist Mono'; text-anchor: middle; fill: #fafbfd" x="227.014744" y="692.982264" transform="rotate(-0 227.014744 692.982264)">40</text>
+   </g>
+   <g id="patch_3">
+    <path d="M 759.977556 224.087519
+Q 771.093613 228.880978 782.20967 233.674436
+" style="fill: none; opacity: 0.6; stroke: #365ec0; stroke-width: 0.7; stroke-linecap: round"/>
+   </g>
+   <g id="text_65">
+    <g id="patch_4">
+     <path d="M 657.584112 223.29504
+L 760.184112 223.29504
+Q 762.704112 223.29504 762.704112 220.77504
+L 762.704112 183.33504
+Q 762.704112 180.81504 760.184112 180.81504
+L 657.584112 180.81504
+Q 655.064112 180.81504 655.064112 183.33504
+L 655.064112 220.77504
+Q 655.064112 223.29504 657.584112 223.29504
+z
+" style="fill: #fafbfd; opacity: 0.96"/>
+    </g>
+    <text style="font-size: 9px; font-family: 'Geist Mono'; fill: #365ec0" transform="translate(662.984112 195.89004)">GPT-6 Astra medium</text>
+    <text style="font-size: 9px; font-family: 'Geist Mono'; fill: #365ec0" transform="translate(657.584112 214.524259)">80.6  |  $8.87/task</text>
+   </g>
+   <g id="patch_5">
+    <path d="M 580.455189 305.707207
+Q 575.686622 310.968152 570.918054 316.229097
+" style="fill: none; opacity: 0.6; stroke: #365ec0; stroke-width: 0.7; stroke-linecap: round"/>
+   </g>
+   <g id="text_66">
+    <g id="patch_6">
+     <path d="M 549.753096 304.222464
+L 652.353096 304.222464
+Q 654.873096 304.222464 654.873096 301.702464
+L 654.873096 264.262464
+Q 654.873096 261.742464 652.353096 261.742464
+L 549.753096 261.742464
+Q 547.233096 261.742464 547.233096 264.262464
+L 547.233096 301.702464
+Q 547.233096 304.222464 549.753096 304.222464
+z
+" style="fill: #fafbfd; opacity: 0.96"/>
+    </g>
+    <text style="font-size: 9px; font-family: 'Geist Mono'; fill: #365ec0" transform="translate(549.753096 276.817464)">GPT-6 Sol medium</text>
+    <text style="font-size: 9px; font-family: 'Geist Mono'; fill: #365ec0" transform="translate(549.753096 295.451683)">66.8  |  $1.20/task</text>
+   </g>
+   <g id="patch_7">
+    <path d="M 412.408909 362.76129
+Q 392.767317 368.057927 373.125725 373.354563
+" style="fill: none; opacity: 0.6; stroke: #365ec0; stroke-width: 0.7; stroke-linecap: round"/>
+   </g>
+   <g id="text_67">
+    <g id="patch_8">
+     <path d="M 416.857912 368.23968
+L 524.857912 368.23968
+Q 527.377912 368.23968 527.377912 365.71968
+L 527.377912 328.27968
+Q 527.377912 325.75968 524.857912 325.75968
+L 416.857912 325.75968
+Q 414.337912 325.75968 414.337912 328.27968
+L 414.337912 365.71968
+Q 414.337912 368.23968 416.857912 368.23968
+z
+" style="fill: #fafbfd; opacity: 0.96"/>
+    </g>
+    <text style="font-size: 9px; font-family: 'Geist Mono'; fill: #365ec0" transform="translate(416.857912 340.177258)">GPT-6 Luna xhigh</text>
+    <text style="font-size: 9px; font-family: 'Geist Mono'; fill: #365ec0" transform="translate(416.857912 359.468899)">57.5  |  $0.190/task</text>
+   </g>
+   <g id="patch_9">
+    <path d="M 358.408475 333.981461
+Q 354.063022 363.807732 349.717569 393.634004
+" style="fill: none; opacity: 0.6; stroke: #365ec0; stroke-width: 0.7; stroke-linecap: round"/>
+   </g>
+   <g id="text_68">
+    <g id="patch_10">
+     <path d="M 307.791147 332.00352
+L 415.791147 332.00352
+Q 418.311147 332.00352 418.311147 329.48352
+L 418.311147 292.04352
+Q 418.311147 289.52352 415.791147 289.52352
+L 307.791147 289.52352
+Q 305.271147 289.52352 305.271147 292.04352
+L 305.271147 329.48352
+Q 305.271147 332.00352 307.791147 332.00352
+z
+" style="fill: #fafbfd; opacity: 0.96"/>
+    </g>
+    <text style="font-size: 9px; font-family: 'Geist Mono'; fill: #365ec0" transform="translate(307.791147 303.941098)">GPT-6 Luna high</text>
+    <text style="font-size: 9px; font-family: 'Geist Mono'; fill: #365ec0" transform="translate(307.791147 323.232739)">54.0  |  $0.155/task</text>
+   </g>
+   <g id="patch_11">
+    <path d="M 308.718872 391.003573
+Q 317.66745 403.520014 326.616027 416.036455
+" style="fill: none; opacity: 0.6; stroke: #365ec0; stroke-width: 0.7; stroke-linecap: round"/>
+   </g>
+   <g id="text_69">
+    <g id="patch_12">
+     <path d="M 238.370825 389.37744
+L 346.370825 389.37744
+Q 348.890825 389.37744 348.890825 386.85744
+L 348.890825 349.41744
+Q 348.890825 346.89744 346.370825 346.89744
+L 238.370825 346.89744
+Q 235.850825 346.89744 235.850825 349.41744
+L 235.850825 386.85744
+Q 235.850825 389.37744 238.370825 389.37744
+z
+" style="fill: #fafbfd; opacity: 0.96"/>
+    </g>
+    <text style="font-size: 9px; font-family: 'Geist Mono'; fill: #365ec0" transform="translate(238.370825 361.97244)">GPT-6 Luna medium</text>
+    <text style="font-size: 9px; font-family: 'Geist Mono'; fill: #365ec0" transform="translate(238.370825 380.606659)">50.3  |  $0.126/task</text>
+   </g>
+   <g id="patch_13">
+    <path d="M 446.981315 420.291866
+Q 427.585899 425.99137 408.190483 431.690875
+" style="fill: none; opacity: 0.6; stroke: #087b66; stroke-width: 0.7; stroke-linecap: round"/>
+   </g>
+   <g id="text_70">
+    <g id="patch_14">
+     <path d="M 451.382349 421.989984
+L 575.582349 421.989984
+Q 578.102349 421.989984 578.102349 419.469984
+L 578.102349 382.029984
+Q 578.102349 379.509984 575.582349 379.509984
+L 451.382349 379.509984
+Q 448.862349 379.509984 448.862349 382.029984
+L 448.862349 419.469984
+Q 448.862349 421.989984 451.382349 421.989984
+z
+" style="fill: #fafbfd; opacity: 0.96"/>
+    </g>
+    <text style="font-size: 9px; font-family: 'Geist Mono'; fill: #087b66" transform="translate(451.382349 393.981703)">DeepSeek V4.1 Flash max</text>
+    <text style="font-size: 9px; font-family: 'Geist Mono'; fill: #087b66" transform="translate(451.382349 413.219203)">47.9  |  $0.263/task</text>
+   </g>
+   <g id="patch_15">
+    <path d="M 135.470191 462.003856
+Q 128.805524 468.19225 122.140856 474.380644
+" style="fill: none; opacity: 0.6; stroke: #365ec0; stroke-width: 0.7; stroke-linecap: round"/>
+   </g>
+   <g id="text_71">
+    <g id="patch_16">
+     <path d="M 105.811658 460.641888
+L 213.811658 460.641888
+Q 216.331658 460.641888 216.331658 458.121888
+L 216.331658 420.681888
+Q 216.331658 418.161888 213.811658 418.161888
+L 105.811658 418.161888
+Q 103.291658 418.161888 103.291658 420.681888
+L 103.291658 458.121888
+Q 103.291658 460.641888 105.811658 460.641888
+z
+" style="fill: #fafbfd; opacity: 0.96"/>
+    </g>
+    <text style="font-size: 9px; font-family: 'Geist Mono'; fill: #365ec0" transform="translate(105.811658 433.236888)">GPT-6 Luna low</text>
+    <text style="font-size: 9px; font-family: 'Geist Mono'; fill: #365ec0" transform="translate(105.811658 451.871107)">40.7  |  $0.018/task</text>
+   </g>
+   <g id="patch_17">
+    <path d="M 244.618737 557.4067
+Q 273.126162 526.517157 301.633588 495.627615
+" style="fill: none; opacity: 0.6; stroke: #bd5800; stroke-width: 0.7; stroke-linecap: round"/>
+   </g>
+   <g id="text_72">
+    <g id="patch_18">
+     <path d="M 169.657969 601.358976
+L 277.657969 601.358976
+Q 280.177969 601.358976 280.177969 598.838976
+L 280.177969 561.398976
+Q 280.177969 558.878976 277.657969 558.878976
+L 169.657969 558.878976
+Q 167.137969 558.878976 167.137969 561.398976
+L 167.137969 598.838976
+Q 167.137969 601.358976 169.657969 601.358976
+z
+" style="fill: #fafbfd; opacity: 0.96"/>
+    </g>
+    <text style="font-size: 9px; font-family: 'Geist Mono'; fill: #bd5800" transform="translate(169.657969 573.953976)">MiMo V2.6 Flash</text>
+    <text style="font-size: 9px; font-family: 'Geist Mono'; fill: #bd5800" transform="translate(169.657969 592.588195)">37.6  |  $0.100/task</text>
+   </g>
+   <g id="patch_19">
+    <path d="M 449.012109 587.377751
+Q 421.793769 543.330291 394.57543 499.282831
+" style="fill: none; opacity: 0.6; stroke: #bd5800; stroke-width: 0.7; stroke-linecap: round"/>
+   </g>
+   <g id="text_73">
+    <g id="patch_20">
+     <path d="M 409.186251 631.555776
+L 517.186251 631.555776
+Q 519.706251 631.555776 519.706251 629.035776
+L 519.706251 591.595776
+Q 519.706251 589.075776 517.186251 589.075776
+L 409.186251 589.075776
+Q 406.666251 589.075776 406.666251 591.595776
+L 406.666251 629.035776
+Q 406.666251 631.555776 409.186251 631.555776
+z
+" style="fill: #fafbfd; opacity: 0.96"/>
+    </g>
+    <text style="font-size: 9px; font-family: 'Geist Mono'; fill: #bd5800" transform="translate(409.186251 604.150776)">MiMo V2.6 Pro</text>
+    <text style="font-size: 9px; font-family: 'Geist Mono'; fill: #bd5800" transform="translate(409.186251 622.784995)">37.1  |  $0.233/task</text>
+   </g>
+   <g id="patch_21">
+    <path d="M 213.907129 679.929556
+Q 219.688112 684.652966 225.469095 689.376376
+" style="fill: none; opacity: 0.6; stroke: #963ca1; stroke-width: 0.7; stroke-linecap: round"/>
+   </g>
+   <g id="text_74">
+    <g id="patch_22">
+     <path d="M 124.261084 678.662784
+L 248.461084 678.662784
+Q 250.981084 678.662784 250.981084 676.142784
+L 250.981084 638.702784
+Q 250.981084 636.182784 248.461084 636.182784
+L 124.261084 636.182784
+Q 121.741084 636.182784 121.741084 638.702784
+L 121.741084 676.142784
+Q 121.741084 678.662784 124.261084 678.662784
+z
+" style="fill: #fafbfd; opacity: 0.96"/>
+    </g>
+    <text style="font-size: 9px; font-family: 'Geist Mono'; fill: #963ca1" transform="translate(124.261084 650.762784)">Mercury 2.5 / diffusion</text>
+    <text style="font-size: 9px; font-family: 'Geist Mono'; fill: #963ca1" transform="translate(124.261084 669.892003)">5.1  |  $0.049/task</text>
+   </g>
+  </g>
+  <g id="axes_2">
+   <g id="patch_23">
+    <path d="M 909.576 399.781656
+L 1406.448 399.781656
+L 1406.448 385.905384
+L 909.576 385.905384
+z
+" clip-path="url(#p7bbb3c6ae6)" style="fill: #bd5800; opacity: 0.1"/>
+   </g>
+   <g id="patch_24">
+    <path d="M 909.576 415.916856
+L 1406.448 415.916856
+L 1406.448 402.040584
+L 909.576 402.040584
+z
+" clip-path="url(#p7bbb3c6ae6)" style="fill: #bd5800; opacity: 0.1"/>
+   </g>
+   <g id="patch_25">
+    <path d="M 909.576 754.756056
+L 1406.448 754.756056
+L 1406.448 740.879784
+L 909.576 740.879784
+z
+" clip-path="url(#p7bbb3c6ae6)" style="fill: #963ca1; opacity: 0.1"/>
+   </g>
+   <g id="text_75">
+    <text style="font-size: 9px; font-family: 'Geist Mono'; text-anchor: start; fill: #536377" x="914.4" y="99.18288" transform="rotate(-0 914.4 99.18288)">MODEL / REASONING</text>
+   </g>
+   <g id="text_76">
+    <text style="font-size: 9px; font-family: 'Geist Mono'; text-anchor: end; fill: #536377" x="1285.848" y="99.18288" transform="rotate(-0 1285.848 99.18288)">SCORE</text>
+   </g>
+   <g id="text_77">
+    <text style="font-size: 9px; font-family: 'Geist Mono'; text-anchor: end; fill: #536377" x="1396.8" y="99.18288" transform="rotate(-0 1396.8 99.18288)">$/TASK</text>
+   </g>
+   <g id="text_78">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: start; fill: #365ec0" x="914.4" y="121.49162" transform="rotate(-0 914.4 121.49162)">01  GPT-6 Astra medium</text>
+   </g>
+   <g id="text_79">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1285.848" y="121.49162" transform="rotate(-0 1285.848 121.49162)">80.63</text>
+   </g>
+   <g id="text_80">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1396.8" y="121.49162" transform="rotate(-0 1396.8 121.49162)">$8.87</text>
+   </g>
+   <g id="text_81">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: start; fill: #365ec0" x="914.4" y="137.62682" transform="rotate(-0 914.4 137.62682)">02  GPT-6 Sol medium</text>
+   </g>
+   <g id="text_82">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1285.848" y="137.62682" transform="rotate(-0 1285.848 137.62682)">66.85</text>
+   </g>
+   <g id="text_83">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1396.8" y="137.62682" transform="rotate(-0 1396.8 137.62682)">$1.20</text>
+   </g>
+   <g id="text_84">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: start; fill: #935832" x="914.4" y="153.76202" transform="rotate(-0 914.4 153.76202)">03  Opus 5.5</text>
+   </g>
+   <g id="text_85">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1285.848" y="153.76202" transform="rotate(-0 1285.848 153.76202)">59.40</text>
+   </g>
+   <g id="text_86">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1396.8" y="153.76202" transform="rotate(-0 1396.8 153.76202)">$4.21</text>
+   </g>
+   <g id="text_87">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: start; fill: #365ec0" x="914.4" y="169.89722" transform="rotate(-0 914.4 169.89722)">04  GPT-6 Luna xhigh</text>
+   </g>
+   <g id="text_88">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1285.848" y="169.89722" transform="rotate(-0 1285.848 169.89722)">57.55</text>
+   </g>
+   <g id="text_89">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1396.8" y="169.89722" transform="rotate(-0 1396.8 169.89722)">$0.190</text>
+   </g>
+   <g id="text_90">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: start; fill: #935832" x="914.4" y="186.03242" transform="rotate(-0 914.4 186.03242)">05  Fable 5.1 high</text>
+   </g>
+   <g id="text_91">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1285.848" y="186.03242" transform="rotate(-0 1285.848 186.03242)">56.23</text>
+   </g>
+   <g id="text_92">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1396.8" y="186.03242" transform="rotate(-0 1396.8 186.03242)">$8.11</text>
+   </g>
+   <g id="text_93">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: start; fill: #365ec0" x="914.4" y="202.16762" transform="rotate(-0 914.4 202.16762)">06  GPT-6 Luna high</text>
+   </g>
+   <g id="text_94">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1285.848" y="202.16762" transform="rotate(-0 1285.848 202.16762)">53.95</text>
+   </g>
+   <g id="text_95">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1396.8" y="202.16762" transform="rotate(-0 1396.8 202.16762)">$0.155</text>
+   </g>
+   <g id="text_96">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: start; fill: #935832" x="914.4" y="218.30282" transform="rotate(-0 914.4 218.30282)">07  Opus 5</text>
+   </g>
+   <g id="text_97">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1285.848" y="218.30282" transform="rotate(-0 1285.848 218.30282)">50.53</text>
+   </g>
+   <g id="text_98">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1396.8" y="218.30282" transform="rotate(-0 1396.8 218.30282)">$7.37</text>
+   </g>
+   <g id="text_99">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: start; fill: #365ec0" x="914.4" y="234.43802" transform="rotate(-0 914.4 234.43802)">08  GPT-6 Luna medium</text>
+   </g>
+   <g id="text_100">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1285.848" y="234.43802" transform="rotate(-0 1285.848 234.43802)">50.30</text>
+   </g>
+   <g id="text_101">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1396.8" y="234.43802" transform="rotate(-0 1396.8 234.43802)">$0.126</text>
+   </g>
+   <g id="text_102">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: start; fill: #365ec0" x="914.4" y="250.57322" transform="rotate(-0 914.4 250.57322)">09  GPT-5.6 Sol xhigh</text>
+   </g>
+   <g id="text_103">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1285.848" y="250.57322" transform="rotate(-0 1285.848 250.57322)">49.07</text>
+   </g>
+   <g id="text_104">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1396.8" y="250.57322" transform="rotate(-0 1396.8 250.57322)">$7.80</text>
+   </g>
+   <g id="text_105">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: start; fill: #087b66" x="914.4" y="266.70842" transform="rotate(-0 914.4 266.70842)">10  DS V4.1 Flash max</text>
+   </g>
+   <g id="text_106">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1285.848" y="266.70842" transform="rotate(-0 1285.848 266.70842)">47.88</text>
+   </g>
+   <g id="text_107">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1396.8" y="266.70842" transform="rotate(-0 1396.8 266.70842)">$0.263</text>
+   </g>
+   <g id="text_108">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: start; fill: #087b66" x="914.4" y="282.84362" transform="rotate(-0 914.4 282.84362)">11  DS V4.1 Flash high</text>
+   </g>
+   <g id="text_109">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1285.848" y="282.84362" transform="rotate(-0 1285.848 282.84362)">41.47</text>
+   </g>
+   <g id="text_110">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1396.8" y="282.84362" transform="rotate(-0 1396.8 282.84362)">$0.152</text>
+   </g>
+   <g id="text_111">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: start; fill: #365ec0" x="914.4" y="298.97882" transform="rotate(-0 914.4 298.97882)">12  GPT-5.6 Luna xhigh</text>
+   </g>
+   <g id="text_112">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1285.848" y="298.97882" transform="rotate(-0 1285.848 298.97882)">41.17</text>
+   </g>
+   <g id="text_113">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1396.8" y="298.97882" transform="rotate(-0 1396.8 298.97882)">$0.358</text>
+   </g>
+   <g id="text_114">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: start; fill: #365ec0" x="914.4" y="315.11402" transform="rotate(-0 914.4 315.11402)">13  GPT-6 Luna low</text>
+   </g>
+   <g id="text_115">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1285.848" y="315.11402" transform="rotate(-0 1285.848 315.11402)">40.68</text>
+   </g>
+   <g id="text_116">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1396.8" y="315.11402" transform="rotate(-0 1396.8 315.11402)">$0.018</text>
+   </g>
+   <g id="text_117">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: start; fill: #536377" x="914.4" y="331.24922" transform="rotate(-0 914.4 331.24922)">14  Grok 4.7 high</text>
+   </g>
+   <g id="text_118">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1285.848" y="331.24922" transform="rotate(-0 1285.848 331.24922)">39.93</text>
+   </g>
+   <g id="text_119">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1396.8" y="331.24922" transform="rotate(-0 1396.8 331.24922)">$5.72</text>
+   </g>
+   <g id="text_120">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: start; fill: #365ec0" x="914.4" y="347.38442" transform="rotate(-0 914.4 347.38442)">15  GPT-5.6 Sol default</text>
+   </g>
+   <g id="text_121">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1285.848" y="347.38442" transform="rotate(-0 1285.848 347.38442)">38.45</text>
+   </g>
+   <g id="text_122">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1396.8" y="347.38442" transform="rotate(-0 1396.8 347.38442)">$2.71</text>
+   </g>
+   <g id="text_123">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: start; fill: #087b66" x="914.4" y="363.51962" transform="rotate(-0 914.4 363.51962)">16  DS V4.1 Flash low</text>
+   </g>
+   <g id="text_124">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1285.848" y="363.51962" transform="rotate(-0 1285.848 363.51962)">38.17</text>
+   </g>
+   <g id="text_125">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1396.8" y="363.51962" transform="rotate(-0 1396.8 363.51962)">$0.138</text>
+   </g>
+   <g id="text_126">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: start; fill: #536377" x="914.4" y="379.65482" transform="rotate(-0 914.4 379.65482)">17  GLM 5.3 FlashX max</text>
+   </g>
+   <g id="text_127">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1285.848" y="379.65482" transform="rotate(-0 1285.848 379.65482)">38.12</text>
+   </g>
+   <g id="text_128">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1396.8" y="379.65482" transform="rotate(-0 1396.8 379.65482)">$0.628</text>
+   </g>
+   <g id="text_129">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: start; fill: #bd5800" x="914.4" y="395.79002" transform="rotate(-0 914.4 395.79002)">18  MiMo V2.6 Flash (think)</text>
+   </g>
+   <g id="text_130">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1285.848" y="395.79002" transform="rotate(-0 1285.848 395.79002)">37.63</text>
+   </g>
+   <g id="text_131">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1396.8" y="395.79002" transform="rotate(-0 1396.8 395.79002)">$0.100</text>
+   </g>
+   <g id="text_132">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: start; fill: #bd5800" x="914.4" y="411.92522" transform="rotate(-0 914.4 411.92522)">19  MiMo V2.6 Pro (think)</text>
+   </g>
+   <g id="text_133">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1285.848" y="411.92522" transform="rotate(-0 1285.848 411.92522)">37.07</text>
+   </g>
+   <g id="text_134">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1396.8" y="411.92522" transform="rotate(-0 1396.8 411.92522)">$0.233</text>
+   </g>
+   <g id="text_135">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: start; fill: #536377" x="914.4" y="428.06042" transform="rotate(-0 914.4 428.06042)">20  Kimi K3</text>
+   </g>
+   <g id="text_136">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1285.848" y="428.06042" transform="rotate(-0 1285.848 428.06042)">36.60</text>
+   </g>
+   <g id="text_137">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1396.8" y="428.06042" transform="rotate(-0 1396.8 428.06042)">$4.12</text>
+   </g>
+   <g id="text_138">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: start; fill: #365ec0" x="914.4" y="444.19562" transform="rotate(-0 914.4 444.19562)">21  GPT-5.5</text>
+   </g>
+   <g id="text_139">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1285.848" y="444.19562" transform="rotate(-0 1285.848 444.19562)">34.90</text>
+   </g>
+   <g id="text_140">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1396.8" y="444.19562" transform="rotate(-0 1396.8 444.19562)">$2.36</text>
+   </g>
+   <g id="text_141">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: start; fill: #536377" x="914.4" y="460.33082" transform="rotate(-0 914.4 460.33082)">22  Qwen3.8 Max</text>
+   </g>
+   <g id="text_142">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1285.848" y="460.33082" transform="rotate(-0 1285.848 460.33082)">33.60</text>
+   </g>
+   <g id="text_143">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1396.8" y="460.33082" transform="rotate(-0 1396.8 460.33082)">$3.03</text>
+   </g>
+   <g id="text_144">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: start; fill: #536377" x="914.4" y="476.46602" transform="rotate(-0 914.4 476.46602)">23  Grok 4.5</text>
+   </g>
+   <g id="text_145">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1285.848" y="476.46602" transform="rotate(-0 1285.848 476.46602)">33.03</text>
+   </g>
+   <g id="text_146">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1396.8" y="476.46602" transform="rotate(-0 1396.8 476.46602)">$1.15</text>
+   </g>
+   <g id="text_147">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: start; fill: #536377" x="914.4" y="492.60122" transform="rotate(-0 914.4 492.60122)">24  GLM 5.3 Flash max</text>
+   </g>
+   <g id="text_148">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1285.848" y="492.60122" transform="rotate(-0 1285.848 492.60122)">32.33</text>
+   </g>
+   <g id="text_149">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1396.8" y="492.60122" transform="rotate(-0 1396.8 492.60122)">$0.543</text>
+   </g>
+   <g id="text_150">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: start; fill: #365ec0" x="914.4" y="508.73642" transform="rotate(-0 914.4 508.73642)">25  GPT-6 Luna none</text>
+   </g>
+   <g id="text_151">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1285.848" y="508.73642" transform="rotate(-0 1285.848 508.73642)">31.75</text>
+   </g>
+   <g id="text_152">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1396.8" y="508.73642" transform="rotate(-0 1396.8 508.73642)">$0.077</text>
+   </g>
+   <g id="text_153">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: start; fill: #365ec0" x="914.4" y="524.87162" transform="rotate(-0 914.4 524.87162)">26  GPT-5.6 Terra</text>
+   </g>
+   <g id="text_154">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1285.848" y="524.87162" transform="rotate(-0 1285.848 524.87162)">31.52</text>
+   </g>
+   <g id="text_155">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1396.8" y="524.87162" transform="rotate(-0 1396.8 524.87162)">$0.417</text>
+   </g>
+   <g id="text_156">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: start; fill: #536377" x="914.4" y="541.00682" transform="rotate(-0 914.4 541.00682)">27  Grok 4.6</text>
+   </g>
+   <g id="text_157">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1285.848" y="541.00682" transform="rotate(-0 1285.848 541.00682)">31.18</text>
+   </g>
+   <g id="text_158">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1396.8" y="541.00682" transform="rotate(-0 1396.8 541.00682)">$3.93</text>
+   </g>
+   <g id="text_159">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: start; fill: #087b66" x="914.4" y="557.14202" transform="rotate(-0 914.4 557.14202)">28  DS V4.1 Flash none</text>
+   </g>
+   <g id="text_160">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1285.848" y="557.14202" transform="rotate(-0 1285.848 557.14202)">29.05</text>
+   </g>
+   <g id="text_161">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1396.8" y="557.14202" transform="rotate(-0 1396.8 557.14202)">$0.118</text>
+   </g>
+   <g id="text_162">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: start; fill: #536377" x="914.4" y="573.27722" transform="rotate(-0 914.4 573.27722)">29  GLM 5.3</text>
+   </g>
+   <g id="text_163">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1285.848" y="573.27722" transform="rotate(-0 1285.848 573.27722)">28.05</text>
+   </g>
+   <g id="text_164">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1396.8" y="573.27722" transform="rotate(-0 1396.8 573.27722)">$2.81</text>
+   </g>
+   <g id="text_165">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: start; fill: #536377" x="914.4" y="589.41242" transform="rotate(-0 914.4 589.41242)">30  GLM 5.3 Flash default</text>
+   </g>
+   <g id="text_166">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1285.848" y="589.41242" transform="rotate(-0 1285.848 589.41242)">28.03</text>
+   </g>
+   <g id="text_167">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1396.8" y="589.41242" transform="rotate(-0 1396.8 589.41242)">$0.114</text>
+   </g>
+   <g id="text_168">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: start; fill: #536377" x="914.4" y="605.54762" transform="rotate(-0 914.4 605.54762)">31  GLM 5.2</text>
+   </g>
+   <g id="text_169">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1285.848" y="605.54762" transform="rotate(-0 1285.848 605.54762)">27.90</text>
+   </g>
+   <g id="text_170">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1396.8" y="605.54762" transform="rotate(-0 1396.8 605.54762)">$1.48</text>
+   </g>
+   <g id="text_171">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: start; fill: #935832" x="914.4" y="621.68282" transform="rotate(-0 914.4 621.68282)">32  Opus 4.8</text>
+   </g>
+   <g id="text_172">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1285.848" y="621.68282" transform="rotate(-0 1285.848 621.68282)">27.20</text>
+   </g>
+   <g id="text_173">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1396.8" y="621.68282" transform="rotate(-0 1396.8 621.68282)">$4.27</text>
+   </g>
+   <g id="text_174">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: start; fill: #087b66" x="914.4" y="637.81802" transform="rotate(-0 914.4 637.81802)">33  DS V4 Pro</text>
+   </g>
+   <g id="text_175">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1285.848" y="637.81802" transform="rotate(-0 1285.848 637.81802)">23.43</text>
+   </g>
+   <g id="text_176">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1396.8" y="637.81802" transform="rotate(-0 1396.8 637.81802)">$1.01</text>
+   </g>
+   <g id="text_177">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: start; fill: #087b66" x="914.4" y="653.95322" transform="rotate(-0 914.4 653.95322)">34  DS V4 Flash 0731</text>
+   </g>
+   <g id="text_178">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1285.848" y="653.95322" transform="rotate(-0 1285.848 653.95322)">19.63</text>
+   </g>
+   <g id="text_179">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1396.8" y="653.95322" transform="rotate(-0 1396.8 653.95322)">$0.149</text>
+   </g>
+   <g id="text_180">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: start; fill: #536377" x="914.4" y="670.08842" transform="rotate(-0 914.4 670.08842)">35  Qwen3.8 27B</text>
+   </g>
+   <g id="text_181">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1285.848" y="670.08842" transform="rotate(-0 1285.848 670.08842)">17.80</text>
+   </g>
+   <g id="text_182">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1396.8" y="670.08842" transform="rotate(-0 1396.8 670.08842)">$0.689</text>
+   </g>
+   <g id="text_183">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: start; fill: #365ec0" x="914.4" y="686.22362" transform="rotate(-0 914.4 686.22362)">36  GPT-5.6 Luna default</text>
+   </g>
+   <g id="text_184">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1285.848" y="686.22362" transform="rotate(-0 1285.848 686.22362)">16.05</text>
+   </g>
+   <g id="text_185">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1396.8" y="686.22362" transform="rotate(-0 1396.8 686.22362)">$0.056</text>
+   </g>
+   <g id="text_186">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: start; fill: #536377" x="914.4" y="702.35882" transform="rotate(-0 914.4 702.35882)">37  MiniMax M3</text>
+   </g>
+   <g id="text_187">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1285.848" y="702.35882" transform="rotate(-0 1285.848 702.35882)">11.82</text>
+   </g>
+   <g id="text_188">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1396.8" y="702.35882" transform="rotate(-0 1396.8 702.35882)">$0.883</text>
+   </g>
+   <g id="text_189">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: start; fill: #536377" x="914.4" y="718.49402" transform="rotate(-0 914.4 718.49402)">38  Gemini 3.7 Flash</text>
+   </g>
+   <g id="text_190">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1285.848" y="718.49402" transform="rotate(-0 1285.848 718.49402)">9.58</text>
+   </g>
+   <g id="text_191">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1396.8" y="718.49402" transform="rotate(-0 1396.8 718.49402)">$0.998</text>
+   </g>
+   <g id="text_192">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: start; fill: #536377" x="914.4" y="734.62922" transform="rotate(-0 914.4 734.62922)">39  Gemini 3.1 Pro</text>
+   </g>
+   <g id="text_193">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1285.848" y="734.62922" transform="rotate(-0 1285.848 734.62922)">6.88</text>
+   </g>
+   <g id="text_194">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1396.8" y="734.62922" transform="rotate(-0 1396.8 734.62922)">$0.965</text>
+   </g>
+   <g id="text_195">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: start; fill: #963ca1" x="914.4" y="750.76442" transform="rotate(-0 914.4 750.76442)">40  Mercury 2.5 (diff.)</text>
+   </g>
+   <g id="text_196">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1285.848" y="750.76442" transform="rotate(-0 1285.848 750.76442)">5.10</text>
+   </g>
+   <g id="text_197">
+    <text style="font-size: 8.3px; font-family: 'Geist Mono'; text-anchor: end; fill: #172331" x="1396.8" y="750.76442" transform="rotate(-0 1396.8 750.76442)">$0.049</text>
+   </g>
+  </g>
+  <g id="text_198">
+   <text style="font-weight: 700; font-size: 24px; font-family: 'Geist Mono'; text-anchor: start; fill: #172331" x="64.8" y="44.064" transform="rotate(-0 64.8 44.064)">Browser Use Benchmark v2</text>
+  </g>
+  <g id="text_199">
+   <text style="font-size: 11px; font-family: 'Geist Mono'; text-anchor: start; fill: #536377" x="64.8" y="72.576" transform="rotate(-0 64.8 72.576)">Xiaomi MiMo added  |  Historical 60-task cut  |  September 23, 2026</text>
+  </g>
+  <g id="text_200">
+   <text style="font-size: 9px; font-family: 'Geist Mono'; text-anchor: start; fill: #536377" x="64.8" y="811.296" transform="rotate(-0 64.8 811.296)">Final weighted rubric credit after judge penalties; not % of tasks solved. Historical API runs; no uncertainty intervals.</text>
+  </g>
+  <g id="text_201">
+   <text style="font-size: 8.7px; font-family: 'Geist Mono'; text-anchor: start; fill: #536377" x="64.8" y="828.576" transform="rotate(-0 64.8 828.576)">Original continuation/recovery replacements retained. Cost covers selected task results; judge, infrastructure and discarded attempts excluded.</text>
+  </g>
+  <g id="text_202">
+   <text style="font-size: 8.7px; font-family: 'Geist Mono'; text-anchor: start; fill: #536377" x="64.8" y="846.72" transform="rotate(-0 64.8 846.72)">Sources, pinned evaluation IDs and cohort notes: official_results/bu_bench_v2_2026_09_23.json  |  browser-use/benchmark</text>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pd26b90fc81">
+   <rect x="83.52" y="117.504" width="770.4" height="603.936"/>
+  </clipPath>
+  <clipPath id="p7bbb3c6ae6">
+   <rect x="914.4" y="108.864" width="482.4" height="645.408"/>
+  </clipPath>
+ </defs>
+</svg>
