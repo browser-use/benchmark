@@ -36,6 +36,28 @@ help review the proposed semantics but are not fresh executions of the new tasks
 The other four edits concern rubric interpretation. Rejudging saved evidence must
 still record both rubric versions; historical published results are unchanged.
 
+## Saved-run feasibility check (September 24)
+
+Six archived platform executions per task, three Astra and three Fable, show:
+
+- AliExpress 171: four scored 100% under the original acquisition requirements.
+  Astra repetition 2's downloaded runner archive matches GitHub's SHA-256 and
+  the archived result hash. Its tool outputs contain actual seller feedback,
+  shipping and delivery values for the ranked listings. Keep the restored A6/A7
+  requirements; an unresolved block is not completion.
+- Reuters 185: three scored 100% for an evidenced absence of an in-scope player,
+  not successful playback. Five runs reached the page; one was blocked. No
+  reviewed run demonstrates the requested footer-video playback. Astra repetition
+  2's hash-verified archive contains footer inspection and zero-player probes.
+  Preserve the original evidenced-absence branch, distinguish it from an
+  inaccessible page, and do not claim this is a demonstrated playback task.
+  A playback-only benchmark needs a verified target and revised task wording.
+
+These are historical platform records from September 17, not an exhaustive
+all-time search or fresh site verification. The legacy live eval connector returned
+HTTP 401. No paid judging or historical score changes were made. The original
+AliExpress/Reuters task objects remain exactly restored from the August 25 snapshot.
+
 ## Deferred issues
 
 - `bu2-028`: expanded-cohort completeness has no sufficiently explicit finite
