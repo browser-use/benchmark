@@ -1,9 +1,7 @@
 """Findings judge: the scoring method for BU Bench V2.
 
-Published for transparency. This is the prompt and the scoring arithmetic used
-to produce the reported results; it is NOT wired into run_eval.py, and the LLM
-call plumbing is not included. Treat it as the specification, not a runnable
-verifier.
+This is the prompt and scoring arithmetic used to produce the reported results.
+It is the default judge in run_eval.py; evaluation.py provides the LLM adapter.
 
 The judge emits one finding per rubric item (met / violated / not_assessable,
 each with evidence) and never emits a score. Valuation happens in code from the
@@ -13,13 +11,14 @@ Each BU Bench V2 task carries its own `rubric` and `weights` inline, and both
 are frozen: `weights` keys are exactly the item ids the rubric defines, and they
 sum to 100.
 
-Two divergences from the internal implementation, both infrastructure rather
-than method:
+Infrastructure differences from the internal implementation:
   - image selection: internally, screenshots are fitted to a byte budget shared
-    with the prompt text. Here they are passed through in order.
-  - the LLM call, retries, and tracing are omitted.
-The system prompt, the section layout, the truncation caps, and the scoring are
-identical to what produced the published numbers.
+    with the prompt text. The public runner samples up to 50 unique screenshots
+    evenly across the run; this prompt builder passes those through in order.
+  - LLM calls, SDK retries, and local JSON traces are handled by the public runner.
+The rubric rules, section layout, truncation caps, and scoring are identical to
+what produced the published numbers. Screenshot timing describes the supplying
+harness (Browser Use history stores the state before each action).
 """
 
 from typing import Literal
@@ -151,17 +150,21 @@ def construct_findings_judge_messages(
 	website: str | None = None,
 	output_files_text: str | None = None,
 	screenshot_steps: list[int] | None = None,
+	screenshot_timing: Literal['before', 'after'] = 'after',
 ) -> list[BaseMessage]:
 	if screenshot_steps is None:
 		trajectory = '\n'.join(agent_steps)
-		screenshots_note = '{n} screenshots from execution are attached below in chronological order.'
+		screenshots_note = (
+			'{n} screenshots from execution are attached below in chronological order. '
+			f'They were captured {screenshot_timing} browser actions.'
+		)
 	else:
 		# Number the steps so screenshot labels ([step N]) can be located.
 		trajectory = '\n'.join(f'[step {i}] {s}' for i, s in enumerate(agent_steps, start=1))
 		screenshots_note = (
 			'{n} screenshots are attached below in chronological order. They were captured '
-			'automatically by the harness immediately after browser actions (not chosen by the '
-			'agent); each is labeled with the trajectory step it follows. Identical consecutive '
+			f'automatically by the harness immediately {screenshot_timing} browser actions (not chosen by the '
+			'agent); each is labeled with its trajectory step. Identical consecutive '
 			'frames were removed.'
 		)
 
@@ -214,12 +217,12 @@ rubrics/{task_id}.md
 		if step is None:
 			label = f'Screenshot {index} of {len(screenshots_b64)}. Chronological order.'
 		else:
-			label = f'Screenshot {index} of {len(screenshots_b64)}, captured immediately after [step {step}].'
+			label = f'Screenshot {index} of {len(screenshots_b64)}, captured immediately {screenshot_timing} [step {step}].'
 		content_parts.append(ContentPartTextParam(text=label))
 		content_parts.append(image)
 
 	return [
-		SystemMessage(content=FINDINGS_SYSTEM_PROMPT),
+		SystemMessage(content=FINDINGS_SYSTEM_PROMPT.replace('after browser actions', f'{screenshot_timing} browser actions')),
 		UserMessage(content=content_parts),
 	]
 
