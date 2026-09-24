@@ -114,30 +114,36 @@ the dataset revision. Missing/duplicate findings are judge errors. Clipped agent
 evidence is recorded in `evidence_clipped_sections` and shown as a warning; it
 does not automatically suppress the judge's score or exclude the task from the mean.
 The judge assesses each item using the final output and all available evidence.
-Every `not_assessable` finding names its reason:
-`missing_evidence` means the judge cannot settle an item because required evidence
-the run produced is unavailable; it names the missing evidence and withholds the
-task score. A clipped task instruction or rubric also withholds the score because
-the judging question is incomplete. `absent_scope` is a rubric-defined missing deliverable,
-empty scope, or inapplicable branch and retains the historical zero item credit.
-Missing agent work is not a collector failure. Diagnostic credit is retained
-separately for incomplete evaluations. Any unscored task, including missing
-required evidence or clipped instructions/rubrics, makes the full-set mean
-unavailable and the run exit nonzero. Judge/API/schema failures
-are unscored, preserve the
-trace, make the overall mean unavailable, and exit nonzero. The separate mean
-over scored tasks is explicitly labeled. Agent execution failures still count
-as zero; timed-out runs are judged on their partial evidence.
+Every `not_assessable` finding names its reason: `missing_evidence` identifies
+unavailable evidence, while `absent_scope` is a rubric-defined empty or
+inapplicable scope. Both retain the existing zero item credit. Other earned
+points and the task's normal weight in the mean are preserved; item weights
+are not renormalized. Missing agent work is judged under the rubric, rather than
+being classified as a collector failure. Task instructions and rubrics are
+supplied in full instead of being clipped.
+
+The score comes from weighted rubric findings and the existing reward-hacking /
+canary penalty. Evidence size, missing-evidence findings, and execution errors
+never override a valid judgment. Timeouts and other runtime exceptions retain
+partial work for judging. Judge/API/schema failures have no valid judgment to
+score: they preserve the trace, make the full-set mean unavailable, and exit
+nonzero. The separate mean over scored tasks is explicitly labeled.
 
 By default this runner uses Browser Use 0.11.5 / `bu-2-0`, a 30-minute limit and 100 steps.
 It supplies tool results, final output, text from the agent's managed files, and
-up to 50 unique screenshots sampled across the run within a byte budget. Downloaded binary files and
+up to 50 screenshots sampled in chronological order, preserving the first and
+final captures and later returns to an earlier state. Only adjacent repeats are
+collapsed. Images that exceed the encoded-byte budget are compressed first,
+then resized only as needed. Unreadable or impossible-to-fit images are omitted
+with an explicit note for the judge, without rejecting the task score. The
+saved `screenshot_evidence` records source positions, MIME types, resizing,
+omissions, and final encoded bytes. Original run images remain unchanged. Downloaded binary files and
 files created outside the agent's managed filesystem are not extracted. This
 is a runnable public harness, not a reproduction of the published 60-task
 BrowserCode setup: the executor, task cohort, limits, and image selection differ.
-Weights and reward-hacking penalties are unchanged. Adapter 2.1.1 removes the
-automatic score exclusion for clipped agent evidence; record the adapter version
-when comparing results with earlier runs.
+Weights and reward-hacking penalties are unchanged. Adapter 2.1.2 removes
+remaining evidence-based score exclusions and corrects screenshot preparation;
+record the adapter version when comparing results with earlier runs.
 
 Local traces contain decrypted tasks, rubrics, screenshots, and deliverables.
 Do not publish or commit them. Offline runner tests: `uv run python -m unittest discover -s tests`.

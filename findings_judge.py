@@ -13,8 +13,8 @@ Each versioned BU Bench V2 task carries its own `rubric` and `weights` inline:
 
 Infrastructure differences from the internal implementation:
   - image selection: internally, screenshots are fitted to a byte budget shared
-    with the prompt text. The public runner samples up to 50 unique screenshots
-    evenly across the run; this prompt builder passes those through in order.
+    with the prompt text. The public runner samples up to 50 screenshots
+    across the run with adjacent-repeat deduplication and resizing; this prompt builder preserves order.
   - LLM calls, SDK retries, and local JSON traces are handled by the public runner.
 Historical results must be interpreted using their original dataset and judge
 versions. Screenshot timing describes the supplying framework (Browser Use
@@ -107,9 +107,7 @@ Set these independently of the findings:
 # Caps applied per section before the prompt is assembled. The concatenated
 # trajectory is clipped in the middle, retaining its beginning and end. Cuts
 # can fall within individual steps or tool results.
-TASK_MAX_CHARS = 40_000
 WEBSITE_MAX_CHARS = 4_000
-RUBRIC_MAX_CHARS = 100_000
 FINAL_RESULT_MAX_CHARS = 100_000
 TRAJECTORY_MAX_CHARS = 700_000
 FILES_MAX_CHARS = 600_000
@@ -174,6 +172,7 @@ def construct_findings_judge_messages(
 	output_files_text: str | None = None,
 	screenshot_steps: list[int] | None = None,
 	screenshot_timing: Literal['before', 'after'] = 'after',
+	evidence_notes: list[str] | None = None,
 ) -> list[BaseMessage]:
 	if screenshot_steps is None:
 		trajectory = '\n'.join(agent_steps)
@@ -205,7 +204,7 @@ def construct_findings_judge_messages(
 
 	text_sections = f"""
 <task>
-{_truncate(task, TASK_MAX_CHARS) or 'No task provided'}
+{task or 'No task provided'}
 </task>
 
 <website>
@@ -217,7 +216,7 @@ rubrics/{task_id}.md
 </rubric_path>
 
 <rubric>
-{_truncate(rubric, RUBRIC_MAX_CHARS) or 'No rubric exists yet.'}
+{rubric or 'No rubric exists yet.'}
 </rubric>
 
 <agent_trajectory>
@@ -229,7 +228,11 @@ rubrics/{task_id}.md
 </final_result>
 {output_files_section}"""
 
+	evidence_note_text = "\n".join(evidence_notes or [])
 	user_prompt = f"""{text_sections}
+<evidence_notes>
+{evidence_note_text}
+</evidence_notes>
 <screenshots>
 {screenshots_note.format(n=len(screenshots_b64))}
 </screenshots>
@@ -268,8 +271,8 @@ def score(task: dict, judgement: BaseModel, agent_texts: list[str] | None = None
 
 	score = met weight / total weight. This historical arithmetic assigns no
 	credit to missing or not_assessable items. The public adapter separately
-	rejects incomplete findings and withholds scores for missing judge evidence;
-	rubric-defined absent scopes retain their historical zero item credit.
+	rejects malformed findings. Both missing evidence and rubric-defined absent
+	scopes retain zero item credit without overriding the task score.
 	"""
 	weights: dict[str, int] = task['weights']
 

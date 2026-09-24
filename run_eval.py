@@ -75,20 +75,28 @@ def select_tasks(
     return tasks[:limit] if limit is not None else tasks
 
 
-def encode_screenshots(paths: list[str]) -> list[str]:
-    return [
-        base64.b64encode(Path(p).read_bytes()).decode()
-        for p in paths
-        if Path(p).is_file()
-    ]
+def encode_screenshots(paths: list[str], evidence_notes: list[str] | None = None) -> list[str]:
+    images = []
+    for index, path in enumerate(paths, 1):
+        try:
+            images.append(base64.b64encode(Path(path).read_bytes()).decode())
+        except OSError:
+            if evidence_notes is not None:
+                evidence_notes.append(f"Capture {index} could not be read from the saved screenshots.")
+    return images
 
 
-def collect_output_files(agent) -> str:
+def collect_output_files(agent, evidence_notes: list[str] | None = None) -> str:
     """Collect source text of files managed by this agent, including PDF/DOCX."""
     fs = agent.file_system
-    return "\n\n".join(
-        f"--- {name} ---\n{fs.get_file(name).read()}" for name in fs.list_files()
-    )
+    contents = []
+    for name in fs.list_files():
+        try:
+            contents.append(f"--- {name} ---\n{fs.get_file(name).read()}")
+        except Exception:
+            if evidence_notes is not None:
+                evidence_notes.append(f"Managed output file {name} could not be read by the collector.")
+    return "\n\n".join(contents)
 
 
 def save_task(run_data_dir: Path | None, task_id: str, payload: dict) -> None:
@@ -160,13 +168,16 @@ async def run_task(
                 # Preserve and judge partial work instead of discarding its evidence.
                 history = agent.history
                 result["execution_error"] = f"Task timed out after {task_timeout}s"
-
+            except Exception as exc:
+                history = agent.history
+                result["execution_error"] = f"{type(exc).__name__}: {exc}"
+            phase = "evidence"
             result.update(
                 steps=history.number_of_steps(),
                 duration=history.total_duration_seconds(),
                 cost=history.usage.total_cost if history.usage else 0,
             )
-            phase = "evidence"
+            evidence_notes = []
             trace = {
                 "agent_task": task["confirmed_task"],
                 "final_result": history.final_result()
@@ -174,9 +185,10 @@ async def run_task(
                 "agent_steps": history.agent_steps(),
                 "ground_truth": task.get("answer"),
                 "screenshots_b64": encode_screenshots(
-                    [p for p in history.screenshot_paths() if p is not None]
+                    [p for p in history.screenshot_paths() if p is not None], evidence_notes
                 ),
-                "output_files_text": collect_output_files(agent),
+                "output_files_text": collect_output_files(agent, evidence_notes),
+                "evidence_notes": evidence_notes,
             }
             artifact.update(
                 agent_trace=trace,
@@ -191,19 +203,13 @@ async def run_task(
             if result.get("evidence_clipped_sections"):
                 sections = ", ".join(result["evidence_clipped_sections"])
                 print(f"Task {task_id}: warning: clipped {sections}")
-            if result["score"] is None:
-                result["status"] = "evidence_incomplete"
-                print(f"Task {task_id}: evidence incomplete; no benchmark score")
-            else:
-                result["status"] = "judged"
-                print(
-                    "Task",
-                    task_id,
-                    "raw=",
-                    result["raw_score"],
-                    "final=",
-                    result["score"],
-                )
+            if result.get("evidence_missing_items"):
+                print(f"Task {task_id}: warning: missing evidence for {result['evidence_missing_items']}; item credit follows the rubric")
+            image_info = result.get("screenshot_evidence", {})
+            if image_info.get("reencoded") or image_info.get("omitted"):
+                print(f"Task {task_id}: screenshot preparation: {len(image_info['reencoded'])} reencoded, {len(image_info['resized'])} resized, {len(image_info['omitted'])} omitted; see evidence notes")
+            result["status"] = "judged"
+            print("Task", task_id, "raw=", result["raw_score"], "final=", result["score"])
         except Exception as exc:
             # A broken judge/configuration is not an agent score of zero.
             result.update(
@@ -211,8 +217,6 @@ async def run_task(
                 error=f"{type(exc).__name__}: {exc}",
                 traceback=traceback.format_exc(),
             )
-            if phase == "execution":
-                result.update(score=0.0, raw_score=0.0)
             print(f"Task {task_id}: {result['status']}: {result['error']}")
         finally:
             cleanup_errors = []
@@ -248,6 +252,9 @@ def summarize_results(results: list[dict]) -> dict:
         ),
         "tasks_with_clipped_evidence": sum(
             bool(r.get("evidence_clipped_sections")) for r in results
+        ),
+        "tasks_with_missing_evidence": sum(
+            bool(r.get("evidence_missing_items")) for r in results
         ),
         "execution_errors": sum(
             r["status"] == "execution_error" or "execution_error" in r for r in results

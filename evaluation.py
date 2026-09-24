@@ -1,5 +1,6 @@
 """Dataset and judge adapters for the public benchmark runner."""
 
+import asyncio
 import base64
 import hashlib
 import json
@@ -16,8 +17,6 @@ from cryptography.fernet import Fernet
 from findings_judge import (
     FILES_MAX_CHARS,
     FINAL_RESULT_MAX_CHARS,
-    RUBRIC_MAX_CHARS,
-    TASK_MAX_CHARS,
     TRAJECTORY_MAX_CHARS,
     WEBSITE_MAX_CHARS,
     construct_findings_judge_messages,
@@ -27,6 +26,7 @@ from findings_judge import (
     score as score_findings,
 )
 from judge import JudgementResult, construct_judge_messages
+from screenshot_evidence import prepare_screenshots
 
 DEFAULT_BENCHMARK = "BU_Bench_V2"
 BENCHMARKS = (DEFAULT_BENCHMARK, "BU_Bench_V1", "Stealth_Bench_V1")
@@ -118,7 +118,7 @@ def judge_config(benchmark: str, llm) -> dict:
     endpoint_host = urlparse(str(endpoint)).hostname
     return {
         "type": "findings" if findings else "legacy_binary",
-        "adapter_version": "2.1.1" if findings else "legacy-v1",
+        "adapter_version": "2.1.2" if findings else "legacy-v1",
         "adapter_source_sha256": hashlib.sha256(
             Path(__file__).read_bytes()
         ).hexdigest(),
@@ -130,8 +130,11 @@ def judge_config(benchmark: str, llm) -> dict:
         "max_completion_tokens": getattr(llm, "max_completion_tokens", None),
         "max_images": MAX_IMAGES if findings else 10,
         "max_screenshot_bytes": MAX_SCREENSHOT_BYTES if findings else None,
-        "image_selection": "evenly_spaced_unique" if findings else "last_unique",
+        "image_selection": "chronological_adjacent_dedupe_resize" if findings else "last_unique",
         "screenshot_timing": "before_action",
+        "screenshot_source_sha256": hashlib.sha256(
+            Path(__file__).with_name("screenshot_evidence.py").read_bytes()
+        ).hexdigest() if findings else None,
         "judge_source_sha256": hashlib.sha256(
             Path(__file__)
             .with_name("findings_judge.py" if findings else "judge.py")
@@ -145,55 +148,15 @@ def select_screenshots(
     max_images: int = MAX_IMAGES,
     max_bytes: int = MAX_SCREENSHOT_BYTES,
 ) -> list[str]:
-    """Deduplicate and sample frames under count and encoded-byte budgets.
-
-    The first and last unique frames are mandatory. Other frames are selected
-    at even intervals where they fit, then filled from the remaining frames in
-    chronological order. A budget error is explicit when even the mandatory
-    frames cannot fit; silently dropping the boundary evidence would make a
-    score incomparable.
-    """
-    unique = list(dict.fromkeys(images))
-    if not unique or max_images <= 0:
-        return []
-    if max_bytes <= 0:
-        raise ValueError("screenshot byte budget must be positive")
-    if any(not isinstance(image, str) for image in unique):
-        raise ValueError("screenshots must be base64 strings")
-
-    target_count = min(max_images, len(unique))
-    mandatory = {0}
-    if target_count > 1:
-        mandatory.add(len(unique) - 1)
-    sizes = [len(image.encode("ascii")) for image in unique]
-    used = sum(sizes[index] for index in mandatory)
-    if used > max_bytes:
-        raise ValueError("screenshot byte budget cannot retain first and last frames")
-
-    selected = set(mandatory)
-    if target_count > 1:
-        candidates = [
-            round(i * (len(unique) - 1) / (target_count - 1))
-            for i in range(target_count)
-        ]
-    else:
-        candidates = [0]
-    for index in candidates + list(range(len(unique))):
-        if index in selected or len(selected) >= target_count:
-            continue
-        if used + sizes[index] <= max_bytes:
-            selected.add(index)
-            used += sizes[index]
-    return [unique[index] for index in sorted(selected)]
+    """Prepare bounded images while preserving later repeated states."""
+    return prepare_screenshots(images, max_images, max_bytes)[0]
 
 
 def evidence_truncation_sections(task: dict, trace: dict) -> list[str]:
     """Return prompt sections that the builder would clip or omit."""
     sections = []
     values = (
-        ("task", task.get("confirmed_task", ""), TASK_MAX_CHARS),
         ("website", task.get("website") or "", WEBSITE_MAX_CHARS),
-        ("rubric", task.get("rubric", ""), RUBRIC_MAX_CHARS),
         ("trajectory", "\n".join(trace.get("agent_steps") or []), TRAJECTORY_MAX_CHARS),
         ("final_result", trace.get("final_result") or "", FINAL_RESULT_MAX_CHARS),
         ("files", trace.get("output_files_text") or "", FILES_MAX_CHARS),
@@ -202,24 +165,6 @@ def evidence_truncation_sections(task: dict, trace: dict) -> list[str]:
         if len(value) > limit:
             sections.append(name)
     return sections
-
-
-def _incomplete_result(
-    sections: list[str],
-    judgement=None,
-    diagnostic_score=None,
-    diagnostic_raw_score=None,
-) -> dict:
-    """Represent evidence that cannot support a headline score."""
-    return {
-        "score": None,
-        "raw_score": None,
-        "evidence_incomplete": True,
-        "evidence_incomplete_sections": sections,
-        "diagnostic_score": diagnostic_score,
-        "diagnostic_raw_score": diagnostic_raw_score,
-        "judgement": judgement.model_dump() if judgement is not None else None,
-    }
 
 
 def _validate_findings_coverage(judgement, item_ids: tuple[str, ...]) -> None:
@@ -250,23 +195,14 @@ async def judge_trace(
     """Judge once against the full rubric; calculate weighted scores in code."""
     if benchmark == DEFAULT_BENCHMARK:
         validate_findings_task(task)
-        truncations = evidence_truncation_sections(task, trace)
-        # Keep the judging question intact. Clipped agent evidence is still
-        # assessable when the remaining material supports the item findings.
-        hard_truncations = [
-            section for section in truncations if section in {"task", "rubric"}
-        ]
-        if hard_truncations:
-            return _incomplete_result(hard_truncations)
+        selected_images, image_metadata = await asyncio.to_thread(
+            prepare_screenshots, trace["screenshots_b64"], MAX_IMAGES, MAX_SCREENSHOT_BYTES
+        )
         images = [
             ContentPartImageParam(
-                image_url=ImageURL(
-                    url=f"data:image/png;base64,{image}", media_type="image/png"
-                )
+                image_url=ImageURL(url=f"data:{mime_type};base64,{image}", media_type=mime_type)
             )
-            for image in select_screenshots(
-                trace["screenshots_b64"], max_bytes=MAX_SCREENSHOT_BYTES
-            )
+            for image, mime_type in zip(selected_images, image_metadata["mime_types"])
         ]
         messages = construct_findings_judge_messages(
             task=task["confirmed_task"],
@@ -280,6 +216,7 @@ async def judge_trace(
             # unset rather than claiming these were captured after the action.
             screenshots_b64=images,
             screenshot_timing="before",
+            evidence_notes=[*trace.get("evidence_notes", []), *image_metadata["notes"]],
         )
         schema = findings_result_model(tuple(task["weights"]))
     else:
@@ -319,19 +256,9 @@ async def judge_trace(
             if finding.status == "not_assessable"
             and finding.not_assessable_reason == "missing_evidence"
         ]
+        scoring["screenshot_evidence"] = image_metadata
         if incomplete_items:
-            diagnostic_score = scoring["score"]
-            diagnostic_raw_score = scoring["raw_score"]
-            return {
-                **scoring,
-                **_incomplete_result(
-                    incomplete_sections,
-                    judgement=judgement,
-                    diagnostic_score=diagnostic_score,
-                    diagnostic_raw_score=diagnostic_raw_score,
-                ),
-                "evidence_incomplete_items": incomplete_items,
-            }
+            scoring["evidence_missing_items"] = incomplete_items
     else:
         scoring = {
             "score": float(judgement.verdict),
