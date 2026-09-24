@@ -45,6 +45,11 @@ The 55-task subset selects public IDs `bu2-001` through `bu2-055` from the full 
 
 Tasks, rubrics and weights live once, in the encrypted 200-task release. `BU_Bench_V2_55.json` pins that file's SHA-256 and lists the subset IDs; it does not contain a second dataset. Label scores with the set used: **200 tasks**, **55-task subset**, or **legacy 60 tasks**.
 
+**Rubric revision candidate:** [corrections and review instructions](RUBRIC_REVISION.md).
+This branch updates seven task contracts; it has not been regraded and does not
+update the chart above. The prior encrypted snapshot and exact change hashes are
+preserved. Pin a revision when comparing results.
+
 The tasks are encrypted to keep their text out of web crawlers and model training data. Please do not publish decrypted tasks or rubrics in plaintext or use them for model training.
 
 <details>
