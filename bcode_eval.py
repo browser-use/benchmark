@@ -9,6 +9,7 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
+from bcode_results import init_laminar, public_result, publish_laminar
 from bcode_runner import (
     execute,
     preflight,
@@ -56,6 +57,9 @@ async def run_task(task, semaphore, *, run_dir, args, judge_llm):
                 effort=args.agent_reasoning,
                 timeout=args.task_timeout,
                 catalog_path=args.catalog_path,
+                browser=getattr(args, "browser", "browser-use-cloud"),
+                chrome_bin=getattr(args, "chrome_bin", None),
+                fetch_use=getattr(args, "fetch_use", True),
             )
             result.update(executed["metrics"])
             if not executed["metrics"]["steps"]:
@@ -82,6 +86,21 @@ async def run_task(task, semaphore, *, run_dir, args, judge_llm):
                 traceback=traceback.format_exc(),
             )
         write_json(task_dir / "result.json", result)
+        if getattr(args, "laminar_id", None):
+            try:
+                await asyncio.to_thread(
+                    publish_laminar,
+                    args.laminar_id,
+                    task,
+                    result,
+                    task_dir,
+                    args.run_config,
+                )
+            except Exception as exc:  # noqa: BLE001 - preserve scores if optional reporting fails
+                result["reporting_error"] = type(exc).__name__
+                write_json(task_dir / "laminar_error.txt", str(exc))
+                write_json(task_dir / "result.json", result)
+        write_json(task_dir / "public-result.json", public_result(result))
         label = (
             f"{result['score']:.1%}"
             if result["score"] is not None
@@ -128,6 +147,12 @@ async def main(args):
         raise ValueError("BU Bench V2 must contain 200 tasks")
     tasks = select_shard(all_tasks, args.shard_index, args.shard_count)
     tasks = select_tasks(tasks, args.task_ids, args.tasks)
+    if not tasks:
+        raise ValueError("Selected task set is empty")
+    if args.browser.startswith("local_"):
+        from bcode_runner import find_chrome
+
+        args.chrome_bin = find_chrome(args.chrome_bin)
     judge = create_judge(DEFAULT_BENCHMARK, args.judge_model, args.judge_reasoning)
     stamp = datetime.now(UTC).strftime("%Y%m%d_%H%M%S_%f")
     run_dir = args.output_dir.expanduser().resolve() / f"BU_Bench_V2_bcode_{stamp}"
@@ -139,6 +164,8 @@ async def main(args):
             args.model,
             args.agent_reasoning,
             run_dir / "preflight-state",
+            browser=args.browser,
+            fetch_use=args.fetch_use,
         )
         args.bcode_bin = executor["binary"]
         args.catalog_path = executor["catalog_path"]
@@ -162,10 +189,14 @@ async def main(args):
             "task_ids": [task["task_id"] for task in tasks],
             "task_timeout_seconds": args.task_timeout,
             "parallel": args.concurrency,
+            "fetch_use": args.fetch_use,
             "browser": {
-                "provider": "browser-use-cloud",
-                "api_version": "v2",
-                "timeout_minutes": (args.task_timeout + 59) // 60,
+                "provider": args.browser,
+                "chrome_bin": args.chrome_bin,
+                "api_version": "v2" if args.browser == "browser-use-cloud" else None,
+                "timeout_minutes": (args.task_timeout + 59) // 60
+                if args.browser == "browser-use-cloud"
+                else None,
             },
         }
         write_json(run_dir / "config.json", config)
@@ -178,6 +209,10 @@ async def main(args):
                 f"Preflight passed; no tasks executed. Configuration: {run_dir / 'config.json'}"
             )
             return
+        args.run_config = config
+        args.laminar_id = await asyncio.to_thread(init_laminar, config)
+        if args.laminar_id:
+            write_json(run_dir / "laminar.json", {"evaluation_id": args.laminar_id})
         semaphore = asyncio.Semaphore(args.concurrency)
         results = await asyncio.gather(
             *(
@@ -199,7 +234,7 @@ async def main(args):
                 f"Incomplete evaluation: {summary['tasks_unscored']} unscored tasks; {summary['tasks_scored']} scored"
             )
         print(f"Results and evidence: {run_dir}")
-        if summary["tasks_unscored"]:
+        if summary["tasks_unscored"] or any(r.get("reporting_error") for r in results):
             raise SystemExit(1)
     finally:
         client = getattr(judge, "client", None)

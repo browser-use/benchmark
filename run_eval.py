@@ -293,6 +293,9 @@ def parse_args(argv=None):
     )
     parser.add_argument("--bcode-bin", default=str(Path.home() / ".bcode/bin/bcode"))
     parser.add_argument("--bcode-version", default="0.1.20")
+    parser.add_argument("--chrome-bin", help="Local Chrome/Chromium executable")
+    parser.add_argument("--fetch-use", action=argparse.BooleanOptionalAction, default=None,
+                        help="Browser Use fetch service (default: on with Cloud, off with local Chrome)")
     parser.add_argument(
         "--output-dir", type=Path, default=Path(__file__).parent / "run_data"
     )
@@ -353,14 +356,15 @@ def parse_args(argv=None):
     if args.task_ids and args.shard_count is not None:
         parser.error("Use either --task-ids or --shard-index/--shard-count")
     if args.executor == "bcode":
-        if args.benchmark != DEFAULT_BENCHMARK or args.browser != "browser-use-cloud":
+        if args.benchmark != DEFAULT_BENCHMARK or args.browser not in ("browser-use-cloud", "local_headless", "local_headful"):
             parser.error(
-                "BrowserCode uses BU Bench V2 and Browser Use Cloud; select --executor browser-use for other benchmarks/browsers"
+                "BrowserCode supports V2 with Cloud or local Chrome; select --executor browser-use for other benchmarks/browsers"
             )
         if args.max_steps is not None:
             parser.error(
                 "--max-steps applies to --executor browser-use; use --task-timeout for BrowserCode"
             )
+        args.fetch_use = args.fetch_use if args.fetch_use is not None else args.browser == "browser-use-cloud"
         from bcode_runner import DEFAULT_MODEL, resolve_model
 
         try:
@@ -370,7 +374,7 @@ def parse_args(argv=None):
         except ValueError as exc:
             parser.error(str(exc))
         args.task_timeout = args.task_timeout if args.task_timeout is not None else 3600
-        if args.task_timeout > 14400:
+        if args.browser == "browser-use-cloud" and args.task_timeout > 14400:
             parser.error("BrowserCode Cloud task timeout cannot exceed 14400 seconds")
     else:
         if args.shard_count is not None:

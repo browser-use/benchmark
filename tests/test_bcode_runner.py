@@ -62,6 +62,32 @@ class ConfigurationTests(unittest.TestCase):
         with contextlib.redirect_stderr(io.StringIO()), self.assertRaises(SystemExit):
             run_eval.parse_args(["--framework", "browser-use"])
 
+    def test_local_uses_bcode_without_fetch_by_default(self):
+        args = run_eval.parse_args(["--browser", "local_headless"])
+        self.assertEqual(args.executor, "bcode")
+        self.assertFalse(args.fetch_use)
+        self.assertTrue(
+            run_eval.parse_args(
+                ["--browser", "local_headless", "--fetch-use"]
+            ).fetch_use
+        )
+
+    def test_public_results_exclude_private_evidence(self):
+        from bcode_results import public_result
+
+        self.assertEqual(
+            public_result(
+                {
+                    "task_id": "bu2-001",
+                    "score": 0.5,
+                    "error": "private task",
+                    "findings": "private rubric",
+                    "traceback": "private",
+                }
+            ),
+            {"task_id": "bu2-001", "score": 0.5},
+        )
+
     def test_stealth_and_v1_keep_their_existing_executor_and_datasets(self):
         for benchmark, count in (("Stealth_Bench_V1", 80), ("BU_Bench_V1", 100)):
             args = run_eval.parse_args(
@@ -229,6 +255,74 @@ class IntegrationTests(unittest.IsolatedAsyncioTestCase):
                 self.root / "state",
                 catalog_client=self.catalog_client,
             )
+
+    async def test_local_preflight_needs_no_cloud_key(self):
+        with patch.dict(os.environ, {"OPENAI_API_KEY": "synthetic"}, clear=True):
+            result = await preflight(
+                self.binary,
+                "0.1.20",
+                "openai/gpt-6-luna",
+                "low",
+                self.root / "local-state",
+                catalog_client=self.catalog_client,
+                browser="local_headless",
+                fetch_use=False,
+            )
+            self.assertFalse(result["provider_config"]["experimental"]["fetch_use"])
+            with self.assertRaisesRegex(ValueError, "BROWSER_USE_API_KEY"):
+                await preflight(
+                    self.binary,
+                    "0.1.20",
+                    "openai/gpt-6-luna",
+                    "low",
+                    self.root / "fetch-state",
+                    browser="local_headless",
+                    fetch_use=True,
+                )
+
+    @unittest.skipUnless(
+        os.getenv("BCODE_TEST_CHROME"),
+        "set BCODE_TEST_CHROME for real Chrome transport smoke",
+    )
+    async def test_real_local_chrome_isolation_capture_and_cleanup(self):
+        processes = []
+        real_start = bcode_runner.start_local_browser
+
+        async def start(*args, **kwargs):
+            proc, cdp = await real_start(*args, **kwargs)
+            processes.append(proc)
+            return proc, cdp
+
+        with patch.object(bcode_runner, "start_local_browser", side_effect=start):
+            results = await asyncio.gather(
+                *(
+                    execute(
+                        label,
+                        self.root / label,
+                        binary=self.binary,
+                        model="openai/gpt-6-luna",
+                        effort="low",
+                        timeout=30,
+                        browser="local_headless",
+                        chrome_bin=os.environ["BCODE_TEST_CHROME"],
+                        fetch_use=False,
+                        cloud_client=self.client,
+                    )
+                    for label in ("local-alpha", "local-beta")
+                )
+            )
+        self.assertEqual(self.created, [])
+        self.assertEqual(len(processes), 2)
+        self.assertNotEqual(processes[0].pid, processes[1].pid)
+        for result, proc in zip(results, processes):
+            self.assertIsNotNone(proc.returncode)
+            self.assertEqual(len(result["trace"]["screenshots_b64"]), 1)
+            self.assertTrue(
+                base64.b64decode(result["trace"]["screenshots_b64"][0]).startswith(
+                    b"\x89PNG"
+                )
+            )
+            self.assertEqual(result["trace"]["evidence_errors"], [])
 
     async def test_concurrent_tasks_keep_files_screenshots_and_browser_ownership(self):
         results = await asyncio.gather(

@@ -1,122 +1,160 @@
 name: Run BU Bench V2
+run-name: BU200 ${{ inputs.browser }} · ${{ inputs.model }} · ${{ inputs.tasks }} tasks
 
 on:
   workflow_dispatch:
     inputs:
-      shards:
-        description: "Number of contiguous task shards (20 means 10 tasks per runner)"
-        required: true
-        default: 20
+      browser:
+        description: Browser provider
+        type: choice
+        options: [browser-use-cloud, local_headless]
+        default: browser-use-cloud
+      model:
+        description: BrowserCode provider/model
+        type: string
+        default: openai/gpt-6-luna
+      reasoning:
+        description: Agent reasoning effort
+        type: choice
+        options: [none, minimal, low, medium, high, xhigh, max]
+        default: low
+      tasks:
+        description: Number of tasks (all 200 by default)
         type: number
-      parallel:
-        description: "Tasks per runner"
-        required: true
-        default: 3
-        type: number
+        default: 200
+      task_ids:
+        description: Optional exact task IDs separated by spaces
+        type: string
       task_timeout:
-        description: "Per-task timeout in seconds"
-        required: true
+        description: Seconds per task
+        type: number
         default: 3600
-        type: number
       max_parallel:
-        description: "Maximum concurrent GitHub runners"
-        required: true
-        default: 10
+        description: Maximum concurrent task runners
         type: number
+        default: 12
+      fetch_use:
+        description: Enable BrowserCode fetch service (requires Browser Use key)
+        type: boolean
+        default: true
 
 permissions:
   contents: read
 
+env:
+  BROWSER_USE_SETUP_LOGGING: "false"
+
 jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.tasks.outputs.matrix }}
+      task_ids: ${{ steps.tasks.outputs.task_ids }}
+      evaluation_id: ${{ steps.tasks.outputs.evaluation_id }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - run: uv sync --frozen --python 3.12 --extra laminar
+      - name: Validate inputs and select tasks
+        id: tasks
+        env:
+          TASK_IDS: ${{ inputs.task_ids }}
+          TASK_COUNT: ${{ inputs.tasks }}
+          MAX_PARALLEL: ${{ inputs.max_parallel }}
+          TASK_TIMEOUT: ${{ inputs.task_timeout }}
+          EVAL_MODEL: ${{ inputs.model }}
+          EVAL_BROWSER: ${{ inputs.browser }}
+          LMNR_PROJECT_API_KEY: ${{ secrets.LMNR_PROJECT_API_KEY }}
+        run: |
+          python3 - <<'PY'
+          import os
+          assert 1 <= int(os.environ["MAX_PARALLEL"]) <= 50
+          assert 1 <= int(os.environ["TASK_TIMEOUT"]) <= 14400
+          PY
+          uv run python bcode_results.py prepare --tasks "$TASK_COUNT" --task-ids "$TASK_IDS"
+
   evaluate:
-    if: ${{ inputs.shards >= 1 && inputs.shards <= 20 && matrix.shard < inputs.shards }}
+    needs: prepare
     strategy:
       fail-fast: false
       max-parallel: ${{ inputs.max_parallel }}
-      matrix:
-        shard: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+      matrix: ${{ fromJSON(needs.prepare.outputs.matrix) }}
     runs-on: ubuntu-latest
-    timeout-minutes: 360
+    timeout-minutes: 260
     env:
       BROWSER_USE_API_KEY: ${{ secrets.BROWSER_USE_API_KEY }}
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-      BROWSER_USE_SETUP_LOGGING: "false"
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      GOOGLE_GENERATIVE_AI_API_KEY: ${{ secrets.GOOGLE_GENERATIVE_AI_API_KEY }}
+      OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+      XAI_API_KEY: ${{ secrets.XAI_API_KEY }}
+      LMNR_PROJECT_API_KEY: ${{ secrets.LMNR_PROJECT_API_KEY }}
+      BENCHMARK_LAMINAR_EVAL_ID: ${{ needs.prepare.outputs.evaluation_id }}
     steps:
       - uses: actions/checkout@v4
-
       - uses: astral-sh/setup-uv@v6
-        with:
-          version: latest
-
-      - name: Install Python dependencies
-        run: uv sync --frozen --python 3.12
-
+      - run: uv sync --frozen --python 3.12 --extra laminar
       - name: Install BrowserCode
         run: |
           curl -fsSL https://bcode.sh/install | bash -s -- --version 0.1.20 --no-modify-path
-          echo "$HOME/.bcode/bin" >> "$GITHUB_PATH"
-
-      - name: Run shard
+      - name: Execute and judge task
+        env:
+          TASK_ID: ${{ matrix.task_id }}
+          EVAL_MODEL: ${{ inputs.model }}
+          REASONING: ${{ inputs.reasoning }}
+          BROWSER: ${{ inputs.browser }}
+          TASK_TIMEOUT: ${{ inputs.task_timeout }}
+          FETCH_USE: ${{ inputs.fetch_use }}
         run: |
+          fetch_flag=--no-fetch-use
+          if [ "$FETCH_USE" = true ]; then fetch_flag=--fetch-use; fi
           uv run python run_eval.py \
-            --shard-index "${{ matrix.shard }}" \
-            --shard-count "${{ inputs.shards }}" \
-            --parallel "${{ inputs.parallel }}" \
-            --task-timeout "${{ inputs.task_timeout }}" \
-            --output-dir run_data
-
-      - name: Upload task evidence
+            --task-ids "$TASK_ID" --parallel 1 \
+            --model "$EVAL_MODEL" --agent-reasoning "$REASONING" \
+            --browser "$BROWSER" "$fetch_flag" \
+            --task-timeout "$TASK_TIMEOUT" --output-dir run_data
+      - name: Export public-safe configuration
+        if: ${{ always() }}
+        run: uv run python bcode_results.py export
+      - name: Upload scores and configuration
         if: ${{ always() }}
         uses: actions/upload-artifact@v4
         with:
-          name: bu-bench-v2-shard-${{ matrix.shard }}
-          path: run_data
+          name: score-${{ matrix.task_id }}
+          path: |
+            run_data/**/public-result.json
+            run_data/**/public-config.json
           if-no-files-found: error
           retention-days: 30
+      - name: Retain full evidence in private repositories
+        if: ${{ always() && github.event.repository.private }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: evidence-${{ matrix.task_id }}
+          path: |
+            run_data
+            !run_data/**/browser-profile/**
+            !run_data/**/state/**
+            !run_data/**/preflight-state/**
+          if-no-files-found: warn
+          retention-days: 14
 
   aggregate:
-    if: ${{ always() }}
-    needs: evaluate
+    if: ${{ always() && needs.prepare.result == 'success' }}
+    needs: [prepare, evaluate]
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - run: uv sync --frozen --python 3.12
       - uses: actions/download-artifact@v4
         with:
-          pattern: bu-bench-v2-shard-*
+          pattern: score-*
           path: artifacts
-          merge-multiple: false
-
-      - name: Aggregate shard results
-        run: |
-          python3 - <<'PY'
-          import glob, json, pathlib, sys
-          paths = sorted(glob.glob("artifacts/**/results.json", recursive=True))
-          if not paths:
-              print("No shard results found", file=sys.stderr)
-              raise SystemExit(1)
-          runs = [json.loads(pathlib.Path(path).read_text()) for path in paths]
-          tasks = [task for run in runs for task in run.get("task_results", [])]
-          ids = [task.get("task_id") for task in tasks]
-          if len(tasks) != 200 or len(set(ids)) != 200:
-              print(f"Expected 200 unique task results; found {len(tasks)}", file=sys.stderr)
-              raise SystemExit(1)
-          scored = [task for task in tasks if task.get("score") is not None]
-          summary = {
-              "tasks_completed": len(tasks),
-              "tasks_scored": len(scored),
-              "tasks_unscored": len(tasks) - len(scored),
-              "mean_score": sum(task["score"] for task in scored) / len(scored) if len(scored) == len(tasks) else None,
-              "mean_raw_score": sum(task["raw_score"] for task in scored) / len(scored) if len(scored) == len(tasks) else None,
-              "mean_score_scored_tasks": sum(task["score"] for task in scored) / len(scored) if scored else None,
-              "mean_raw_score_scored_tasks": sum(task["raw_score"] for task in scored) / len(scored) if scored else None,
-              "shards": len(runs),
-              "task_results": tasks,
-          }
-          pathlib.Path("aggregate-results.json").write_text(json.dumps(summary, indent=2))
-          print(json.dumps({key: summary[key] for key in ("tasks_completed", "tasks_scored", "tasks_unscored", "mean_score", "mean_score_scored_tasks", "shards")}, indent=2))
-          if summary["tasks_unscored"]:
-              raise SystemExit(1)
-          PY
-
+      - name: Check every task and aggregate scores
+        env:
+          EXPECTED_TASK_IDS: ${{ needs.prepare.outputs.task_ids }}
+        run: uv run python bcode_results.py aggregate --root artifacts
       - name: Upload aggregate results
         if: ${{ always() }}
         uses: actions/upload-artifact@v4

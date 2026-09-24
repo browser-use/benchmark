@@ -81,19 +81,43 @@ These results use the earlier 60-task set, not the full 200-task release or the 
 
 ### Running BU Bench V2 (default)
 
-The canonical V2 entry point runs all 200 tasks with [BrowserCode](https://bcode.sh/)
-and the existing [findings judge](findings_judge.py). It uses Browser Use Cloud for
-one browser session per task and writes independent evidence under a task-local
-folder.
+The default entry point runs all 200 tasks with [BrowserCode](https://bcode.sh/)
+and the existing [findings judge](findings_judge.py). Anyone can clone this public
+repository and run it with their own API keys. No access to our evaluation
+platform is needed. Use macOS or Linux (including GitHub's Ubuntu runners).
+
+Install [uv](https://docs.astral.sh/uv/getting-started/installation/), then:
 
 ```bash
-uv sync --frozen
+git clone https://github.com/browser-use/benchmark.git
+cd benchmark
+uv sync --frozen --python 3.12
 curl -fsSL https://bcode.sh/install | bash -s -- --version 0.1.20 --no-modify-path
 cp .env.example .env
+# Set OPENAI_API_KEY for the Luna executor and findings judge.
 # Set BROWSER_USE_API_KEY for Cloud browsers and BrowserCode's fetch tool.
-# Set OPENAI_API_KEY for the findings judge.
 uv run python run_eval.py
 ```
+
+Get a browser key from [Browser Use Cloud](https://cloud.browser-use.com/) and a
+model key from [OpenAI](https://platform.openai.com/api-keys). Each task gets a
+fresh Cloud browser and its own evidence folder.
+
+To use a local browser, install Google Chrome or Chromium and change only the
+browser flag. This still uses BrowserCode and the same V2 judge:
+
+```bash
+uv run python run_eval.py --browser local_headless
+```
+
+The local path needs only `OPENAI_API_KEY`. It starts a fresh browser profile per
+task and closes its Chrome process afterward. `--browser local_headful` shows the
+browser on a machine with a display. Use `--chrome-bin /path/to/chrome` if Chrome
+is not detected.
+
+BrowserCode's paid fetch service defaults on for Cloud and off for local Chrome.
+For a controlled browser comparison, pass the same setting to both arms:
+`--fetch-use` (requires `BROWSER_USE_API_KEY`) or `--no-fetch-use`.
 
 Defaults:
 
@@ -145,18 +169,47 @@ batch/orchestrator path.
 
 ### Running the default evaluation on GitHub Actions
 
-The repository includes one manual workflow, **Run BU Bench V2**. In the GitHub
-Actions tab, choose that workflow and click **Run workflow**. The default 20
-contiguous shards cover all 200 tasks on GitHub-hosted runners, three tasks
-concurrently per runner, with at most 10 runners active. Each shard invokes the
-same `run_eval.py` entry point with its task range. A final aggregate job checks
-that all 200 unique task results are present, computes the weighted mean, and
-uploads `aggregate-results.json` alongside every shard's evidence.
+The manual **Run BU Bench V2** workflow runs one task per GitHub-hosted Ubuntu
+runner, with at most 12 task runners active. Every runner invokes the same
+`run_eval.py` command and judges its task. All 200 tasks run by default. The
+aggregate job requires every selected task exactly once and reports incomplete
+judging as an error instead of treating it as a zero or silently dropping it.
 
-The workflow needs only `BROWSER_USE_API_KEY` and `OPENAI_API_KEY` repository
-secrets. It calls Browser Use Cloud directly, runs BrowserCode on the GitHub
-runner, and sends the V2 findings-judge request to OpenAI. It does not use the
-separate new evaluation platform.
+For your own runs, fork the repository, enable Actions, and add your own secrets
+under **Settings → Secrets and variables → Actions**:
+
+- `OPENAI_API_KEY`: the default Luna executor and findings judge.
+- `BROWSER_USE_API_KEY`: Cloud browsers or the fetch service. For a local browser
+  with fetch disabled, this key is unnecessary.
+- `LMNR_PROJECT_API_KEY`: optional, for your private Laminar project.
+
+Our secrets are not shared with clones or forks. Select the browser, model,
+reasoning and task count in **Actions → Run BU Bench V2 → Run workflow**.
+GitHub's Ubuntu image already has Chrome for `local_headless`. With GitHub CLI:
+
+```bash
+gh workflow run run-benchmark.yml --repo YOUR_ACCOUNT/benchmark
+# Local Chrome with no Browser Use services:
+gh workflow run run-benchmark.yml --repo YOUR_ACCOUNT/benchmark \
+  -f browser=local_headless -F fetch_use=false
+```
+
+Public Actions artifacts contain task IDs, numeric scores and pinned
+configuration. Decrypted tasks, rubrics, screenshots and tool output are not
+uploaded publicly. Full evidence is retained locally; the workflow also uploads
+it when run in a **private repository**. Do not publish decrypted benchmark
+material.
+
+Optional Laminar reporting saves scores and text/tool traces in your own project.
+For a local run, install `uv sync --frozen --extra laminar` and set
+`LMNR_PROJECT_API_KEY` in `.env`; the run command stays the same. Actions installs
+this optional dependency automatically. Full screenshots remain in task
+artifacts. Without a Laminar key, the run still saves JSON results normally.
+
+This follows the new evaluation platform's GitHub-runner approach, but remains
+a separate runner. BrowserCode versions, prompts, task/rubric revisions, and
+judge evidence packing can differ between the two repositories. Pin the saved
+configuration and compare matching task instructions before comparing scores.
 
 <br/>
 

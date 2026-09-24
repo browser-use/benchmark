@@ -6,6 +6,7 @@ import hashlib
 import json
 import math
 import os
+import shutil
 import signal
 import time
 import zipfile
@@ -28,6 +29,7 @@ PROVIDER_KEYS = {
 EFFORTS = ("none", "minimal", "low", "medium", "high", "xhigh", "max")
 PRE_PROMPT = """You are a coding agent with browser access working autonomously to complete a task.
 A browser is preconfigured: await session.connect() inside browser_execute attaches to it.
+Calling session.Page.captureScreenshot() returns the image and auto-attaches it to your next turn so you can see it inline.
 Save every file deliverable under {outputs}. Those files and your final response are returned to the user.
 Use the browser and available tools to obtain evidence. Your final response should be clear and honest.
 To search the web, prefer DuckDuckGo. If using Google, open its homepage and type the query instead of opening a cold search URL.
@@ -74,7 +76,7 @@ def provider_config(model, effort):
     }
 
 
-def agent_env(model, effort, state_dir, catalog_path=None):
+def agent_env(model, effort, state_dir, catalog_path=None, *, fetch_use=True):
     provider = model.split("/", 1)[0]
     env = {
         key: os.environ[key]
@@ -106,6 +108,9 @@ def agent_env(model, effort, state_dir, catalog_path=None):
         XDG_CACHE_HOME=str(state_dir / "cache"),
         OPENCODE_CONFIG_CONTENT=json.dumps(provider_config(model, effort)),
     )
+    config = json.loads(env["OPENCODE_CONFIG_CONTENT"])
+    config["experimental"]["fetch_use"] = fetch_use
+    env["OPENCODE_CONFIG_CONTENT"] = json.dumps(config)
     if provider == "openai" and os.environ.get("OPENAI_BASE_URL"):
         config = json.loads(env["OPENCODE_CONFIG_CONTENT"])
         config["provider"]["openai"]["options"] = {
@@ -119,12 +124,23 @@ def agent_env(model, effort, state_dir, catalog_path=None):
 
 
 async def preflight(
-    binary, expected_version, model, effort, state_dir, catalog_client=None
+    binary,
+    expected_version,
+    model,
+    effort,
+    state_dir,
+    catalog_client=None,
+    *,
+    browser="browser-use-cloud",
+    fetch_use=True,
 ):
     binary = Path(binary).expanduser().resolve()
     if not binary.is_file() or not os.access(binary, os.X_OK):
         raise ValueError(f"BrowserCode is not installed at {binary}; see README setup")
-    for key in ("BROWSER_USE_API_KEY", PROVIDER_KEYS[model.split("/", 1)[0]]):
+    required = [PROVIDER_KEYS[model.split("/", 1)[0]]]
+    if browser == "browser-use-cloud" or fetch_use:
+        required.append("BROWSER_USE_API_KEY")
+    for key in required:
         if not os.environ.get(key):
             raise ValueError(f"{key} is required")
     # Freeze the public catalog once for the whole run. A fresh bcode starts
@@ -144,9 +160,11 @@ async def preflight(
     if model_id not in catalog_data.get(provider, {}).get("models", {}):
         raise ValueError(f"The public model catalog does not contain {model}")
     catalog_path.write_text(json.dumps({provider: catalog_data[provider]}))
-    env = agent_env(model, effort, state_dir, catalog_path)
+    env = agent_env(model, effort, state_dir, catalog_path, fetch_use=fetch_use)
     effective_config = env["OPENCODE_CONFIG_CONTENT"]
-    env["OPENCODE_CONFIG_CONTENT"] = json.dumps({"experimental": {"fetch_use": True}})
+    env["OPENCODE_CONFIG_CONTENT"] = json.dumps(
+        {"experimental": {"fetch_use": fetch_use}}
+    )
 
     async def probe(*args):
         proc = await asyncio.create_subprocess_exec(
@@ -215,7 +233,7 @@ async def preflight(
         "model": model,
         "reasoning_effort": effort,
         "resolved_model": metadata,
-        "provider_config": provider_config(model, effort),
+        "provider_config": json.loads(effective_config),
     }
 
 
@@ -379,6 +397,70 @@ async def stop_process(proc):
     await proc.wait()
 
 
+def find_chrome(binary=None):
+    candidates = (
+        [binary]
+        if binary
+        else [
+            shutil.which("google-chrome"),
+            shutil.which("google-chrome-stable"),
+            shutil.which("chromium"),
+            shutil.which("chromium-browser"),
+            "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+        ]
+    )
+    for candidate in candidates:
+        if candidate and Path(candidate).is_file() and os.access(candidate, os.X_OK):
+            return str(Path(candidate).resolve())
+    raise ValueError(
+        "Install Google Chrome/Chromium or pass --chrome-bin /path/to/chrome"
+    )
+
+
+async def start_local_browser(task_dir, *, binary=None, headless=True):
+    """Own a fresh Chrome process/profile and an ephemeral loopback CDP port."""
+    binary = find_chrome(binary)
+    profile = task_dir / "browser-profile"
+    profile.mkdir()
+    command = [
+        binary,
+        f"--user-data-dir={profile}",
+        "--remote-debugging-address=127.0.0.1",
+        "--remote-debugging-port=0",
+        "--no-first-run",
+        "--no-default-browser-check",
+        "--disable-dev-shm-usage",
+        "--window-size=1920,1080",
+    ]
+    if headless:
+        command.append("--headless=new")
+    if os.environ.get("CI") or os.geteuid() == 0:
+        command.append("--no-sandbox")
+    command.append("about:blank")
+    with (task_dir / "browser.log").open("wb") as log:
+        proc = await asyncio.create_subprocess_exec(
+            *command,
+            stdout=log,
+            stderr=log,
+            stdin=asyncio.subprocess.DEVNULL,
+            start_new_session=True,
+        )
+    try:
+        async with asyncio.timeout(30):
+            port_file = profile / "DevToolsActivePort"
+            while True:
+                if proc.returncode is not None:
+                    raise RuntimeError("Chrome exited during startup; see browser.log")
+                if port_file.is_file():
+                    lines = port_file.read_text().splitlines()
+                    if len(lines) >= 2:
+                        return proc, f"ws://127.0.0.1:{int(lines[0])}{lines[1]}"
+                await asyncio.sleep(0.1)
+    except BaseException:
+        await stop_process(proc)
+        raise
+
+
 async def execute(
     task_text,
     task_dir,
@@ -389,13 +471,18 @@ async def execute(
     timeout,
     cloud_client=None,
     catalog_path=None,
+    browser="browser-use-cloud",
+    chrome_bin=None,
+    fetch_use=True,
 ):
     workspace = task_dir / "workspace"
     outputs = workspace / "outputs"
     shots = task_dir / "screenshots"
     for path in (outputs, shots, task_dir / "agent_screenshots"):
         path.mkdir(parents=True, exist_ok=False)
-    env = agent_env(model, effort, task_dir / "state", catalog_path)
+    env = agent_env(
+        model, effort, task_dir / "state", catalog_path, fetch_use=fetch_use
+    )
     env.update(
         PWD=str(workspace), BCODE_SCREENSHOT_DIR=str(task_dir / "agent_screenshots")
     )
@@ -410,7 +497,7 @@ async def execute(
         "evidence_errors": [],
     }
     metrics = {"steps": 0, "duration": 0.0, "cost": 0.0}
-    browser_id, proc, recorder = None, None, None
+    browser_id, proc, recorder, chrome_proc = None, None, None, None
     errors = []
     start = time.monotonic()
     own_client = cloud_client is None
@@ -418,25 +505,30 @@ async def execute(
     base = os.environ.get("BU_CLOUD_API_BASE", "https://api.browser-use.com").rstrip(
         "/"
     )
-    headers = {"X-Browser-Use-API-Key": os.environ["BROWSER_USE_API_KEY"]}
     try:
-        for attempt in range(6):
-            response = await client.post(
-                base + "/api/v2/browsers",
-                headers=headers,
-                json={"timeout": math.ceil(timeout / 60)},
+        if browser.startswith("local_"):
+            chrome_proc, cdp = await start_local_browser(
+                task_dir, binary=chrome_bin, headless=browser == "local_headless"
             )
-            if response.status_code != 429 or attempt == 5:
-                break
-            await asyncio.sleep(min(2**attempt, 15))
-        response.raise_for_status()
-        data = response.json()
-        browser_id = data["id"]
-        cdp = data["cdpUrl"]
-        if not cdp.startswith(("ws://", "wss://")):
-            response = await client.get(cdp.rstrip("/") + "/json/version")
+        else:
+            headers = {"X-Browser-Use-API-Key": os.environ["BROWSER_USE_API_KEY"]}
+            for attempt in range(6):
+                response = await client.post(
+                    base + "/api/v2/browsers",
+                    headers=headers,
+                    json={"timeout": math.ceil(timeout / 60)},
+                )
+                if response.status_code != 429 or attempt == 5:
+                    break
+                await asyncio.sleep(min(2**attempt, 15))
             response.raise_for_status()
-            cdp = response.json()["webSocketDebuggerUrl"]
+            data = response.json()
+            browser_id = data["id"]
+            cdp = data["cdpUrl"]
+            if not cdp.startswith(("ws://", "wss://")):
+                response = await client.get(cdp.rstrip("/") + "/json/version")
+                response.raise_for_status()
+                cdp = response.json()["webSocketDebuggerUrl"]
         env["BU_CDP_WS"] = cdp
         recorder = ScreenshotRecorder(cdp, shots)
         await recorder.connect()
@@ -522,6 +614,7 @@ async def execute(
                 errors.append(f"BrowserCode exited with status {proc.returncode}")
     finally:
         await stop_process(proc)
+        await stop_process(chrome_proc)
         if browser_id:
             try:
                 stopped = await client.patch(
