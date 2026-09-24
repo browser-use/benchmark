@@ -393,9 +393,3 @@ No license (public validation split only) | https://huggingface.co/datasets/gaia
   primaryClass={cs.CL}
 }
 ```
-
-## Draft outcome-scoring policy
-
-[Verified task completion](OUTCOME_SCORING.md) proposes a judge instruction and
-completion cap for revised V2 tasks. It is opt-in; the current 200-task dataset
-and historical scores are unchanged.

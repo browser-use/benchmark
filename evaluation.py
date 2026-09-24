@@ -13,7 +13,6 @@ from browser_use.llm import ChatOpenAI
 from browser_use.llm.messages import ContentPartImageParam, ImageURL
 from cryptography.fernet import Fernet
 
-from completion_policy import completion_contract
 from findings_judge import (
     FILES_MAX_CHARS,
     FINAL_RESULT_MAX_CHARS,
@@ -21,7 +20,6 @@ from findings_judge import (
     TASK_MAX_CHARS,
     TRAJECTORY_MAX_CHARS,
     WEBSITE_MAX_CHARS,
-    completion_result_model,
     construct_findings_judge_messages,
     findings_result_model,
 )
@@ -43,7 +41,6 @@ MAX_SCREENSHOT_BYTES = 8_000_000
 
 def validate_findings_task(task: dict) -> None:
     """Reject missing or malformed scoring metadata before executing an agent."""
-    completion_contract(task)
     task_id = task.get("task_id", "unknown")
     rubric = task.get("rubric")
     weights = task.get("weights")
@@ -121,14 +118,7 @@ def judge_config(benchmark: str, llm) -> dict:
     endpoint_host = urlparse(str(endpoint)).hostname
     return {
         "type": "findings" if findings else "legacy_binary",
-        "adapter_version": "2.1.1-outcomes-draft-1" if findings else "legacy-v1",
-        "completion_policy_source_sha256": (
-            hashlib.sha256(
-                Path(__file__).with_name("completion_policy.py").read_bytes()
-            ).hexdigest()
-            if findings
-            else None
-        ),
+        "adapter_version": "2.1.1" if findings else "legacy-v1",
         "adapter_source_sha256": hashlib.sha256(
             Path(__file__).read_bytes()
         ).hexdigest(),
@@ -278,7 +268,6 @@ async def judge_trace(
                 trace["screenshots_b64"], max_bytes=MAX_SCREENSHOT_BYTES
             )
         ]
-        contract = completion_contract(task)
         messages = construct_findings_judge_messages(
             task=task["confirmed_task"],
             rubric=task["rubric"],
@@ -291,15 +280,8 @@ async def judge_trace(
             # unset rather than claiming these were captured after the action.
             screenshots_b64=images,
             screenshot_timing="before",
-            completion=contract,
         )
-        schema = (
-            completion_result_model(
-                tuple(task["weights"]), tuple(group.id for group in contract.groups)
-            )
-            if contract is not None
-            else findings_result_model(tuple(task["weights"]))
-        )
+        schema = findings_result_model(tuple(task["weights"]))
     else:
         messages = construct_judge_messages(
             task=task["confirmed_task"],
@@ -337,7 +319,7 @@ async def judge_trace(
             if finding.status == "not_assessable"
             and finding.not_assessable_reason == "missing_evidence"
         ]
-        if incomplete_items or scoring.get("completion_missing_evidence"):
+        if incomplete_items:
             diagnostic_score = scoring["score"]
             diagnostic_raw_score = scoring["raw_score"]
             return {

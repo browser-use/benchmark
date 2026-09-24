@@ -6,8 +6,7 @@ run_eval.py; evaluation.py provides the LLM adapter and records source hashes.
 
 The judge emits one finding per rubric item (met / violated / not_assessable,
 each with evidence) and never emits a score. Valuation happens in code from the
-task's weights. Revised tasks may also opt into a verified-completion ceiling;
-their judge reports completed-unit counts and code applies the cap.
+task's weights, so re-weighting a rubric never requires re-judging a run.
 
 Each versioned BU Bench V2 task carries its own `rubric` and `weights` inline:
 `weights` keys are exactly the item ids the rubric defines, and they sum to 100.
@@ -22,23 +21,15 @@ versions. Screenshot timing describes the supplying framework (Browser Use
 history stores the state before each action).
 """
 
-import json
 from typing import Literal
 
+from pydantic import BaseModel, create_model, model_validator
 from browser_use.llm.messages import (
 	BaseMessage,
 	ContentPartImageParam,
 	ContentPartTextParam,
 	SystemMessage,
 	UserMessage,
-)
-from pydantic import BaseModel, StrictInt, create_model, model_validator
-
-from completion_policy import (
-	COMPLETION_SYSTEM_PROMPT,
-	CompletionContract,
-	completion_cap,
-	completion_contract,
 )
 
 FINDINGS_SYSTEM_PROMPT = """
@@ -71,6 +62,13 @@ Exception: if the run's own evidence shows the site changed after the rubric's d
 An item is `met` only when the deliverable content is corroborated by trace evidence: page content in screenshots, tool results, or data the trajectory produced.
 Correct-looking data with no extraction evidence is not met. Models can recite public data from memory. Never credit it.
 </evidence_rule>
+
+<completion_rule>
+Judge completed outcomes, not attempts. An unresolved CAPTCHA, bot block or login wall does not satisfy a requirement to inspect, verify or act, even when reported honestly. This takes precedence over rubric rulings that count blocked attempts as completed verification.
+Mark unmet outcome items as violated; evaluate honesty and reporting items separately.
+If the agent recovers and completes the requirement using a permitted source or method, award normal credit.
+Inability to inspect a source is not evidence that the requested information does not exist.
+</completion_rule>
 
 <task_reading_rule>
 Before the findings, reconstruct in agent_task_reading how THIS agent read the task: which sources it treated as required, what deliverable shape and semantics it adopted, and what it treated as optional or out of scope.
@@ -157,29 +155,6 @@ def findings_result_model(item_ids: tuple[str, ...]) -> type[BaseModel]:
 	return _MODEL_CACHE[item_ids]
 
 
-_COMPLETION_MODEL_CACHE: dict[tuple, type[BaseModel]] = {}
-
-
-def completion_result_model(
-	item_ids: tuple[str, ...], group_ids: tuple[str, ...]
-) -> type[BaseModel]:
-	"""Keep historical response schemas intact for tasks without a contract."""
-	key = (item_ids, group_ids)
-	if key not in _COMPLETION_MODEL_CACHE:
-		finding = create_model(
-			'CompletionFinding',
-			group=(Literal[group_ids], ...),
-			evidence=(str, ...),
-			completed=(StrictInt | None, ...),
-		)
-		_COMPLETION_MODEL_CACHE[key] = create_model(
-			'OutcomeFindingsResult',
-			__base__=findings_result_model(item_ids),
-			completion_findings=(list[finding], ...),
-		)
-	return _COMPLETION_MODEL_CACHE[key]
-
-
 def _truncate(text: str, limit: int) -> str:
 	"""Clip the middle, keeping the start and the end, and mark the omission."""
 	if len(text) <= limit:
@@ -199,7 +174,6 @@ def construct_findings_judge_messages(
 	output_files_text: str | None = None,
 	screenshot_steps: list[int] | None = None,
 	screenshot_timing: Literal['before', 'after'] = 'after',
-	completion: CompletionContract | None = None,
 ) -> list[BaseMessage]:
 	if screenshot_steps is None:
 		trajectory = '\n'.join(agent_steps)
@@ -255,13 +229,6 @@ rubrics/{task_id}.md
 </final_result>
 {output_files_section}"""
 
-	if completion is not None:
-		text_sections += (
-			'\n<completion_contract>\n'
-			+ json.dumps(completion.model_dump(), ensure_ascii=False)
-			+ '\n</completion_contract>\n'
-		)
-
 	user_prompt = f"""{text_sections}
 <screenshots>
 {screenshots_note.format(n=len(screenshots_b64))}
@@ -279,8 +246,6 @@ rubrics/{task_id}.md
 		content_parts.append(image)
 
 	system_prompt = FINDINGS_SYSTEM_PROMPT.replace('after browser actions', f'{screenshot_timing} browser actions')
-	if completion is not None:
-		system_prompt += COMPLETION_SYSTEM_PROMPT
 	if screenshot_steps is None:
 		system_prompt = system_prompt.replace(
 			'Labels tie each image to a step.',
@@ -305,8 +270,6 @@ def score(task: dict, judgement: BaseModel, agent_texts: list[str] | None = None
 	credit to missing or not_assessable items. The public adapter separately
 	rejects incomplete findings and withholds scores for missing judge evidence;
 	rubric-defined absent scopes retain their historical zero item credit.
-	An explicit completion contract additionally caps this score; tasks without
-	one preserve historical arithmetic and do not request completion findings.
 	"""
 	weights: dict[str, int] = task['weights']
 
@@ -327,7 +290,7 @@ def score(task: dict, judgement: BaseModel, agent_texts: list[str] | None = None
 	earned = sum(w for i, w in weights.items() if status.get(i) == 'met')
 	verdict = all(status.get(i) == 'met' for i in weights)
 	rh = judgement.reward_hacking_suspected or canary_leak
-	result = {
+	return {
 		'score': 0.0 if rh else earned / sum(weights.values()),
 		'verdict': False if rh else verdict,
 		'earned_weight': earned,
@@ -335,15 +298,3 @@ def score(task: dict, judgement: BaseModel, agent_texts: list[str] | None = None
 		'canary_leak': canary_leak,
 		'missing_items': [i for i in weights if i not in status],
 	}
-
-	contract = completion_contract(task)
-	if contract is not None:
-		result.update(completion_cap(contract, judgement.completion_findings))
-		cap = result['completion_cap']
-		if cap is None:
-			# Missing judge evidence is an unscored measurement, not agent failure.
-			result.update(score=None, verdict=False)
-		else:
-			result['score'] = min(result['score'], cap)
-			result['verdict'] = result['verdict'] and cap == 1.0
-	return result
