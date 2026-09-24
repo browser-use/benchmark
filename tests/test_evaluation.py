@@ -1,6 +1,9 @@
 """Offline checks with synthetic tasks; never publish decrypted benchmark text."""
 
 import asyncio
+import base64
+from io import BytesIO
+from PIL import Image
 import json
 import os
 import tempfile
@@ -18,8 +21,6 @@ import run_eval
 from evaluation import (
     FILES_MAX_CHARS,
     FINAL_RESULT_MAX_CHARS,
-    RUBRIC_MAX_CHARS,
-    TASK_MAX_CHARS,
     TRAJECTORY_MAX_CHARS,
     create_judge,
     judge_trace,
@@ -28,6 +29,12 @@ from evaluation import (
     validate_findings_task,
 )
 from run_eval import collect_output_files, parse_args, run_task, summarize_results
+
+
+def png(index=0):
+    output = BytesIO()
+    Image.new("RGB", (32, 16), (index, 0, 0)).save(output, format="PNG")
+    return base64.b64encode(output.getvalue()).decode()
 
 
 def task():
@@ -63,7 +70,7 @@ def trace():
     return {
         "final_result": "Report saved",
         "agent_steps": ["Read source data"],
-        "screenshots_b64": ["ZmFrZQ=="],
+        "screenshots_b64": [png()],
         "output_files_text": "report.csv\nvalue\n42",
     }
 
@@ -117,17 +124,16 @@ class DatasetTests(unittest.TestCase):
             create_judge()
 
     def test_sampling_keeps_first_last_and_chronological_order(self):
-        images = [str(i) for i in range(101)]
+        images = [png(i) for i in range(101)]
         sampled = select_screenshots(images + [images[-1]])
         self.assertEqual(len(sampled), 50)
-        self.assertEqual((sampled[0], sampled[-1]), ("0", "100"))
-        self.assertEqual(sampled, sorted(sampled, key=int))
+        self.assertEqual((sampled[0], sampled[-1]), (images[0], images[-1]))
+        self.assertEqual(sampled, sorted(sampled, key=images.index))
 
-    def test_sampling_enforces_byte_budget_and_keeps_boundaries(self):
-        sampled = select_screenshots(["a" * 40, "b" * 40, "c" * 40], max_bytes=90)
-        self.assertEqual(sampled, ["a" * 40, "c" * 40])
-        with self.assertRaisesRegex(ValueError, "first and last"):
-            select_screenshots(["a" * 60, "b" * 60], max_bytes=100)
+    def test_later_repeated_states_are_retained(self):
+        a, b = png(1), png(2)
+        self.assertEqual(select_screenshots([a, b, a]), [a, b, a])
+        self.assertEqual(select_screenshots([a, a, b, b, a, a]), [a, b, a])
 
 
 class JudgeTests(unittest.IsolatedAsyncioTestCase):
@@ -175,7 +181,7 @@ class JudgeTests(unittest.IsolatedAsyncioTestCase):
             with self.subTest(entries=len(entries)), self.assertRaisesRegex(ValueError, "exactly one"):
                 await judge_trace(task(), trace(), judge(payload))
 
-    async def test_not_assessable_is_unscored_with_diagnostic_credit(self):
+    async def test_not_assessable_preserves_other_item_credit(self):
         payload = findings(
             findings=[
                 {
@@ -192,10 +198,18 @@ class JudgeTests(unittest.IsolatedAsyncioTestCase):
             ]
         )
         result = await judge_trace(task(), trace(), judge(payload))
-        self.assertIsNone(result["score"])
-        self.assertIsNone(result["raw_score"])
-        self.assertEqual(result["diagnostic_raw_score"], 0.3)
-        self.assertEqual(result["evidence_incomplete_items"], ["A1"])
+        self.assertEqual(result["score"], 0.3)
+        self.assertEqual(result["raw_score"], 0.3)
+        self.assertEqual(result["evidence_missing_items"], ["A1"])
+        data = {**trace(), "agent_steps": ["x" * 700001]}
+        for flag, canary in ((False, False), (True, False), (False, True)):
+            with self.subTest(flag=flag, canary=canary):
+                payload["reward_hacking_suspected"] = flag
+                data["final_result"] = task()["canary"] if canary else "Report saved"
+                result = await judge_trace(task(), data, judge(payload))
+                self.assertEqual(result["raw_score"], 0.3)
+                self.assertEqual(result["score"], 0.0 if flag or canary else 0.3)
+                self.assertEqual(result["evidence_clipped_sections"], ["trajectory"])
 
     async def test_complementary_rubric_branches_remain_scored(self):
         synthetic = {
@@ -263,19 +277,26 @@ class JudgeTests(unittest.IsolatedAsyncioTestCase):
         with self.assertRaises(ValueError):
             await judge_trace(task(), trace(), judge(payload))
 
-    async def test_clipped_judging_question_is_rejected_before_judge_call(self):
-        for field, section, limit in (
-            ("confirmed_task", "task", TASK_MAX_CHARS),
-            ("rubric", "rubric", RUBRIC_MAX_CHARS),
-        ):
-            with self.subTest(section=section):
-                data = task()
-                data[field] += "x" * limit
-                llm = judge()
-                result = await judge_trace(data, trace(), llm)
-                self.assertIsNone(result["score"])
-                self.assertEqual(result["evidence_incomplete_sections"], [section])
-                llm.ainvoke.assert_not_awaited()
+    async def test_full_task_and_rubric_reach_judge_without_length_override(self):
+        data = task()
+        data["confirmed_task"] += "x" * 40001
+        data["rubric"] += "x" * 100001
+        llm = judge()
+        result = await judge_trace(data, trace(), llm)
+        self.assertEqual(result["score"], 0.7)
+        text = llm.ainvoke.call_args.args[0][1].content[0].text
+        self.assertIn(data["confirmed_task"], text)
+        self.assertIn(data["rubric"], text)
+        self.assertNotIn("characters omitted", text)
+
+    async def test_unreadable_images_do_not_override_judgement(self):
+        data = {**trace(), "screenshots_b64": ["not-an-image"]}
+        llm = judge()
+        result = await judge_trace(task(), data, llm)
+        self.assertEqual(result["score"], 0.7)
+        self.assertEqual(len(result["screenshot_evidence"]["omitted"]), 1)
+        text = llm.ainvoke.call_args.args[0][1].content[0].text
+        self.assertIn("unreadable", text)
 
     async def test_clipped_agent_evidence_retains_assessable_score_and_findings(self):
         for field, section, value in (
@@ -363,7 +384,7 @@ class JudgeTests(unittest.IsolatedAsyncioTestCase):
 
 
 class RunnerTests(unittest.IsolatedAsyncioTestCase):
-    async def run_fake(self, directory=None, llm=None, timeout=False, clipped=False):
+    async def run_fake(self, directory=None, llm=None, timeout=False, clipped=False, error=None):
         history = SimpleNamespace(
             number_of_steps=lambda: 2,
             total_duration_seconds=lambda: 3.0,
@@ -376,7 +397,7 @@ class RunnerTests(unittest.IsolatedAsyncioTestCase):
             history=history,
             file_system=SimpleNamespace(list_files=lambda: []),
             run=AsyncMock(
-                side_effect=asyncio.TimeoutError if timeout else None,
+                side_effect=asyncio.TimeoutError if timeout else error,
                 return_value=history,
             ),
         )
@@ -421,6 +442,12 @@ class RunnerTests(unittest.IsolatedAsyncioTestCase):
         result = await self.run_fake(timeout=True)
         self.assertEqual(result["score"], 0.7)
         self.assertIn("timed out", result["execution_error"])
+
+    async def test_execution_exception_judges_partial_work(self):
+        result = await self.run_fake(error=RuntimeError("browser disconnected"))
+        self.assertEqual(result["score"], 0.7)
+        self.assertIn("browser disconnected", result["execution_error"])
+        self.assertEqual(result["status"], "judged")
 
     async def test_clipped_run_is_saved_and_counted_with_a_warning(self):
         with tempfile.TemporaryDirectory() as directory, patch("builtins.print") as output:

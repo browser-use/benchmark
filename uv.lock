@@ -280,6 +280,7 @@ dependencies = [
     { name = "certifi" },
     { name = "cryptography" },
     { name = "httpx" },
+    { name = "pillow" },
     { name = "python-dotenv" },
 ]
 
@@ -295,6 +296,7 @@ requires-dist = [
     { name = "certifi" },
     { name = "cryptography" },
     { name = "httpx" },
+    { name = "pillow", specifier = ">=12.1.0" },
     { name = "python-dotenv" },
 ]
 
