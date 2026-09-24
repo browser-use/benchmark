@@ -1,0 +1,14 @@
+name: Test V2 runner
+on:
+  pull_request:
+  push:
+    branches: [main]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - run: uv sync --frozen --python 3.12
+      - run: uv run python -m unittest discover -s tests
+      - run: uv run ruff check bcode_runner.py bcode_eval.py tests/test_bcode_runner.py tests/test_bcode_binary.py

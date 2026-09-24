@@ -81,72 +81,82 @@ These results use the earlier 60-task set, not the full 200-task release or the 
 
 ### Running BU Bench V2 (default)
 
+The canonical V2 entry point runs all 200 tasks with [BrowserCode](https://bcode.sh/)
+and the existing [findings judge](findings_judge.py). It uses Browser Use Cloud for
+one browser session per task and writes independent evidence under a task-local
+folder.
+
 ```bash
 uv sync --frozen
+curl -fsSL https://bcode.sh/install | bash -s -- --version 0.1.20 --no-modify-path
 cp .env.example .env
-# Set BROWSER_USE_API_KEY for the agent and cloud browser.
+# Set BROWSER_USE_API_KEY for Cloud browsers and BrowserCode's fetch tool.
 # Set OPENAI_API_KEY for the findings judge.
-uv run python run_eval.py --tasks 5
-# Omit --tasks to run all 200 tasks.
+uv run python run_eval.py
 ```
 
-The runner decrypts V2 in memory and uses the [findings judge](findings_judge.py)
-with **gpt-5.6-luna, xhigh reasoning**. Each task's whole rubric is judged in one
-call. Code applies its unequal item weights; `score` is continuous from 0 to 1.
-The canary and reward-hacking policy can zero the whole task. Reward hacking
-requires concrete evidence of fabrication or manipulation; an ordinary task error
-or wrong target alone is scored under its rubric items. Both `raw_score`
-(before that penalty) and final `score`, findings, and flags are saved.
+Defaults:
 
-Use `--model gpt-5.6-luna --agent-reasoning xhigh` for a Luna executor.
-`--task-ids bu2-171 bu2-185` selects exact cases; `--max-steps`,
-`--task-timeout` (seconds), and `--concurrency` set explicit execution limits.
-Use `--judge-model` and `--judge-reasoning` to override the OpenAI judge settings,
-or `--browser local_headless` to use local Chromium (install it first with
-`uv run browser-use install`). The selected model must support images and
-structured output. `OPENAI_API_KEY` must have access to it. OpenAI-compatible gateways can be selected with `OPENAI_BASE_URL`; the run records the endpoint host. Overrides are recorded
-with every run; changing the judge affects comparability.
+| Setting | Default |
+| --- | --- |
+| Executor | BrowserCode 0.1.20, `openai/gpt-6-luna`, low reasoning |
+| Tasks | All 200 in `BU_Bench_V2.enc` |
+| Browser | Browser Use Cloud, one session per task |
+| Limits | 3 concurrent tasks; 3,600 seconds per task |
+| Judge | `gpt-5.6-luna`, xhigh reasoning |
+| Score | Continuous weighted V2 rubric score, including partial credit |
 
-Results go to ignored `results/`; detailed evidence and judge configuration go
-to ignored `run_data/`. The headline metric is **mean weighted score**, not the
-fraction of perfect tasks. The adapter version is recorded independently of
-the dataset revision. Missing/duplicate findings are judge errors. Clipped agent
-evidence is recorded in `evidence_clipped_sections` and shown as a warning; it
-does not automatically suppress the judge's score or exclude the task from the mean.
-The judge assesses each item using the final output and all available evidence.
-Every `not_assessable` finding names its reason: `missing_evidence` identifies
-unavailable evidence, while `absent_scope` is a rubric-defined empty or
-inapplicable scope. Both retain the existing zero item credit. Other earned
-points and the task's normal weight in the mean are preserved; item weights
-are not renormalized. Missing agent work is judged under the rubric, rather than
-being classified as a collector failure. Task instructions and rubrics are
-supplied in full instead of being clipped.
+The executor receives only the task instruction. The findings judge receives the
+full rubric plus the saved trajectory, deliverables, and screenshots captured
+immediately after browser tool events. The judge and scoring policy are the V2
+implementation in this repository; this runner is separate from the new
+[evaluation platform](https://github.com/browser-use/new-eval-platform).
 
-The score comes from weighted rubric findings and the existing reward-hacking /
-canary penalty. Evidence size, missing-evidence findings, and execution errors
-never override a valid judgment. Timeouts and other runtime exceptions retain
-partial work for judging. Judge/API/schema failures have no valid judgment to
-score: they preserve the trace, make the full-set mean unavailable, and exit
-nonzero. The separate mean over scored tasks is explicitly labeled.
+Results and evidence are saved under `run_data/BU_Bench_V2_bcode_<timestamp>/`:
 
-By default this runner uses Browser Use 0.11.5 / `bu-2-0`, a 30-minute limit and 100 steps.
-It supplies tool results, final output, text from the agent's managed files, and
-up to 50 screenshots sampled in chronological order, preserving the first and
-final captures and later returns to an earlier state. Only adjacent repeats are
-collapsed. Images that exceed the encoded-byte budget are compressed first,
-then resized only as needed. Unreadable or impossible-to-fit images are omitted
-with an explicit note for the judge, without rejecting the task score. The
-saved `screenshot_evidence` records source positions, MIME types, resizing,
-omissions, and final encoded bytes. Original run images remain unchanged. Downloaded binary files and
-files created outside the agent's managed filesystem are not extracted. This
-is a runnable public harness, not a reproduction of the published 60-task
-BrowserCode setup: the executor, task cohort, limits, and image selection differ.
-Weights and reward-hacking penalties are unchanged. Adapter 2.1.2 removes
-remaining evidence-based score exclusions and corrects screenshot preparation;
-record the adapter version when comparing results with earlier runs.
+```text
+config.json                    # Dataset, executor, browser and judge configuration
+results.json                   # Aggregate and per-task weighted scores
+bu2-001/
+  workspace/outputs/           # Task file deliverables
+  screenshots/                 # Independent browser screenshots for this task
+  screenshot_manifest.json    # Screenshot-to-step mapping
+  agent_screenshots/           # Images requested by BrowserCode itself
+  events.jsonl                 # BrowserCode events and model text
+  trace.json                   # Judge input trace
+  task.json
+  judge_input.json
+  judge_response.json
+  result.json
+```
 
-Local traces contain decrypted tasks, rubrics, screenshots, and deliverables.
-Do not publish or commit them. Offline runner tests: `uv run python -m unittest discover -s tests`.
+Use `--tasks 5` for a short run, or `--task-ids bu2-171 bu2-185` for exact cases.
+`--parallel` controls tasks per process; `--task-timeout` is in seconds. `--model`
+and `--agent-reasoning` select another BrowserCode model/variant, while
+`--judge-model` and `--judge-reasoning` change the findings judge. `--check`
+performs the binary/model preflight without executing tasks.
+
+The historical V1, Stealth, and framework comparison runners remain available
+below. `--benchmark BU_Bench_V1` and `--benchmark Stealth_Bench_V1` keep their
+existing paths. To explicitly run the Python Agent against V2, use
+`--executor browser-use`; that path retains its existing browser and `--max-steps`
+options. The older `eval.yaml` workflow is also retained for the historical V1
+batch/orchestrator path.
+
+### Running the default evaluation on GitHub Actions
+
+The repository includes one manual workflow, **Run BU Bench V2**. In the GitHub
+Actions tab, choose that workflow and click **Run workflow**. The default 20
+contiguous shards cover all 200 tasks on GitHub-hosted runners, three tasks
+concurrently per runner, with at most 10 runners active. Each shard invokes the
+same `run_eval.py` entry point with its task range. A final aggregate job checks
+that all 200 unique task results are present, computes the weighted mean, and
+uploads `aggregate-results.json` alongside every shard's evidence.
+
+The workflow needs only `BROWSER_USE_API_KEY` and `OPENAI_API_KEY` repository
+secrets. It calls Browser Use Cloud directly, runs BrowserCode on the GitHub
+runner, and sends the V2 findings-judge request to OpenAI. It does not use the
+separate new evaluation platform.
 
 <br/>
 

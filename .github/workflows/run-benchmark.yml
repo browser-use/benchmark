@@ -1,0 +1,126 @@
+name: Run BU Bench V2
+
+on:
+  workflow_dispatch:
+    inputs:
+      shards:
+        description: "Number of contiguous task shards (20 means 10 tasks per runner)"
+        required: true
+        default: 20
+        type: number
+      parallel:
+        description: "Tasks per runner"
+        required: true
+        default: 3
+        type: number
+      task_timeout:
+        description: "Per-task timeout in seconds"
+        required: true
+        default: 3600
+        type: number
+      max_parallel:
+        description: "Maximum concurrent GitHub runners"
+        required: true
+        default: 10
+        type: number
+
+permissions:
+  contents: read
+
+jobs:
+  evaluate:
+    if: ${{ inputs.shards >= 1 && inputs.shards <= 20 && matrix.shard < inputs.shards }}
+    strategy:
+      fail-fast: false
+      max-parallel: ${{ inputs.max_parallel }}
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    env:
+      BROWSER_USE_API_KEY: ${{ secrets.BROWSER_USE_API_KEY }}
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      BROWSER_USE_SETUP_LOGGING: "false"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: latest
+
+      - name: Install Python dependencies
+        run: uv sync --frozen --python 3.12
+
+      - name: Install BrowserCode
+        run: |
+          curl -fsSL https://bcode.sh/install | bash -s -- --version 0.1.20 --no-modify-path
+          echo "$HOME/.bcode/bin" >> "$GITHUB_PATH"
+
+      - name: Run shard
+        run: |
+          uv run python run_eval.py \
+            --shard-index "${{ matrix.shard }}" \
+            --shard-count "${{ inputs.shards }}" \
+            --parallel "${{ inputs.parallel }}" \
+            --task-timeout "${{ inputs.task_timeout }}" \
+            --output-dir run_data
+
+      - name: Upload task evidence
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: bu-bench-v2-shard-${{ matrix.shard }}
+          path: run_data
+          if-no-files-found: error
+          retention-days: 30
+
+  aggregate:
+    if: ${{ always() }}
+    needs: evaluate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: bu-bench-v2-shard-*
+          path: artifacts
+          merge-multiple: false
+
+      - name: Aggregate shard results
+        run: |
+          python3 - <<'PY'
+          import glob, json, pathlib, sys
+          paths = sorted(glob.glob("artifacts/**/results.json", recursive=True))
+          if not paths:
+              print("No shard results found", file=sys.stderr)
+              raise SystemExit(1)
+          runs = [json.loads(pathlib.Path(path).read_text()) for path in paths]
+          tasks = [task for run in runs for task in run.get("task_results", [])]
+          ids = [task.get("task_id") for task in tasks]
+          if len(tasks) != 200 or len(set(ids)) != 200:
+              print(f"Expected 200 unique task results; found {len(tasks)}", file=sys.stderr)
+              raise SystemExit(1)
+          scored = [task for task in tasks if task.get("score") is not None]
+          summary = {
+              "tasks_completed": len(tasks),
+              "tasks_scored": len(scored),
+              "tasks_unscored": len(tasks) - len(scored),
+              "mean_score": sum(task["score"] for task in scored) / len(scored) if len(scored) == len(tasks) else None,
+              "mean_raw_score": sum(task["raw_score"] for task in scored) / len(scored) if len(scored) == len(tasks) else None,
+              "mean_score_scored_tasks": sum(task["score"] for task in scored) / len(scored) if scored else None,
+              "mean_raw_score_scored_tasks": sum(task["raw_score"] for task in scored) / len(scored) if scored else None,
+              "shards": len(runs),
+              "task_results": tasks,
+          }
+          pathlib.Path("aggregate-results.json").write_text(json.dumps(summary, indent=2))
+          print(json.dumps({key: summary[key] for key in ("tasks_completed", "tasks_scored", "tasks_unscored", "mean_score", "mean_score_scored_tasks", "shards")}, indent=2))
+          if summary["tasks_unscored"]:
+              raise SystemExit(1)
+          PY
+
+      - name: Upload aggregate results
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: bu-bench-v2-aggregate
+          path: aggregate-results.json
+          retention-days: 30

@@ -11,7 +11,11 @@ from urllib.parse import urlparse
 
 from browser_use import ChatGoogle
 from browser_use.llm import ChatOpenAI
-from browser_use.llm.messages import ContentPartImageParam, ImageURL
+from browser_use.llm.messages import (
+    ContentPartImageParam,
+    ContentPartTextParam,
+    ImageURL,
+)
 from cryptography.fernet import Fernet
 
 from findings_judge import (
@@ -190,7 +194,12 @@ def _validate_findings_coverage(judgement, item_ids: tuple[str, ...]) -> None:
 
 
 async def judge_trace(
-    task: dict, trace: dict, llm, benchmark=DEFAULT_BENCHMARK
+    task: dict,
+    trace: dict,
+    llm,
+    benchmark=DEFAULT_BENCHMARK,
+    *,
+    artifact_dir: Path | None = None,
 ) -> dict:
     """Judge once against the full rubric; calculate weighted scores in code."""
     if benchmark == DEFAULT_BENCHMARK:
@@ -204,6 +213,10 @@ async def judge_trace(
             )
             for image, mime_type in zip(selected_images, image_metadata["mime_types"])
         ]
+        source_indices = image_metadata["source_indices"]
+        step_map = trace.get("screenshot_steps")
+        if step_map is not None and len(step_map) != image_metadata["input_count"]:
+            raise ValueError("Screenshot step mapping length mismatch")
         messages = construct_findings_judge_messages(
             task=task["confirmed_task"],
             rubric=task["rubric"],
@@ -212,12 +225,27 @@ async def judge_trace(
             final_result=trace["final_result"],
             agent_steps=trace["agent_steps"],
             output_files_text=trace.get("output_files_text"),
-            # Browser Use's history images precede actions. Leave step labels
-            # unset rather than claiming these were captured after the action.
             screenshots_b64=images,
-            screenshot_timing="before",
+            screenshot_steps=[step_map[index] for index in source_indices]
+            if step_map is not None
+            else None,
+            screenshot_timing=trace.get("screenshot_timing", "before"),
             evidence_notes=[*trace.get("evidence_notes", []), *image_metadata["notes"]],
         )
+        for item in trace.get("output_images", []):
+            messages[-1].content.extend(
+                [
+                    ContentPartTextParam(
+                        text=f"Agent-created image deliverable: {item['name']} (not a browser screenshot)."
+                    ),
+                    ContentPartImageParam(
+                        image_url=ImageURL(
+                            url=f"data:{item['mime']};base64,{item['data']}",
+                            media_type=item["mime"],
+                        )
+                    ),
+                ]
+            )
         schema = findings_result_model(tuple(task["weights"]))
     else:
         messages = construct_judge_messages(
@@ -229,7 +257,29 @@ async def judge_trace(
         )
         schema = JudgementResult
 
+    if artifact_dir is not None:
+        artifact_dir.mkdir(parents=True, exist_ok=True)
+        (artifact_dir / "judge_input.json").write_text(
+            json.dumps(
+                {
+                    "model": getattr(llm, "model", None),
+                    "reasoning_effort": getattr(llm, "reasoning_effort", None),
+                    "max_completion_tokens": getattr(llm, "max_completion_tokens", None),
+                    "messages": [message.model_dump(mode="json") for message in messages],
+                    "output_schema": schema.model_json_schema(),
+                }
+            )
+        )
     response = await llm.ainvoke(messages, output_format=schema)
+    if artifact_dir is not None:
+        (artifact_dir / "judge_response.json").write_text(
+            json.dumps(
+                {
+                    "completion": response.completion.model_dump(mode="json"),
+                    "stop_reason": getattr(response, "stop_reason", None),
+                }
+            )
+        )
     if benchmark == DEFAULT_BENCHMARK and getattr(
         response, "stop_reason", None
     ) not in (None, "stop"):

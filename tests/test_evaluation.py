@@ -495,7 +495,8 @@ class RunnerTests(unittest.IsolatedAsyncioTestCase):
                 with (
                     patch("run_eval.__file__", str(root / "run_eval.py")),
                     patch(
-                        "run_eval.parse_args", return_value=parse_args(["--tasks", "1"])
+                        "run_eval.parse_args",
+                        return_value=parse_args(["--executor", "browser-use", "--tasks", "1"]),
                     ),
                     patch("run_eval.load_tasks", return_value=[task()]),
                     patch("run_eval.create_judge", return_value=judge()),
