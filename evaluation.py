@@ -118,7 +118,7 @@ def judge_config(benchmark: str, llm) -> dict:
     endpoint_host = urlparse(str(endpoint)).hostname
     return {
         "type": "findings" if findings else "legacy_binary",
-        "adapter_version": "2.1" if findings else "legacy-v1",
+        "adapter_version": "2.1.1" if findings else "legacy-v1",
         "adapter_source_sha256": hashlib.sha256(
             Path(__file__).read_bytes()
         ).hexdigest(),
@@ -251,10 +251,10 @@ async def judge_trace(
     if benchmark == DEFAULT_BENCHMARK:
         validate_findings_task(task)
         truncations = evidence_truncation_sections(task, trace)
-        # A clipped task, rubric, or deliverable changes the judging question;
-        # do not call the model and then turn a partial view into a score.
+        # Keep the judging question intact. Clipped agent evidence is still
+        # assessable when the remaining material supports the item findings.
         hard_truncations = [
-            section for section in truncations if section in {"task", "rubric", "files"}
+            section for section in truncations if section in {"task", "rubric"}
         ]
         if hard_truncations:
             return _incomplete_result(hard_truncations)
@@ -311,13 +311,15 @@ async def judge_trace(
         )
         scoring["raw_score"] = scoring["earned_weight"] / sum(task["weights"].values())
         incomplete_sections = evidence_truncation_sections(task, trace)
+        if incomplete_sections:
+            scoring["evidence_clipped_sections"] = incomplete_sections
         incomplete_items = [
             finding.item
             for finding in judgement.findings
             if finding.status == "not_assessable"
             and finding.not_assessable_reason == "missing_evidence"
         ]
-        if incomplete_sections or incomplete_items:
+        if incomplete_items:
             diagnostic_score = scoring["score"]
             diagnostic_raw_score = scoring["raw_score"]
             return {

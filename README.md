@@ -110,14 +110,20 @@ with every run; changing the judge affects comparability.
 Results go to ignored `results/`; detailed evidence and judge configuration go
 to ignored `run_data/`. The headline metric is **mean weighted score**, not the
 fraction of perfect tasks. The adapter version is recorded independently of
-the dataset revision. Missing/duplicate findings are judge errors; clipped evidence
-produces `evidence_incomplete`. Both withhold the score and exit nonzero.
+the dataset revision. Missing/duplicate findings are judge errors. Clipped agent
+evidence is recorded in `evidence_clipped_sections` and shown as a warning; it
+does not automatically suppress the judge's score or exclude the task from the mean.
+The judge assesses each item using the final output and all available evidence.
 Every `not_assessable` finding names its reason:
-`missing_evidence` means the judge cannot inspect evidence the run produced and
-withholds the task score; `absent_scope` is a rubric-defined missing deliverable,
+`missing_evidence` means the judge cannot settle an item because required evidence
+the run produced is unavailable; it names the missing evidence and withholds the
+task score. A clipped task instruction or rubric also withholds the score because
+the judging question is incomplete. `absent_scope` is a rubric-defined missing deliverable,
 empty scope, or inapplicable branch and retains the historical zero item credit.
 Missing agent work is not a collector failure. Diagnostic credit is retained
-separately for incomplete evaluations. Judge/API/schema failures
+separately for incomplete evaluations. Any unscored task, including missing
+required evidence or clipped instructions/rubrics, makes the full-set mean
+unavailable and the run exit nonzero. Judge/API/schema failures
 are unscored, preserve the
 trace, make the overall mean unavailable, and exit nonzero. The separate mean
 over scored tasks is explicitly labeled. Agent execution failures still count
@@ -129,7 +135,9 @@ up to 50 unique screenshots sampled across the run within a byte budget. Downloa
 files created outside the agent's managed filesystem are not extracted. This
 is a runnable public harness, not a reproduction of the published 60-task
 BrowserCode setup: the executor, task cohort, limits, and image selection differ.
-Weights and reward-hacking penalties are unchanged. Incomplete evidence is withheld from headline scores; do not compare this handling to historical scores without regrading.
+Weights and reward-hacking penalties are unchanged. Adapter 2.1.1 removes the
+automatic score exclusion for clipped agent evidence; record the adapter version
+when comparing results with earlier runs.
 
 Local traces contain decrypted tasks, rubrics, screenshots, and deliverables.
 Do not publish or commit them. Offline runner tests: `uv run python -m unittest discover -s tests`.
