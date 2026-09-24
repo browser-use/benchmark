@@ -1,5 +1,5 @@
 {
-  "revision": "2026-09-24-access-outcomes-draft-3",
+  "revision": "2026-09-24-feedback-review-draft-4",
   "status": "draft_not_regraded",
   "base_commit": "421390ea7fa4708f3d89d7695f9a16debb861daf",
   "base_encrypted_sha256": "fe0fc1eede3197d9eaffd42af3ac7b11cc15743d401e95496f3eb03f0d023a0e",
@@ -7,30 +7,23 @@
   "changes": [
     {
       "task_id": "bu2-014",
-      "summary": "Make unavailable values conditional on source evidence; close unconditional-null shortcut.",
-      "task_changed": false,
+      "summary": "Keep source-visible compensation; define smaller-cohort completion by recorded multi-source searches and candidate decisions.",
+      "task_changed": true,
       "before_task_sha256": "3578c21e47e73f690ce31c67a2692de17c69b4cb8924700f4936823bfe6119ba",
-      "after_task_sha256": "3578c21e47e73f690ce31c67a2692de17c69b4cb8924700f4936823bfe6119ba",
+      "after_task_sha256": "843f49825a0e45e165e82326d59c239a9d168dd0f5368181e0d021e3984b9aa5",
       "before_rubric_sha256": "b7c582ce186cfaa75057311817a5dc1a4463bcad5e80d7b033a84f2080123061",
-      "after_rubric_sha256": "0dcb31ac906ff06bfe5e52a93a5e15149c532facda527541ed1332f17998f5b1"
+      "after_rubric_sha256": "49d99d2def75f79e985cc9cc28f2e12371dd146b022040cae25c354d2428ed9e",
+      "review_status": "pending_saved_trace_review"
     },
     {
-      "task_id": "bu2-088",
-      "summary": "Align task scope with the named committee section; remove required correction of an erroneous task premise.",
-      "task_changed": true,
-      "before_task_sha256": "279a3772909d0720827c6bb35bea1135b9667395491b4dd6062d030bb901de7e",
-      "after_task_sha256": "28cbf79e37ca2a30f99af5b8a78ee282270e5b9a247c2561e80b7b8e552ce7b4",
-      "before_rubric_sha256": "a86a04e21b06ea1e8e5e0b57c465fa37876801eaa5a6dbd2afbb732768934cd7",
-      "after_rubric_sha256": "a4fb2d0e53fbc31e58449f7b6d0c84d84f78ad634768b4b146807e688464fac0"
-    },
-    {
-      "task_id": "bu2-113",
-      "summary": "State listed-versus-in-stock scope in the task itself; this is a prospective task clarification.",
-      "task_changed": true,
-      "before_task_sha256": "36b0472858a52e6fdeb900d16e3bf1e795f3400253e3d447d022352215720eb7",
-      "after_task_sha256": "71d1a6c5073fb15332b2d1ed4277a2fac36981ca486a228dbe91df5e1e5036e9",
-      "before_rubric_sha256": "32e1594d2c5385135e654266b4e1d514889c803282c1b89e264d08f4a7c2bf58",
-      "after_rubric_sha256": "5eccccd75def9017bc6171a2b00cbf201383713c6ca26d9b23a88b3dc5f85a8c"
+      "task_id": "bu2-028",
+      "summary": "Require evidenced expansion and account for discovered candidates; an empty or arbitrarily reduced cohort cannot pass vacuously.",
+      "review_status": "pending_saved_trace_review",
+      "before_task_sha256": "89db1932f589fd97da4d010042d0ac60f8a936b8e4c25c21f63bef15e3e32ecd",
+      "after_task_sha256": "bd586d07d84dd9aa54028edc6019bef3002ac294c4805a9a6062d4b78d8f3a45",
+      "before_rubric_sha256": "1663fb5807199ee05d438fe25f56b315a50b68f361ead8400a7b9b5afb034bbc",
+      "after_rubric_sha256": "ab17ae29568a6e965b7534139088c2a4dff884607cd86b80a25ad5533baec69a",
+      "task_changed": true
     },
     {
       "task_id": "bu2-029",
@@ -61,6 +54,34 @@
       "review_status": "pending_saved_trace_review"
     },
     {
+      "task_id": "bu2-088",
+      "summary": "Align task scope with the named committee section; remove required correction of an erroneous task premise.",
+      "task_changed": true,
+      "before_task_sha256": "279a3772909d0720827c6bb35bea1135b9667395491b4dd6062d030bb901de7e",
+      "after_task_sha256": "28cbf79e37ca2a30f99af5b8a78ee282270e5b9a247c2561e80b7b8e552ce7b4",
+      "before_rubric_sha256": "a86a04e21b06ea1e8e5e0b57c465fa37876801eaa5a6dbd2afbb732768934cd7",
+      "after_rubric_sha256": "a4fb2d0e53fbc31e58449f7b6d0c84d84f78ad634768b4b146807e688464fac0"
+    },
+    {
+      "task_id": "bu2-113",
+      "summary": "State listed-versus-in-stock scope in the task itself; this is a prospective task clarification.",
+      "task_changed": true,
+      "before_task_sha256": "36b0472858a52e6fdeb900d16e3bf1e795f3400253e3d447d022352215720eb7",
+      "after_task_sha256": "71d1a6c5073fb15332b2d1ed4277a2fac36981ca486a228dbe91df5e1e5036e9",
+      "before_rubric_sha256": "32e1594d2c5385135e654266b4e1d514889c803282c1b89e264d08f4a7c2bf58",
+      "after_rubric_sha256": "5eccccd75def9017bc6171a2b00cbf201383713c6ca26d9b23a88b3dc5f85a8c"
+    },
+    {
+      "task_id": "bu2-163",
+      "summary": "Use captured source rows rather than historical counts; consolidate repeated appearances of the same event within or across sources.",
+      "review_status": "pending_saved_trace_review",
+      "before_task_sha256": "7d75351cacdf4ae604a90ce455e345b4353e950601dee82f1921c4ad368289b1",
+      "after_task_sha256": "7d75351cacdf4ae604a90ce455e345b4353e950601dee82f1921c4ad368289b1",
+      "before_rubric_sha256": "0b357be0abd8b769471983709dde0d973dfb0a8044151bde0c2fa4775cbe660a",
+      "after_rubric_sha256": "26b7125e6ee49c96e6d6970d98fa085c300881edf40e4d3a653f51671c84b5bb",
+      "task_changed": false
+    },
+    {
       "task_id": "bu2-187",
       "summary": "Separate blocked unfinished work from missing judge evidence; zero delivered listings fails the required cohort size.",
       "task_changed": false,
@@ -74,24 +95,24 @@
   "deferred": [
     {
       "task_id": "bu2-014",
-      "issue": "Atomic criteria and finite smaller-population/search protocol still need design and calibration."
-    },
-    {
-      "task_id": "bu2-028",
-      "issue": "Expansion completeness lacks a bounded target/stopping rule; no invented live-web population added."
+      "issue": "Splitting combined criteria and reallocating weights needs separate calibration; no new items or weights in this draft."
     },
     {
       "task_id": "bu2-163",
-      "issue": "Reported duplicate/missing record requires exact source rows and original judge evidence."
+      "issue": "Partner's exact disputed row identities are still unavailable; the source-count/deduplication rule is corrected without inventing a replacement answer key."
     },
     {
       "task_id": "bu2-040",
-      "issue": "Pin budgets and demonstrate feasibility; strategy/runtime difference alone does not prove rubric error."
+      "issue": "Keep success requirements; compare equal budgets. Partner-reported 100% run is not independently verified."
+    },
+    {
+      "task_id": "bu2-185",
+      "issue": "No in-scope playback demonstrated in seven reviewed historical executions; retain evidenced-absence outcome, require verified target before a playback-only revision."
     }
   ],
-  "candidate_encrypted_sha256": "e2feef1123c569e3f0470871bc94ac9da1b9ca3dcb6f1975d2e4a2f960a9b673",
-  "previous_revision": "2026-09-24-access-outcomes-draft-2",
-  "previous_encrypted_sha256": "fcf3ed69e86de7ebe688e31db4e09dab0ad5ff9d3280e3d00cda08acff9318c1",
+  "candidate_encrypted_sha256": "87101f7ebcf3bfbde00091e278741427e906c9b7ccc223892c95e4549704d7c6",
+  "previous_revision": "2026-09-24-access-outcomes-draft-3",
+  "previous_encrypted_sha256": "e2feef1123c569e3f0470871bc94ac9da1b9ca3dcb6f1975d2e4a2f960a9b673",
   "reverted_changes": [
     {
       "task_id": "bu2-171",

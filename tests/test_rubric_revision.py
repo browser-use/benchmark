@@ -18,17 +18,19 @@ class RevisionTests(unittest.TestCase):
         manifest, before, after, cases = validate_revision()
         expected = {
             "bu2-014",
+            "bu2-028",
             "bu2-029",
             "bu2-048",
             "bu2-053",
             "bu2-088",
             "bu2-113",
+            "bu2-163",
             "bu2-187",
         }
         self.assertEqual({c["task_id"] for c in manifest["changes"]}, expected)
         self.assertEqual(
             {c["task_id"] for c in manifest["changes"] if c["task_changed"]},
-            {"bu2-029", "bu2-088", "bu2-113"},
+            {"bu2-014", "bu2-028", "bu2-029", "bu2-088", "bu2-113"},
         )
         allowed = {"task", "rubric", "task_sha", "rubric_sha", "revision"}
         missing = object()
@@ -65,7 +67,7 @@ class RevisionTests(unittest.TestCase):
         )
         self.assertEqual(
             candidate["source_sha256"],
-            "e2feef1123c569e3f0470871bc94ac9da1b9ca3dcb6f1975d2e4a2f960a9b673",
+            "87101f7ebcf3bfbde00091e278741427e906c9b7ccc223892c95e4549704d7c6",
         )
         self.assertEqual(
             historical["source_sha256"],
