@@ -20,7 +20,7 @@ import os
 import random
 import signal
 import sys
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 from cryptography.fernet import Fernet
@@ -102,14 +102,14 @@ async def run(args: argparse.Namespace) -> None:
             raise SystemExit("Unknown or duplicate task IDs")
         tasks = [index[i] for i in requested]
     output = args.output or ROOT / "run_data/stealth_v2" / (
-        args.browser + "-" + datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S")
+        args.browser + "-" + datetime.now(UTC).strftime("%Y%m%dT%H%M%S")
     )
     output.mkdir(parents=True, exist_ok=False)
     manifest = {
         "browser": args.browser, "options": options, "repetitions": args.repetitions,
         "task_ids": [t["task_id"] for t in tasks], "task_order_seed_base": 20260927,
         "judge": "gpt-5.6-luna",
-        "judge_reasoning_effort": "low", "started_at": datetime.now(timezone.utc).isoformat(),
+        "judge_reasoning_effort": "low", "started_at": datetime.now(UTC).isoformat(),
         "source_sha256": {
             name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest()
             for name in ("stealth_bench/v2/probe.py", "stealth_bench/v2/judge.py", "Stealth_Bench_V2.enc")

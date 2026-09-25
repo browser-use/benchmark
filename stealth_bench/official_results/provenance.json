@@ -435,10 +435,10 @@
   "public_snapshot_sha256": {
     "stealth_bench/v2/probe.py": "f1fa9a5bc8e42b506ec0b309eb6dfc762960b1343abb2f68761b4ae8142d18c7",
     "stealth_bench/v2/judge.py": "afebf8434431510ebb2b5eef38dfb70d67ea4a43c016d9396a662f367876635f",
-    "stealth_bench/run.py": "99cdb7fca97d2b85a251622b772cda543a0ca3c74a3be70e8d5c3cce0f0878ce",
+    "stealth_bench/run.py": "c36699d68337497ecfe7094d9c8927a55266ad8d39d34b7afa2ddae6d1e6a9ce",
     "stealth_bench/run.py.lock": "b35b022282a8bf890830ba9c2f2d43ed635627a423a9e3094ee527e7e8d8ef06",
     "stealth_bench/v2/protocol.json": "c4f940764ef7b2cfadf29b8c481f3295ce80307463f32766c2c5fac745d336e0",
-    "stealth_bench/generate_plots.py": "26963e7113721bd84a3e5a150cd9d4d25e5f5d5a82d82f7fe1d52ecf32686b1b"
+    "stealth_bench/generate_plots.py": "a6267b8091e8bb6af15140f7b4d16f4ec4267628392503281566d54732d1369e"
   },
   "notes": [
     "The ten initial configurations use the first source version. Steel and Browserless use the second; later Browserless scheduling uses the same probe and judge with faster setup.",
