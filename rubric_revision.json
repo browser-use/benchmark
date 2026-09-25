@@ -1,5 +1,5 @@
 {
-  "revision": "2026-09-25-captcha-alignment",
+  "revision": "2026-09-25-four-case-clarifications",
   "status": "main_not_regraded",
   "release_version": "2.1",
   "release_tag": null,
@@ -59,12 +59,12 @@
     },
     {
       "task_id": "bu2-020",
-      "summary": "Distinguish inaccessible story evidence from an evidenced zero qualifying set; state recovery in the task.",
+      "summary": "Clarify real observation-window timestamps and reserve global penalties for concrete fabricated evidence; retain source-access recovery rules.",
       "review_status": "pending_saved_trace_review",
       "before_task_sha256": "51701867c187833c681e59c287111942c44cbd7b7b39cb1d1439923d48737041",
       "after_task_sha256": "ba49c02b99f3ff42383170c0318e789f5d7b7e89d54fef1235c9b340fdca5412",
       "before_rubric_sha256": "3ab30f18cb46fd13a12f312de4e782cf4640f4eae47b92bdaeb12fae31881211",
-      "after_rubric_sha256": "f83a6d82e183fe960220fd3ceedda4849e8b298b1b7d30aeea173f010a1bec7d",
+      "after_rubric_sha256": "2a0bb0184c0d5987e0f74f5427b83890d997610f9dc67980bcfeb95ae47eead6",
       "task_changed": true
     },
     {
@@ -126,6 +126,16 @@
       "review_status": "pending_saved_trace_review"
     },
     {
+      "task_id": "bu2-084",
+      "summary": "Distinguish honest unavailable scopes and unsupported summaries from fabricated source responses; preserve query-coverage requirements.",
+      "review_status": "pending_saved_trace_review",
+      "before_task_sha256": "329b70aa3832f6c0069d0d24e5a3a9687843fe61108b86084e80648bff814cf4",
+      "after_task_sha256": "329b70aa3832f6c0069d0d24e5a3a9687843fe61108b86084e80648bff814cf4",
+      "before_rubric_sha256": "961eb69b7a5692a728166a8324b0d453ca412d26686b4048e6e29a9bb8ed2cca",
+      "after_rubric_sha256": "5209f2972f6f41ee4db61079dd3ff2f0580193a8d5e405c0ef61d45f308ec9bc",
+      "task_changed": false
+    },
+    {
       "task_id": "bu2-088",
       "summary": "Align task scope with the named committee section; remove required correction of an erroneous task premise.",
       "task_changed": true,
@@ -133,6 +143,16 @@
       "after_task_sha256": "28cbf79e37ca2a30f99af5b8a78ee282270e5b9a247c2561e80b7b8e552ce7b4",
       "before_rubric_sha256": "a86a04e21b06ea1e8e5e0b57c465fa37876801eaa5a6dbd2afbb732768934cd7",
       "after_rubric_sha256": "a4fb2d0e53fbc31e58449f7b6d0c84d84f78ad634768b4b146807e688464fac0"
+    },
+    {
+      "task_id": "bu2-099",
+      "summary": "Do not treat internal todo completion alone as reward hacking; keep source verification requirements.",
+      "review_status": "pending_saved_trace_review",
+      "before_task_sha256": "5c8c8febcf46436f9d210d846d782e8f7527d9932493821e3a58c18fca51aa59",
+      "after_task_sha256": "5c8c8febcf46436f9d210d846d782e8f7527d9932493821e3a58c18fca51aa59",
+      "before_rubric_sha256": "728485cb9cd17b8d11898cffc840b5f38e61dfa075ce772fc1ef91b420ffdfe9",
+      "after_rubric_sha256": "d36ce17bac60359d005f6587068577a9c9de8bb4e43298b6f774e35477fbc986",
+      "task_changed": false
     },
     {
       "task_id": "bu2-113",
@@ -164,6 +184,16 @@
       "task_changed": false
     },
     {
+      "task_id": "bu2-185",
+      "summary": "Make evidenced absence an explicit task alternative and distinguish independent partial credit from completed playback or absence verification.",
+      "review_status": "pending_saved_trace_review",
+      "before_task_sha256": "162f44ed2f8269824ecb9696783b08328265761e7ea826feea22092ffb942c36",
+      "after_task_sha256": "f72199e84d2c563a130014b21be39d0d11a93dec804e77f8044213a510e88f8f",
+      "before_rubric_sha256": "2820f3c00db846389b72b90b45785d364dcd15b532aea05dd07151ae4d1b0a4f",
+      "after_rubric_sha256": "cf6529f9821db04527422e83339361a2a9a7eef784c0e2cff238b0427c9a3ea7",
+      "task_changed": true
+    },
+    {
       "task_id": "bu2-187",
       "summary": "Separate blocked unfinished work from missing judge evidence; zero delivered listings fails the required cohort size.",
       "task_changed": false,
@@ -192,22 +222,15 @@
       "issue": "No in-scope playback demonstrated in seven reviewed historical executions; retain evidenced-absence outcome, require verified target before a playback-only revision."
     }
   ],
-  "candidate_encrypted_sha256": "7ef05a1d0abdf6ab4b570cae5b93adf3299cc5c3c2749961473d68f5cdc7bf94",
-  "previous_revision": "2026-09-24-feedback-review-draft-4",
-  "previous_encrypted_sha256": "87101f7ebcf3bfbde00091e278741427e906c9b7ccc223892c95e4549704d7c6",
+  "candidate_encrypted_sha256": "81f209900d0145c6ed6065555a921d9fd4b3f3381913a90f6925d452901bec5a",
+  "previous_revision": "2026-09-25-captcha-alignment",
+  "previous_encrypted_sha256": "7ef05a1d0abdf6ab4b570cae5b93adf3299cc5c3c2749961473d68f5cdc7bf94",
   "reverted_changes": [
     {
       "task_id": "bu2-171",
       "reverted_from_pr": 32,
       "restored_from": "421390ea7fa4708f3d89d7695f9a16debb861daf:BU_Bench_V2.enc",
       "rubric_sha256": "8b855fdf62d3e3d31935ac2bc978cc86dc4386af4b8bc1d1d1437f81cf3a20d5",
-      "reason": "Restore acquisition requirements; reporting an access failure is not completion."
-    },
-    {
-      "task_id": "bu2-185",
-      "reverted_from_pr": 32,
-      "restored_from": "421390ea7fa4708f3d89d7695f9a16debb861daf:BU_Bench_V2.enc",
-      "rubric_sha256": "2820f3c00db846389b72b90b45785d364dcd15b532aea05dd07151ae4d1b0a4f",
       "reason": "Restore acquisition requirements; reporting an access failure is not completion."
     }
   ],
@@ -221,7 +244,17 @@
     "bu2-020",
     "bu2-044",
     "bu2-047",
-    "bu2-154"
+    "bu2-084",
+    "bu2-099",
+    "bu2-154",
+    "bu2-185"
   ],
-  "release_note": "V2.1 rubric update on main; the original v2.1 tag and release assets retain the September 24 snapshot."
+  "release_note": "V2.1 four-case clarification; the original v2.1 tag and release assets retain the September 24 snapshot. Historical scores are unchanged.",
+  "previous_commit": "6ddf6d690f72d80985f0d257f52e33abcfddaf37",
+  "changes_since_previous_revision": [
+    "bu2-020",
+    "bu2-084",
+    "bu2-099",
+    "bu2-185"
+  ]
 }

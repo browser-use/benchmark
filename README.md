@@ -42,9 +42,12 @@
 | [BU_Bench_V2_review_cases.enc](BU_Bench_V2_review_cases.enc) | Judge review scenarios; not a runnable task set |
 | [rubric_revision.json](rubric_revision.json) | Revision metadata and integrity hashes |
 
-Main includes the September 25 CAPTCHA-alignment update
-(`2026-09-25-captcha-alignment`), with eight further task/rubric corrections on
-top of the nine in the [original V2.1 snapshot](https://github.com/browser-use/benchmark/releases/tag/v2.1).
+Main includes the September 25 four-case clarification
+(`2026-09-25-four-case-clarifications`) on top of the CAPTCHA-alignment update
+and the [original V2.1 snapshot](https://github.com/browser-use/benchmark/releases/tag/v2.1).
+It clarifies when timestamps, incomplete research and unavailable results justify
+item deductions versus fabrication penalties, and makes the video task's
+evidenced-absence alternative explicit.
 All 200 task IDs, item IDs and weights are unchanged. The filename remains
 `BU_Bench_V2.enc` for compatibility; its contents are V2.1.
 
@@ -54,7 +57,7 @@ Git history, rather than as extra files in the current checkout. The original
 for the latest V2.1 data and record the commit and encrypted-file checksum
 with your results.
 
-See [changes, validation and remaining work](RUBRIC_REVISION.md). The update
+See [changes, validation and remaining work](RUBRIC_REVISION.md). The earlier update
 requires successful Walmart source verification and gives no item credit to a
 run blocked before obtaining any Walmart task result. Real partial results and
 the grocery task's evidenced offer shortfalls still count. It also aligns
@@ -123,6 +126,11 @@ Defaults:
 | Limits | Up to 100 concurrent tasks; 3,600 seconds per task |
 | Judge | `gpt-5.6-luna`, xhigh reasoning |
 | Score | Continuous weighted V2 rubric score, including partial credit |
+
+The score measures weighted rubric compliance, not the percentage of tasks
+completed. A task can award independent partial credit or explicitly accept
+an evidenced alternative outcome; a high score alone does not prove playback
+or completion of every requested action.
 
 The executor receives only the task instruction. The findings judge receives the
 full rubric plus the saved trajectory, deliverables, and screenshots captured
