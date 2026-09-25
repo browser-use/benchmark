@@ -157,6 +157,36 @@ class JudgeTests(unittest.IsolatedAsyncioTestCase):
             any(isinstance(part, ContentPartImageParam) for part in content)
         )
 
+    async def test_reasoning_excluded_without_changing_saved_evidence_or_image_ids(self):
+        for screenshot_steps in (None, [4]):
+            with self.subTest(screenshot_steps=screenshot_steps):
+                data = trace()
+                data["agent_steps"] = [
+                    "thinking: PRIVATE_DRAFT",
+                    "text: Inspecting the page",
+                    "  reasoning: PRIVATE_SUMMARY",
+                    "tool: observed thinking: and reasoning: on the page",
+                ]
+                original = data["agent_steps"].copy()
+                if screenshot_steps is not None:
+                    data["screenshot_steps"] = screenshot_steps
+                llm = judge()
+                await judge_trace(task(), data, llm)
+                content = llm.ainvoke.call_args.args[0][1].content
+                prompt = content[0].text
+                self.assertNotIn("PRIVATE_DRAFT", prompt)
+                self.assertNotIn("PRIVATE_SUMMARY", prompt)
+                self.assertIn("text: Inspecting the page", prompt)
+                self.assertIn("tool: observed thinking: and reasoning: on the page", prompt)
+                self.assertIn(data["final_result"], prompt)
+                self.assertIn(data["output_files_text"], prompt)
+                self.assertTrue(any(isinstance(p, ContentPartImageParam) for p in content))
+                if screenshot_steps is not None:
+                    self.assertIn("[step 4] tool:", prompt)
+                    self.assertIn("[step 2] text:", prompt)
+                    self.assertIn("[step 4]", content[-2].text)
+                self.assertEqual(data["agent_steps"], original)
+
     async def test_global_penalty_preserves_raw_score(self):
         result = await judge_trace(
             task(), trace(), judge(findings(reward_hacking_suspected=True))

@@ -174,8 +174,13 @@ def construct_findings_judge_messages(
 	screenshot_timing: Literal['before', 'after'] = 'after',
 	evidence_notes: list[str] | None = None,
 ) -> list[BaseMessage]:
+	# Keep original step IDs for screenshot references; retain raw reasoning in saved traces.
+	visible_steps = [
+		(i, step) for i, step in enumerate(agent_steps, start=1)
+		if not step.lstrip().startswith(('thinking:', 'reasoning:'))
+	]
 	if screenshot_steps is None:
-		trajectory = '\n'.join(agent_steps)
+		trajectory = '\n'.join(step for _, step in visible_steps)
 		screenshots_note = (
 			'{n} screenshots from execution are attached below in chronological order. '
 			f'They were captured {screenshot_timing} browser actions. '
@@ -183,7 +188,7 @@ def construct_findings_judge_messages(
 		)
 	else:
 		# Number the steps so screenshot labels ([step N]) can be located.
-		trajectory = '\n'.join(f'[step {i}] {s}' for i, s in enumerate(agent_steps, start=1))
+		trajectory = '\n'.join(f'[step {i}] {step}' for i, step in visible_steps)
 		screenshots_note = (
 			'{n} screenshots are attached below in chronological order. They were captured '
 			f'automatically by the harness immediately {screenshot_timing} browser actions (not chosen by the '
