@@ -172,8 +172,8 @@ bu2-001/
 Use `--tasks 5` for a short run, or `--task-ids bu2-171 bu2-185` for exact cases.
 `--parallel` controls tasks per process (default 100); use a smaller value such as
 `--parallel 5` to fit your browser capacity or API limits. `--task-timeout` is in
-seconds. `--model` and `--agent-reasoning` select another BrowserCode model/variant, while
-`--judge-model` and `--judge-reasoning` change the findings judge. `--check`
+seconds. `--model` and `--agent-reasoning` select another BrowserCode model/variant,
+while `--judge-model` and `--judge-reasoning` change the findings judge. `--check`
 performs the binary/model preflight without executing tasks.
 
 The historical V1, Stealth, and framework comparison runners remain available
@@ -188,8 +188,9 @@ batch/orchestrator path.
 The manual **Run BU Bench V2** workflow runs one task per GitHub-hosted Ubuntu
 runner, with up to 100 task runners active by default, subject to your GitHub
 account's concurrency limits. Set `max_parallel` to override this (1–200).
-Every runner invokes the same `run_eval.py` command and judges its task. All 200 tasks run by default. The
-aggregate job requires every selected task exactly once and reports incomplete
+Every runner invokes the same `run_eval.py` command and judges its task.
+All 200 tasks run by default. The aggregate job requires every selected task
+exactly once and reports incomplete
 judging as an error instead of treating it as a zero or silently dropping it.
 
 For your own runs, fork the repository, enable Actions, and add your own secrets
