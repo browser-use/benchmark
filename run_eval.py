@@ -342,11 +342,13 @@ def parse_args(argv=None):
     parser.add_argument("--shard-count", type=int, help="Total contiguous shards")
     parser.add_argument("--task-timeout", type=int, default=None)
     parser.add_argument("--max-steps", type=int, default=None)
-    parser.add_argument("--concurrency", "--parallel", type=int, default=MAX_CONCURRENT)
+    parser.add_argument("--concurrency", "--parallel", type=int, default=None)
     args = parser.parse_args(argv)
     args.executor = args.executor or (
         "bcode" if args.benchmark == DEFAULT_BENCHMARK else "browser-use"
     )
+    if args.concurrency is None:
+        args.concurrency = 100 if args.executor == "bcode" else MAX_CONCURRENT
     if (args.shard_index is None) != (args.shard_count is None):
         parser.error("--shard-index and --shard-count must be provided together")
     if args.shard_count is not None and (

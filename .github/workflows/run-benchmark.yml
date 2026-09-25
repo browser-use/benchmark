@@ -32,7 +32,7 @@ on:
       max_parallel:
         description: Maximum concurrent task runners
         type: number
-        default: 12
+        default: 100
       fetch_use:
         description: Enable BrowserCode fetch service (requires Browser Use key)
         type: boolean
@@ -67,7 +67,7 @@ jobs:
         run: |
           python3 - <<'PY'
           import os
-          assert 1 <= int(os.environ["MAX_PARALLEL"]) <= 50
+          assert 1 <= int(os.environ["MAX_PARALLEL"]) <= 200
           assert 1 <= int(os.environ["TASK_TIMEOUT"]) <= 14400
           PY
           uv run python bcode_results.py prepare --tasks "$TASK_COUNT" --task-ids "$TASK_IDS"
