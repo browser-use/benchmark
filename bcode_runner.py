@@ -18,7 +18,7 @@ import websockets
 
 BCODE_VERSION = "0.1.20"
 DEFAULT_MODEL = "openai/gpt-6-luna"
-DEFAULT_REASONING = "low"
+DEFAULT_REASONING = "xhigh"
 PROVIDER_KEYS = {
     "openai": "OPENAI_API_KEY",
     "openrouter": "OPENROUTER_API_KEY",

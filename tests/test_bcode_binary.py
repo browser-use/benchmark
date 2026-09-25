@@ -56,7 +56,7 @@ class ReleasedBinaryTests(unittest.IsolatedAsyncioTestCase):
                         result["resolved_model"]["capabilities"]["attachment"]
                     )
 
-    async def test_native_openai_request_uses_requested_model_and_low_reasoning(self):
+    async def test_native_openai_request_uses_requested_model_and_xhigh_reasoning(self):
         requests = []
 
         class Handler(BaseHTTPRequestHandler):
@@ -98,7 +98,7 @@ class ReleasedBinaryTests(unittest.IsolatedAsyncioTestCase):
                 root = Path(temporary)
                 env = agent_env(
                     "openai/gpt-6-luna",
-                    "low",
+                    "xhigh",
                     root / "state",
                     Path(os.environ["BCODE_TEST_CATALOG"]).resolve(),
                 )
@@ -110,7 +110,7 @@ class ReleasedBinaryTests(unittest.IsolatedAsyncioTestCase):
                     "--model",
                     "openai/gpt-6-luna",
                     "--variant",
-                    "low",
+                    "xhigh",
                     "--format",
                     "json",
                     "--thinking",
@@ -131,7 +131,7 @@ class ReleasedBinaryTests(unittest.IsolatedAsyncioTestCase):
                 actual = [r for r in requests if r["body"].get("model") == "gpt-6-luna"]
                 self.assertTrue(actual, stderr.decode(errors="replace")[-1000:])
                 self.assertEqual(actual[0]["path"], "/v1/responses")
-                self.assertEqual(actual[0]["body"]["reasoning"]["effort"], "low")
+                self.assertEqual(actual[0]["body"]["reasoning"]["effort"], "xhigh")
                 self.assertIn(
                     "browser_execute",
                     [tool["name"] for tool in actual[0]["body"]["tools"]],
