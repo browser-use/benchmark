@@ -13,6 +13,32 @@ from cryptography.fernet import Fernet
 
 ROOT = Path(__file__).resolve().parent
 
+# One prospective scoring redesign; all other tasks retain original weights.
+APPROVED_WEIGHT_REVISIONS = {
+    "bu2-185": (
+        "a3a3b9bf46595905b842c65560b9054a46746dccd8bb70469de29165ba0814a4",
+        "de3256e1d436612e9b546532da0aa21d45c7b9e0ceabdc6fdd91e3b8528f0ba4",
+    ),
+}
+
+
+APPROVED_METADATA_REVISIONS = {
+    "bu2-185": {
+        "title": (
+            "a2e7dd85053f9c85b3251f2905009f24f15e89ba0df1317d41dcbf3eec0052a7",
+            "596ad9375e266e32f2be30feb5d80942ed57716a86b708add83c291b070033d5",
+        ),
+        "summary": (
+            "1f7be224bd117f9e7f03fab45dceabb81e3ce1494f8a4ebf8e29479d2485e6b3",
+            "4a611a12737aa08ac06befa841d5331af779d8b3174f564c4421326ddcdf111d",
+        ),
+    },
+}
+
+
+def weights_digest(weights: dict) -> str:
+    return digest(json.dumps(weights, sort_keys=True, separators=(",", ":")))
+
 
 def digest(text: str) -> str:
     return hashlib.sha256(text.encode()).hexdigest()
@@ -104,12 +130,38 @@ def validate_revision(
             for key in set(old) | set(task)
             if old.get(key, missing) != task.get(key, missing)
         }
-        if not changed_fields <= {"task", "rubric", "task_sha", "rubric_sha", "revision"}:
+        allowed_fields = {"task", "rubric", "task_sha", "rubric_sha", "revision"}
+        if task_id in APPROVED_WEIGHT_REVISIONS:
+            allowed_fields |= {"title", "summary", "weights", "weights_sha"}
+        if not changed_fields <= allowed_fields:
             raise ValueError(f"Unapproved task field change: {task_id}")
         if task.get("revision") != manifest["revision"]:
             raise ValueError(f"Task revision mismatch: {task_id}")
-        if task["weights"] != old["weights"] or sum(task["weights"].values()) != 100:
+        if task_id in APPROVED_WEIGHT_REVISIONS:
+            expected_before, expected_after = APPROVED_WEIGHT_REVISIONS[task_id]
+            if (
+                weights_digest(old["weights"]) != expected_before
+                or weights_digest(task["weights"]) != expected_after
+                or change.get("before_weights_sha256") != expected_before
+                or change.get("after_weights_sha256") != expected_after
+                or task.get("weights_sha") != expected_after
+            ):
+                raise ValueError(f"Unapproved weight revision: {task_id}")
+            for field, hashes in APPROVED_METADATA_REVISIONS[task_id].items():
+                expected_before, expected_after = hashes
+                if (
+                    digest(old[field]) != expected_before
+                    or digest(task[field]) != expected_after
+                    or change.get(f"before_{field}_sha256") != expected_before
+                    or change.get(f"after_{field}_sha256") != expected_after
+                ):
+                    raise ValueError(f"Metadata hash mismatch: {task_id}/{field}")
+        elif task["weights"] != old["weights"]:
             raise ValueError(f"Weight change: {task_id}")
+        if any(type(w) is not int or w <= 0 for w in task["weights"].values()):
+            raise ValueError(f"Invalid weights: {task_id}")
+        if sum(task["weights"].values()) != 100:
+            raise ValueError(f"Weight total changed: {task_id}")
         if task["canary"] != old["canary"] or task["canary"] in task["task"]:
             raise ValueError(f"Canary changed or exposed: {task_id}")
         item_ids = set(
@@ -150,7 +202,8 @@ def main():
     args = parser.parse_args()
     manifest, before, after, cases = validate_revision(base_artifact=args.base_artifact)
     print(
-        f"Validated {len(manifest['changes'])} revised tasks; other tasks and all weights unchanged."
+        f"Validated {len(manifest['changes'])} revised tasks; "
+        "only explicitly pinned scoring revisions may change weights."
     )
     print(
         f"{len(cases['cases'])} synthetic semantic review cases; no judge accuracy result implied."

@@ -12,7 +12,12 @@ from unittest.mock import patch
 
 from cryptography.fernet import Fernet
 
-from review_rubric_revision import ROOT, read_base_artifact, validate_revision
+from review_rubric_revision import (
+    ROOT,
+    read_base_artifact,
+    validate_revision,
+    weights_digest,
+)
 
 
 class RevisionTests(unittest.TestCase):
@@ -55,6 +60,7 @@ class RevisionTests(unittest.TestCase):
             "bu2-113",
             "bu2-163",
             "bu2-187",
+            "bu2-185",
         }
         self.assertEqual({c["task_id"] for c in manifest["changes"]}, expected)
         self.assertEqual(
@@ -72,6 +78,7 @@ class RevisionTests(unittest.TestCase):
                 "bu2-029",
                 "bu2-088",
                 "bu2-113",
+                "bu2-185",
             },
         )
         allowed = {"task", "rubric", "task_sha", "rubric_sha", "revision"}
@@ -82,9 +89,15 @@ class RevisionTests(unittest.TestCase):
                 for key in set(before[task_id]) | set(after[task_id])
                 if before[task_id].get(key, missing) != after[task_id].get(key, missing)
             }
-            self.assertTrue(changed_fields <= allowed)
-            self.assertEqual(after[task_id]["weights"], before[task_id]["weights"])
-        self.assertEqual(len(cases["cases"]), 24)
+            if task_id == "bu2-185":
+                self.assertTrue(
+                    changed_fields <= allowed | {"title", "summary", "weights", "weights_sha"}
+                )
+                self.assertNotEqual(after[task_id]["weights"], before[task_id]["weights"])
+            else:
+                self.assertTrue(changed_fields <= allowed)
+                self.assertEqual(after[task_id]["weights"], before[task_id]["weights"])
+        self.assertEqual(len(cases["cases"]), 32)
         self.assertEqual(manifest["status"], "main_not_regraded")
 
     def test_baseline_from_history_is_exact_published_snapshot(self):
@@ -148,6 +161,64 @@ class RevisionTests(unittest.TestCase):
             (root / "rubric_revision.json").write_text(json.dumps(manifest))
             with self.assertRaisesRegex(ValueError, "Unapproved task field change"):
                 validate_revision(root, base_artifact=baseline)
+
+    def test_redesign_cannot_rebalance_even_with_matching_manifest(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            baseline = self.copy_revision_fixture(root)
+            manifest, _, after, _ = validate_revision(root, base_artifact=baseline)
+            task = after["bu2-185"]
+            keys = list(task["weights"])
+            task["weights"][keys[0]] += 1
+            task["weights"][keys[1]] -= 1
+            task["weights_sha"] = weights_digest(task["weights"])
+            change = next(c for c in manifest["changes"] if c["task_id"] == "bu2-185")
+            change["after_weights_sha256"] = task["weights_sha"]
+            payload = {"tasks": list(after.values()), "revision": manifest["revision"]}
+            fernet = Fernet(
+                base64.urlsafe_b64encode(hashlib.sha256(b"BU_Bench_V2").digest())
+            )
+            artifact = base64.b64encode(fernet.encrypt(json.dumps(payload).encode()))
+            (root / "BU_Bench_V2.enc").write_bytes(artifact)
+            manifest["candidate_encrypted_sha256"] = hashlib.sha256(artifact).hexdigest()
+            (root / "rubric_revision.json").write_text(json.dumps(manifest))
+            with self.assertRaisesRegex(ValueError, "Unapproved weight revision"):
+                validate_revision(root, base_artifact=baseline)
+
+    def test_redesign_requires_declared_original_and_current_weight_hashes(self):
+        for key in ("before_weights_sha256", "after_weights_sha256"):
+            with self.subTest(key=key), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                baseline = self.copy_revision_fixture(root)
+                manifest = json.loads((root / "rubric_revision.json").read_text())
+                change = next(c for c in manifest["changes"] if c["task_id"] == "bu2-185")
+                del change[key]
+                (root / "rubric_revision.json").write_text(json.dumps(manifest))
+                with self.assertRaisesRegex(ValueError, "Unapproved weight revision"):
+                    validate_revision(root, base_artifact=baseline)
+
+    def test_redesign_metadata_cannot_change_with_matching_manifest(self):
+        for field in ("title", "summary"):
+            with self.subTest(field=field), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                baseline = self.copy_revision_fixture(root)
+                manifest, _, after, _ = validate_revision(root, base_artifact=baseline)
+                task = after["bu2-185"]
+                task[field] += " unapproved change"
+                change = next(c for c in manifest["changes"] if c["task_id"] == "bu2-185")
+                change[f"after_{field}_sha256"] = hashlib.sha256(
+                    task[field].encode()
+                ).hexdigest()
+                payload = {"tasks": list(after.values()), "revision": manifest["revision"]}
+                fernet = Fernet(
+                    base64.urlsafe_b64encode(hashlib.sha256(b"BU_Bench_V2").digest())
+                )
+                artifact = base64.b64encode(fernet.encrypt(json.dumps(payload).encode()))
+                (root / "BU_Bench_V2.enc").write_bytes(artifact)
+                manifest["candidate_encrypted_sha256"] = hashlib.sha256(artifact).hexdigest()
+                (root / "rubric_revision.json").write_text(json.dumps(manifest))
+                with self.assertRaisesRegex(ValueError, "Metadata hash mismatch"):
+                    validate_revision(root, base_artifact=baseline)
 
     def test_duplicate_task_ids_rejected_before_indexing(self):
         with tempfile.TemporaryDirectory() as directory:

@@ -1,3 +1,42 @@
+# BU Bench V2.1 Reuters playback revision
+
+**Content revision:** `2026-09-25-reuters-playback`
+**Dataset version:** 2.1. Historical executions and scores are unchanged.
+The original v2.1 release assets retain their earlier snapshot.
+
+Task 185 now measures actual news-video playback. It permits navigation to
+Reuters articles and removes the unreliable footer-location premise and the
+successful-absence alternative. Most credit requires evidenced normal playback;
+reporting an honest failure does not complete the playback requirement and is
+not automatically reward hacking. Native player evidence is required; seeking
+or an agent-drawn progress indicator cannot substitute for playback.
+
+This is a prospective task and scoring redesign, not a historical regrade.
+Only 185 changes its instruction, title, summary, rubric, item IDs and weights.
+The other 199 task contracts and weights, all task IDs/canaries, judge/scorer
+code, runner defaults and existing result artifacts remain unchanged.
+Existing revised tasks receive the common dataset revision identifier only.
+
+## Validation
+
+- The validator pins the original and replacement weight hashes for 185.
+  Every other task retains its original weights. Undeclared edits still fail.
+- Eight encrypted semantic cases cover valid article playback, absence, seeking,
+  buffering, advertising, short clips, disclosed overlays and honest blocks.
+  These cases are review inputs, not executed-model accuracy results.
+- One frozen-candidate execution (private Actions run 36097801340) scored
+  100/100 with BrowserCode 0.1.20, OpenAI Luna xhigh, Cloud and the unchanged
+  Luna xhigh findings judge. Six actual player samples demonstrated 25.54 seconds
+  of normal playback; the final screenshot visibly showed genuine player controls.
+  Trace, screenshot and configuration were inspected; no judge or evidence errors.
+  This demonstrates one successful execution, not site reliability across runs.
+- Earlier pending saved-trace reviews remain pending; this change does not
+  claim to complete them.
+
+The records below describe earlier revisions and their validation at the time.
+
+---
+
 # BU Bench V2.1 CAPTCHA-alignment update
 
 **Content revision:** `2026-09-25-captcha-alignment`

@@ -58,11 +58,13 @@ Results go to `run_data/BU_Bench_V2_bcode_<timestamp>/`.
 | [BU_Bench_V2_review_cases.enc](BU_Bench_V2_review_cases.enc) | Judge review scenarios; not a runnable task set |
 | [rubric_revision.json](rubric_revision.json) | Revision metadata and integrity hashes |
 
-Main includes the September 25 CAPTCHA-alignment update
-(`2026-09-25-captcha-alignment`), with eight further task/rubric corrections on
-top of the nine in the [original V2.1 snapshot](https://github.com/browser-use/benchmark/releases/tag/v2.1).
-All 200 task IDs, item IDs and weights are unchanged. The filename remains
-`BU_Bench_V2.enc` for compatibility; its contents are V2.1.
+Main includes the September 25 Reuters playback revision
+(`2026-09-25-reuters-playback`), following the CAPTCHA-alignment update and
+the corrections in the [original V2.1 snapshot](https://github.com/browser-use/benchmark/releases/tag/v2.1).
+All 200 task IDs remain. Task 185 has a prospective playback contract and
+scoring redesign; the other 199 tasks retain their prior contracts and weights.
+Historical task 185 scores are not comparable to the revised task. The filename
+remains `BU_Bench_V2.enc` for compatibility; its contents are V2.1.
 
 The old 55-task selectors and original 200-task snapshot are available through
 Git history, rather than as extra files in the current checkout. The original
@@ -70,8 +72,8 @@ Git history, rather than as extra files in the current checkout. The original
 for the latest V2.1 data and record the commit and encrypted-file checksum
 with your results.
 
-See [changes, validation and remaining work](RUBRIC_REVISION.md). The update
-requires successful Walmart source verification and gives no item credit to a
+See [changes, validation and remaining work](RUBRIC_REVISION.md). The earlier
+CAPTCHA-alignment update requires successful Walmart source verification and gives no item credit to a
 run blocked before obtaining any Walmart task result. Real partial results and
 the grocery task's evidenced offer shortfalls still count. It also aligns
 CAPTCHA recovery instructions, resolves an observation-record ambiguity, and
