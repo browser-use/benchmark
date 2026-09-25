@@ -107,10 +107,11 @@ def prepare(task_ids, limit):
             Path("BU_Bench_V2.enc").read_bytes()
         ).hexdigest(),
     }
+    selected_ids = [task["task_id"] for task in tasks]
     evaluation_id = init_laminar(config) or ""
+    print("Selected task IDs: " + json.dumps(selected_ids), flush=True)
     with Path(os.environ["GITHUB_OUTPUT"]).open("a") as output:
-        output.write("matrix=" + json.dumps({"task_id": config["task_ids"]}) + "\n")
-        output.write("task_ids=" + json.dumps(config["task_ids"]) + "\n")
+        output.write("task_ids=" + json.dumps(selected_ids) + "\n")
         output.write("evaluation_id=" + evaluation_id + "\n")
 
 

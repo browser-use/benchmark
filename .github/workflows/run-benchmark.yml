@@ -48,7 +48,6 @@ jobs:
   prepare:
     runs-on: ubuntu-latest
     outputs:
-      matrix: ${{ steps.tasks.outputs.matrix }}
       task_ids: ${{ steps.tasks.outputs.task_ids }}
       evaluation_id: ${{ steps.tasks.outputs.evaluation_id }}
     steps:
@@ -77,8 +76,9 @@ jobs:
     needs: prepare
     strategy:
       fail-fast: false
-      max-parallel: ${{ inputs.max_parallel }}
-      matrix: ${{ fromJSON(needs.prepare.outputs.matrix) }}
+      max-parallel: ${{ fromJSON(format('{0}', inputs.max_parallel)) }}
+      matrix:
+        task_id: ${{ fromJSON(needs.prepare.outputs.task_ids) }}
     runs-on: ubuntu-latest
     timeout-minutes: 260
     env:
