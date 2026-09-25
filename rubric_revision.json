@@ -1,7 +1,7 @@
 {
-  "revision": "2026-09-25-captcha-alignment-draft-1",
-  "status": "draft_not_regraded",
-  "release_version": null,
+  "revision": "2026-09-25-captcha-alignment",
+  "status": "main_not_regraded",
+  "release_version": "2.1",
   "release_tag": null,
   "base_commit": "421390ea7fa4708f3d89d7695f9a16debb861daf",
   "base_encrypted_sha256": "fe0fc1eede3197d9eaffd42af3ac7b11cc15743d401e95496f3eb03f0d023a0e",
@@ -192,7 +192,7 @@
       "issue": "No in-scope playback demonstrated in seven reviewed historical executions; retain evidenced-absence outcome, require verified target before a playback-only revision."
     }
   ],
-  "candidate_encrypted_sha256": "31295343642e64d38b3ccf1e6233e5dce4f0abc42fb9d542284de50393ee14a3",
+  "candidate_encrypted_sha256": "7ef05a1d0abdf6ab4b570cae5b93adf3299cc5c3c2749961473d68f5cdc7bf94",
   "previous_revision": "2026-09-24-feedback-review-draft-4",
   "previous_encrypted_sha256": "87101f7ebcf3bfbde00091e278741427e906c9b7ccc223892c95e4549704d7c6",
   "reverted_changes": [
@@ -222,5 +222,6 @@
     "bu2-044",
     "bu2-047",
     "bu2-154"
-  ]
+  ],
+  "release_note": "V2.1 rubric update on main; the original v2.1 tag and release assets retain the September 24 snapshot."
 }

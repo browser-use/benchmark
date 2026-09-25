@@ -64,7 +64,7 @@ class RevisionTests(unittest.TestCase):
             self.assertTrue(changed_fields <= allowed)
             self.assertEqual(after[task_id]["weights"], before[task_id]["weights"])
         self.assertEqual(len(cases["cases"]), 24)
-        self.assertEqual(manifest["status"], "draft_not_regraded")
+        self.assertEqual(manifest["status"], "main_not_regraded")
 
     def test_original_artifact_is_exact_published_snapshot(self):
         self.assertEqual(
@@ -87,7 +87,7 @@ class RevisionTests(unittest.TestCase):
         )
         self.assertEqual(
             candidate["source_sha256"],
-            "31295343642e64d38b3ccf1e6233e5dce4f0abc42fb9d542284de50393ee14a3",
+            "7ef05a1d0abdf6ab4b570cae5b93adf3299cc5c3c2749961473d68f5cdc7bf94",
         )
         self.assertEqual(
             historical["source_sha256"],
