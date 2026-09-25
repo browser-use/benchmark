@@ -4,6 +4,7 @@ import base64
 import hashlib
 import json
 import shutil
+import subprocess
 import tempfile
 import unittest
 from pathlib import Path
@@ -15,7 +16,26 @@ from review_rubric_revision import ROOT, read_base_artifact, validate_revision
 
 
 class RevisionTests(unittest.TestCase):
+    def historical_baseline(self):
+        manifest = json.loads((ROOT / "rubric_revision.json").read_text())
+        try:
+            return read_base_artifact(ROOT, manifest)
+        except ValueError as error:
+            if isinstance(error.__cause__, (OSError, subprocess.CalledProcessError)):
+                self.skipTest(str(error))
+            raise
+
+    def copy_revision_fixture(self, root):
+        baseline = root / "original.enc"
+        baseline.write_bytes(self.historical_baseline())
+        for name in (
+            "rubric_revision.json", "BU_Bench_V2.enc", "BU_Bench_V2_review_cases.enc"
+        ):
+            shutil.copy2(ROOT / name, root / name)
+        return baseline
+
     def test_only_declared_contracts_change(self):
+        self.historical_baseline()
         manifest, before, after, cases = validate_revision()
         expected = {
             "bu2-001",
@@ -68,9 +88,8 @@ class RevisionTests(unittest.TestCase):
         self.assertEqual(manifest["status"], "main_not_regraded")
 
     def test_baseline_from_history_is_exact_published_snapshot(self):
-        manifest = json.loads((ROOT / "rubric_revision.json").read_text())
         self.assertEqual(
-            hashlib.sha256(read_base_artifact(ROOT, manifest)).hexdigest(),
+            hashlib.sha256(self.historical_baseline()).hexdigest(),
             "fe0fc1eede3197d9eaffd42af3ac7b11cc15743d401e95496f3eb03f0d023a0e",
         )
 
@@ -89,16 +108,9 @@ class RevisionTests(unittest.TestCase):
             self.assertFalse((ROOT / name).exists())
 
     def test_explicit_baseline_works_without_git_and_is_hash_checked(self):
-        manifest = json.loads((ROOT / "rubric_revision.json").read_text())
-        artifact = read_base_artifact(ROOT, manifest)
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            baseline = root / "original.enc"
-            baseline.write_bytes(artifact)
-            for name in (
-                "rubric_revision.json", "BU_Bench_V2.enc", "BU_Bench_V2_review_cases.enc"
-            ):
-                shutil.copy2(ROOT / name, root / name)
+            baseline = self.copy_revision_fixture(root)
             with patch("review_rubric_revision.subprocess.run") as git:
                 _, before, after, _ = validate_revision(root, base_artifact=baseline)
                 git.assert_not_called()
@@ -116,17 +128,10 @@ class RevisionTests(unittest.TestCase):
             read_base_artifact(ROOT, manifest)
 
     def test_weight_edit_rejected_even_with_updated_artifact_hash(self):
-        _, _, after, _ = validate_revision()
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            manifest = json.loads((ROOT / "rubric_revision.json").read_text())
-            baseline = root / "original.enc"
-            baseline.write_bytes(read_base_artifact(ROOT, manifest))
-            for name in (
-                "rubric_revision.json",
-                "BU_Bench_V2_review_cases.enc",
-            ):
-                shutil.copy2(ROOT / name, root / name)
+            baseline = self.copy_revision_fixture(root)
+            _, _, after, _ = validate_revision(root, base_artifact=baseline)
             task = after["bu2-014"]
             key = next(iter(task["weights"]))
             task["weights"][key] += 1
@@ -147,14 +152,7 @@ class RevisionTests(unittest.TestCase):
     def test_duplicate_task_ids_rejected_before_indexing(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            manifest = json.loads((ROOT / "rubric_revision.json").read_text())
-            baseline = root / "original.enc"
-            baseline.write_bytes(read_base_artifact(ROOT, manifest))
-            for name in (
-                "rubric_revision.json",
-                "BU_Bench_V2_review_cases.enc",
-            ):
-                shutil.copy2(ROOT / name, root / name)
+            baseline = self.copy_revision_fixture(root)
             candidate = json.loads(
                 Fernet(
                     base64.urlsafe_b64encode(hashlib.sha256(b"BU_Bench_V2").digest())

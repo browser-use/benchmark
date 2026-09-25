@@ -151,6 +151,13 @@ encrypted baseline explicitly:
 uv run python review_rubric_revision.py --base-artifact /path/to/original/BU_Bench_V2.enc
 ```
 
-Both paths verify the same baseline hash. Normal benchmark execution needs only
+Download the [original encrypted baseline at the pinned commit](https://github.com/browser-use/benchmark/raw/421390ea7fa4708f3d89d7695f9a16debb861daf/BU_Bench_V2.enc),
+or extract it from a full clone with `git show <base_commit>:BU_Bench_V2.enc`.
+Both paths verify `base_encrypted_sha256` from `rubric_revision.json`.
+
+Without the pinned Git history, the unittest suite skips historical-comparison
+checks with retrieval instructions; the standalone validator fails until you
+supply the baseline. CI explicitly fetches that commit and runs the validator,
+so those checks remain required there. Normal benchmark execution needs only
 the current dataset and does not need Git history or the original baseline.
 This cleanup changes no tasks, rubrics, scores or runtime defaults.
