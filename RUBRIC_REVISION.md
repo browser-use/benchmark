@@ -1,63 +1,78 @@
-# BU Bench V2 rubric revision candidate
+# BU Bench V2 feedback review
 
-**Revision:** `2026-09-23-rubric-contract-draft-1`
-**Status:** draft contract corrections; original partner runs have not been regraded.
+**Candidate:** `2026-09-24-feedback-review-draft-4`
+**Status:** draft; historical results are unchanged.
 
-The previous release contains task/rubric conflicts. A change of judge model alone
-cannot resolve them. This candidate corrects seven task contracts without changing
-the 200-task population, item IDs, weights, or global scoring/penalty policy.
+This candidate keeps the five earlier corrections from PR #32, restores the
+original AliExpress and Reuters rules, and adds targeted fixes for job-search
+coverage, source-count drift and blocked property lookups. It preserves all 200
+task IDs, the 55-task subset membership, every item ID and every weight.
 
-| Task | Candidate correction | Remaining validation |
+## Feedback and decisions
+
+| Task | What the evidence supports | Candidate decision |
 |---|---|---|
-| `bu2-014` | Null no longer earns field credit when consulted evidence discloses a value. | Long combined criteria and the smaller-population search rule remain unresolved. |
-| `bu2-029` | Officially evidenced address aliases can identify one building; shared tax lot alone cannot. | The reported partner run and its official mapping still need review. |
-| `bu2-048` | Evaluate the declared final table with supporting ledger/conflict files; clipped supporting content is not proof of a missing annotation. | The harness must actually supply full files; this dataset edit cannot repair an artifact mount or truncated prompt. |
-| `bu2-088` | Remove the conflicting numeric range from the task; request the named committee section and its source-backed range. | Revised instructions require a new attempt for a comparable benchmark result. |
-| `bu2-113` | State explicitly that all storefront-listed variants, including sold-out variants, are in scope. | Prospective clarification: do not retroactively punish a reasonable reading of the old task. |
-| `bu2-171` | Honor evidenced unavailable fields in the two criteria totaling 34 points. | Check positive and negative access cases; this does not prove every reported 66% run was correct. |
-| `bu2-185` | Separate a genuine blocked/failed-load outcome from an inspectable page with no player. | Compare against complete traces showing genuine blocks, unsupported block claims, and accessible pages. |
+| 014 | Some runs deliver substantial verified cohorts. That does not make “plausibly exhausted the public population” measurable. | Keep the visible-salary correction. Define smaller-cohort completion through recorded multi-source searches, result boundaries, regional coverage and candidate decisions. Clarify the task too. |
+| 028 | A full-score saved result can include Dice-only workbook rows that the old expansion item expressly ignores. Other runs admit that expansion remains partial. | Apply expansion eligibility to every retained workbook role; preserve the raw Dice anchor separately. Require actual expansion and account for discovered candidates. Clarify the smaller-cohort stopping rule in the task. |
+| 029 | Officially supported address aliases can refer to one building. A shared tax lot alone is insufficient. Some reviewed deductions concern contact handling instead, so alias wording cannot justify a blanket score increase. | Retain PR #32's source-backed alias correction. Do not change historical scores or contact rules. |
+| 040 | Saved evidence shows substantial successful booking research; the partner reports a full-score run. Runtime and strategy differences alone do not establish a rubric defect. | Keep the rubric. Pin equal budgets when comparing agents; the partner's particular successful trace still needs verification. |
+| 048 | Supporting conflict files and the declared final table serve different purposes. Missing portions of a judge packet cannot prove missing annotations. | Retain PR #32's final-table/ledger distinction. Do not weaken eligibility or completeness requirements to compensate for incomplete judge evidence. |
+| 088 | The task's numeric range conflicted with its named committee section. Successful handling of the contradiction does not make it a fair instruction. | Retain the source-backed section wording and premise correction from PR #32. |
+| 113 | “Available” was ambiguous between listed and in stock. An incomplete delivered file is a separate failure. | Retain explicit inclusion of storefront-listed sold-out variants. Do not make a judge accept a bare assertion of complete extraction. |
+| 163 | Retained source CSVs contain 89 with-comment rows, 64 without-comment rows and 173 final-action rows, with 172 distinct permit/date/type keys in the last report. Historical rubric counts were 88/64/170. | Use the run's captured rows and dates; historical counts are examples, not targets. Consolidate repeated appearances of the same event within and across sources. Keep source-stream and row-fidelity requirements. |
+| 171 | Hash-verified successful executions obtained the requested seller feedback and delivery data. It is not inherently capped at 66%. | Restore original A6/A7 acquisition requirements, totaling 34 points. Honest unavailable markers do not complete those items. |
+| 185 | Reviewed full-score executions demonstrate inspected absence, not footer-video playback. A blocked page does not establish absence. | Remove PR #32's expanded blocked-result credit; retain the original evidenced-absence branch. A playback-only task needs a verified target and revised instructions. |
 
-The `bu2-029`, `bu2-088`, and `bu2-113` instructions change. Their old traces can
-help review the proposed semantics but are not fresh executions of the new tasks.
-The other four edits concern rubric interpretation. Rejudging saved evidence must
-still record both rubric versions; historical published results are unchanged.
+Earlier authorized follow-ups remain: **053** requires an accessible external
+property lookup; a block alone does not complete reconciliation. **187** treats
+zero delivered listings as failure to meet the required cohort size, while keeping
+unavailable judge evidence distinct from unfinished work.
 
-## Deferred issues
+## Evidence reviewed
 
-- `bu2-028`: expanded-cohort completeness has no sufficiently explicit finite
-  target or stopping rule. Agree that rule in the task before assigning it weight.
-- `bu2-163`: the reported duplicate/omitted record has not been independently
-  reconciled. Obtain exact rows, identities, dates, source snapshot, and the judge
-  input before changing a factual answer key.
-- `bu2-040`: a turn cap and a wall-clock cap measure different constraints.
-  A successful direct-UI strategy versus a timed-out pipeline is not by itself
-  proof of a rubric defect. Pin the run budget and demonstrate feasibility.
-- `bu2-014`: atomic criteria and a bounded search contract need a separate revision.
+The September 24 review queried the new platform's Laminar project directly over
+the August 1–September 24 window. It found 101 scored datapoints across these
+12 task IDs in the 200-task category. These include different harnesses, repairs
+and judge replays; they are not 101 independent, comparable executions.
 
-## Review without publishing benchmark text
+The review also examined the 72 saved Astra/Fable results for these tasks, selected
+original GitHub runner artifacts with matching archive and result hashes, current
+task/rubric text, the partner's feedback and retained official-source CSVs.
+Private captures, complete rubrics, personal source fields and raw traces are not
+included in this document.
 
-`BU_Bench_V2.enc` is the candidate in this branch. The exact previous encrypted
-artifact is preserved at `snapshots/BU_Bench_V2_2026-08-25.enc`, using the same
-`BU_Bench_V2` decryption key name. `rubric_revision.json` records artifact and
-per-task before/after hashes. Original per-task hash fields have mixed historical
-provenance; revised task/rubric hashes cover the exact distributed UTF-8 strings.
-Source verification dates retain their original meaning; this edit does not claim
-a new live-site verification.
+A high historical score is evidence to inspect, not proof that the requested work
+was completed. No reviewed Reuters execution demonstrates in-scope playback.
+The exact permit rows disputed by the partner have not been supplied; the retained
+CSVs support a count/deduplication correction, not a claim to have identified the
+partner's precise missing row.
+
+## Validation and remaining work
+
+- The existing artifact validator checks the nine declared revised tasks, hashes,
+  all 200 IDs, unchanged weights/canaries and unchanged 55-task membership.
+- Eleven pre-existing semantic cases remain; no tests or cases were added.
+  Their revision label was refreshed; they do not validate the newly added rules.
+- New semantics for 014/028/053/163/187 still need saved-evidence judge validation.
+  This review inspected historical judgments and evidence without making paid calls.
+- An earlier synthetic 113 “positive” case produced `not_assessable` because it
+  asserted completeness without supplying result rows. This is not a successful
+  semantic validation and is not a reason to weaken the evidence requirement.
+- Combined criteria in 014 remain. Splitting them and reallocating their weights
+  requires a separate scoring revision.
+
+Task instructions change for 014/028 as well as the earlier 029/088/113 edits.
+Historical runs must not be presented as executions of the revised instructions.
+Any future saved-trace rejudging must record both rubric versions.
+
+## Reproduce artifact checks
 
 ```bash
 uv run python review_rubric_revision.py
 uv run python review_rubric_revision.py --write-private-diffs
 ```
 
-The second command writes seven plaintext diffs for local review and copies the
-15 synthetic review cases as `review-cases.private.enc` into ignored
-`run_data/rubric-review/`. The diffs contain task/rubric text and must stay local;
-the encrypted cases specify expected semantic judgments, not measured model
-accuracy. Run them against the candidate judge and have reviewers adjudicate
-disagreements before release. Never commit or publish the diffs.
-
-For a partner comparison, freeze the exact task/rubric revision, task IDs, judge
-model/reasoning, evidence files, screenshot policy, tool set, and runtime limits.
-Keep incomplete judge evidence separate from an adjudicated task failure. The
-existing scorer still gives `not_assessable` no credit; this candidate does not
-change that global policy or claim missing evidence has been recovered.
+The second command writes plaintext task/rubric diffs into ignored
+`run_data/rubric-review/`. Keep those private. The original encrypted August 25
+dataset remains in `snapshots/BU_Bench_V2_2026-08-25.enc`. This candidate adds no
+score-cap machinery and makes no changes to historical results.

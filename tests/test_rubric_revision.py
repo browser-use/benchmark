@@ -18,17 +18,19 @@ class RevisionTests(unittest.TestCase):
         manifest, before, after, cases = validate_revision()
         expected = {
             "bu2-014",
+            "bu2-028",
             "bu2-029",
             "bu2-048",
+            "bu2-053",
             "bu2-088",
             "bu2-113",
-            "bu2-171",
-            "bu2-185",
+            "bu2-163",
+            "bu2-187",
         }
         self.assertEqual({c["task_id"] for c in manifest["changes"]}, expected)
         self.assertEqual(
             {c["task_id"] for c in manifest["changes"] if c["task_changed"]},
-            {"bu2-029", "bu2-088", "bu2-113"},
+            {"bu2-014", "bu2-028", "bu2-029", "bu2-088", "bu2-113"},
         )
         allowed = {"task", "rubric", "task_sha", "rubric_sha", "revision"}
         missing = object()
@@ -41,7 +43,7 @@ class RevisionTests(unittest.TestCase):
             }
             self.assertTrue(changed_fields <= allowed)
             self.assertEqual(after[task_id]["weights"], before[task_id]["weights"])
-        self.assertEqual(len(cases["cases"]), 15)
+        self.assertEqual(len(cases["cases"]), 11)
         self.assertEqual(manifest["status"], "draft_not_regraded")
 
     def test_original_artifact_is_exact_published_snapshot(self):
@@ -65,7 +67,7 @@ class RevisionTests(unittest.TestCase):
         )
         self.assertEqual(
             candidate["source_sha256"],
-            "fe9ce279176fd965c9a658928a8d7562338c90934e5b4a330b4995bbfc150370",
+            "87101f7ebcf3bfbde00091e278741427e906c9b7ccc223892c95e4549704d7c6",
         )
         self.assertEqual(
             historical["source_sha256"],
@@ -92,7 +94,7 @@ class RevisionTests(unittest.TestCase):
                 "snapshots/BU_Bench_V2_2026-08-25.enc",
             ):
                 shutil.copy2(ROOT / name, root / name)
-            task = after["bu2-171"]
+            task = after["bu2-014"]
             key = next(iter(task["weights"]))
             task["weights"][key] += 1
             manifest = json.loads((root / "rubric_revision.json").read_text())
