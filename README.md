@@ -32,6 +32,12 @@
 
 <br/>
 
+## Benchmark scores — historical 60-task results
+
+<img alt="Legacy 60-task BU Bench V2 results - Mean rubric score by model and cost per task, including GPT-6 Astra" src="official_plots/bu_bench_v2_astra.jpg" width="100%">
+
+These results use the earlier 60-task set. They are not results for the current 200-task V2.1 dataset. Compare model scores only on the same task set and revision.
+
 ## BU Bench V2.1
 
 **200 web tasks scored against weighted findings rubrics — the default task set.**
@@ -90,12 +96,6 @@ or score override was added. Historical results and the chart are unchanged;
 saved-evidence semantic validation remains pending.
 
 The tasks are encrypted to keep their text out of web crawlers and model training data. Please do not publish decrypted tasks or rubrics in plaintext or use them for model training.
-
-### Historical results — 60 tasks
-
-<img alt="Legacy 60-task BU Bench V2 results - Mean rubric score by model and cost per task, including GPT-6 Astra" src="official_plots/bu_bench_v2_astra.jpg" width="100%">
-
-These results use the earlier 60-task set. They are not results for the current 200-task V2.1 dataset. Compare model scores only on the same task set and revision.
 
 ### Running BU Bench V2.1 (default)
 
