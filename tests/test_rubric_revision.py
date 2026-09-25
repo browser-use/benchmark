@@ -55,6 +55,9 @@ class RevisionTests(unittest.TestCase):
             "bu2-113",
             "bu2-163",
             "bu2-187",
+            "bu2-084",
+            "bu2-099",
+            "bu2-185",
         }
         self.assertEqual({c["task_id"] for c in manifest["changes"]}, expected)
         self.assertEqual(
@@ -72,6 +75,7 @@ class RevisionTests(unittest.TestCase):
                 "bu2-029",
                 "bu2-088",
                 "bu2-113",
+                "bu2-185",
             },
         )
         allowed = {"task", "rubric", "task_sha", "rubric_sha", "revision"}
@@ -84,7 +88,7 @@ class RevisionTests(unittest.TestCase):
             }
             self.assertTrue(changed_fields <= allowed)
             self.assertEqual(after[task_id]["weights"], before[task_id]["weights"])
-        self.assertEqual(len(cases["cases"]), 24)
+        self.assertEqual(len(cases["cases"]), 34)
         self.assertEqual(manifest["status"], "main_not_regraded")
 
     def test_baseline_from_history_is_exact_published_snapshot(self):
