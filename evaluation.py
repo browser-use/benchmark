@@ -122,7 +122,7 @@ def judge_config(benchmark: str, llm) -> dict:
     endpoint_host = urlparse(str(endpoint)).hostname
     return {
         "type": "findings" if findings else "legacy_binary",
-        "adapter_version": "2.1.2" if findings else "legacy-v1",
+        "adapter_version": "2.1.3" if findings else "legacy-v1",
         "adapter_source_sha256": hashlib.sha256(
             Path(__file__).read_bytes()
         ).hexdigest(),

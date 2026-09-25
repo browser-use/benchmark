@@ -1,12 +1,42 @@
 {
-  "revision": "2026-09-24-feedback-review-draft-4",
-  "status": "released_not_regraded",
+  "revision": "2026-09-25-captcha-alignment",
+  "status": "main_not_regraded",
   "release_version": "2.1",
-  "release_tag": "v2.1",
+  "release_tag": null,
   "base_commit": "421390ea7fa4708f3d89d7695f9a16debb861daf",
   "base_encrypted_sha256": "fe0fc1eede3197d9eaffd42af3ac7b11cc15743d401e95496f3eb03f0d023a0e",
   "hash_convention": "sha256 of UTF-8 text exactly as distributed; weights hashes unchanged",
   "changes": [
+    {
+      "task_id": "bu2-001",
+      "summary": "Require actual Walmart product-page verification; a wholly blocked run has no scored product-result scope.",
+      "review_status": "pending_saved_trace_review",
+      "before_task_sha256": "007da4a40bab3f96172632bd7455ccc12bdfe28284ed7bad277ce7486384a666",
+      "after_task_sha256": "5bc61a8e4fb06636e553a24e4774e895dfc025e598beb1b2cf4b54d34f5a4716",
+      "before_rubric_sha256": "9f5c9cf4ed1305572c3d123b53a3d6f49c02e296e1932d05bf186a0e864a6aec",
+      "after_rubric_sha256": "ab0874129659986571ef425ea490c7b3b59907d7b6d64aef002d24cfbb705c7d",
+      "task_changed": true
+    },
+    {
+      "task_id": "bu2-005",
+      "summary": "State challenge recovery and distinguish an inaccessible grid from an observed empty result.",
+      "review_status": "pending_saved_trace_review",
+      "before_task_sha256": "0a365494d069f8cda451f1c0b627a75d7d35ba5a79b28d58d05e8e57976682ce",
+      "after_task_sha256": "9533b9cecf97ec400f71cc3bfd4b6740fffe97b4fc4ff99476a96ec6be8e4bc5",
+      "before_rubric_sha256": "d336ef0a8aeae9741c8a9dded190a6d3de24079d661394b5f9f29ba3dad47db4",
+      "after_rubric_sha256": "9b798e95db673f13bd1933a327b590d5e29b2f2878efd2190c3f3217378ab89c",
+      "task_changed": true
+    },
+    {
+      "task_id": "bu2-007",
+      "summary": "Require inspected source content for product and external-source coverage; clarify absent product-result scope.",
+      "review_status": "pending_saved_trace_review",
+      "before_task_sha256": "1650afffdd047cafebb2477ef1613b176ecbd2f97b97d3e29fc9b39ae3f83fb6",
+      "after_task_sha256": "756fe9390c55a79d36ee8e60152150aa62cfbc86244b858416e472ea8751f917",
+      "before_rubric_sha256": "39d8eedf24feb44c841b9bf4a1c487b6fe824e7f322521832885322fe9c2889a",
+      "after_rubric_sha256": "661004bf393f478356af7107b985645a15586e77d54e1e801ce0cc62b39c4313",
+      "task_changed": true
+    },
     {
       "task_id": "bu2-014",
       "summary": "Keep source-visible compensation; define smaller-cohort completion by recorded multi-source searches and candidate decisions.",
@@ -16,6 +46,26 @@
       "before_rubric_sha256": "b7c582ce186cfaa75057311817a5dc1a4463bcad5e80d7b033a84f2080123061",
       "after_rubric_sha256": "49d99d2def75f79e985cc9cc28f2e12371dd146b022040cae25c354d2428ed9e",
       "review_status": "pending_saved_trace_review"
+    },
+    {
+      "task_id": "bu2-016",
+      "summary": "Resolve the contradictory A4 observation-record treatment on blocked runs.",
+      "review_status": "pending_saved_trace_review",
+      "before_task_sha256": "3bd364e752808c2a0d584826f25f7ef76c1ac9e2326fe19f79b454b88a7805ff",
+      "after_task_sha256": "3bd364e752808c2a0d584826f25f7ef76c1ac9e2326fe19f79b454b88a7805ff",
+      "before_rubric_sha256": "811b0ae3a73b1fa27e6cfc6aa3c418617a7a9825993a907ea2c05ff85791540d",
+      "after_rubric_sha256": "682f6aa2d44b1d7ca8ef6e2cc2e105eb1e4dc5d373325bea9403e5325371ecc7",
+      "task_changed": false
+    },
+    {
+      "task_id": "bu2-020",
+      "summary": "Distinguish inaccessible story evidence from an evidenced zero qualifying set; state recovery in the task.",
+      "review_status": "pending_saved_trace_review",
+      "before_task_sha256": "51701867c187833c681e59c287111942c44cbd7b7b39cb1d1439923d48737041",
+      "after_task_sha256": "ba49c02b99f3ff42383170c0318e789f5d7b7e89d54fef1235c9b340fdca5412",
+      "before_rubric_sha256": "3ab30f18cb46fd13a12f312de4e782cf4640f4eae47b92bdaeb12fae31881211",
+      "after_rubric_sha256": "f83a6d82e183fe960220fd3ceedda4849e8b298b1b7d30aeea173f010a1bec7d",
+      "task_changed": true
     },
     {
       "task_id": "bu2-028",
@@ -35,6 +85,26 @@
       "after_task_sha256": "5540e078e903306ff89f9936e9933b3aeae0eae4fd88ad783302b597d6b0ee76",
       "before_rubric_sha256": "b439261f2be9e4f5b0da6341c57c2255443ec93aa5982ba5abe382a11bbf0607",
       "after_rubric_sha256": "b98e32cf8529337c10e825ebe2c10c9b6ccf2c0e953a014fef6069b0c3023b84"
+    },
+    {
+      "task_id": "bu2-044",
+      "summary": "Preserve 25 successful product checks; clarify wholly blocked runs and independently earned partial credit.",
+      "review_status": "pending_saved_trace_review",
+      "before_task_sha256": "c3c4afe2b517ce2b3b40bfba56ed719db88b14fee0fddb7e0d1a83af174e68f8",
+      "after_task_sha256": "3c01a50619a4082cb3a7d49a44a19ffb5b0b66110d09b66bf8a089d63040118b",
+      "before_rubric_sha256": "66147d8b7aa0a3718a57725c756436acda26745c1a4b7b8fc573e2de9476cfdb",
+      "after_rubric_sha256": "e1de2fdd0ad6a8af9308f292f76c15f10ae2ef72727590049a19e3ffb8c5ca45",
+      "task_changed": true
+    },
+    {
+      "task_id": "bu2-047",
+      "summary": "Preserve supported offer shortfalls, require actual verification, and give no item credit without any Walmart result.",
+      "review_status": "pending_saved_trace_review",
+      "before_task_sha256": "ca31f53d2d0b824b664b8601b3bdab54ef46b16e1996c323981bb1913c4a0d0d",
+      "after_task_sha256": "5eed6ceca5e15b503358be00ba06cf21bbdb35cfafab7974f1e081507184c7c8",
+      "before_rubric_sha256": "c81c1fd48b32392804d47390af587d2ea0a9f0a6fdf5bca4e7422463c6ac7d2e",
+      "after_rubric_sha256": "3512ec834cad236a31a47806d017ea29f91f3e67262b8f4774fa2eb9722d5da5",
+      "task_changed": true
     },
     {
       "task_id": "bu2-048",
@@ -72,6 +142,16 @@
       "after_task_sha256": "71d1a6c5073fb15332b2d1ed4277a2fac36981ca486a228dbe91df5e1e5036e9",
       "before_rubric_sha256": "32e1594d2c5385135e654266b4e1d514889c803282c1b89e264d08f4a7c2bf58",
       "after_rubric_sha256": "5eccccd75def9017bc6171a2b00cbf201383713c6ca26d9b23a88b3dc5f85a8c"
+    },
+    {
+      "task_id": "bu2-154",
+      "summary": "Align permitted CAPTCHA solving with visible instructions; remove provider/payment-based reward-hacking treatment.",
+      "review_status": "pending_saved_trace_review",
+      "before_task_sha256": "eacb0e3e76c9bda65ee5990b509e0f30796d1fcd36fb9af92da0c3fb945a70e5",
+      "after_task_sha256": "7d5ea06a954aa06b2c90212c21c8f19f6706b44877b365514a417630647eda40",
+      "before_rubric_sha256": "6ad301361508e7c3ad20064c4223a1e4650c07a1840e34dda9cc53b7fa0a6db1",
+      "after_rubric_sha256": "6779fef800d4d28da49d08383cd2718c50c63293a8fc820aada882fdc6bb9290",
+      "task_changed": true
     },
     {
       "task_id": "bu2-163",
@@ -112,9 +192,9 @@
       "issue": "No in-scope playback demonstrated in seven reviewed historical executions; retain evidenced-absence outcome, require verified target before a playback-only revision."
     }
   ],
-  "candidate_encrypted_sha256": "87101f7ebcf3bfbde00091e278741427e906c9b7ccc223892c95e4549704d7c6",
-  "previous_revision": "2026-09-24-access-outcomes-draft-3",
-  "previous_encrypted_sha256": "e2feef1123c569e3f0470871bc94ac9da1b9ca3dcb6f1975d2e4a2f960a9b673",
+  "candidate_encrypted_sha256": "7ef05a1d0abdf6ab4b570cae5b93adf3299cc5c3c2749961473d68f5cdc7bf94",
+  "previous_revision": "2026-09-24-feedback-review-draft-4",
+  "previous_encrypted_sha256": "87101f7ebcf3bfbde00091e278741427e906c9b7ccc223892c95e4549704d7c6",
   "reverted_changes": [
     {
       "task_id": "bu2-171",
@@ -130,5 +210,18 @@
       "rubric_sha256": "2820f3c00db846389b72b90b45785d364dcd15b532aea05dd07151ae4d1b0a4f",
       "reason": "Restore acquisition requirements; reporting an access failure is not completion."
     }
-  ]
+  ],
+  "previous_release_version": "2.1",
+  "previous_release_tag": "v2.1",
+  "changes_since_previous_release": [
+    "bu2-001",
+    "bu2-005",
+    "bu2-007",
+    "bu2-016",
+    "bu2-020",
+    "bu2-044",
+    "bu2-047",
+    "bu2-154"
+  ],
+  "release_note": "V2.1 rubric update on main; the original v2.1 tag and release assets retain the September 24 snapshot."
 }

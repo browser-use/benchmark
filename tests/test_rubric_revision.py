@@ -17,6 +17,14 @@ class RevisionTests(unittest.TestCase):
     def test_only_declared_contracts_change(self):
         manifest, before, after, cases = validate_revision()
         expected = {
+            "bu2-001",
+            "bu2-005",
+            "bu2-007",
+            "bu2-016",
+            "bu2-020",
+            "bu2-044",
+            "bu2-047",
+            "bu2-154",
             "bu2-014",
             "bu2-028",
             "bu2-029",
@@ -30,7 +38,20 @@ class RevisionTests(unittest.TestCase):
         self.assertEqual({c["task_id"] for c in manifest["changes"]}, expected)
         self.assertEqual(
             {c["task_id"] for c in manifest["changes"] if c["task_changed"]},
-            {"bu2-014", "bu2-028", "bu2-029", "bu2-088", "bu2-113"},
+            {
+                "bu2-001",
+                "bu2-005",
+                "bu2-007",
+                "bu2-020",
+                "bu2-044",
+                "bu2-047",
+                "bu2-154",
+                "bu2-014",
+                "bu2-028",
+                "bu2-029",
+                "bu2-088",
+                "bu2-113",
+            },
         )
         allowed = {"task", "rubric", "task_sha", "rubric_sha", "revision"}
         missing = object()
@@ -38,13 +59,12 @@ class RevisionTests(unittest.TestCase):
             changed_fields = {
                 key
                 for key in set(before[task_id]) | set(after[task_id])
-                if before[task_id].get(key, missing)
-                != after[task_id].get(key, missing)
+                if before[task_id].get(key, missing) != after[task_id].get(key, missing)
             }
             self.assertTrue(changed_fields <= allowed)
             self.assertEqual(after[task_id]["weights"], before[task_id]["weights"])
-        self.assertEqual(len(cases["cases"]), 11)
-        self.assertEqual(manifest["status"], "released_not_regraded")
+        self.assertEqual(len(cases["cases"]), 24)
+        self.assertEqual(manifest["status"], "main_not_regraded")
 
     def test_original_artifact_is_exact_published_snapshot(self):
         self.assertEqual(
@@ -67,7 +87,7 @@ class RevisionTests(unittest.TestCase):
         )
         self.assertEqual(
             candidate["source_sha256"],
-            "87101f7ebcf3bfbde00091e278741427e906c9b7ccc223892c95e4549704d7c6",
+            "7ef05a1d0abdf6ab4b570cae5b93adf3299cc5c3c2749961473d68f5cdc7bf94",
         )
         self.assertEqual(
             historical["source_sha256"],
@@ -130,17 +150,13 @@ class RevisionTests(unittest.TestCase):
             fernet = Fernet(
                 base64.urlsafe_b64encode(hashlib.sha256(b"BU_Bench_V2").digest())
             )
-            artifact = base64.b64encode(
-                fernet.encrypt(json.dumps(candidate).encode())
-            )
+            artifact = base64.b64encode(fernet.encrypt(json.dumps(candidate).encode()))
             (root / "BU_Bench_V2.enc").write_bytes(artifact)
             manifest = json.loads((root / "rubric_revision.json").read_text())
             manifest["candidate_encrypted_sha256"] = hashlib.sha256(
                 artifact
             ).hexdigest()
-            (root / "rubric_revision.json").write_text(
-                json.dumps(manifest, indent=2)
-            )
+            (root / "rubric_revision.json").write_text(json.dumps(manifest, indent=2))
             with self.assertRaisesRegex(ValueError, "Candidate task population"):
                 validate_revision(root)
 
