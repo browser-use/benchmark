@@ -24,8 +24,12 @@ Existing revised tasks receive the common dataset revision identifier only.
 - Eight encrypted semantic cases cover valid article playback, absence, seeking,
   buffering, advertising, short clips, disclosed overlays and honest blocks.
   These cases are review inputs, not executed-model accuracy results.
-- A single live execution of the frozen candidate is required before merging;
-  its trace, player progression, final screenshot and judgment will be reviewed.
+- One frozen-candidate execution (private Actions run 36097801340) scored
+  100/100 with BrowserCode 0.1.20, OpenAI Luna xhigh, Cloud and the unchanged
+  Luna xhigh findings judge. Six actual player samples demonstrated 25.54 seconds
+  of normal playback; the final screenshot visibly showed genuine player controls.
+  Trace, screenshot and configuration were inspected; no judge or evidence errors.
+  This demonstrates one successful execution, not site reliability across runs.
 - Earlier pending saved-trace reviews remain pending; this change does not
   claim to complete them.
 

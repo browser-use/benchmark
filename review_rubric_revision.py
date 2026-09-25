@@ -26,7 +26,6 @@ def weights_digest(weights: dict) -> str:
     return digest(json.dumps(weights, sort_keys=True, separators=(",", ":")))
 
 
-
 def digest(text: str) -> str:
     return hashlib.sha256(text.encode()).hexdigest()
 
