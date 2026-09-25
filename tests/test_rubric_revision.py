@@ -98,7 +98,7 @@ class RevisionTests(unittest.TestCase):
                 self.assertTrue(changed_fields <= allowed)
                 self.assertEqual(after[task_id]["weights"], before[task_id]["weights"])
         self.assertEqual(len(cases["cases"]), 32)
-        self.assertEqual(manifest["status"], "main_not_regraded")
+        self.assertEqual(manifest["status"], "released_not_regraded")
 
     def test_baseline_from_history_is_exact_published_snapshot(self):
         self.assertEqual(
@@ -112,7 +112,8 @@ class RevisionTests(unittest.TestCase):
             hashlib.sha256((ROOT / "BU_Bench_V2.enc").read_bytes()).hexdigest(),
             manifest["candidate_encrypted_sha256"],
         )
-        self.assertEqual(manifest["release_version"], "2.1")
+        self.assertEqual(manifest["release_version"], "2.1.1")
+        self.assertEqual(manifest["release_tag"], "v2.1.1")
         for name in (
             "BU_Bench_V2_55.json",
             "snapshots/BU_Bench_V2_55_2026-08-25.json",

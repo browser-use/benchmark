@@ -1,8 +1,8 @@
 {
   "revision": "2026-09-25-reuters-playback",
-  "status": "main_not_regraded",
-  "release_version": "2.1",
-  "release_tag": null,
+  "status": "released_not_regraded",
+  "release_version": "2.1.1",
+  "release_tag": "v2.1.1",
   "base_commit": "421390ea7fa4708f3d89d7695f9a16debb861daf",
   "base_encrypted_sha256": "fe0fc1eede3197d9eaffd42af3ac7b11cc15743d401e95496f3eb03f0d023a0e",
   "hash_convention": "sha256 of UTF-8 text exactly as distributed; revised weights use sorted compact JSON",
@@ -243,7 +243,8 @@
     "bu2-020",
     "bu2-044",
     "bu2-047",
-    "bu2-154"
+    "bu2-154",
+    "bu2-185"
   ],
-  "release_note": "V2.1 rubric update on main; the original v2.1 tag and release assets retain the September 24 snapshot."
+  "release_note": "V2.1.1 includes the merged BrowserCode runner/defaults, CAPTCHA alignment, dataset cleanup and validated Reuters playback redesign. Historical results are unchanged; the original v2.1 tag/assets retain their snapshot."
 }

@@ -1,3 +1,24 @@
+# BU Bench V2.1.1 release
+
+[Release v2.1.1](https://github.com/browser-use/benchmark/releases/tag/v2.1.1)
+packages the current V2.1 dataset with all merged runner and rubric updates
+through the September 25 Reuters playback redesign.
+
+- The complete source includes the BrowserCode 0.1.20 runner, Cloud/local browser
+  support, Luna xhigh executor and findings judge, 200 tasks, 100-concurrency
+  defaults, one-hour task budgets and GitHub Actions execution.
+- Download assets contain the encrypted dataset, encrypted semantic review cases,
+  release metadata and SHA-256 checksums. Obsolete 55-task selectors are omitted.
+- Dataset and review-case bytes are unchanged from the reviewed Reuters revision.
+  This release changes only documentation, release metadata and their test fixtures.
+- Historical scores are unchanged. Task 185 has one successful live validation;
+  the other pending saved-trace reviews listed below remain pending.
+
+The original v2.1 release/tag remains available for reproducing older results.
+Use the exact release tag and recorded dataset hash when comparing scores.
+
+---
+
 # BU Bench V2.1 Reuters playback revision
 
 **Content revision:** `2026-09-25-reuters-playback`
