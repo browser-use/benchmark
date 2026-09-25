@@ -45,10 +45,15 @@ The 55-task subset selects public IDs `bu2-001` through `bu2-055` from the full 
 
 Tasks, rubrics and weights live once, in the encrypted 200-task release. `BU_Bench_V2_55.json` pins that file's SHA-256 and lists the subset IDs; it does not contain a second dataset. Label scores with the set used: **200 tasks**, **55-task subset**, or **legacy 60 tasks**.
 
-**Rubric revision candidate:** [corrections and review instructions](RUBRIC_REVISION.md).
-This branch updates seven task contracts; it has not been regraded and does not
-update the chart above. The prior encrypted snapshot and exact change hashes are
-preserved. Pin a revision when comparing results.
+**Current dataset release: [BU Bench V2.1](https://github.com/browser-use/benchmark/releases/tag/v2.1).**
+The same 200 task IDs now include nine task/rubric corrections relative to the
+original release; item IDs, weights and 55-task subset membership are unchanged.
+See [changes, validation and remaining work](RUBRIC_REVISION.md). The original
+AliExpress and Reuters rules are restored after the earlier blocked-access edits.
+Historical results have not been regraded, and the chart above is unchanged.
+New rules for 014/028/053/163/187 still need saved-evidence judge validation.
+Pin tag `v2.1` when comparing this release; the judge adapter version is separately
+`2.1.2`. The encrypted filename remains `BU_Bench_V2.enc` for compatibility.
 
 The tasks are encrypted to keep their text out of web crawlers and model training data. Please do not publish decrypted tasks or rubrics in plaintext or use them for model training.
 
