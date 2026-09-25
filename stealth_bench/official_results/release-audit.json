@@ -1,0 +1,17 @@
+{
+  "dataset_sha256": "6dee4f2eb9954c96445222b0fb8b7228689300f84001de4ba4ee9a952b0f3228",
+  "tasks": 100,
+  "unique_starting_registered_domains": 100,
+  "query_strings": 0,
+  "credentials_or_fragments": 0,
+  "generic_homepages": 97,
+  "generic_public_routes": 3,
+  "effective_attempts": 2400,
+  "original_attempts": 2400,
+  "one_time_missing_measurement_retries": 97,
+  "source_and_lock_hashes_verified": true,
+  "original_retry_effective_lineage_verified": true,
+  "public_result_fields_allowlisted": true,
+  "public_result_private_data_pattern_scan": "passed",
+  "scope": "Automated structure/privacy checks plus documented visual audit; does not certify every model judgment."
+}

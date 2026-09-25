@@ -1,0 +1,635 @@
+{
+  "scope": "Conservative sensitivity for identified visual-audit ambiguities; original scores and all 100 tasks retained. Not confidence intervals or a full human relabeling.",
+  "policy": "Treat both age-overlay tasks across all configurations and repetitions, plus all uniform final screenshots identified in the empty-body-text screen, as unresolved. Include existing unresolved outcomes.",
+  "uniform_screen_threshold": "Maximum RGB standard deviation <1.0, only when final body text is empty and final capture is complete.",
+  "flagged_attempts": [
+    {
+      "configuration": "browserless_solver",
+      "repetition": 2,
+      "task_id": "shs100-049",
+      "classification": "accessible",
+      "score": 1,
+      "audit_flags": [
+        "age_overlay_domain_all_configurations"
+      ]
+    },
+    {
+      "configuration": "browserless_solver",
+      "repetition": 2,
+      "task_id": "shs100-072",
+      "classification": "accessible",
+      "score": 1,
+      "audit_flags": [
+        "age_overlay_domain_all_configurations"
+      ]
+    },
+    {
+      "configuration": "steel",
+      "repetition": 2,
+      "task_id": "shs100-049",
+      "classification": "accessible",
+      "score": 1,
+      "audit_flags": [
+        "age_overlay_domain_all_configurations"
+      ]
+    },
+    {
+      "configuration": "steel",
+      "repetition": 2,
+      "task_id": "shs100-072",
+      "classification": "accessible",
+      "score": 1,
+      "audit_flags": [
+        "age_overlay_domain_all_configurations"
+      ]
+    },
+    {
+      "configuration": "browserless_solver",
+      "repetition": 1,
+      "task_id": "shs100-049",
+      "classification": "accessible",
+      "score": 1,
+      "audit_flags": [
+        "age_overlay_domain_all_configurations"
+      ]
+    },
+    {
+      "configuration": "browserless_solver",
+      "repetition": 1,
+      "task_id": "shs100-072",
+      "classification": "accessible",
+      "score": 1,
+      "audit_flags": [
+        "age_overlay_domain_all_configurations"
+      ]
+    },
+    {
+      "configuration": "steel",
+      "repetition": 1,
+      "task_id": "shs100-049",
+      "classification": "accessible",
+      "score": 1,
+      "audit_flags": [
+        "age_overlay_domain_all_configurations"
+      ]
+    },
+    {
+      "configuration": "steel",
+      "repetition": 1,
+      "task_id": "shs100-072",
+      "classification": "accessible",
+      "score": 1,
+      "audit_flags": [
+        "age_overlay_domain_all_configurations"
+      ]
+    },
+    {
+      "configuration": "steel",
+      "repetition": 1,
+      "task_id": "shs100-036",
+      "classification": "uncertain",
+      "score": null,
+      "audit_flags": [
+        "uniform_final_screenshot_with_empty_body_text"
+      ]
+    },
+    {
+      "configuration": "headful_proxy",
+      "repetition": 2,
+      "task_id": "shs100-049",
+      "classification": "bot_block",
+      "score": 0,
+      "audit_flags": [
+        "age_overlay_domain_all_configurations"
+      ]
+    },
+    {
+      "configuration": "headful_proxy",
+      "repetition": 2,
+      "task_id": "shs100-072",
+      "classification": "bot_block",
+      "score": 0,
+      "audit_flags": [
+        "age_overlay_domain_all_configurations"
+      ]
+    },
+    {
+      "configuration": "kernel",
+      "repetition": 2,
+      "task_id": "shs100-049",
+      "classification": "accessible",
+      "score": 1,
+      "audit_flags": [
+        "age_overlay_domain_all_configurations"
+      ]
+    },
+    {
+      "configuration": "kernel",
+      "repetition": 2,
+      "task_id": "shs100-041",
+      "classification": "bot_block",
+      "score": 0,
+      "audit_flags": [
+        "uniform_final_screenshot_with_empty_body_text"
+      ]
+    },
+    {
+      "configuration": "kernel",
+      "repetition": 2,
+      "task_id": "shs100-072",
+      "classification": "accessible",
+      "score": 1,
+      "audit_flags": [
+        "age_overlay_domain_all_configurations"
+      ]
+    },
+    {
+      "configuration": "cloud_no_solver",
+      "repetition": 2,
+      "task_id": "shs100-049",
+      "classification": "accessible",
+      "score": 1,
+      "audit_flags": [
+        "age_overlay_domain_all_configurations"
+      ]
+    },
+    {
+      "configuration": "cloud_no_solver",
+      "repetition": 2,
+      "task_id": "shs100-072",
+      "classification": "accessible",
+      "score": 1,
+      "audit_flags": [
+        "age_overlay_domain_all_configurations"
+      ]
+    },
+    {
+      "configuration": "headful_direct",
+      "repetition": 2,
+      "task_id": "shs100-049",
+      "classification": "bot_block",
+      "score": 0,
+      "audit_flags": [
+        "age_overlay_domain_all_configurations"
+      ]
+    },
+    {
+      "configuration": "headful_direct",
+      "repetition": 2,
+      "task_id": "shs100-072",
+      "classification": "accessible",
+      "score": 1,
+      "audit_flags": [
+        "age_overlay_domain_all_configurations"
+      ]
+    },
+    {
+      "configuration": "headless_direct",
+      "repetition": 2,
+      "task_id": "shs100-049",
+      "classification": "bot_block",
+      "score": 0,
+      "audit_flags": [
+        "age_overlay_domain_all_configurations"
+      ]
+    },
+    {
+      "configuration": "headless_direct",
+      "repetition": 2,
+      "task_id": "shs100-072",
+      "classification": "bot_block",
+      "score": 0,
+      "audit_flags": [
+        "age_overlay_domain_all_configurations"
+      ]
+    },
+    {
+      "configuration": "browserbase",
+      "repetition": 2,
+      "task_id": "shs100-049",
+      "classification": "accessible",
+      "score": 1,
+      "audit_flags": [
+        "age_overlay_domain_all_configurations"
+      ]
+    },
+    {
+      "configuration": "browserbase",
+      "repetition": 2,
+      "task_id": "shs100-072",
+      "classification": "accessible",
+      "score": 1,
+      "audit_flags": [
+        "age_overlay_domain_all_configurations"
+      ]
+    },
+    {
+      "configuration": "cloud",
+      "repetition": 2,
+      "task_id": "shs100-049",
+      "classification": "accessible",
+      "score": 1,
+      "audit_flags": [
+        "age_overlay_domain_all_configurations"
+      ]
+    },
+    {
+      "configuration": "cloud",
+      "repetition": 2,
+      "task_id": "shs100-072",
+      "classification": "accessible",
+      "score": 1,
+      "audit_flags": [
+        "age_overlay_domain_all_configurations"
+      ]
+    },
+    {
+      "configuration": "hyperbrowser",
+      "repetition": 2,
+      "task_id": "shs100-049",
+      "classification": "accessible",
+      "score": 1,
+      "audit_flags": [
+        "age_overlay_domain_all_configurations"
+      ]
+    },
+    {
+      "configuration": "hyperbrowser",
+      "repetition": 2,
+      "task_id": "shs100-072",
+      "classification": "bot_block",
+      "score": 0,
+      "audit_flags": [
+        "age_overlay_domain_all_configurations"
+      ]
+    },
+    {
+      "configuration": "anchor",
+      "repetition": 2,
+      "task_id": "shs100-049",
+      "classification": "accessible",
+      "score": 1,
+      "audit_flags": [
+        "age_overlay_domain_all_configurations"
+      ]
+    },
+    {
+      "configuration": "anchor",
+      "repetition": 2,
+      "task_id": "shs100-072",
+      "classification": "accessible",
+      "score": 1,
+      "audit_flags": [
+        "age_overlay_domain_all_configurations"
+      ]
+    },
+    {
+      "configuration": "headless_proxy",
+      "repetition": 2,
+      "task_id": "shs100-049",
+      "classification": "accessible",
+      "score": 1,
+      "audit_flags": [
+        "age_overlay_domain_all_configurations"
+      ]
+    },
+    {
+      "configuration": "headless_proxy",
+      "repetition": 2,
+      "task_id": "shs100-072",
+      "classification": "bot_block",
+      "score": 0,
+      "audit_flags": [
+        "age_overlay_domain_all_configurations"
+      ]
+    },
+    {
+      "configuration": "headful_direct",
+      "repetition": 1,
+      "task_id": "shs100-049",
+      "classification": "bot_block",
+      "score": 0,
+      "audit_flags": [
+        "age_overlay_domain_all_configurations"
+      ]
+    },
+    {
+      "configuration": "headful_direct",
+      "repetition": 1,
+      "task_id": "shs100-072",
+      "classification": "accessible",
+      "score": 1,
+      "audit_flags": [
+        "age_overlay_domain_all_configurations"
+      ]
+    },
+    {
+      "configuration": "headless_direct",
+      "repetition": 1,
+      "task_id": "shs100-049",
+      "classification": "bot_block",
+      "score": 0,
+      "audit_flags": [
+        "age_overlay_domain_all_configurations"
+      ]
+    },
+    {
+      "configuration": "headless_direct",
+      "repetition": 1,
+      "task_id": "shs100-072",
+      "classification": "bot_block",
+      "score": 0,
+      "audit_flags": [
+        "age_overlay_domain_all_configurations"
+      ]
+    },
+    {
+      "configuration": "hyperbrowser",
+      "repetition": 1,
+      "task_id": "shs100-049",
+      "classification": "accessible",
+      "score": 1,
+      "audit_flags": [
+        "age_overlay_domain_all_configurations"
+      ]
+    },
+    {
+      "configuration": "hyperbrowser",
+      "repetition": 1,
+      "task_id": "shs100-072",
+      "classification": "accessible",
+      "score": 1,
+      "audit_flags": [
+        "age_overlay_domain_all_configurations"
+      ]
+    },
+    {
+      "configuration": "headful_proxy",
+      "repetition": 1,
+      "task_id": "shs100-049",
+      "classification": "accessible",
+      "score": 1,
+      "audit_flags": [
+        "age_overlay_domain_all_configurations"
+      ]
+    },
+    {
+      "configuration": "headful_proxy",
+      "repetition": 1,
+      "task_id": "shs100-068",
+      "classification": "bot_block",
+      "score": 0,
+      "audit_flags": [
+        "uniform_final_screenshot_with_empty_body_text"
+      ]
+    },
+    {
+      "configuration": "headful_proxy",
+      "repetition": 1,
+      "task_id": "shs100-072",
+      "classification": "bot_block",
+      "score": 0,
+      "audit_flags": [
+        "age_overlay_domain_all_configurations"
+      ]
+    },
+    {
+      "configuration": "browserbase",
+      "repetition": 1,
+      "task_id": "shs100-049",
+      "classification": "accessible",
+      "score": 1,
+      "audit_flags": [
+        "age_overlay_domain_all_configurations"
+      ]
+    },
+    {
+      "configuration": "browserbase",
+      "repetition": 1,
+      "task_id": "shs100-072",
+      "classification": "uncertain",
+      "score": null,
+      "audit_flags": [
+        "age_overlay_domain_all_configurations"
+      ]
+    },
+    {
+      "configuration": "cloud",
+      "repetition": 1,
+      "task_id": "shs100-049",
+      "classification": "accessible",
+      "score": 1,
+      "audit_flags": [
+        "age_overlay_domain_all_configurations"
+      ]
+    },
+    {
+      "configuration": "cloud",
+      "repetition": 1,
+      "task_id": "shs100-072",
+      "classification": "accessible",
+      "score": 1,
+      "audit_flags": [
+        "age_overlay_domain_all_configurations"
+      ]
+    },
+    {
+      "configuration": "anchor",
+      "repetition": 1,
+      "task_id": "shs100-073",
+      "classification": "bot_block",
+      "score": 0,
+      "audit_flags": [
+        "uniform_final_screenshot_with_empty_body_text"
+      ]
+    },
+    {
+      "configuration": "anchor",
+      "repetition": 1,
+      "task_id": "shs100-049",
+      "classification": "accessible",
+      "score": 1,
+      "audit_flags": [
+        "age_overlay_domain_all_configurations"
+      ]
+    },
+    {
+      "configuration": "anchor",
+      "repetition": 1,
+      "task_id": "shs100-072",
+      "classification": "accessible",
+      "score": 1,
+      "audit_flags": [
+        "age_overlay_domain_all_configurations"
+      ]
+    },
+    {
+      "configuration": "kernel",
+      "repetition": 1,
+      "task_id": "shs100-049",
+      "classification": "accessible",
+      "score": 1,
+      "audit_flags": [
+        "age_overlay_domain_all_configurations"
+      ]
+    },
+    {
+      "configuration": "kernel",
+      "repetition": 1,
+      "task_id": "shs100-041",
+      "classification": "bot_block",
+      "score": 0,
+      "audit_flags": [
+        "uniform_final_screenshot_with_empty_body_text"
+      ]
+    },
+    {
+      "configuration": "kernel",
+      "repetition": 1,
+      "task_id": "shs100-072",
+      "classification": "accessible",
+      "score": 1,
+      "audit_flags": [
+        "age_overlay_domain_all_configurations"
+      ]
+    },
+    {
+      "configuration": "cloud_no_solver",
+      "repetition": 1,
+      "task_id": "shs100-049",
+      "classification": "accessible",
+      "score": 1,
+      "audit_flags": [
+        "age_overlay_domain_all_configurations"
+      ]
+    },
+    {
+      "configuration": "cloud_no_solver",
+      "repetition": 1,
+      "task_id": "shs100-072",
+      "classification": "accessible",
+      "score": 1,
+      "audit_flags": [
+        "age_overlay_domain_all_configurations"
+      ]
+    },
+    {
+      "configuration": "headless_proxy",
+      "repetition": 1,
+      "task_id": "shs100-049",
+      "classification": "accessible",
+      "score": 1,
+      "audit_flags": [
+        "age_overlay_domain_all_configurations"
+      ]
+    },
+    {
+      "configuration": "headless_proxy",
+      "repetition": 1,
+      "task_id": "shs100-072",
+      "classification": "bot_block",
+      "score": 0,
+      "audit_flags": [
+        "age_overlay_domain_all_configurations"
+      ]
+    }
+  ],
+  "configurations": [
+    {
+      "configuration": "anchor",
+      "attempts": 200,
+      "unchanged_judge_access_percent": 82.0,
+      "audit_flagged_attempts": 5,
+      "sensitivity_lower_percent": 80.0,
+      "sensitivity_upper_percent": 82.5
+    },
+    {
+      "configuration": "browserbase",
+      "attempts": 200,
+      "unchanged_judge_access_percent": 78.5,
+      "audit_flagged_attempts": 4,
+      "sensitivity_lower_percent": 77.0,
+      "sensitivity_upper_percent": 79.0
+    },
+    {
+      "configuration": "browserless_solver",
+      "attempts": 200,
+      "unchanged_judge_access_percent": 77.5,
+      "audit_flagged_attempts": 4,
+      "sensitivity_lower_percent": 75.5,
+      "sensitivity_upper_percent": 86.0
+    },
+    {
+      "configuration": "cloud",
+      "attempts": 200,
+      "unchanged_judge_access_percent": 90.5,
+      "audit_flagged_attempts": 4,
+      "sensitivity_lower_percent": 88.5,
+      "sensitivity_upper_percent": 90.5
+    },
+    {
+      "configuration": "cloud_no_solver",
+      "attempts": 200,
+      "unchanged_judge_access_percent": 84.0,
+      "audit_flagged_attempts": 4,
+      "sensitivity_lower_percent": 82.0,
+      "sensitivity_upper_percent": 84.0
+    },
+    {
+      "configuration": "headful_direct",
+      "attempts": 200,
+      "unchanged_judge_access_percent": 10.0,
+      "audit_flagged_attempts": 4,
+      "sensitivity_lower_percent": 9.0,
+      "sensitivity_upper_percent": 11.0
+    },
+    {
+      "configuration": "headful_proxy",
+      "attempts": 200,
+      "unchanged_judge_access_percent": 14.0,
+      "audit_flagged_attempts": 5,
+      "sensitivity_lower_percent": 13.5,
+      "sensitivity_upper_percent": 16.0
+    },
+    {
+      "configuration": "headless_direct",
+      "attempts": 200,
+      "unchanged_judge_access_percent": 3.0,
+      "audit_flagged_attempts": 4,
+      "sensitivity_lower_percent": 3.0,
+      "sensitivity_upper_percent": 5.0
+    },
+    {
+      "configuration": "headless_proxy",
+      "attempts": 200,
+      "unchanged_judge_access_percent": 2.0,
+      "audit_flagged_attempts": 4,
+      "sensitivity_lower_percent": 1.0,
+      "sensitivity_upper_percent": 3.0
+    },
+    {
+      "configuration": "hyperbrowser",
+      "attempts": 200,
+      "unchanged_judge_access_percent": 73.5,
+      "audit_flagged_attempts": 4,
+      "sensitivity_lower_percent": 72.0,
+      "sensitivity_upper_percent": 75.0
+    },
+    {
+      "configuration": "kernel",
+      "attempts": 200,
+      "unchanged_judge_access_percent": 80.5,
+      "audit_flagged_attempts": 6,
+      "sensitivity_lower_percent": 78.5,
+      "sensitivity_upper_percent": 81.5
+    },
+    {
+      "configuration": "steel",
+      "attempts": 200,
+      "unchanged_judge_access_percent": 74.5,
+      "audit_flagged_attempts": 5,
+      "sensitivity_lower_percent": 72.5,
+      "sensitivity_upper_percent": 75.0
+    }
+  ]
+}

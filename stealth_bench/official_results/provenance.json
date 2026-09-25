@@ -1,0 +1,454 @@
+{
+  "observed_browser_versions": {
+    "browserless_solver": {
+      "154.0.8037.58": 200
+    },
+    "steel": {
+      "150.0.7871.46": 200
+    },
+    "headful_proxy": {
+      "153.0.8010.12": 200
+    },
+    "kernel": {
+      "153.0.8010.36": 200
+    },
+    "cloud_no_solver": {
+      "151.0.7922.108": 200
+    },
+    "headful_direct": {
+      "153.0.8010.12": 200
+    },
+    "headless_direct": {
+      "153.0.8010.12": 200
+    },
+    "browserbase": {
+      "154.0.8037.58": 200
+    },
+    "cloud": {
+      "151.0.7922.108": 200
+    },
+    "hyperbrowser": {
+      "140.0.7339.186": 200
+    },
+    "anchor": {
+      "147.0.7727.137": 200
+    },
+    "headless_proxy": {
+      "153.0.8010.12": 200
+    }
+  },
+  "observed_judge_response_models": {
+    "gpt-5.6-luna": 2382
+  },
+  "protocol": "60-second access observation; two fresh-session repetitions",
+  "runner_environment": "GitHub-hosted ubuntu-24.04; Python 3.12; Playwright 1.63.0",
+  "task_order_seed_base": 20260927,
+  "judge_model": "gpt-5.6-luna",
+  "judge_reasoning_effort": "low",
+  "judge_max_output_tokens": 1200,
+  "dataset_sha256": "6dee4f2eb9954c96445222b0fb8b7228689300f84001de4ba4ee9a952b0f3228",
+  "encrypted_dataset_sha256": "133d88fdb3e269584cd630ddc374cc96e4381aa68eb5d20132b5befa58827c37",
+  "code_versions": [
+    {
+      "workflow_commit": "549bb3ff6dfffd78410c8359e6a296bfaff2f226",
+      "platform_source_commit": "d3f1e8e0568999e4acb477e52e8568cafeb403c4",
+      "files_sha256": {
+        "eval.py": "202fcf584c9041135a216e911ed258ed2fee40ca446b70f52ca0c200df432d4d",
+        "pyproject.toml": "9968870b0c281eec530747099e6e01b27b38b017772427f0d0ffe1df5a3a10c8",
+        "uv.lock": "5a108cd18f6e74ae4d609119a5dec0dac371e1b6f076848b00a37799e0477525",
+        "harnesses/access-probe/run.py": "7d1cf5c4b1e503630887ae0064cc6ae3a964634a56ed0d5946bc38a7c305c856",
+        "harnesses/access-probe/setup.sh": "13a9a543c13eacbf153ab9e46517e8319c1c30fb089e1d7a2f68729c91dcc0e9",
+        "judges/access-v3/run.py": "afebf8434431510ebb2b5eef38dfb70d67ea4a43c016d9396a662f367876635f",
+        "datasets/Stealth_Bench_V2_100_60s.json": "6dee4f2eb9954c96445222b0fb8b7228689300f84001de4ba4ee9a952b0f3228"
+      },
+      "configurations": [
+        {
+          "stage": "full",
+          "configuration": "headless_proxy",
+          "repetition": 1,
+          "max_parallel": 20,
+          "options": {
+            "browser": "local",
+            "headless": true,
+            "proxy": "browser-use",
+            "observation_seconds": 60
+          }
+        },
+        {
+          "stage": "full",
+          "configuration": "cloud_no_solver",
+          "repetition": 1,
+          "max_parallel": 20,
+          "options": {
+            "browser": "cloud",
+            "solve_captchas": false,
+            "observation_seconds": 60
+          }
+        },
+        {
+          "stage": "full",
+          "configuration": "kernel",
+          "repetition": 1,
+          "max_parallel": 10,
+          "options": {
+            "browser": "kernel",
+            "observation_seconds": 60
+          }
+        },
+        {
+          "stage": "full",
+          "configuration": "anchor",
+          "repetition": 1,
+          "max_parallel": 10,
+          "options": {
+            "browser": "anchor",
+            "observation_seconds": 60
+          }
+        },
+        {
+          "stage": "full",
+          "configuration": "cloud",
+          "repetition": 1,
+          "max_parallel": 20,
+          "options": {
+            "browser": "cloud",
+            "solve_captchas": true,
+            "observation_seconds": 60
+          }
+        },
+        {
+          "stage": "full",
+          "configuration": "browserbase",
+          "repetition": 1,
+          "max_parallel": 10,
+          "options": {
+            "browser": "browserbase",
+            "verified": false,
+            "observation_seconds": 60
+          }
+        },
+        {
+          "stage": "full",
+          "configuration": "headful_proxy",
+          "repetition": 1,
+          "max_parallel": 20,
+          "options": {
+            "browser": "local",
+            "headless": false,
+            "proxy": "browser-use",
+            "observation_seconds": 60
+          }
+        },
+        {
+          "stage": "full",
+          "configuration": "hyperbrowser",
+          "repetition": 1,
+          "max_parallel": 10,
+          "options": {
+            "browser": "hyperbrowser",
+            "observation_seconds": 60
+          }
+        },
+        {
+          "stage": "full",
+          "configuration": "headless_direct",
+          "repetition": 1,
+          "max_parallel": 20,
+          "options": {
+            "browser": "local",
+            "headless": true,
+            "proxy": "none",
+            "observation_seconds": 60
+          }
+        },
+        {
+          "stage": "full",
+          "configuration": "headful_direct",
+          "repetition": 1,
+          "max_parallel": 20,
+          "options": {
+            "browser": "local",
+            "headless": false,
+            "proxy": "none",
+            "observation_seconds": 60
+          }
+        },
+        {
+          "stage": "full",
+          "configuration": "headless_proxy",
+          "repetition": 2,
+          "max_parallel": 20,
+          "options": {
+            "browser": "local",
+            "headless": true,
+            "proxy": "browser-use",
+            "observation_seconds": 60
+          }
+        },
+        {
+          "stage": "full",
+          "configuration": "anchor",
+          "repetition": 2,
+          "max_parallel": 10,
+          "options": {
+            "browser": "anchor",
+            "observation_seconds": 60
+          }
+        },
+        {
+          "stage": "full",
+          "configuration": "hyperbrowser",
+          "repetition": 2,
+          "max_parallel": 10,
+          "options": {
+            "browser": "hyperbrowser",
+            "observation_seconds": 60
+          }
+        },
+        {
+          "stage": "full",
+          "configuration": "cloud",
+          "repetition": 2,
+          "max_parallel": 20,
+          "options": {
+            "browser": "cloud",
+            "solve_captchas": true,
+            "observation_seconds": 60
+          }
+        },
+        {
+          "stage": "full",
+          "configuration": "browserbase",
+          "repetition": 2,
+          "max_parallel": 10,
+          "options": {
+            "browser": "browserbase",
+            "verified": false,
+            "observation_seconds": 60
+          }
+        },
+        {
+          "stage": "full",
+          "configuration": "headless_direct",
+          "repetition": 2,
+          "max_parallel": 20,
+          "options": {
+            "browser": "local",
+            "headless": true,
+            "proxy": "none",
+            "observation_seconds": 60
+          }
+        },
+        {
+          "stage": "full",
+          "configuration": "headful_direct",
+          "repetition": 2,
+          "max_parallel": 20,
+          "options": {
+            "browser": "local",
+            "headless": false,
+            "proxy": "none",
+            "observation_seconds": 60
+          }
+        },
+        {
+          "stage": "full",
+          "configuration": "cloud_no_solver",
+          "repetition": 2,
+          "max_parallel": 20,
+          "options": {
+            "browser": "cloud",
+            "solve_captchas": false,
+            "observation_seconds": 60
+          }
+        },
+        {
+          "stage": "full",
+          "configuration": "kernel",
+          "repetition": 2,
+          "max_parallel": 10,
+          "options": {
+            "browser": "kernel",
+            "observation_seconds": 60
+          }
+        },
+        {
+          "stage": "full",
+          "configuration": "headful_proxy",
+          "repetition": 2,
+          "max_parallel": 20,
+          "options": {
+            "browser": "local",
+            "headless": false,
+            "proxy": "browser-use",
+            "observation_seconds": 60
+          }
+        },
+        {
+          "stage": "retry",
+          "configuration": "cloud_no_solver",
+          "repetition": 2,
+          "max_parallel": 2,
+          "options": {
+            "browser": "cloud",
+            "solve_captchas": false,
+            "observation_seconds": 60
+          }
+        },
+        {
+          "stage": "retry",
+          "configuration": "anchor",
+          "repetition": 1,
+          "max_parallel": 2,
+          "options": {
+            "browser": "anchor",
+            "observation_seconds": 60
+          }
+        },
+        {
+          "stage": "retry",
+          "configuration": "hyperbrowser",
+          "repetition": 1,
+          "max_parallel": 2,
+          "options": {
+            "browser": "hyperbrowser",
+            "observation_seconds": 60
+          }
+        },
+        {
+          "stage": "retry",
+          "configuration": "anchor",
+          "repetition": 2,
+          "max_parallel": 2,
+          "options": {
+            "browser": "anchor",
+            "observation_seconds": 60
+          }
+        },
+        {
+          "stage": "retry",
+          "configuration": "hyperbrowser",
+          "repetition": 2,
+          "max_parallel": 2,
+          "options": {
+            "browser": "hyperbrowser",
+            "observation_seconds": 60
+          }
+        }
+      ]
+    },
+    {
+      "workflow_commit": "e8a12086a62c116d516c5b0e58c64af94fdc2e7d",
+      "platform_source_commit": "05bd0b9432cd761f601be672535f6f1cae9c374f",
+      "files_sha256": {
+        "eval.py": "202fcf584c9041135a216e911ed258ed2fee40ca446b70f52ca0c200df432d4d",
+        "pyproject.toml": "9968870b0c281eec530747099e6e01b27b38b017772427f0d0ffe1df5a3a10c8",
+        "uv.lock": "5a108cd18f6e74ae4d609119a5dec0dac371e1b6f076848b00a37799e0477525",
+        "harnesses/access-probe/run.py": "f1fa9a5bc8e42b506ec0b309eb6dfc762960b1343abb2f68761b4ae8142d18c7",
+        "harnesses/access-probe/setup.sh": "fa2b257d9300b97d26b4a118601252e1876fd9872a7ec563b9ff97ba237088ea",
+        "judges/access-v3/run.py": "afebf8434431510ebb2b5eef38dfb70d67ea4a43c016d9396a662f367876635f",
+        "datasets/Stealth_Bench_V2_100_60s.json": "6dee4f2eb9954c96445222b0fb8b7228689300f84001de4ba4ee9a952b0f3228"
+      },
+      "configurations": [
+        {
+          "stage": "full",
+          "configuration": "steel",
+          "repetition": 1,
+          "max_parallel": 10,
+          "options": {
+            "browser": "steel",
+            "observation_seconds": 60
+          }
+        },
+        {
+          "stage": "full",
+          "configuration": "browserless_solver",
+          "repetition": 1,
+          "max_parallel": 10,
+          "options": {
+            "browser": "browserless",
+            "solve_captchas": true,
+            "observation_seconds": 60
+          }
+        },
+        {
+          "stage": "full",
+          "configuration": "steel",
+          "repetition": 2,
+          "max_parallel": 10,
+          "options": {
+            "browser": "steel",
+            "observation_seconds": 60
+          }
+        }
+      ]
+    },
+    {
+      "workflow_commit": "9433cb3f87314c0d0bd8ef538404d1e05fe69646",
+      "platform_source_commit": "6f35892339616c5533c1db213c248b78a7a817ac",
+      "files_sha256": {
+        "eval.py": "202fcf584c9041135a216e911ed258ed2fee40ca446b70f52ca0c200df432d4d",
+        "pyproject.toml": "9968870b0c281eec530747099e6e01b27b38b017772427f0d0ffe1df5a3a10c8",
+        "uv.lock": "5a108cd18f6e74ae4d609119a5dec0dac371e1b6f076848b00a37799e0477525",
+        "harnesses/access-probe/run.py": "f1fa9a5bc8e42b506ec0b309eb6dfc762960b1343abb2f68761b4ae8142d18c7",
+        "harnesses/access-probe/setup.sh": "b7de1973bfa5d17fd537bd4275fff8472e9c473d6113c0afcd2c2ec4d02fd083",
+        "judges/access-v3/run.py": "afebf8434431510ebb2b5eef38dfb70d67ea4a43c016d9396a662f367876635f",
+        "datasets/Stealth_Bench_V2_100_60s.json": "6dee4f2eb9954c96445222b0fb8b7228689300f84001de4ba4ee9a952b0f3228"
+      },
+      "configurations": [
+        {
+          "stage": "retry",
+          "configuration": "browserless_solver",
+          "repetition": 1,
+          "max_parallel": 5,
+          "options": {
+            "browser": "browserless",
+            "solve_captchas": true,
+            "observation_seconds": 60
+          }
+        },
+        {
+          "stage": "full-replacement",
+          "configuration": "browserless_solver",
+          "repetition": 2,
+          "max_parallel": 5,
+          "options": {
+            "browser": "browserless",
+            "solve_captchas": true,
+            "observation_seconds": 60
+          }
+        },
+        {
+          "stage": "retry",
+          "configuration": "browserless_solver",
+          "repetition": 2,
+          "max_parallel": 2,
+          "options": {
+            "browser": "browserless",
+            "solve_captchas": true,
+            "observation_seconds": 60
+          }
+        }
+      ]
+    }
+  ],
+  "public_snapshot_sha256": {
+    "stealth_bench/v2/probe.py": "f1fa9a5bc8e42b506ec0b309eb6dfc762960b1343abb2f68761b4ae8142d18c7",
+    "stealth_bench/v2/judge.py": "afebf8434431510ebb2b5eef38dfb70d67ea4a43c016d9396a662f367876635f",
+    "stealth_bench/run.py": "99cdb7fca97d2b85a251622b772cda543a0ca3c74a3be70e8d5c3cce0f0878ce",
+    "stealth_bench/run.py.lock": "b35b022282a8bf890830ba9c2f2d43ed635627a423a9e3094ee527e7e8d8ef06",
+    "stealth_bench/v2/protocol.json": "c4f940764ef7b2cfadf29b8c481f3295ce80307463f32766c2c5fac745d336e0",
+    "stealth_bench/generate_plots.py": "26963e7113721bd84a3e5a150cd9d4d25e5f5d5a82d82f7fe1d52ecf32686b1b"
+  },
+  "notes": [
+    "The ten initial configurations use the first source version. Steel and Browserless use the second; later Browserless scheduling uses the same probe and judge with faster setup.",
+    "Later source changes affect Steel API transport, explicit Browserless solver/session lifetime and redacted acquisition diagnostics. Navigation, observation schedule and judge are unchanged.",
+    "Browserbase Verified was unavailable: its API requires an Enterprise plan.",
+    "Superseded Browserless defaults and acquisition-only preflights are excluded as configurations; no task was selected or removed using these new scores.",
+    "Provider settings are requested settings, not independent verification of feature activation.",
+    "Unresolved attempts have no per-task score and remain in the full denominator.",
+    "Browserless initially exceeded its existing adapter cap of five sessions (HTTP 429); completed observations are retained and only missing acquisitions are retried at five.",
+    "Stock and other CDP providers use a 1365x900 content viewport; Cloud requests a 1365x900 screen and retains its provider-managed content viewport.",
+    "Raw screenshots, private trace URLs, API credentials, exact egress IPs and customer-source material are not included."
+  ]
+}
