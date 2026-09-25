@@ -36,10 +36,15 @@
 
 **200 web tasks scored against weighted findings rubrics — the default task set.**
 
+Latest release: [v2.1.1](https://github.com/browser-use/benchmark/releases/latest).
+It includes the updated BrowserCode runner and the September 25 CAPTCHA and Reuters
+changes. Download its source code for the complete runner, or use the setup below;
+the encrypted dataset, review cases, revision metadata and checksums are also attached.
+
 ### Default evaluation command
 
 After [installing the runner and setting your API keys](#running-bu-bench-v21-default),
-run this from the repository root on `main`:
+run this from the repository root in `v2.1.1` or current `main`:
 
 ```bash
 uv run python run_eval.py
@@ -58,7 +63,7 @@ Results go to `run_data/BU_Bench_V2_bcode_<timestamp>/`.
 | [BU_Bench_V2_review_cases.enc](BU_Bench_V2_review_cases.enc) | Judge review scenarios; not a runnable task set |
 | [rubric_revision.json](rubric_revision.json) | Revision metadata and integrity hashes |
 
-Main includes the September 25 Reuters playback revision
+Release `v2.1.1` and current main include the September 25 Reuters playback revision
 (`2026-09-25-reuters-playback`), following the CAPTCHA-alignment update and
 the corrections in the [original V2.1 snapshot](https://github.com/browser-use/benchmark/releases/tag/v2.1).
 All 200 task IDs remain. Task 185 has a prospective playback contract and
@@ -68,8 +73,9 @@ remains `BU_Bench_V2.enc` for compatibility; its contents are V2.1.
 
 The old 55-task selectors and original 200-task snapshot are available through
 Git history, rather than as extra files in the current checkout. The original
-`v2.1` tag and its download assets retain the September 24 snapshot; use main
-for the latest V2.1 data and record the commit and encrypted-file checksum
+`v2.1` tag and its download assets retain the September 24 snapshot. Use the
+[latest release](https://github.com/browser-use/benchmark/releases/latest) for the
+updated runner and V2.1 data; record its tag, commit and encrypted-file checksum
 with your results.
 
 See [changes, validation and remaining work](RUBRIC_REVISION.md). The earlier
@@ -101,7 +107,7 @@ platform is needed. Use macOS or Linux (including GitHub's Ubuntu runners).
 Install [uv](https://docs.astral.sh/uv/getting-started/installation/), then:
 
 ```bash
-git clone https://github.com/browser-use/benchmark.git
+git clone --branch v2.1.1 --single-branch https://github.com/browser-use/benchmark.git
 cd benchmark
 uv sync --frozen --python 3.12
 curl -fsSL https://bcode.sh/install | bash -s -- --version 0.1.20 --no-modify-path
