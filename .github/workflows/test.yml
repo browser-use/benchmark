@@ -10,8 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Fetch pinned rubric baseline
+        run: git fetch --no-tags --depth=1 origin 421390ea7fa4708f3d89d7695f9a16debb861daf
       - uses: astral-sh/setup-uv@v6
       - run: uv sync --frozen --python 3.12
+      - run: uv run python review_rubric_revision.py
       - run: BCODE_TEST_CHROME="$(command -v google-chrome)" uv run python -m unittest discover -s tests
       - run: uv run ruff check bcode_runner.py bcode_eval.py bcode_results.py tests/test_bcode_runner.py tests/test_bcode_binary.py
       - run: go install github.com/rhysd/actionlint/cmd/actionlint@v1.7.7

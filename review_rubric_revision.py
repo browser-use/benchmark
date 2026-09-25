@@ -6,6 +6,7 @@ import difflib
 import hashlib
 import json
 import re
+import subprocess
 from pathlib import Path
 
 from cryptography.fernet import Fernet
@@ -17,9 +18,41 @@ def digest(text: str) -> str:
     return hashlib.sha256(text.encode()).hexdigest()
 
 
-def decrypt(path: Path, key_name: str) -> dict:
+def decrypt_bytes(artifact: bytes, key_name: str) -> dict:
     key = base64.urlsafe_b64encode(hashlib.sha256(key_name.encode()).digest())
-    return json.loads(Fernet(key).decrypt(base64.b64decode(path.read_bytes())))
+    return json.loads(Fernet(key).decrypt(base64.b64decode(artifact)))
+
+
+def decrypt(path: Path, key_name: str) -> dict:
+    return decrypt_bytes(path.read_bytes(), key_name)
+
+
+def read_base_artifact(
+    root: Path, manifest: dict, base_artifact: Path | None = None
+) -> bytes:
+    """Read the pinned baseline without keeping an obsolete dataset in the checkout."""
+    if base_artifact is not None:
+        artifact = base_artifact.read_bytes()
+    else:
+        commit = manifest["base_commit"]
+        if not re.fullmatch(r"[0-9a-f]{40}", commit):
+            raise ValueError("Base commit must be a full lowercase Git SHA")
+        try:
+            artifact = subprocess.run(
+                ["git", "-C", str(root), "show", f"{commit}:BU_Bench_V2.enc"],
+                check=True,
+                capture_output=True,
+            ).stdout
+        except (OSError, subprocess.CalledProcessError) as exc:
+            raise ValueError(
+                "Pinned baseline is absent from local Git history. "
+                "Use a full clone, fetch the base_commit from rubric_revision.json, "
+                "or pass --base-artifact /path/to/original/BU_Bench_V2.enc. "
+                "Normal benchmark execution does not need the historical baseline."
+            ) from exc
+    if hashlib.sha256(artifact).hexdigest() != manifest["base_encrypted_sha256"]:
+        raise ValueError("Encrypted artifact hash mismatch: historical baseline")
+    return artifact
 
 
 def index_tasks(tasks: list[dict], label: str) -> dict[str, dict]:
@@ -34,17 +67,18 @@ def index_tasks(tasks: list[dict], label: str) -> dict[str, dict]:
     return {task["id"]: task for task in tasks}
 
 
-def validate_revision(root: Path = ROOT) -> tuple[dict, dict, dict, dict]:
+def validate_revision(
+    root: Path = ROOT, *, base_artifact: Path | None = None
+) -> tuple[dict, dict, dict, dict]:
     manifest = json.loads((root / "rubric_revision.json").read_text())
-    base_path = root / "snapshots/BU_Bench_V2_2026-08-25.enc"
     candidate_path = root / "BU_Bench_V2.enc"
-    for path, field in [
-        (base_path, "base_encrypted_sha256"),
-        (candidate_path, "candidate_encrypted_sha256"),
+    if hashlib.sha256(candidate_path.read_bytes()).hexdigest() != manifest[
+        "candidate_encrypted_sha256"
     ]:
-        if hashlib.sha256(path.read_bytes()).hexdigest() != manifest[field]:
-            raise ValueError(f"Encrypted artifact hash mismatch: {path.name}")
-    original = decrypt(base_path, "BU_Bench_V2")
+        raise ValueError(f"Encrypted artifact hash mismatch: {candidate_path.name}")
+    original = decrypt_bytes(
+        read_base_artifact(root, manifest, base_artifact), "BU_Bench_V2"
+    )
     candidate = decrypt(candidate_path, "BU_Bench_V2")
     cases = decrypt(root / "BU_Bench_V2_review_cases.enc", "BU_Bench_V2_review_cases")
     before = index_tasks(original["tasks"], "Base")
@@ -108,8 +142,13 @@ def validate_revision(root: Path = ROOT) -> tuple[dict, dict, dict, dict]:
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--write-private-diffs", action="store_true")
+    parser.add_argument(
+        "--base-artifact",
+        type=Path,
+        help="Original encrypted baseline for source archives or shallow clones; hash-verified.",
+    )
     args = parser.parse_args()
-    manifest, before, after, cases = validate_revision()
+    manifest, before, after, cases = validate_revision(base_artifact=args.base_artifact)
     print(
         f"Validated {len(manifest['changes'])} revised tasks; other tasks and all weights unchanged."
     )

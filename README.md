@@ -32,27 +32,27 @@
 
 <br/>
 
-## BU Bench V2
+## BU Bench V2.1
 
-**200 web tasks scored against weighted findings rubrics**
+**200 web tasks scored against weighted findings rubrics — the default task set.**
 
-| Evaluation set | Tasks | File |
-| --- | ---: | --- |
-| Full BU Bench V2 | 200 | [BU_Bench_V2.enc](BU_Bench_V2.enc) |
-| BU Bench V2 — 55-task subset | 55 | [BU_Bench_V2_55.json](BU_Bench_V2_55.json) (task IDs only) |
+| File | Purpose |
+| --- | --- |
+| [BU_Bench_V2.enc](BU_Bench_V2.enc) | All 200 current V2.1 tasks, rubrics and weights |
+| [BU_Bench_V2_review_cases.enc](BU_Bench_V2_review_cases.enc) | Judge review scenarios; not a runnable task set |
+| [rubric_revision.json](rubric_revision.json) | Revision metadata and integrity hashes |
 
-The 55-task subset selects public IDs `bu2-001` through `bu2-055` from the full release. It is the public overlap with the original 60-task benchmark; five original tasks were omitted and the remaining tasks were renumbered. Use the public IDs in the subset file, not the first 55 historical IDs.
-
-Tasks, rubrics and weights live once, in the encrypted 200-task release. `BU_Bench_V2_55.json` pins that file's SHA-256 and lists the subset IDs; it does not contain a second dataset. Label scores with the set used: **200 tasks**, **55-task subset**, or **legacy 60 tasks**.
-
-**Dataset version: BU Bench V2.1.**
 Main includes the September 25 CAPTCHA-alignment update
 (`2026-09-25-captcha-alignment`), with eight further task/rubric corrections on
 top of the nine in the [original V2.1 snapshot](https://github.com/browser-use/benchmark/releases/tag/v2.1).
-All 200 task IDs, item IDs, weights and 55-task subset membership are unchanged.
-The original `v2.1` tag and its download assets retain the September 24 snapshot;
-use this revision's commit and encrypted-file checksum to identify the updated
-V2.1 data. The filename remains `BU_Bench_V2.enc`.
+All 200 task IDs, item IDs and weights are unchanged. The filename remains
+`BU_Bench_V2.enc` for compatibility; its contents are V2.1.
+
+The old 55-task selectors and original 200-task snapshot are available through
+Git history, rather than as extra files in the current checkout. The original
+`v2.1` tag and its download assets retain the September 24 snapshot; use main
+for the latest V2.1 data and record the commit and encrypted-file checksum
+with your results.
 
 See [changes, validation and remaining work](RUBRIC_REVISION.md). The update
 requires successful Walmart source verification and gives no item credit to a
@@ -67,34 +67,13 @@ saved-evidence semantic validation remains pending.
 
 The tasks are encrypted to keep their text out of web crawlers and model training data. Please do not publish decrypted tasks or rubrics in plaintext or use them for model training.
 
-<details>
-<summary>Select the 55-task subset</summary>
-
-After decrypting `BU_Bench_V2.enc` into a Python object named `benchmark`:
-
-```python
-import hashlib
-import json
-from pathlib import Path
-
-subset = json.loads(Path("BU_Bench_V2_55.json").read_text())
-assert hashlib.sha256(Path(subset["source"]).read_bytes()).hexdigest() == subset["source_sha256"]
-by_id = {task["id"]: task for task in benchmark["tasks"]}
-tasks = [by_id[task_id] for task_id in subset["task_ids"]]
-assert len(tasks) == subset["task_count"]
-```
-
-This selects evaluation records, including the judge's rubric and weights. Pass only the task instructions to the evaluated agent; keep the rubric and weights for the judge.
-
-</details>
-
 ### Historical results — 60 tasks
 
 <img alt="Legacy 60-task BU Bench V2 results - Mean rubric score by model and cost per task, including GPT-6 Astra" src="official_plots/bu_bench_v2_astra.jpg" width="100%">
 
-These results use the earlier 60-task set, not the full 200-task release or the 55-task subset. Compare model scores only on the same task set.
+These results use the earlier 60-task set. They are not results for the current 200-task V2.1 dataset. Compare model scores only on the same task set and revision.
 
-### Running BU Bench V2 (default)
+### Running BU Bench V2.1 (default)
 
 The default entry point runs all 200 tasks with [BrowserCode](https://bcode.sh/)
 and the existing [findings judge](findings_judge.py). Anyone can clone this public
@@ -139,7 +118,7 @@ Defaults:
 | Setting | Default |
 | --- | --- |
 | Executor | BrowserCode 0.1.20, `openai/gpt-6-luna`, xhigh reasoning |
-| Tasks | All 200 in `BU_Bench_V2.enc` |
+| Tasks | All 200 V2.1 tasks in `BU_Bench_V2.enc` |
 | Browser | Browser Use Cloud, one session per task |
 | Limits | Up to 100 concurrent tasks; 3,600 seconds per task |
 | Judge | `gpt-5.6-luna`, xhigh reasoning |

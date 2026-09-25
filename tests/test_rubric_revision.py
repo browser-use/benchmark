@@ -4,17 +4,38 @@ import base64
 import hashlib
 import json
 import shutil
+import subprocess
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from cryptography.fernet import Fernet
 
-from review_rubric_revision import ROOT, validate_revision
+from review_rubric_revision import ROOT, read_base_artifact, validate_revision
 
 
 class RevisionTests(unittest.TestCase):
+    def historical_baseline(self):
+        manifest = json.loads((ROOT / "rubric_revision.json").read_text())
+        try:
+            return read_base_artifact(ROOT, manifest)
+        except ValueError as error:
+            if isinstance(error.__cause__, (OSError, subprocess.CalledProcessError)):
+                self.skipTest(str(error))
+            raise
+
+    def copy_revision_fixture(self, root):
+        baseline = root / "original.enc"
+        baseline.write_bytes(self.historical_baseline())
+        for name in (
+            "rubric_revision.json", "BU_Bench_V2.enc", "BU_Bench_V2_review_cases.enc"
+        ):
+            shutil.copy2(ROOT / name, root / name)
+        return baseline
+
     def test_only_declared_contracts_change(self):
+        self.historical_baseline()
         manifest, before, after, cases = validate_revision()
         expected = {
             "bu2-001",
@@ -66,54 +87,51 @@ class RevisionTests(unittest.TestCase):
         self.assertEqual(len(cases["cases"]), 24)
         self.assertEqual(manifest["status"], "main_not_regraded")
 
-    def test_original_artifact_is_exact_published_snapshot(self):
+    def test_baseline_from_history_is_exact_published_snapshot(self):
         self.assertEqual(
-            hashlib.sha256(
-                (ROOT / "snapshots/BU_Bench_V2_2026-08-25.enc").read_bytes()
-            ).hexdigest(),
+            hashlib.sha256(self.historical_baseline()).hexdigest(),
             "fe0fc1eede3197d9eaffd42af3ac7b11cc15743d401e95496f3eb03f0d023a0e",
         )
 
-    def test_candidate_and_historical_subset_manifests_pin_sources(self):
-        candidate = json.loads((ROOT / "BU_Bench_V2_55.json").read_text())
-        historical = json.loads(
-            (ROOT / "snapshots/BU_Bench_V2_55_2026-08-25.json").read_text()
-        )
-        candidate_source = ROOT / candidate["source"]
-        historical_source = ROOT / "snapshots" / historical["source"]
+    def test_current_dataset_is_pinned_and_legacy_v2_files_are_absent(self):
+        manifest = json.loads((ROOT / "rubric_revision.json").read_text())
         self.assertEqual(
-            candidate["source_sha256"],
-            hashlib.sha256(candidate_source.read_bytes()).hexdigest(),
+            hashlib.sha256((ROOT / "BU_Bench_V2.enc").read_bytes()).hexdigest(),
+            manifest["candidate_encrypted_sha256"],
         )
-        self.assertEqual(
-            candidate["source_sha256"],
-            "7ef05a1d0abdf6ab4b570cae5b93adf3299cc5c3c2749961473d68f5cdc7bf94",
-        )
-        self.assertEqual(
-            historical["source_sha256"],
-            hashlib.sha256(historical_source.read_bytes()).hexdigest(),
-        )
-        self.assertEqual(
-            historical["source_sha256"],
-            "fe0fc1eede3197d9eaffd42af3ac7b11cc15743d401e95496f3eb03f0d023a0e",
-        )
-        self.assertEqual(
-            candidate["task_ids"],
-            historical["task_ids"],
-        )
-        self.assertEqual(candidate["task_count"], historical["task_count"])
+        self.assertEqual(manifest["release_version"], "2.1")
+        for name in (
+            "BU_Bench_V2_55.json",
+            "snapshots/BU_Bench_V2_55_2026-08-25.json",
+            "snapshots/BU_Bench_V2_2026-08-25.enc",
+        ):
+            self.assertFalse((ROOT / name).exists())
 
-    def test_weight_edit_rejected_even_with_updated_artifact_hash(self):
-        _, _, after, _ = validate_revision()
+    def test_explicit_baseline_works_without_git_and_is_hash_checked(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            (root / "snapshots").mkdir()
-            for name in (
-                "rubric_revision.json",
-                "BU_Bench_V2_review_cases.enc",
-                "snapshots/BU_Bench_V2_2026-08-25.enc",
-            ):
-                shutil.copy2(ROOT / name, root / name)
+            baseline = self.copy_revision_fixture(root)
+            with patch("review_rubric_revision.subprocess.run") as git:
+                _, before, after, _ = validate_revision(root, base_artifact=baseline)
+                git.assert_not_called()
+                self.assertEqual(set(before), set(after))
+                baseline.write_bytes(b"wrong baseline")
+                with self.assertRaisesRegex(ValueError, "historical baseline"):
+                    validate_revision(root, base_artifact=baseline)
+
+    def test_missing_history_explains_explicit_baseline_option(self):
+        manifest = json.loads((ROOT / "rubric_revision.json").read_text())
+        with (
+            patch("review_rubric_revision.subprocess.run", side_effect=OSError),
+            self.assertRaisesRegex(ValueError, "--base-artifact"),
+        ):
+            read_base_artifact(ROOT, manifest)
+
+    def test_weight_edit_rejected_even_with_updated_artifact_hash(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            baseline = self.copy_revision_fixture(root)
+            _, _, after, _ = validate_revision(root, base_artifact=baseline)
             task = after["bu2-014"]
             key = next(iter(task["weights"]))
             task["weights"][key] += 1
@@ -129,18 +147,12 @@ class RevisionTests(unittest.TestCase):
             ).hexdigest()
             (root / "rubric_revision.json").write_text(json.dumps(manifest))
             with self.assertRaisesRegex(ValueError, "Unapproved task field change"):
-                validate_revision(root)
+                validate_revision(root, base_artifact=baseline)
 
     def test_duplicate_task_ids_rejected_before_indexing(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            (root / "snapshots").mkdir()
-            for name in (
-                "rubric_revision.json",
-                "BU_Bench_V2_review_cases.enc",
-                "snapshots/BU_Bench_V2_2026-08-25.enc",
-            ):
-                shutil.copy2(ROOT / name, root / name)
+            baseline = self.copy_revision_fixture(root)
             candidate = json.loads(
                 Fernet(
                     base64.urlsafe_b64encode(hashlib.sha256(b"BU_Bench_V2").digest())
@@ -158,7 +170,7 @@ class RevisionTests(unittest.TestCase):
             ).hexdigest()
             (root / "rubric_revision.json").write_text(json.dumps(manifest, indent=2))
             with self.assertRaisesRegex(ValueError, "Candidate task population"):
-                validate_revision(root)
+                validate_revision(root, base_artifact=baseline)
 
 
 if __name__ == "__main__":

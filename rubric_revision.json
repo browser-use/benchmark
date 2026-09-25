@@ -199,14 +199,14 @@
     {
       "task_id": "bu2-171",
       "reverted_from_pr": 32,
-      "restored_from": "snapshots/BU_Bench_V2_2026-08-25.enc",
+      "restored_from": "421390ea7fa4708f3d89d7695f9a16debb861daf:BU_Bench_V2.enc",
       "rubric_sha256": "8b855fdf62d3e3d31935ac2bc978cc86dc4386af4b8bc1d1d1437f81cf3a20d5",
       "reason": "Restore acquisition requirements; reporting an access failure is not completion."
     },
     {
       "task_id": "bu2-185",
       "reverted_from_pr": 32,
-      "restored_from": "snapshots/BU_Bench_V2_2026-08-25.enc",
+      "restored_from": "421390ea7fa4708f3d89d7695f9a16debb861daf:BU_Bench_V2.enc",
       "rubric_sha256": "2820f3c00db846389b72b90b45785d364dcd15b532aea05dd07151ae4d1b0a4f",
       "reason": "Restore acquisition requirements; reporting an access failure is not completion."
     }
