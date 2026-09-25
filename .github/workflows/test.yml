@@ -1,0 +1,19 @@
+name: Test V2 runner
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - run: uv sync --frozen --python 3.12
+      - run: BCODE_TEST_CHROME="$(command -v google-chrome)" uv run python -m unittest discover -s tests
+      - run: uv run ruff check bcode_runner.py bcode_eval.py bcode_results.py tests/test_bcode_runner.py tests/test_bcode_binary.py
+      - run: go install github.com/rhysd/actionlint/cmd/actionlint@v1.7.7
+      - run: |
+          "$(go env GOPATH)/bin/actionlint" .github/workflows/run-benchmark.yml

@@ -13,7 +13,7 @@ import json
 import logging
 import os
 import traceback
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from importlib.metadata import version
 from pathlib import Path
 
@@ -61,6 +61,17 @@ def create_agent_model(model: str = MODEL_NAME, reasoning: str = "xhigh"):
         timeout=300,
         max_retries=2,
     )
+
+
+def select_shard(
+    tasks: list[dict], shard_index: int | None, shard_count: int | None
+) -> list[dict]:
+    """Select one contiguous shard while preserving the dataset's task order."""
+    if shard_index is None or shard_count is None:
+        return tasks
+    start = len(tasks) * shard_index // shard_count
+    end = len(tasks) * (shard_index + 1) // shard_count
+    return tasks[start:end]
 
 
 def select_tasks(
@@ -272,7 +283,26 @@ def summarize_results(results: list[dict]) -> dict:
 
 def parse_args(argv=None):
     parser = argparse.ArgumentParser(
-        description="Run BU Bench V2 with the findings judge (default)"
+        description="Run all 200 V2 tasks with BrowserCode and the findings judge (default)"
+    )
+    parser.add_argument(
+        "--executor",
+        choices=["bcode", "browser-use"],
+        default=None,
+        help="Default: bcode for V2; browser-use for V1/Stealth",
+    )
+    parser.add_argument("--bcode-bin", default=str(Path.home() / ".bcode/bin/bcode"))
+    parser.add_argument("--bcode-version", default="0.1.20")
+    parser.add_argument("--chrome-bin", help="Local Chrome/Chromium executable")
+    parser.add_argument("--fetch-use", action=argparse.BooleanOptionalAction, default=None,
+                        help="Browser Use fetch service (default: on with Cloud, off with local Chrome)")
+    parser.add_argument(
+        "--output-dir", type=Path, default=Path(__file__).parent / "run_data"
+    )
+    parser.add_argument(
+        "--check",
+        action="store_true",
+        help="Validate BrowserCode configuration without running tasks",
     )
     parser.add_argument(
         "--browser",
@@ -295,27 +325,71 @@ def parse_args(argv=None):
     )
     parser.add_argument(
         "--model",
-        default=MODEL_NAME,
-        choices=["bu-2-0", "gpt-5.6-luna", "gpt-6-astra"],
+        default=None,
         help="Executor model; separate from --judge-model",
     )
     parser.add_argument(
         "--agent-reasoning",
-        default="xhigh",
-        choices=["none", "minimal", "low", "medium", "high", "xhigh"],
+        default=None,
+        choices=["none", "minimal", "low", "medium", "high", "xhigh", "max"],
     )
     parser.add_argument(
         "--task-ids", nargs="+", help="Exact task IDs, in execution order"
     )
     parser.add_argument(
-        "--task-timeout",
-        type=int,
-        default=TASK_TIMEOUT,
-        help="Per-task execution timeout in seconds (default: %(default)s; 1 hour)",
+        "--shard-index", type=int, help="Zero-based contiguous shard index"
     )
-    parser.add_argument("--max-steps", type=int, default=100)
-    parser.add_argument("--concurrency", type=int, default=MAX_CONCURRENT)
+    parser.add_argument("--shard-count", type=int, help="Total contiguous shards")
+    parser.add_argument("--task-timeout", type=int, default=None)
+    parser.add_argument("--max-steps", type=int, default=None)
+    parser.add_argument("--concurrency", "--parallel", type=int, default=MAX_CONCURRENT)
     args = parser.parse_args(argv)
+    args.executor = args.executor or (
+        "bcode" if args.benchmark == DEFAULT_BENCHMARK else "browser-use"
+    )
+    if (args.shard_index is None) != (args.shard_count is None):
+        parser.error("--shard-index and --shard-count must be provided together")
+    if args.shard_count is not None and (
+        args.shard_count < 1 or not 0 <= args.shard_index < args.shard_count
+    ):
+        parser.error("Shard index must be between zero and shard-count - 1")
+    if args.task_ids and args.shard_count is not None:
+        parser.error("Use either --task-ids or --shard-index/--shard-count")
+    if args.executor == "bcode":
+        if args.benchmark != DEFAULT_BENCHMARK or args.browser not in ("browser-use-cloud", "local_headless", "local_headful"):
+            parser.error(
+                "BrowserCode supports V2 with Cloud or local Chrome; select --executor browser-use for other benchmarks/browsers"
+            )
+        if args.max_steps is not None:
+            parser.error(
+                "--max-steps applies to --executor browser-use; use --task-timeout for BrowserCode"
+            )
+        args.fetch_use = args.fetch_use if args.fetch_use is not None else args.browser == "browser-use-cloud"
+        from bcode_runner import DEFAULT_MODEL, resolve_model
+
+        try:
+            args.model, args.agent_reasoning = resolve_model(
+                args.model or DEFAULT_MODEL, args.agent_reasoning
+            )
+        except ValueError as exc:
+            parser.error(str(exc))
+        args.task_timeout = args.task_timeout if args.task_timeout is not None else 3600
+        if args.browser == "browser-use-cloud" and args.task_timeout > 14400:
+            parser.error("BrowserCode Cloud task timeout cannot exceed 14400 seconds")
+    else:
+        if args.shard_count is not None:
+            parser.error(
+                "Sharding is currently supported only by the BrowserCode executor"
+            )
+        if args.check:
+            parser.error("--check applies to the BrowserCode executor")
+        args.model = args.model or MODEL_NAME
+        args.agent_reasoning = args.agent_reasoning or "xhigh"
+        args.task_timeout = (
+            args.task_timeout if args.task_timeout is not None else TASK_TIMEOUT
+        )
+        args.max_steps = args.max_steps if args.max_steps is not None else 100
+    args.max_steps = args.max_steps if args.max_steps is not None else 100
     if min(args.task_timeout, args.max_steps, args.concurrency) < 1:
         parser.error("Timeout, max steps, and concurrency must be positive")
     if args.tasks is not None and args.tasks < 1:
@@ -323,8 +397,12 @@ def parse_args(argv=None):
     return args
 
 
-async def main():
-    args = parse_args()
+async def main(argv=None):
+    args = parse_args(argv)
+    if args.executor == "bcode":
+        from bcode_eval import main as run_bcode
+
+        return await run_bcode(args)
     tasks = select_tasks(load_tasks(args.benchmark), args.task_ids, args.tasks)
     # Fail on missing judge credentials before launching any browser sessions.
     judge_llm = create_judge(args.benchmark, args.judge_model, args.judge_reasoning)
@@ -333,7 +411,7 @@ async def main():
     browser_provider = (
         None if args.browser == "browser-use-cloud" else get_provider(args.browser)
     )
-    run_start = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S_%f")
+    run_start = datetime.now(UTC).strftime("%Y%m%d_%H%M%S_%f")
     run_key = f"{args.benchmark}_{AGENT_FRAMEWORK_NAME}_{AGENT_FRAMEWORK_VERSION}_browser_{args.browser}_model_{args.model}"
     root = Path(__file__).parent
     run_data_dir = root / "run_data" / f"{run_key}_start_at_{run_start}"

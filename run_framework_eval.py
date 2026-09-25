@@ -158,6 +158,8 @@ async def _run_one(
 
 
 async def _run_all(args: argparse.Namespace) -> list[dict]:
+    if args.benchmark == "BU_Bench_V2":
+        raise SystemExit("Use run_eval.py for BU Bench V2 with BrowserCode and the findings judge")
     tasks = load_tasks(args.benchmark)
     if not args.no_interleave:
         tasks = interleave(tasks)

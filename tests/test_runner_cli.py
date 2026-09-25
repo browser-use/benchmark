@@ -9,6 +9,8 @@ class RunnerConfigurationTests(unittest.TestCase):
     def test_executor_choice_does_not_override_judge(self):
         args = parse_args(
             [
+                "--executor",
+                "browser-use",
                 "--model",
                 "gpt-6-astra",
                 "--agent-reasoning",

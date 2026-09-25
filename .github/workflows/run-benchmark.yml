@@ -1,0 +1,164 @@
+name: Run BU Bench V2
+run-name: BU200 ${{ inputs.browser }} · ${{ inputs.model }} · ${{ inputs.tasks }} tasks
+
+on:
+  workflow_dispatch:
+    inputs:
+      browser:
+        description: Browser provider
+        type: choice
+        options: [browser-use-cloud, local_headless]
+        default: browser-use-cloud
+      model:
+        description: BrowserCode provider/model
+        type: string
+        default: openai/gpt-6-luna
+      reasoning:
+        description: Agent reasoning effort
+        type: choice
+        options: [none, minimal, low, medium, high, xhigh, max]
+        default: low
+      tasks:
+        description: Number of tasks (all 200 by default)
+        type: number
+        default: 200
+      task_ids:
+        description: Optional exact task IDs separated by spaces
+        type: string
+      task_timeout:
+        description: Seconds per task
+        type: number
+        default: 3600
+      max_parallel:
+        description: Maximum concurrent task runners
+        type: number
+        default: 12
+      fetch_use:
+        description: Enable BrowserCode fetch service (requires Browser Use key)
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+env:
+  BROWSER_USE_SETUP_LOGGING: "false"
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      task_ids: ${{ steps.tasks.outputs.task_ids }}
+      evaluation_id: ${{ steps.tasks.outputs.evaluation_id }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - run: uv sync --frozen --python 3.12 --extra laminar
+      - name: Validate inputs and select tasks
+        id: tasks
+        env:
+          TASK_IDS: ${{ inputs.task_ids }}
+          TASK_COUNT: ${{ inputs.tasks }}
+          MAX_PARALLEL: ${{ inputs.max_parallel }}
+          TASK_TIMEOUT: ${{ inputs.task_timeout }}
+          EVAL_MODEL: ${{ inputs.model }}
+          EVAL_BROWSER: ${{ inputs.browser }}
+          LMNR_PROJECT_API_KEY: ${{ secrets.LMNR_PROJECT_API_KEY }}
+        run: |
+          python3 - <<'PY'
+          import os
+          assert 1 <= int(os.environ["MAX_PARALLEL"]) <= 50
+          assert 1 <= int(os.environ["TASK_TIMEOUT"]) <= 14400
+          PY
+          uv run python bcode_results.py prepare --tasks "$TASK_COUNT" --task-ids "$TASK_IDS"
+
+  evaluate:
+    needs: prepare
+    strategy:
+      fail-fast: false
+      max-parallel: ${{ fromJSON(format('{0}', inputs.max_parallel)) }}
+      matrix:
+        task_id: ${{ fromJSON(needs.prepare.outputs.task_ids) }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 260
+    env:
+      BROWSER_USE_API_KEY: ${{ secrets.BROWSER_USE_API_KEY }}
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      GOOGLE_GENERATIVE_AI_API_KEY: ${{ secrets.GOOGLE_GENERATIVE_AI_API_KEY }}
+      OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+      XAI_API_KEY: ${{ secrets.XAI_API_KEY }}
+      LMNR_PROJECT_API_KEY: ${{ secrets.LMNR_PROJECT_API_KEY }}
+      BENCHMARK_LAMINAR_EVAL_ID: ${{ needs.prepare.outputs.evaluation_id }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - run: uv sync --frozen --python 3.12 --extra laminar
+      - name: Install BrowserCode
+        run: |
+          curl -fsSL https://bcode.sh/install | bash -s -- --version 0.1.20 --no-modify-path
+      - name: Execute and judge task
+        env:
+          TASK_ID: ${{ matrix.task_id }}
+          EVAL_MODEL: ${{ inputs.model }}
+          REASONING: ${{ inputs.reasoning }}
+          BROWSER: ${{ inputs.browser }}
+          TASK_TIMEOUT: ${{ inputs.task_timeout }}
+          FETCH_USE: ${{ inputs.fetch_use }}
+        run: |
+          fetch_flag=--no-fetch-use
+          if [ "$FETCH_USE" = true ]; then fetch_flag=--fetch-use; fi
+          uv run python run_eval.py \
+            --task-ids "$TASK_ID" --parallel 1 \
+            --model "$EVAL_MODEL" --agent-reasoning "$REASONING" \
+            --browser "$BROWSER" "$fetch_flag" \
+            --task-timeout "$TASK_TIMEOUT" --output-dir run_data
+      - name: Export public-safe configuration
+        if: ${{ always() }}
+        run: uv run python bcode_results.py export
+      - name: Upload scores and configuration
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: score-${{ matrix.task_id }}
+          path: |
+            run_data/**/public-result.json
+            run_data/**/public-config.json
+          if-no-files-found: error
+          retention-days: 30
+      - name: Retain full evidence in private repositories
+        if: ${{ always() && github.event.repository.private }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: evidence-${{ matrix.task_id }}
+          path: |
+            run_data
+            !run_data/**/browser-profile/**
+            !run_data/**/state/**
+            !run_data/**/preflight-state/**
+          if-no-files-found: warn
+          retention-days: 14
+
+  aggregate:
+    if: ${{ always() && needs.prepare.result == 'success' }}
+    needs: [prepare, evaluate]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - run: uv sync --frozen --python 3.12
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: score-*
+          path: artifacts
+      - name: Check every task and aggregate scores
+        env:
+          EXPECTED_TASK_IDS: ${{ needs.prepare.outputs.task_ids }}
+        run: uv run python bcode_results.py aggregate --root artifacts
+      - name: Upload aggregate results
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: bu-bench-v2-aggregate
+          path: aggregate-results.json
+          retention-days: 30

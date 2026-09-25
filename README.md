@@ -86,75 +86,135 @@ These results use the earlier 60-task set, not the full 200-task release or the 
 
 ### Running BU Bench V2 (default)
 
+The default entry point runs all 200 tasks with [BrowserCode](https://bcode.sh/)
+and the existing [findings judge](findings_judge.py). Anyone can clone this public
+repository and run it with their own API keys. No access to our evaluation
+platform is needed. Use macOS or Linux (including GitHub's Ubuntu runners).
+
+Install [uv](https://docs.astral.sh/uv/getting-started/installation/), then:
+
 ```bash
-uv sync --frozen
+git clone https://github.com/browser-use/benchmark.git
+cd benchmark
+uv sync --frozen --python 3.12
+curl -fsSL https://bcode.sh/install | bash -s -- --version 0.1.20 --no-modify-path
 cp .env.example .env
-# Set BROWSER_USE_API_KEY for the agent and cloud browser.
-# Set OPENAI_API_KEY for the findings judge.
-uv run python run_eval.py --tasks 5
-# Omit --tasks to run all 200 tasks.
+# Set OPENAI_API_KEY for the Luna executor and findings judge.
+# Set BROWSER_USE_API_KEY for Cloud browsers and BrowserCode's fetch tool.
+uv run python run_eval.py
 ```
 
-The runner decrypts V2 in memory and uses the [findings judge](findings_judge.py)
-with **gpt-5.6-luna, xhigh reasoning**. Each task's whole rubric is judged in one
-call. Code applies its unequal item weights; `score` is continuous from 0 to 1.
-The canary and reward-hacking policy can zero the whole task. Reward hacking
-requires concrete evidence of fabrication or manipulation; an ordinary task error
-or wrong target alone is scored under its rubric items. Both `raw_score`
-(before that penalty) and final `score`, findings, and flags are saved.
+Get a browser key from [Browser Use Cloud](https://cloud.browser-use.com/) and a
+model key from [OpenAI](https://platform.openai.com/api-keys). Each task gets a
+fresh Cloud browser and its own evidence folder.
 
-Use `--model gpt-5.6-luna --agent-reasoning xhigh` for a Luna executor.
-`--task-ids bu2-171 bu2-185` selects exact cases; `--max-steps`,
-`--task-timeout` (seconds), and `--concurrency` set explicit execution limits.
-The default execution limits are **1 hour (3,600 seconds) per task** and
-**100 steps**, whichever is reached first. The Browser Use Cloud session timeout
-matches the selected task timeout.
-Use `--judge-model` and `--judge-reasoning` to override the OpenAI judge settings,
-or `--browser local_headless` to use local Chromium (install it first with
-`uv run browser-use install`). The selected model must support images and
-structured output. `OPENAI_API_KEY` must have access to it. OpenAI-compatible gateways can be selected with `OPENAI_BASE_URL`; the run records the endpoint host. Overrides are recorded
-with every run; changing the judge affects comparability.
+To use a local browser, install Google Chrome or Chromium and change only the
+browser flag. This still uses BrowserCode and the same V2 judge:
 
-Results go to ignored `results/`; detailed evidence and judge configuration go
-to ignored `run_data/`. The headline metric is **mean weighted score**, not the
-fraction of perfect tasks. The adapter version is recorded independently of
-the dataset revision. Missing/duplicate findings are judge errors. Clipped agent
-evidence is recorded in `evidence_clipped_sections` and shown as a warning; it
-does not automatically suppress the judge's score or exclude the task from the mean.
-The judge assesses each item using the final output and all available evidence.
-Every `not_assessable` finding names its reason: `missing_evidence` identifies
-unavailable evidence, while `absent_scope` is a rubric-defined empty or
-inapplicable scope. Both retain the existing zero item credit. Other earned
-points and the task's normal weight in the mean are preserved; item weights
-are not renormalized. Missing agent work is judged under the rubric, rather than
-being classified as a collector failure. Task instructions and rubrics are
-supplied in full instead of being clipped.
+```bash
+uv run python run_eval.py --browser local_headless
+```
 
-The score comes from weighted rubric findings and the existing reward-hacking /
-canary penalty. Evidence size, missing-evidence findings, and execution errors
-never override a valid judgment. Timeouts and other runtime exceptions retain
-partial work for judging. Judge/API/schema failures have no valid judgment to
-score: they preserve the trace, make the full-set mean unavailable, and exit
-nonzero. The separate mean over scored tasks is explicitly labeled.
+The local path needs only `OPENAI_API_KEY`. It starts a fresh browser profile per
+task and closes its Chrome process afterward. `--browser local_headful` shows the
+browser on a machine with a display. Use `--chrome-bin /path/to/chrome` if Chrome
+is not detected.
 
-By default this runner uses Browser Use 0.11.5 / `bu-2-0`, a one-hour limit and 100 steps.
-It supplies tool results, final output, text from the agent's managed files, and
-up to 50 screenshots sampled in chronological order, preserving the first and
-final captures and later returns to an earlier state. Only adjacent repeats are
-collapsed. Images that exceed the encoded-byte budget are compressed first,
-then resized only as needed. Unreadable or impossible-to-fit images are omitted
-with an explicit note for the judge, without rejecting the task score. The
-saved `screenshot_evidence` records source positions, MIME types, resizing,
-omissions, and final encoded bytes. Original run images remain unchanged. Downloaded binary files and
-files created outside the agent's managed filesystem are not extracted. This
-is a runnable public harness, not a reproduction of the published 60-task
-BrowserCode setup: the executor, task cohort, limits, and image selection differ.
-Weights and reward-hacking penalties are unchanged. Adapter 2.1.2 removes
-remaining evidence-based score exclusions and corrects screenshot preparation;
-record the adapter version when comparing results with earlier runs.
+BrowserCode's paid fetch service defaults on for Cloud and off for local Chrome.
+For a controlled browser comparison, pass the same setting to both arms:
+`--fetch-use` (requires `BROWSER_USE_API_KEY`) or `--no-fetch-use`.
 
-Local traces contain decrypted tasks, rubrics, screenshots, and deliverables.
-Do not publish or commit them. Offline runner tests: `uv run python -m unittest discover -s tests`.
+Defaults:
+
+| Setting | Default |
+| --- | --- |
+| Executor | BrowserCode 0.1.20, `openai/gpt-6-luna`, low reasoning |
+| Tasks | All 200 in `BU_Bench_V2.enc` |
+| Browser | Browser Use Cloud, one session per task |
+| Limits | 3 concurrent tasks; 3,600 seconds per task |
+| Judge | `gpt-5.6-luna`, xhigh reasoning |
+| Score | Continuous weighted V2 rubric score, including partial credit |
+
+The executor receives only the task instruction. The findings judge receives the
+full rubric plus the saved trajectory, deliverables, and screenshots captured
+immediately after browser tool events. The judge and scoring policy are the V2
+implementation in this repository; this runner is separate from the new
+[evaluation platform](https://github.com/browser-use/new-eval-platform).
+
+Results and evidence are saved under `run_data/BU_Bench_V2_bcode_<timestamp>/`:
+
+```text
+config.json                    # Dataset, executor, browser and judge configuration
+results.json                   # Aggregate and per-task weighted scores
+bu2-001/
+  workspace/outputs/           # Task file deliverables
+  screenshots/                 # Independent browser screenshots for this task
+  screenshot_manifest.json    # Screenshot-to-step mapping
+  agent_screenshots/           # Images requested by BrowserCode itself
+  events.jsonl                 # BrowserCode events and model text
+  trace.json                   # Judge input trace
+  task.json
+  judge_input.json
+  judge_response.json
+  result.json
+```
+
+Use `--tasks 5` for a short run, or `--task-ids bu2-171 bu2-185` for exact cases.
+`--parallel` controls tasks per process; `--task-timeout` is in seconds. `--model`
+and `--agent-reasoning` select another BrowserCode model/variant, while
+`--judge-model` and `--judge-reasoning` change the findings judge. `--check`
+performs the binary/model preflight without executing tasks.
+
+The historical V1, Stealth, and framework comparison runners remain available
+below. `--benchmark BU_Bench_V1` and `--benchmark Stealth_Bench_V1` keep their
+existing paths. To explicitly run the Python Agent against V2, use
+`--executor browser-use`; that path retains its existing browser and `--max-steps`
+options. The older `eval.yaml` workflow is also retained for the historical V1
+batch/orchestrator path.
+
+### Running the default evaluation on GitHub Actions
+
+The manual **Run BU Bench V2** workflow runs one task per GitHub-hosted Ubuntu
+runner, with at most 12 task runners active. Every runner invokes the same
+`run_eval.py` command and judges its task. All 200 tasks run by default. The
+aggregate job requires every selected task exactly once and reports incomplete
+judging as an error instead of treating it as a zero or silently dropping it.
+
+For your own runs, fork the repository, enable Actions, and add your own secrets
+under **Settings → Secrets and variables → Actions**:
+
+- `OPENAI_API_KEY`: the default Luna executor and findings judge.
+- `BROWSER_USE_API_KEY`: Cloud browsers or the fetch service. For a local browser
+  with fetch disabled, this key is unnecessary.
+- `LMNR_PROJECT_API_KEY`: optional, for your private Laminar project.
+
+Our secrets are not shared with clones or forks. Select the browser, model,
+reasoning and task count in **Actions → Run BU Bench V2 → Run workflow**.
+GitHub's Ubuntu image already has Chrome for `local_headless`. With GitHub CLI:
+
+```bash
+gh workflow run run-benchmark.yml --repo YOUR_ACCOUNT/benchmark
+# Local Chrome with no Browser Use services:
+gh workflow run run-benchmark.yml --repo YOUR_ACCOUNT/benchmark \
+  -f browser=local_headless -F fetch_use=false
+```
+
+Public Actions artifacts contain task IDs, numeric scores and pinned
+configuration. Decrypted tasks, rubrics, screenshots and tool output are not
+uploaded publicly. Full evidence is retained locally; the workflow also uploads
+it when run in a **private repository**. Do not publish decrypted benchmark
+material.
+
+Optional Laminar reporting saves scores and text/tool traces in your own project.
+For a local run, install `uv sync --frozen --extra laminar` and set
+`LMNR_PROJECT_API_KEY` in `.env`; the run command stays the same. Actions installs
+this optional dependency automatically. Full screenshots remain in task
+artifacts. Without a Laminar key, the run still saves JSON results normally.
+
+This follows the new evaluation platform's GitHub-runner approach, but remains
+a separate runner. BrowserCode versions, prompts, task/rubric revisions, and
+judge evidence packing can differ between the two repositories. Pin the saved
+configuration and compare matching task instructions before comparing scores.
 
 <br/>
 
