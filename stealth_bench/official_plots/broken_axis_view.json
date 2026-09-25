@@ -1,0 +1,22 @@
+{
+  "source": "../official_results/summary.json",
+  "source_sha256": "25b587f64dd271cb28232e57c177aa8c1f8e143abf443d238272d7bc4c633871",
+  "visible_intervals_percent": [
+    [
+      0,
+      20
+    ],
+    [
+      65,
+      100
+    ]
+  ],
+  "equal_scale": true,
+  "omitted_interval_percent": [
+    20,
+    65
+  ],
+  "all_configurations_retained": true,
+  "full_axis_view": "stealth_v2_light.png",
+  "renderer": "../generate_broken_axis_plot.py"
+}

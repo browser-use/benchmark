@@ -1,0 +1,501 @@
+{
+  "benchmark": "Stealth Bench V2",
+  "tasks": 100,
+  "repetitions": 2,
+  "observation_seconds": 60,
+  "measurement_date": "2026-09-25",
+  "dataset_sha256": "6dee4f2eb9954c96445222b0fb8b7228689300f84001de4ba4ee9a952b0f3228",
+  "selection": "Historical Cloud advantage over headful Chromium with a US proxy; all 100 frozen domains retained.",
+  "metric": "Confirmed access / 200 scheduled attempts per configuration; unresolved attempts have no score.",
+  "one_time_retries": 97,
+  "configurations": [
+    {
+      "configuration": "headless_direct",
+      "attempts": 200,
+      "confirmed_access": 6,
+      "unresolved": 0,
+      "confirmed_access_percent": 3.0,
+      "possible_access_percent": 3.0,
+      "classifications": {
+        "bot_block": 193,
+        "site_error": 1,
+        "accessible": 6
+      },
+      "repetitions": [
+        {
+          "repetition": 1,
+          "attempts": 100,
+          "confirmed_access": 3,
+          "unresolved": 0,
+          "confirmed_access_percent": 3.0,
+          "possible_access_percent": 3.0,
+          "classifications": {
+            "bot_block": 96,
+            "site_error": 1,
+            "accessible": 3
+          }
+        },
+        {
+          "repetition": 2,
+          "attempts": 100,
+          "confirmed_access": 3,
+          "unresolved": 0,
+          "confirmed_access_percent": 3.0,
+          "possible_access_percent": 3.0,
+          "classifications": {
+            "bot_block": 97,
+            "accessible": 3
+          }
+        }
+      ]
+    },
+    {
+      "configuration": "headful_direct",
+      "attempts": 200,
+      "confirmed_access": 20,
+      "unresolved": 0,
+      "confirmed_access_percent": 10.0,
+      "possible_access_percent": 10.0,
+      "classifications": {
+        "bot_block": 180,
+        "accessible": 20
+      },
+      "repetitions": [
+        {
+          "repetition": 1,
+          "attempts": 100,
+          "confirmed_access": 10,
+          "unresolved": 0,
+          "confirmed_access_percent": 10.0,
+          "possible_access_percent": 10.0,
+          "classifications": {
+            "bot_block": 90,
+            "accessible": 10
+          }
+        },
+        {
+          "repetition": 2,
+          "attempts": 100,
+          "confirmed_access": 10,
+          "unresolved": 0,
+          "confirmed_access_percent": 10.0,
+          "possible_access_percent": 10.0,
+          "classifications": {
+            "bot_block": 90,
+            "accessible": 10
+          }
+        }
+      ]
+    },
+    {
+      "configuration": "headless_proxy",
+      "attempts": 200,
+      "confirmed_access": 4,
+      "unresolved": 0,
+      "confirmed_access_percent": 2.0,
+      "possible_access_percent": 2.0,
+      "classifications": {
+        "bot_block": 196,
+        "accessible": 4
+      },
+      "repetitions": [
+        {
+          "repetition": 1,
+          "attempts": 100,
+          "confirmed_access": 2,
+          "unresolved": 0,
+          "confirmed_access_percent": 2.0,
+          "possible_access_percent": 2.0,
+          "classifications": {
+            "bot_block": 98,
+            "accessible": 2
+          }
+        },
+        {
+          "repetition": 2,
+          "attempts": 100,
+          "confirmed_access": 2,
+          "unresolved": 0,
+          "confirmed_access_percent": 2.0,
+          "possible_access_percent": 2.0,
+          "classifications": {
+            "bot_block": 98,
+            "accessible": 2
+          }
+        }
+      ]
+    },
+    {
+      "configuration": "headful_proxy",
+      "attempts": 200,
+      "confirmed_access": 28,
+      "unresolved": 0,
+      "confirmed_access_percent": 14.0,
+      "possible_access_percent": 14.0,
+      "classifications": {
+        "bot_block": 172,
+        "accessible": 28
+      },
+      "repetitions": [
+        {
+          "repetition": 1,
+          "attempts": 100,
+          "confirmed_access": 15,
+          "unresolved": 0,
+          "confirmed_access_percent": 15.0,
+          "possible_access_percent": 15.0,
+          "classifications": {
+            "bot_block": 85,
+            "accessible": 15
+          }
+        },
+        {
+          "repetition": 2,
+          "attempts": 100,
+          "confirmed_access": 13,
+          "unresolved": 0,
+          "confirmed_access_percent": 13.0,
+          "possible_access_percent": 13.0,
+          "classifications": {
+            "bot_block": 87,
+            "accessible": 13
+          }
+        }
+      ]
+    },
+    {
+      "configuration": "cloud",
+      "attempts": 200,
+      "confirmed_access": 181,
+      "unresolved": 0,
+      "confirmed_access_percent": 90.5,
+      "possible_access_percent": 90.5,
+      "classifications": {
+        "accessible": 181,
+        "bot_block": 17,
+        "network_error": 1,
+        "site_error": 1
+      },
+      "repetitions": [
+        {
+          "repetition": 1,
+          "attempts": 100,
+          "confirmed_access": 89,
+          "unresolved": 0,
+          "confirmed_access_percent": 89.0,
+          "possible_access_percent": 89.0,
+          "classifications": {
+            "accessible": 89,
+            "bot_block": 9,
+            "network_error": 1,
+            "site_error": 1
+          }
+        },
+        {
+          "repetition": 2,
+          "attempts": 100,
+          "confirmed_access": 92,
+          "unresolved": 0,
+          "confirmed_access_percent": 92.0,
+          "possible_access_percent": 92.0,
+          "classifications": {
+            "accessible": 92,
+            "bot_block": 8
+          }
+        }
+      ]
+    },
+    {
+      "configuration": "cloud_no_solver",
+      "attempts": 200,
+      "confirmed_access": 168,
+      "unresolved": 0,
+      "confirmed_access_percent": 84.0,
+      "possible_access_percent": 84.0,
+      "classifications": {
+        "accessible": 168,
+        "bot_block": 30,
+        "network_error": 1,
+        "site_error": 1
+      },
+      "repetitions": [
+        {
+          "repetition": 1,
+          "attempts": 100,
+          "confirmed_access": 87,
+          "unresolved": 0,
+          "confirmed_access_percent": 87.0,
+          "possible_access_percent": 87.0,
+          "classifications": {
+            "accessible": 87,
+            "bot_block": 11,
+            "network_error": 1,
+            "site_error": 1
+          }
+        },
+        {
+          "repetition": 2,
+          "attempts": 100,
+          "confirmed_access": 81,
+          "unresolved": 0,
+          "confirmed_access_percent": 81.0,
+          "possible_access_percent": 81.0,
+          "classifications": {
+            "accessible": 81,
+            "bot_block": 19
+          }
+        }
+      ]
+    },
+    {
+      "configuration": "browserbase",
+      "attempts": 200,
+      "confirmed_access": 157,
+      "unresolved": 1,
+      "confirmed_access_percent": 78.5,
+      "possible_access_percent": 79.0,
+      "classifications": {
+        "accessible": 157,
+        "bot_block": 40,
+        "network_error": 2,
+        "uncertain": 1
+      },
+      "repetitions": [
+        {
+          "repetition": 1,
+          "attempts": 100,
+          "confirmed_access": 80,
+          "unresolved": 1,
+          "confirmed_access_percent": 80.0,
+          "possible_access_percent": 81.0,
+          "classifications": {
+            "accessible": 80,
+            "bot_block": 18,
+            "network_error": 1,
+            "uncertain": 1
+          }
+        },
+        {
+          "repetition": 2,
+          "attempts": 100,
+          "confirmed_access": 77,
+          "unresolved": 0,
+          "confirmed_access_percent": 77.0,
+          "possible_access_percent": 77.0,
+          "classifications": {
+            "accessible": 77,
+            "bot_block": 22,
+            "network_error": 1
+          }
+        }
+      ]
+    },
+    {
+      "configuration": "kernel",
+      "attempts": 200,
+      "confirmed_access": 161,
+      "unresolved": 0,
+      "confirmed_access_percent": 80.5,
+      "possible_access_percent": 80.5,
+      "classifications": {
+        "accessible": 161,
+        "bot_block": 35,
+        "network_error": 1,
+        "site_error": 3
+      },
+      "repetitions": [
+        {
+          "repetition": 1,
+          "attempts": 100,
+          "confirmed_access": 79,
+          "unresolved": 0,
+          "confirmed_access_percent": 79.0,
+          "possible_access_percent": 79.0,
+          "classifications": {
+            "accessible": 79,
+            "bot_block": 19,
+            "network_error": 1,
+            "site_error": 1
+          }
+        },
+        {
+          "repetition": 2,
+          "attempts": 100,
+          "confirmed_access": 82,
+          "unresolved": 0,
+          "confirmed_access_percent": 82.0,
+          "possible_access_percent": 82.0,
+          "classifications": {
+            "accessible": 82,
+            "bot_block": 16,
+            "site_error": 2
+          }
+        }
+      ]
+    },
+    {
+      "configuration": "anchor",
+      "attempts": 200,
+      "confirmed_access": 164,
+      "unresolved": 0,
+      "confirmed_access_percent": 82.0,
+      "possible_access_percent": 82.0,
+      "classifications": {
+        "accessible": 164,
+        "bot_block": 36
+      },
+      "repetitions": [
+        {
+          "repetition": 1,
+          "attempts": 100,
+          "confirmed_access": 85,
+          "unresolved": 0,
+          "confirmed_access_percent": 85.0,
+          "possible_access_percent": 85.0,
+          "classifications": {
+            "accessible": 85,
+            "bot_block": 15
+          }
+        },
+        {
+          "repetition": 2,
+          "attempts": 100,
+          "confirmed_access": 79,
+          "unresolved": 0,
+          "confirmed_access_percent": 79.0,
+          "possible_access_percent": 79.0,
+          "classifications": {
+            "accessible": 79,
+            "bot_block": 21
+          }
+        }
+      ]
+    },
+    {
+      "configuration": "hyperbrowser",
+      "attempts": 200,
+      "confirmed_access": 147,
+      "unresolved": 2,
+      "confirmed_access_percent": 73.5,
+      "possible_access_percent": 74.5,
+      "classifications": {
+        "accessible": 147,
+        "bot_block": 51,
+        "judge_or_capture_error": 2
+      },
+      "repetitions": [
+        {
+          "repetition": 1,
+          "attempts": 100,
+          "confirmed_access": 73,
+          "unresolved": 1,
+          "confirmed_access_percent": 73.0,
+          "possible_access_percent": 74.0,
+          "classifications": {
+            "accessible": 73,
+            "bot_block": 26,
+            "judge_or_capture_error": 1
+          }
+        },
+        {
+          "repetition": 2,
+          "attempts": 100,
+          "confirmed_access": 74,
+          "unresolved": 1,
+          "confirmed_access_percent": 74.0,
+          "possible_access_percent": 75.0,
+          "classifications": {
+            "accessible": 74,
+            "bot_block": 25,
+            "judge_or_capture_error": 1
+          }
+        }
+      ]
+    },
+    {
+      "configuration": "browserless_solver",
+      "attempts": 200,
+      "confirmed_access": 155,
+      "unresolved": 17,
+      "confirmed_access_percent": 77.5,
+      "possible_access_percent": 86.0,
+      "classifications": {
+        "accessible": 155,
+        "bot_block": 27,
+        "judge_or_capture_error": 16,
+        "uncertain": 1,
+        "site_error": 1
+      },
+      "repetitions": [
+        {
+          "repetition": 1,
+          "attempts": 100,
+          "confirmed_access": 77,
+          "unresolved": 13,
+          "confirmed_access_percent": 77.0,
+          "possible_access_percent": 90.0,
+          "classifications": {
+            "accessible": 77,
+            "bot_block": 10,
+            "judge_or_capture_error": 12,
+            "uncertain": 1
+          }
+        },
+        {
+          "repetition": 2,
+          "attempts": 100,
+          "confirmed_access": 78,
+          "unresolved": 4,
+          "confirmed_access_percent": 78.0,
+          "possible_access_percent": 82.0,
+          "classifications": {
+            "accessible": 78,
+            "bot_block": 17,
+            "judge_or_capture_error": 4,
+            "site_error": 1
+          }
+        }
+      ]
+    },
+    {
+      "configuration": "steel",
+      "attempts": 200,
+      "confirmed_access": 149,
+      "unresolved": 1,
+      "confirmed_access_percent": 74.5,
+      "possible_access_percent": 75.0,
+      "classifications": {
+        "accessible": 149,
+        "bot_block": 50,
+        "uncertain": 1
+      },
+      "repetitions": [
+        {
+          "repetition": 1,
+          "attempts": 100,
+          "confirmed_access": 74,
+          "unresolved": 1,
+          "confirmed_access_percent": 74.0,
+          "possible_access_percent": 75.0,
+          "classifications": {
+            "accessible": 74,
+            "bot_block": 25,
+            "uncertain": 1
+          }
+        },
+        {
+          "repetition": 2,
+          "attempts": 100,
+          "confirmed_access": 75,
+          "unresolved": 0,
+          "confirmed_access_percent": 75.0,
+          "possible_access_percent": 75.0,
+          "classifications": {
+            "accessible": 75,
+            "bot_block": 25
+          }
+        }
+      ]
+    }
+  ]
+}
