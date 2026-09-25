@@ -1,11 +1,11 @@
 {
-  "revision": "2026-09-25-captcha-alignment",
+  "revision": "2026-09-25-reuters-playback",
   "status": "main_not_regraded",
   "release_version": "2.1",
   "release_tag": null,
   "base_commit": "421390ea7fa4708f3d89d7695f9a16debb861daf",
   "base_encrypted_sha256": "fe0fc1eede3197d9eaffd42af3ac7b11cc15743d401e95496f3eb03f0d023a0e",
-  "hash_convention": "sha256 of UTF-8 text exactly as distributed; weights hashes unchanged",
+  "hash_convention": "sha256 of UTF-8 text exactly as distributed; revised weights use sorted compact JSON",
   "changes": [
     {
       "task_id": "bu2-001",
@@ -172,6 +172,22 @@
       "before_rubric_sha256": "6f84496a32e5d885253810079090239519b377d02badc36ee509350fb1479886",
       "after_rubric_sha256": "a7d479aefabfa0193cca178e7dd762d4f779b26dc892bfcf402f42e28f992c3b",
       "review_status": "pending_saved_trace_review"
+    },
+    {
+      "task_id": "bu2-185",
+      "summary": "Replace the footer/absence contract with actual news-video playback; reallocate scoring prospectively to the demonstrated outcome.",
+      "task_changed": true,
+      "review_status": "pending_live_validation",
+      "before_task_sha256": "162f44ed2f8269824ecb9696783b08328265761e7ea826feea22092ffb942c36",
+      "after_task_sha256": "ae5f78df23b9f2784932565dd8a1d6649750fcfa39b1b8174930b89e1c708604",
+      "before_rubric_sha256": "2820f3c00db846389b72b90b45785d364dcd15b532aea05dd07151ae4d1b0a4f",
+      "after_rubric_sha256": "d03a749363005b20e98e0042a9aee494e66c4e8e3f5c6f371d4d491095b8780f",
+      "before_title_sha256": "a2e7dd85053f9c85b3251f2905009f24f15e89ba0df1317d41dcbf3eec0052a7",
+      "after_title_sha256": "596ad9375e266e32f2be30feb5d80942ed57716a86b708add83c291b070033d5",
+      "before_summary_sha256": "1f7be224bd117f9e7f03fab45dceabb81e3ce1494f8a4ebf8e29479d2485e6b3",
+      "after_summary_sha256": "4a611a12737aa08ac06befa841d5331af779d8b3174f564c4421326ddcdf111d",
+      "before_weights_sha256": "a3a3b9bf46595905b842c65560b9054a46746dccd8bb70469de29165ba0814a4",
+      "after_weights_sha256": "de3256e1d436612e9b546532da0aa21d45c7b9e0ceabdc6fdd91e3b8528f0ba4"
     }
   ],
   "deferred": [
@@ -186,15 +202,11 @@
     {
       "task_id": "bu2-040",
       "issue": "Keep success requirements; compare equal budgets. Partner-reported 100% run is not independently verified."
-    },
-    {
-      "task_id": "bu2-185",
-      "issue": "No in-scope playback demonstrated in seven reviewed historical executions; retain evidenced-absence outcome, require verified target before a playback-only revision."
     }
   ],
-  "candidate_encrypted_sha256": "7ef05a1d0abdf6ab4b570cae5b93adf3299cc5c3c2749961473d68f5cdc7bf94",
-  "previous_revision": "2026-09-24-feedback-review-draft-4",
-  "previous_encrypted_sha256": "87101f7ebcf3bfbde00091e278741427e906c9b7ccc223892c95e4549704d7c6",
+  "candidate_encrypted_sha256": "0c014b056192e261b06f04ed6da6dcf37f2135150cf58c87ea839bd4e150e5c3",
+  "previous_revision": "2026-09-25-captcha-alignment",
+  "previous_encrypted_sha256": "7ef05a1d0abdf6ab4b570cae5b93adf3299cc5c3c2749961473d68f5cdc7bf94",
   "reverted_changes": [
     {
       "task_id": "bu2-171",
