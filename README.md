@@ -45,15 +45,23 @@ The 55-task subset selects public IDs `bu2-001` through `bu2-055` from the full 
 
 Tasks, rubrics and weights live once, in the encrypted 200-task release. `BU_Bench_V2_55.json` pins that file's SHA-256 and lists the subset IDs; it does not contain a second dataset. Label scores with the set used: **200 tasks**, **55-task subset**, or **legacy 60 tasks**.
 
-**Current dataset release: [BU Bench V2.1](https://github.com/browser-use/benchmark/releases/tag/v2.1).**
-The same 200 task IDs now include nine task/rubric corrections relative to the
-original release; item IDs, weights and 55-task subset membership are unchanged.
-See [changes, validation and remaining work](RUBRIC_REVISION.md). The original
-AliExpress and Reuters rules are restored after the earlier blocked-access edits.
-Historical results have not been regraded, and the chart above is unchanged.
-New rules for 014/028/053/163/187 still need saved-evidence judge validation.
-Pin tag `v2.1` when comparing this release; the judge adapter version is separately
-`2.1.2`. The encrypted filename remains `BU_Bench_V2.enc` for compatibility.
+**Latest stable dataset release: [BU Bench V2.1](https://github.com/browser-use/benchmark/releases/tag/v2.1).**
+This checkout contains the **unreleased CAPTCHA-alignment candidate**
+(`2026-09-25-captcha-alignment-draft-1`), with eight further task/rubric
+corrections on top of V2.1's nine. All 200 task IDs, item IDs, weights and
+55-task subset membership are unchanged. The V2.1 tag and downloadable release
+assets remain unchanged; pin tag `v2.1` to reproduce that release rather than
+using this candidate. The encrypted filename remains `BU_Bench_V2.enc`.
+
+See [changes, validation and remaining work](RUBRIC_REVISION.md). The candidate
+requires successful Walmart source verification and gives no item credit to a
+run that was blocked before obtaining any Walmart task result. Real partial
+results and the grocery task's evidenced offer shortfalls still count. It also
+aligns CAPTCHA recovery instructions, resolves an observation-record ambiguity,
+and removes a judge-only solver-provider restriction. No generic CAPTCHA
+penalty or score override was added. Historical results have not been regraded,
+the chart above is unchanged, and saved-evidence semantic validation remains
+pending. The judge adapter version is separately `2.1.2`.
 
 The tasks are encrypted to keep their text out of web crawlers and model training data. Please do not publish decrypted tasks or rubrics in plaintext or use them for model training.
 
