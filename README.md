@@ -36,6 +36,22 @@
 
 **200 web tasks scored against weighted findings rubrics — the default task set.**
 
+### Default evaluation command
+
+After [installing the runner and setting your API keys](#running-bu-bench-v21-default),
+run this from the repository root on `main`:
+
+```bash
+uv run python run_eval.py
+```
+
+[`run_eval.py`](run_eval.py) is the default entry point. It loads all 200 tasks
+from [`BU_Bench_V2.enc`](BU_Bench_V2.enc), which contains the current V2.1 tasks
+and rubrics, and runs BrowserCode with the findings judge. No task-count or
+dataset flag is needed. Defaults are 60 minutes per task and up to 100 concurrent
+tasks; [model, browser and override details are below](#running-bu-bench-v21-default).
+Results go to `run_data/BU_Bench_V2_bcode_<timestamp>/`.
+
 | File | Purpose |
 | --- | --- |
 | [BU_Bench_V2.enc](BU_Bench_V2.enc) | All 200 current V2.1 tasks, rubrics and weights |
