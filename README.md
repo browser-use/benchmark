@@ -128,7 +128,7 @@ Defaults:
 
 | Setting | Default |
 | --- | --- |
-| Executor | BrowserCode 0.1.20, `openai/gpt-6-luna`, low reasoning |
+| Executor | BrowserCode 0.1.20, `openai/gpt-6-luna`, xhigh reasoning |
 | Tasks | All 200 in `BU_Bench_V2.enc` |
 | Browser | Browser Use Cloud, one session per task |
 | Limits | 3 concurrent tasks; 3,600 seconds per task |
