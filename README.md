@@ -267,6 +267,8 @@ Run the complete dataset twice with a fresh browser session per attempt:
 
 Stock headful/headless controls, US-proxy controls and other providers use the same runner. See [setup, all configurations and limitations](stealth_bench/README.md#reproduce). Tasks are encrypted using the repository convention; do not publish decrypted tasks or use them for training.
 
+**Independent provider rerun:** all seven managed providers were evaluated again on the same 100 tasks. Cloud scored 90%, Anchor 85%, Kernel and Browserless 83%, Browserbase standard 78%, Steel 74%, and Hyperbrowser 72%. See the [separate confirmation results, unresolved counts and chart](stealth_bench/README.md#independent-provider-confirmation); the original two-repeat results above remain unchanged.
+
 ## BU Bench V1
 
 **100 hand-selected tasks for evaluating browser automation agents**

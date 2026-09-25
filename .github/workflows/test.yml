@@ -16,9 +16,11 @@ jobs:
       - run: uv sync --frozen --python 3.12
       - run: uv run python review_rubric_revision.py
       - run: BCODE_TEST_CHROME="$(command -v google-chrome)" uv run python -m unittest discover -s tests
-      - run: uv run ruff check bcode_runner.py bcode_eval.py bcode_results.py tests/test_bcode_runner.py tests/test_bcode_binary.py stealth_bench/run.py stealth_bench/v2 stealth_bench/generate_plots.py tests/test_stealth_v2.py
+      - run: uv run ruff check bcode_runner.py bcode_eval.py bcode_results.py tests/test_bcode_runner.py tests/test_bcode_binary.py stealth_bench/run.py stealth_bench/v2 stealth_bench/generate_plots.py stealth_bench/generate_confirmation_plot.py tests/test_stealth_v2.py
       - name: Validate and render Stealth V2 published results
-        run: uv run --script stealth_bench/generate_plots.py
+        run: |
+          uv run --script stealth_bench/generate_plots.py
+          uv run --script stealth_bench/generate_confirmation_plot.py
       - run: go install github.com/rhysd/actionlint/cmd/actionlint@v1.7.7
       - run: |
           "$(go env GOPATH)/bin/actionlint" .github/workflows/run-benchmark.yml

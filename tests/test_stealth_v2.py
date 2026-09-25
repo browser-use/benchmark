@@ -69,3 +69,49 @@ class StealthV2Tests(unittest.TestCase):
         expected = {(config, rep, tid) for config in configurations for rep in (1, 2) for tid in task_ids}
         self.assertEqual(len(rows), len(keys))
         self.assertEqual(keys, expected)
+
+    def test_confirmation_preserves_full_coverage_and_retry_lineage(self):
+        from collections import Counter
+
+        directory = ROOT / "stealth_bench/official_results/confirmation-20260925"
+        summary = json.loads((directory / "summary.json").read_text())
+        original_summary = json.loads((directory.parent / "summary.json").read_text())
+        original_scores = {r["configuration"]: r for r in original_summary["configurations"]}
+        task_ids = {task["task_id"] for task in load("run.py").load_tasks()}
+
+        def read_rows(name):
+            return [json.loads(line) for line in (directory / name).read_text().splitlines()]
+
+        def index(rows):
+            result = {(r["configuration"], r["task_id"]): r for r in rows}
+            self.assertEqual(len(result), len(rows))
+            return result
+
+        rows = read_rows("attempts.jsonl")
+        originals = index(read_rows("original-attempts.jsonl"))
+        retries = index(read_rows("retry-attempts.jsonl"))
+        effective = index(rows)
+        configurations = {r["configuration"] for r in summary["configurations"]}
+        self.assertEqual(len(configurations), 7)
+        expected = {(cfg, tid) for cfg in configurations for tid in task_ids}
+        self.assertEqual(set(effective), expected)
+        self.assertEqual(set(originals), expected)
+        self.assertEqual(len(rows), 700)
+        self.assertEqual(len(retries), summary["one_time_retries"])
+        for key, row in effective.items():
+            source = retries.get(key, originals[key])
+            self.assertEqual(row["repetition"], 1)
+            self.assertEqual(row["classification"], source["classification"])
+            self.assertEqual(row["score"], source["score"])
+            self.assertEqual(row["retry_used"], key in retries)
+            if key in retries:
+                self.assertEqual(originals[key]["classification"], "judge_or_capture_error")
+        for cfg in summary["configurations"]:
+            selected = [r for r in rows if r["configuration"] == cfg["configuration"]]
+            counts = Counter(r["classification"] for r in selected)
+            self.assertEqual(len(selected), cfg["attempts"])
+            self.assertEqual(dict(counts), cfg["classifications"])
+            self.assertEqual(counts["accessible"], cfg["confirmed_access_percent"])
+            self.assertEqual(cfg["original_two_repeat"]["confirmed_access_percent"],
+                             original_scores[cfg["configuration"]]["confirmed_access_percent"])
+            self.assertEqual(cfg["possible_access_percent"], cfg["confirmed_access_percent"] + cfg["unresolved"])

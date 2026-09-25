@@ -102,8 +102,36 @@ The first Browserless launch omitted explicit native solving and a sufficient se
 
 ## Visual audit and score sensitivity
 
-The headline values are the frozen Luna judge's outputs, not human-certified ground truth. We visually reviewed 61 distinct attempt screenshots, including a fixed random sample of 20 tasks on Cloud and headful-plus-proxy (40 matched screenshots) with no outcome filter. That random sample supported the recorded classifications; it is not a full human relabeling of all 2,400 attempts. The visual audit found a concrete error: an earlier CAPTCHA was cited when the final capture had become blank. Age-verification overlays also expose ambiguity in the phrase "usable content": the model can accept underlying page text on one attempt and return uncertain on another. Proxy-provider blacklist pages are measured failed access, but their site/network subtype is not always consistent.
+The original two-repeat headline values are the frozen Luna judge's outputs, not human-certified ground truth. We visually reviewed 61 distinct attempt screenshots, including a fixed random sample of 20 tasks on Cloud and headful-plus-proxy (40 matched screenshots) with no outcome filter. That random sample supported the recorded classifications; it is not a full human relabeling of all 2,400 attempts. The visual audit found a concrete error: an earlier CAPTCHA was cited when the final capture had become blank. Age-verification overlays also expose ambiguity in the phrase "usable content": the model can accept underlying page text on one attempt and return uncertain on another. Proxy-provider blacklist pages are measured failed access, but their site/network subtype is not always consistent.
 
 We retain every original verdict and do not selectively rerun or override these scores. A separate [sensitivity analysis](official_results/judge-sensitivity.json) treats both identified age-overlay tasks across **every configuration and repetition**, plus all uniform final screenshots found by an empty-body-text screen, as unresolved. It reports a lower and upper access bound on the same 200-attempt denominator. These are conservative checks for the identified cases, not statistical confidence intervals or proof that every remaining judgment is correct. The main chart's hatched extensions cover the judge's recorded unresolved results only; the sensitivity file additionally covers the audit flags.
 
 The public result files contain the effective outcomes, original outcomes and retry outcomes keyed by configuration, repetition and task ID. `retry_used` means the one permitted missing-measurement retry was applied, even when it remained unresolved. Raw captures, reasons containing page text, session identifiers and private source links remain private.
+
+## Independent provider confirmation
+
+After the original comparison, the same 100 tasks were run once more for each of the seven managed providers: 700 original attempts plus nine one-time missing-measurement retries. Task membership, the 60-second observation and the access-v3 judge were unchanged. All providers used concurrency five, with task-order seed 20260930; some original runs used higher concurrency as documented above. Browserbase uses standard mode. The original two-repeat result files and charts remain unchanged.
+
+| Provider | Original two-run average | Fresh confirmation | Unresolved /100 |
+| --- | ---: | ---: | ---: |
+| Browser Use Cloud | 90.5% | 90% | 1 |
+| Browserbase standard | 78.5% | 78% | 0 |
+| Kernel | 80.5% | 83% | 0 |
+| Anchor | 82% | 85% | 0 |
+| Hyperbrowser | 73.5% | 72% | 1 |
+| Steel | 74.5% | 74% | 0 |
+| Browserless | 77.5% | 83% | 3 |
+
+<picture>
+  <source media="(prefers-color-scheme: light)" srcset="official_plots/stealth_v2_confirmation_light.png">
+  <source media="(prefers-color-scheme: dark)" srcset="official_plots/stealth_v2_confirmation_dark.png">
+  <img alt="Stealth V2 independent provider confirmation" src="official_plots/stealth_v2_confirmation_light.png" width="100%">
+</picture>
+
+The new run has five unresolved outcomes: Cloud one, Hyperbrowser one, Browserless three. Their possible-access upper bounds are 91%, 73% and 86%, respectively. All 100 scheduled tasks remain in each denominator. Valid failures and uncertain rendered pages were not retried. The chart's hatching represents recorded unresolved outcomes; circles show the original two-run averages.
+
+A fixed sample of three task IDs per provider produced 21 reviewed screenshots. Nineteen supported the recorded classifications; one mostly blank page with a CAPTCHA badge did not establish the bot-block subtype, and one age/research overlay blurred the underlying content. No verdict was overridden. A separate conservative [sensitivity check](official_results/confirmation-20260925/judge-sensitivity.json) flags both previously identified overlay tasks across all providers and every complete final capture with empty body text. This broader screen includes some embedded challenges and image-only pages that may actually be classifiable; its bounds are not confidence intervals. Cloud's range for the identified cases is 89–92%, Anchor's 83–89%, and Browserless's 81–86%.
+
+[All confirmation outcomes, originals, retries and provenance](official_results/confirmation-20260925/). These repeat the selected-cohort product comparison; they do not isolate fingerprinting or establish web-wide superiority. Regenerate the separate charts with:
+
+    uv run --script stealth_bench/generate_confirmation_plot.py

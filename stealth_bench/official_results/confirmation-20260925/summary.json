@@ -1,0 +1,199 @@
+{
+  "benchmark": "Stealth Bench V2 provider confirmation",
+  "tasks": 100,
+  "repetitions": 1,
+  "observation_seconds": 60,
+  "dataset_sha256": "6dee4f2eb9954c96445222b0fb8b7228689300f84001de4ba4ee9a952b0f3228",
+  "concurrency_per_provider": 5,
+  "task_order_seed": 20260930,
+  "original_attempts": 700,
+  "one_time_retries": 9,
+  "completed_at": "2026-09-25T19:32:43Z",
+  "configurations": [
+    {
+      "configuration": "cloud",
+      "label": "Browser Use Cloud",
+      "attempts": 100,
+      "confirmed_access": 90,
+      "unresolved": 1,
+      "confirmed_access_percent": 90.0,
+      "possible_access_percent": 91.0,
+      "classifications": {
+        "accessible": 90,
+        "bot_block": 9,
+        "uncertain": 1
+      },
+      "original_two_repeat": {
+        "attempts": 200,
+        "confirmed_access": 181,
+        "unresolved": 0,
+        "confirmed_access_percent": 90.5,
+        "possible_access_percent": 90.5,
+        "classifications": {
+          "accessible": 181,
+          "bot_block": 17,
+          "network_error": 1,
+          "site_error": 1
+        }
+      }
+    },
+    {
+      "configuration": "browserbase",
+      "label": "Browserbase standard",
+      "attempts": 100,
+      "confirmed_access": 78,
+      "unresolved": 0,
+      "confirmed_access_percent": 78.0,
+      "possible_access_percent": 78.0,
+      "classifications": {
+        "accessible": 78,
+        "bot_block": 22
+      },
+      "original_two_repeat": {
+        "attempts": 200,
+        "confirmed_access": 157,
+        "unresolved": 1,
+        "confirmed_access_percent": 78.5,
+        "possible_access_percent": 79.0,
+        "classifications": {
+          "bot_block": 40,
+          "accessible": 157,
+          "network_error": 2,
+          "uncertain": 1
+        }
+      }
+    },
+    {
+      "configuration": "kernel",
+      "label": "Kernel",
+      "attempts": 100,
+      "confirmed_access": 83,
+      "unresolved": 0,
+      "confirmed_access_percent": 83.0,
+      "possible_access_percent": 83.0,
+      "classifications": {
+        "bot_block": 16,
+        "accessible": 83,
+        "site_error": 1
+      },
+      "original_two_repeat": {
+        "attempts": 200,
+        "confirmed_access": 161,
+        "unresolved": 0,
+        "confirmed_access_percent": 80.5,
+        "possible_access_percent": 80.5,
+        "classifications": {
+          "accessible": 161,
+          "site_error": 3,
+          "bot_block": 35,
+          "network_error": 1
+        }
+      }
+    },
+    {
+      "configuration": "anchor",
+      "label": "Anchor",
+      "attempts": 100,
+      "confirmed_access": 85,
+      "unresolved": 0,
+      "confirmed_access_percent": 85.0,
+      "possible_access_percent": 85.0,
+      "classifications": {
+        "accessible": 85,
+        "bot_block": 15
+      },
+      "original_two_repeat": {
+        "attempts": 200,
+        "confirmed_access": 164,
+        "unresolved": 0,
+        "confirmed_access_percent": 82.0,
+        "possible_access_percent": 82.0,
+        "classifications": {
+          "accessible": 164,
+          "bot_block": 36
+        }
+      }
+    },
+    {
+      "configuration": "hyperbrowser",
+      "label": "Hyperbrowser",
+      "attempts": 100,
+      "confirmed_access": 72,
+      "unresolved": 1,
+      "confirmed_access_percent": 72.0,
+      "possible_access_percent": 73.0,
+      "classifications": {
+        "accessible": 72,
+        "bot_block": 26,
+        "network_error": 1,
+        "judge_or_capture_error": 1
+      },
+      "original_two_repeat": {
+        "attempts": 200,
+        "confirmed_access": 147,
+        "unresolved": 2,
+        "confirmed_access_percent": 73.5,
+        "possible_access_percent": 74.5,
+        "classifications": {
+          "bot_block": 51,
+          "accessible": 147,
+          "judge_or_capture_error": 2
+        }
+      }
+    },
+    {
+      "configuration": "steel",
+      "label": "Steel",
+      "attempts": 100,
+      "confirmed_access": 74,
+      "unresolved": 0,
+      "confirmed_access_percent": 74.0,
+      "possible_access_percent": 74.0,
+      "classifications": {
+        "accessible": 74,
+        "bot_block": 24,
+        "network_error": 2
+      },
+      "original_two_repeat": {
+        "attempts": 200,
+        "confirmed_access": 149,
+        "unresolved": 1,
+        "confirmed_access_percent": 74.5,
+        "possible_access_percent": 75.0,
+        "classifications": {
+          "accessible": 149,
+          "bot_block": 50,
+          "uncertain": 1
+        }
+      }
+    },
+    {
+      "configuration": "browserless_solver",
+      "label": "Browserless",
+      "attempts": 100,
+      "confirmed_access": 83,
+      "unresolved": 3,
+      "confirmed_access_percent": 83.0,
+      "possible_access_percent": 86.0,
+      "classifications": {
+        "accessible": 83,
+        "bot_block": 14,
+        "judge_or_capture_error": 3
+      },
+      "original_two_repeat": {
+        "attempts": 200,
+        "confirmed_access": 155,
+        "unresolved": 17,
+        "confirmed_access_percent": 77.5,
+        "possible_access_percent": 86.0,
+        "classifications": {
+          "bot_block": 27,
+          "accessible": 155,
+          "judge_or_capture_error": 16,
+          "site_error": 1,
+          "uncertain": 1
+        }
+      }
+    }
+  ]
+}
