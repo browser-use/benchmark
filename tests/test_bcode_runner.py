@@ -57,7 +57,7 @@ class ConfigurationTests(unittest.TestCase):
         )
         self.assertEqual(
             (args.bcode_version, args.task_timeout, args.concurrency),
-            ("0.1.20", 3600, 3),
+            ("0.1.20", 3600, 100),
         )
         with contextlib.redirect_stderr(io.StringIO()), self.assertRaises(SystemExit):
             run_eval.parse_args(["--framework", "browser-use"])
@@ -98,6 +98,7 @@ class ConfigurationTests(unittest.TestCase):
                 ("browser-use", "bu-2-0", "local_headless"),
             )
             self.assertEqual(len(load_tasks(benchmark)), count)
+            self.assertEqual(args.concurrency, 3)
         explicit = run_eval.parse_args(["--executor", "browser-use"])
         self.assertEqual(explicit.benchmark, "BU_Bench_V2")
         self.assertEqual(explicit.model, "bu-2-0")
