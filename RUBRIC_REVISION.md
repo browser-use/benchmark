@@ -6,8 +6,8 @@ The stable [V2.1 release](https://github.com/browser-use/benchmark/releases/tag/
 and its downloaded assets are unchanged.
 
 This V2.1 update changes eight task/rubric contracts relative to the original tag and retains
-the nine earlier corrections. All 200 IDs, every item ID/weight/canary and the
-55-task subset membership remain unchanged. Seven task instructions change;
+the nine earlier corrections. All 200 IDs and every item ID/weight/canary
+remain unchanged. Seven task instructions change;
 016 changes only its rubric. The deterministic scorer, timeouts, screenshot
 handling, reward-hacking calculation and historical scores are unchanged.
 The judge system prompt gains one clarification, recorded as adapter 2.1.3:
@@ -43,7 +43,7 @@ the agent is not required to use an undocumented solver or retry path.
 ## Validation
 
 - Artifact validation checks the 17 declared revisions against the original
-  snapshot, preserving all task IDs, weights, canaries and subset membership.
+  snapshot from Git history, preserving all task IDs, weights and canaries.
 - Thirteen new encrypted semantic review scenarios supplement the existing
   eleven. They cover all four fully blocked Walmart tasks, incomplete product
   verification, valid grocery shortfalls, the observation-record distinction,
@@ -138,6 +138,19 @@ uv run python review_rubric_revision.py --write-private-diffs
 ```
 
 The second command writes plaintext task/rubric diffs into ignored
-`run_data/rubric-review/`. Keep those private. The original encrypted August 25
-dataset remains in `snapshots/BU_Bench_V2_2026-08-25.enc`. This release adds no
-score-cap machinery and makes no changes to historical results.
+`run_data/rubric-review/`. Keep those private.
+
+The validator reads the original encrypted August 25 dataset from
+`BU_Bench_V2.enc` at the `base_commit` pinned in `rubric_revision.json` and
+verifies its SHA-256. The historical dataset and 55-task selectors are no longer
+duplicated in the checkout. Use a full Git clone for revision checks. For a
+shallow clone, fetch the pinned commit; for a source archive, supply the original
+encrypted baseline explicitly:
+
+```bash
+uv run python review_rubric_revision.py --base-artifact /path/to/original/BU_Bench_V2.enc
+```
+
+Both paths verify the same baseline hash. Normal benchmark execution needs only
+the current dataset and does not need Git history or the original baseline.
+This cleanup changes no tasks, rubrics, scores or runtime defaults.

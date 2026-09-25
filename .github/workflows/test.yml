@@ -10,6 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Revision validation reads its pinned baseline from Git history.
       - uses: astral-sh/setup-uv@v6
       - run: uv sync --frozen --python 3.12
       - run: BCODE_TEST_CHROME="$(command -v google-chrome)" uv run python -m unittest discover -s tests
