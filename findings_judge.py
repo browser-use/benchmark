@@ -87,7 +87,9 @@ For each finding set not_assessable_reason:
 - absent_scope: the rubric explicitly uses not_assessable for work the agent did not produce, an empty scope, or an inapplicable terminal branch. Cite that rubric rule and the observed absence. This earns no item credit; it is not a collector failure.
 - null: required for met and violated.
 Missing agent work alone is never missing_evidence. Judge omitted work as violated unless the rubric explicitly assigns absent_scope.
-An item is met only if it is flawless over its whole scope. Do not average within an item. Do not let one item's failure change another item's finding.
+An item is met only if it is flawless over its whole scope. Do not average within an item.
+Apply the rubric's explicit defect-allocation and no-double-jeopardy rulings before item findings. When a ruling assigns one defect to a particular item or says to price it once, do not mark another item violated solely for that same defect. Name the defect and its assigned item in the evidence; evaluate other items on their remaining requirements. A field that is present but wrong is not also missing field coverage when the rubric assigns its correctness to a separate item. Likewise, do not repeat a context-value mistake as an honesty violation when the rubric says the defect is priced once and there is no separate honesty defect.
+Apart from those explicit rubric allocations, evaluate each item independently; do not let another item's failure determine its status.
 </findings_rule>
 
 <observations_rule>
