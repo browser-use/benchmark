@@ -250,10 +250,12 @@ configuration and compare matching task instructions before comparing scores.
 This high-security navigation challenge was selected from historical sites where stock headful Chromium with a US proxy struggled. Membership was frozen before the provider comparison. It measures this deliberately difficult cohort, not representative web-wide access.
 
 <picture>
-  <source media="(prefers-color-scheme: light)" srcset="stealth_bench/official_plots/stealth_v2_light.png">
-  <source media="(prefers-color-scheme: dark)" srcset="stealth_bench/official_plots/stealth_v2_dark.png">
-  <img alt="Stealth Bench V2 — confirmed website access in 60 seconds" src="stealth_bench/official_plots/stealth_v2_light.png" width="100%">
+  <source media="(prefers-color-scheme: light)" srcset="stealth_bench/official_plots/stealth_v2_broken_axis_light.png">
+  <source media="(prefers-color-scheme: dark)" srcset="stealth_bench/official_plots/stealth_v2_broken_axis_dark.png">
+  <img alt="Stealth Bench V2 — confirmed website access in 60 seconds; axis omits 20–65%" src="stealth_bench/official_plots/stealth_v2_broken_axis_light.png" width="100%">
 </picture>
+
+**The chart omits 20–65% with a marked axis break; both visible segments use the same scale.** [Full 0–100% chart](stealth_bench/official_plots/stealth_v2_light.png). All configurations and original two-repeat results are unchanged.
 
 **[Dataset](Stealth_Bench_V2.enc) · [Methodology and judge prompt](stealth_bench/README.md) · [Results](stealth_bench/official_results/)**
 

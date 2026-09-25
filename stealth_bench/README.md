@@ -2,6 +2,8 @@
 
 Can a fresh browser reach ordinary, usable website content within **60 seconds**?
 
+The main comparison has a [marked broken-axis view](official_plots/stealth_v2_broken_axis_light.png) that omits 20–65% while keeping the same scale in both visible segments. The [full 0–100% view](official_plots/stealth_v2_light.png) remains available. Both render the same complete original two-repeat results, including all four Chromium controls.
+
 This is a deliberately difficult **100-domain access challenge**, selected using historical differences between Browser Use Cloud and stock headful Chromium with a US proxy. It is not a representative sample of the web and is not balanced by industry or anti-bot vendor. Membership was frozen before the new provider comparison; all 100 tasks stay in the denominator, including failures and unresolved measurements.
 
 ## Dataset
