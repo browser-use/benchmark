@@ -32,7 +32,7 @@ if '--version' in sys.argv:
     raise SystemExit
 if 'models' in sys.argv:
     print('openai/gpt-6-luna')
-    print(json.dumps({{'variants': {{'low': {{'reasoningEffort': 'low'}}}}, 'capabilities': {{'attachment': True, 'input': {{'image': True}}}}, 'limit': {{'context': 100000, 'output': 10000}}}}))
+    print(json.dumps({{'variants': {{'low': {{'reasoningEffort': 'low'}}, 'xhigh': {{'reasoningEffort': 'xhigh'}}}}, 'capabilities': {{'attachment': True, 'input': {{'image': True}}}}, 'limit': {{'context': 100000, 'output': 10000}}}}))
     raise SystemExit
 label = sys.argv[-1].split('Task: ')[-1]
 Path('outputs/same.csv').write_text('label,value\\n' + label + ',42')
@@ -53,7 +53,7 @@ class ConfigurationTests(unittest.TestCase):
         )
         self.assertEqual(
             (args.model, args.agent_reasoning, args.judge_reasoning),
-            ("openai/gpt-6-luna", "low", "xhigh"),
+            ("openai/gpt-6-luna", "xhigh", "xhigh"),
         )
         self.assertEqual(
             (args.bcode_version, args.task_timeout, args.concurrency),
