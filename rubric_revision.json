@@ -1,6 +1,8 @@
 {
   "revision": "2026-09-24-feedback-review-draft-4",
-  "status": "draft_not_regraded",
+  "status": "released_not_regraded",
+  "release_version": "2.1",
+  "release_tag": "v2.1",
   "base_commit": "421390ea7fa4708f3d89d7695f9a16debb861daf",
   "base_encrypted_sha256": "fe0fc1eede3197d9eaffd42af3ac7b11cc15743d401e95496f3eb03f0d023a0e",
   "hash_convention": "sha256 of UTF-8 text exactly as distributed; weights hashes unchanged",

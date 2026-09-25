@@ -44,7 +44,7 @@ class RevisionTests(unittest.TestCase):
             self.assertTrue(changed_fields <= allowed)
             self.assertEqual(after[task_id]["weights"], before[task_id]["weights"])
         self.assertEqual(len(cases["cases"]), 11)
-        self.assertEqual(manifest["status"], "draft_not_regraded")
+        self.assertEqual(manifest["status"], "released_not_regraded")
 
     def test_original_artifact_is_exact_published_snapshot(self):
         self.assertEqual(

@@ -1,16 +1,22 @@
-# BU Bench V2 feedback review
+# BU Bench V2.1 release and feedback review
 
-**Candidate:** `2026-09-24-feedback-review-draft-4`
-**Status:** draft; historical results are unchanged.
+**Release:** [v2.1](https://github.com/browser-use/benchmark/releases/tag/v2.1)
+**Content revision:** `2026-09-24-feedback-review-draft-4`
+**Status:** released; historical results have not been regraded. Saved-evidence
+judge validation for the newest rules remains pending, as detailed below.
 
-This candidate keeps the five earlier corrections from PR #32, restores the
+The content revision retains its original identifier to preserve the exact
+encrypted dataset and review-case bytes validated before release. The public
+release version is 2.1; the judge adapter version is independently 2.1.2.
+
+This release keeps the five earlier corrections from PR #32, restores the
 original AliExpress and Reuters rules, and adds targeted fixes for job-search
 coverage, source-count drift and blocked property lookups. It preserves all 200
 task IDs, the 55-task subset membership, every item ID and every weight.
 
 ## Feedback and decisions
 
-| Task | What the evidence supports | Candidate decision |
+| Task | What the evidence supports | Released decision |
 |---|---|---|
 | 014 | Some runs deliver substantial verified cohorts. That does not make “plausibly exhausted the public population” measurable. | Keep the visible-salary correction. Define smaller-cohort completion through recorded multi-source searches, result boundaries, regional coverage and candidate decisions. Clarify the task too. |
 | 028 | A full-score saved result can include Dice-only workbook rows that the old expansion item expressly ignores. Other runs admit that expansion remains partial. | Apply expansion eligibility to every retained workbook role; preserve the raw Dice anchor separately. Require actual expansion and account for discovered candidates. Clarify the smaller-cohort stopping rule in the task. |
@@ -74,5 +80,5 @@ uv run python review_rubric_revision.py --write-private-diffs
 
 The second command writes plaintext task/rubric diffs into ignored
 `run_data/rubric-review/`. Keep those private. The original encrypted August 25
-dataset remains in `snapshots/BU_Bench_V2_2026-08-25.enc`. This candidate adds no
+dataset remains in `snapshots/BU_Bench_V2_2026-08-25.enc`. This release adds no
 score-cap machinery and makes no changes to historical results.
