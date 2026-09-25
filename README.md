@@ -40,6 +40,12 @@ These results use the earlier 60-task set. They are not results for the current 
 
 ## BU Bench V2.1
 
+The findings judge excludes agent `thinking:` and `reasoning:` summaries from its input.
+Saved traces retain them for debugging; tool evidence, final answers, files, screenshot
+step references, and deterministic integrity checks are unchanged. Historical scores
+are not recalculated automatically.
+
+
 **200 web tasks scored against weighted findings rubrics — the default task set.**
 
 Latest release: [v2.1.1](https://github.com/browser-use/benchmark/releases/latest).
