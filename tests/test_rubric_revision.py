@@ -197,6 +197,29 @@ class RevisionTests(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError, "Unapproved weight revision"):
                     validate_revision(root, base_artifact=baseline)
 
+    def test_redesign_metadata_cannot_change_with_matching_manifest(self):
+        for field in ("title", "summary"):
+            with self.subTest(field=field), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                baseline = self.copy_revision_fixture(root)
+                manifest, _, after, _ = validate_revision(root, base_artifact=baseline)
+                task = after["bu2-185"]
+                task[field] += " unapproved change"
+                change = next(c for c in manifest["changes"] if c["task_id"] == "bu2-185")
+                change[f"after_{field}_sha256"] = hashlib.sha256(
+                    task[field].encode()
+                ).hexdigest()
+                payload = {"tasks": list(after.values()), "revision": manifest["revision"]}
+                fernet = Fernet(
+                    base64.urlsafe_b64encode(hashlib.sha256(b"BU_Bench_V2").digest())
+                )
+                artifact = base64.b64encode(fernet.encrypt(json.dumps(payload).encode()))
+                (root / "BU_Bench_V2.enc").write_bytes(artifact)
+                manifest["candidate_encrypted_sha256"] = hashlib.sha256(artifact).hexdigest()
+                (root / "rubric_revision.json").write_text(json.dumps(manifest))
+                with self.assertRaisesRegex(ValueError, "Metadata hash mismatch"):
+                    validate_revision(root, base_artifact=baseline)
+
     def test_duplicate_task_ids_rejected_before_indexing(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

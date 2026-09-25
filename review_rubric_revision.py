@@ -22,6 +22,20 @@ APPROVED_WEIGHT_REVISIONS = {
 }
 
 
+APPROVED_METADATA_REVISIONS = {
+    "bu2-185": {
+        "title": (
+            "a2e7dd85053f9c85b3251f2905009f24f15e89ba0df1317d41dcbf3eec0052a7",
+            "596ad9375e266e32f2be30feb5d80942ed57716a86b708add83c291b070033d5",
+        ),
+        "summary": (
+            "1f7be224bd117f9e7f03fab45dceabb81e3ce1494f8a4ebf8e29479d2485e6b3",
+            "4a611a12737aa08ac06befa841d5331af779d8b3174f564c4421326ddcdf111d",
+        ),
+    },
+}
+
+
 def weights_digest(weights: dict) -> str:
     return digest(json.dumps(weights, sort_keys=True, separators=(",", ":")))
 
@@ -133,10 +147,13 @@ def validate_revision(
                 or task.get("weights_sha") != expected_after
             ):
                 raise ValueError(f"Unapproved weight revision: {task_id}")
-            for field in ("title", "summary"):
+            for field, hashes in APPROVED_METADATA_REVISIONS[task_id].items():
+                expected_before, expected_after = hashes
                 if (
-                    digest(old[field]) != change.get(f"before_{field}_sha256")
-                    or digest(task[field]) != change.get(f"after_{field}_sha256")
+                    digest(old[field]) != expected_before
+                    or digest(task[field]) != expected_after
+                    or change.get(f"before_{field}_sha256") != expected_before
+                    or change.get(f"after_{field}_sha256") != expected_after
                 ):
                     raise ValueError(f"Metadata hash mismatch: {task_id}/{field}")
         elif task["weights"] != old["weights"]:

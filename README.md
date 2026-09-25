@@ -72,8 +72,8 @@ Git history, rather than as extra files in the current checkout. The original
 for the latest V2.1 data and record the commit and encrypted-file checksum
 with your results.
 
-See [changes, validation and remaining work](RUBRIC_REVISION.md). The update
-requires successful Walmart source verification and gives no item credit to a
+See [changes, validation and remaining work](RUBRIC_REVISION.md). The earlier
+CAPTCHA-alignment update requires successful Walmart source verification and gives no item credit to a
 run blocked before obtaining any Walmart task result. Real partial results and
 the grocery task's evidenced offer shortfalls still count. It also aligns
 CAPTCHA recovery instructions, resolves an observation-record ambiguity, and
