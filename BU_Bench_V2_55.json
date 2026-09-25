@@ -2,7 +2,7 @@
   "name": "BU Bench V2 \u2014 55-task subset",
   "type": "task_subset",
   "source": "BU_Bench_V2.enc",
-  "source_sha256": "fe9ce279176fd965c9a658928a8d7562338c90934e5b4a330b4995bbfc150370",
+  "source_sha256": "87101f7ebcf3bfbde00091e278741427e906c9b7ccc223892c95e4549704d7c6",
   "task_count": 55,
   "task_ids": [
     "bu2-001",

@@ -63,6 +63,12 @@ An item is `met` only when the deliverable content is corroborated by trace evid
 Correct-looking data with no extraction evidence is not met. Models can recite public data from memory. Never credit it.
 </evidence_rule>
 
+<completion_rule>
+An instruction to report a block or mark a value unavailable does not itself satisfy a separate requirement to obtain that value or complete an action.
+Apply an explicit alternative outcome only within the scope the task and rubric allow. Judge honest reporting separately from completion.
+An unresolved CAPTCHA, bot block or login wall earns no credit for the work left undone. Successful recovery earns normal credit; inability to inspect a source is not evidence of absence.
+</completion_rule>
+
 <task_reading_rule>
 Before the findings, reconstruct in agent_task_reading how THIS agent read the task: which sources it treated as required, what deliverable shape and semantics it adopted, and what it treated as optional or out of scope.
 Derive the reading from what the agent DID. Quote assumptions the agent stated; mark the rest as inferred from behavior.

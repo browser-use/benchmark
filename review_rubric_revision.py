@@ -92,8 +92,11 @@ def validate_revision(root: Path = ROOT) -> tuple[dict, dict, dict, dict]:
                 raise ValueError(f"Candidate content hash mismatch: {task_id}/{field}")
         if change["task_changed"] != (old["task"] != task["task"]):
             raise ValueError(f"Task-change declaration mismatch: {task_id}")
-        if not any(case["task_id"] == task_id for case in cases["cases"]):
-            raise ValueError(f"No review cases: {task_id}")
+        if (
+            not any(case["task_id"] == task_id for case in cases["cases"])
+            and change.get("review_status") != "pending_saved_trace_review"
+        ):
+            raise ValueError(f"No review cases or pending review declaration: {task_id}")
     for case in cases["cases"]:
         if case["task_id"] not in changes or not set(case["expected"]["items"]) <= set(
             after[case["task_id"]]["weights"]
@@ -113,6 +116,12 @@ def main():
     print(
         f"{len(cases['cases'])} synthetic semantic review cases; no judge accuracy result implied."
     )
+    pending = [
+        c["task_id"] for c in manifest["changes"]
+        if c.get("review_status") == "pending_saved_trace_review"
+    ]
+    if pending:
+        print("Saved-trace review pending: " + ", ".join(pending))
     if args.write_private_diffs:
         output = ROOT / "run_data/rubric-review"
         output.mkdir(parents=True, exist_ok=True)

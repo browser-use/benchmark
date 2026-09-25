@@ -1,5 +1,5 @@
 {
-  "revision": "2026-09-23-rubric-contract-draft-1",
+  "revision": "2026-09-24-feedback-review-draft-4",
   "status": "draft_not_regraded",
   "base_commit": "421390ea7fa4708f3d89d7695f9a16debb861daf",
   "base_encrypted_sha256": "fe0fc1eede3197d9eaffd42af3ac7b11cc15743d401e95496f3eb03f0d023a0e",
@@ -7,12 +7,51 @@
   "changes": [
     {
       "task_id": "bu2-014",
-      "summary": "Make unavailable values conditional on source evidence; close unconditional-null shortcut.",
-      "task_changed": false,
+      "summary": "Keep source-visible compensation; define smaller-cohort completion by recorded multi-source searches and candidate decisions.",
+      "task_changed": true,
       "before_task_sha256": "3578c21e47e73f690ce31c67a2692de17c69b4cb8924700f4936823bfe6119ba",
-      "after_task_sha256": "3578c21e47e73f690ce31c67a2692de17c69b4cb8924700f4936823bfe6119ba",
+      "after_task_sha256": "843f49825a0e45e165e82326d59c239a9d168dd0f5368181e0d021e3984b9aa5",
       "before_rubric_sha256": "b7c582ce186cfaa75057311817a5dc1a4463bcad5e80d7b033a84f2080123061",
-      "after_rubric_sha256": "0dcb31ac906ff06bfe5e52a93a5e15149c532facda527541ed1332f17998f5b1"
+      "after_rubric_sha256": "49d99d2def75f79e985cc9cc28f2e12371dd146b022040cae25c354d2428ed9e",
+      "review_status": "pending_saved_trace_review"
+    },
+    {
+      "task_id": "bu2-028",
+      "summary": "Require evidenced expansion and account for discovered candidates; an empty or arbitrarily reduced cohort cannot pass vacuously.",
+      "review_status": "pending_saved_trace_review",
+      "before_task_sha256": "89db1932f589fd97da4d010042d0ac60f8a936b8e4c25c21f63bef15e3e32ecd",
+      "after_task_sha256": "bd586d07d84dd9aa54028edc6019bef3002ac294c4805a9a6062d4b78d8f3a45",
+      "before_rubric_sha256": "1663fb5807199ee05d438fe25f56b315a50b68f361ead8400a7b9b5afb034bbc",
+      "after_rubric_sha256": "ab17ae29568a6e965b7534139088c2a4dff884607cd86b80a25ad5533baec69a",
+      "task_changed": true
+    },
+    {
+      "task_id": "bu2-029",
+      "summary": "Accept source-evidenced address aliases for one building; do not assume a shared tax lot proves building identity.",
+      "task_changed": true,
+      "before_task_sha256": "8b9b1b2c96d6a197818ff70cd2983663c87a401bce35ae57a4800b6055a13e60",
+      "after_task_sha256": "5540e078e903306ff89f9936e9933b3aeae0eae4fd88ad783302b597d6b0ee76",
+      "before_rubric_sha256": "b439261f2be9e4f5b0da6341c57c2255443ec93aa5982ba5abe382a11bbf0607",
+      "after_rubric_sha256": "b98e32cf8529337c10e825ebe2c10c9b6ccf2c0e953a014fef6069b0c3023b84"
+    },
+    {
+      "task_id": "bu2-048",
+      "summary": "Define final-table versus source-ledger roles and handle clipped supporting evidence explicitly.",
+      "task_changed": false,
+      "before_task_sha256": "d247a016b4da4b80e958004dc4048122824ec907722fbae28f90d492a9dc9aec",
+      "after_task_sha256": "d247a016b4da4b80e958004dc4048122824ec907722fbae28f90d492a9dc9aec",
+      "before_rubric_sha256": "954a041d871f5461c8c5dda4a1e5cfbc9e6f9c0618d577e5aeb174db6f69e51f",
+      "after_rubric_sha256": "1df511a39955787849b4f83d438f37f3e2ed193a1a523d6d75b99db63e6e712f"
+    },
+    {
+      "task_id": "bu2-053",
+      "summary": "Require an accessible external lookup for reconciliation; a blocked attempt alone is not accepted.",
+      "task_changed": false,
+      "before_task_sha256": "f41f79fd6fe7b355f78c4413c052c314d65f47cd8d68cd329ca4d80f7213ee14",
+      "after_task_sha256": "f41f79fd6fe7b355f78c4413c052c314d65f47cd8d68cd329ca4d80f7213ee14",
+      "before_rubric_sha256": "3f1790e00fa48f86f1efc80f4e1dce6967a18105f438fbcdeaf3a5296adbf480",
+      "after_rubric_sha256": "39872c6bb7de737f469c33e2ae9b6de760e5b003961fe84130f0a51dca89295d",
+      "review_status": "pending_saved_trace_review"
     },
     {
       "task_id": "bu2-088",
@@ -33,59 +72,61 @@
       "after_rubric_sha256": "5eccccd75def9017bc6171a2b00cbf201383713c6ca26d9b23a88b3dc5f85a8c"
     },
     {
-      "task_id": "bu2-171",
-      "summary": "Honor the task-permitted evidenced-unavailable branch in the two criteria totaling 34 points.",
-      "task_changed": false,
-      "before_task_sha256": "be69f504d3141d3f8c8a92389b973af7c57de932097cb260b42177b4ae04f801",
-      "after_task_sha256": "be69f504d3141d3f8c8a92389b973af7c57de932097cb260b42177b4ae04f801",
-      "before_rubric_sha256": "8b855fdf62d3e3d31935ac2bc978cc86dc4386af4b8bc1d1d1437f81cf3a20d5",
-      "after_rubric_sha256": "7272d62781dcb1e1c53145d79a6a915630ce154d18d3b87497ba161db13f6d0b"
+      "task_id": "bu2-163",
+      "summary": "Use captured source rows rather than historical counts; consolidate repeated appearances of the same event within or across sources.",
+      "review_status": "pending_saved_trace_review",
+      "before_task_sha256": "7d75351cacdf4ae604a90ce455e345b4353e950601dee82f1921c4ad368289b1",
+      "after_task_sha256": "7d75351cacdf4ae604a90ce455e345b4353e950601dee82f1921c4ad368289b1",
+      "before_rubric_sha256": "0b357be0abd8b769471983709dde0d973dfb0a8044151bde0c2fa4775cbe660a",
+      "after_rubric_sha256": "26b7125e6ee49c96e6d6970d98fa085c300881edf40e4d3a653f51671c84b5bb",
+      "task_changed": false
     },
     {
-      "task_id": "bu2-185",
-      "summary": "Distinguish evidenced blocked access from an inspectable page with no player; honor the task-permitted blocked outcome.",
+      "task_id": "bu2-187",
+      "summary": "Separate blocked unfinished work from missing judge evidence; zero delivered listings fails the required cohort size.",
       "task_changed": false,
-      "before_task_sha256": "162f44ed2f8269824ecb9696783b08328265761e7ea826feea22092ffb942c36",
-      "after_task_sha256": "162f44ed2f8269824ecb9696783b08328265761e7ea826feea22092ffb942c36",
-      "before_rubric_sha256": "2820f3c00db846389b72b90b45785d364dcd15b532aea05dd07151ae4d1b0a4f",
-      "after_rubric_sha256": "f8e8e8443aaaebf945d4d46ad739c1de861f2ad3acdaa8a739512639600620eb"
-    },
-    {
-      "task_id": "bu2-029",
-      "summary": "Accept source-evidenced address aliases for one building; do not assume a shared tax lot proves building identity.",
-      "task_changed": true,
-      "before_task_sha256": "8b9b1b2c96d6a197818ff70cd2983663c87a401bce35ae57a4800b6055a13e60",
-      "after_task_sha256": "5540e078e903306ff89f9936e9933b3aeae0eae4fd88ad783302b597d6b0ee76",
-      "before_rubric_sha256": "b439261f2be9e4f5b0da6341c57c2255443ec93aa5982ba5abe382a11bbf0607",
-      "after_rubric_sha256": "b98e32cf8529337c10e825ebe2c10c9b6ccf2c0e953a014fef6069b0c3023b84"
-    },
-    {
-      "task_id": "bu2-048",
-      "summary": "Define final-table versus source-ledger roles and handle clipped supporting evidence explicitly.",
-      "task_changed": false,
-      "before_task_sha256": "d247a016b4da4b80e958004dc4048122824ec907722fbae28f90d492a9dc9aec",
-      "after_task_sha256": "d247a016b4da4b80e958004dc4048122824ec907722fbae28f90d492a9dc9aec",
-      "before_rubric_sha256": "954a041d871f5461c8c5dda4a1e5cfbc9e6f9c0618d577e5aeb174db6f69e51f",
-      "after_rubric_sha256": "1df511a39955787849b4f83d438f37f3e2ed193a1a523d6d75b99db63e6e712f"
+      "before_task_sha256": "8430354fc281f72fadd5a5d540ce1345e19270409bf29e10c3a87f439e2facfe",
+      "after_task_sha256": "8430354fc281f72fadd5a5d540ce1345e19270409bf29e10c3a87f439e2facfe",
+      "before_rubric_sha256": "6f84496a32e5d885253810079090239519b377d02badc36ee509350fb1479886",
+      "after_rubric_sha256": "a7d479aefabfa0193cca178e7dd762d4f779b26dc892bfcf402f42e28f992c3b",
+      "review_status": "pending_saved_trace_review"
     }
   ],
   "deferred": [
     {
       "task_id": "bu2-014",
-      "issue": "Atomic criteria and finite smaller-population/search protocol still need design and calibration."
-    },
-    {
-      "task_id": "bu2-028",
-      "issue": "Expansion completeness lacks a bounded target/stopping rule; no invented live-web population added."
+      "issue": "Splitting combined criteria and reallocating weights needs separate calibration; no new items or weights in this draft."
     },
     {
       "task_id": "bu2-163",
-      "issue": "Reported duplicate/missing record requires exact source rows and original judge evidence."
+      "issue": "Partner's exact disputed row identities are still unavailable; the source-count/deduplication rule is corrected without inventing a replacement answer key."
     },
     {
       "task_id": "bu2-040",
-      "issue": "Pin budgets and demonstrate feasibility; strategy/runtime difference alone does not prove rubric error."
+      "issue": "Keep success requirements; compare equal budgets. Partner-reported 100% run is not independently verified."
+    },
+    {
+      "task_id": "bu2-185",
+      "issue": "No in-scope playback demonstrated in seven reviewed historical executions; retain evidenced-absence outcome, require verified target before a playback-only revision."
     }
   ],
-  "candidate_encrypted_sha256": "fe9ce279176fd965c9a658928a8d7562338c90934e5b4a330b4995bbfc150370"
+  "candidate_encrypted_sha256": "87101f7ebcf3bfbde00091e278741427e906c9b7ccc223892c95e4549704d7c6",
+  "previous_revision": "2026-09-24-access-outcomes-draft-3",
+  "previous_encrypted_sha256": "e2feef1123c569e3f0470871bc94ac9da1b9ca3dcb6f1975d2e4a2f960a9b673",
+  "reverted_changes": [
+    {
+      "task_id": "bu2-171",
+      "reverted_from_pr": 32,
+      "restored_from": "snapshots/BU_Bench_V2_2026-08-25.enc",
+      "rubric_sha256": "8b855fdf62d3e3d31935ac2bc978cc86dc4386af4b8bc1d1d1437f81cf3a20d5",
+      "reason": "Restore acquisition requirements; reporting an access failure is not completion."
+    },
+    {
+      "task_id": "bu2-185",
+      "reverted_from_pr": 32,
+      "restored_from": "snapshots/BU_Bench_V2_2026-08-25.enc",
+      "rubric_sha256": "2820f3c00db846389b72b90b45785d364dcd15b532aea05dd07151ae4d1b0a4f",
+      "reason": "Restore acquisition requirements; reporting an access failure is not completion."
+    }
+  ]
 }
