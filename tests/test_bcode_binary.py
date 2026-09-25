@@ -10,7 +10,9 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from unittest.mock import patch
 
-from bcode_runner import agent_env, stop_process
+import httpx
+
+from bcode_runner import agent_env, preflight, stop_process
 
 
 @unittest.skipUnless(
@@ -18,6 +20,42 @@ from bcode_runner import agent_env, stop_process
     "set BCODE_TEST_BIN and BCODE_TEST_CATALOG for the released-binary wire test",
 )
 class ReleasedBinaryTests(unittest.IsolatedAsyncioTestCase):
+    async def test_large_catalog_preflight_resolves_model_on_fresh_install(self):
+        catalog = json.loads(Path(os.environ["BCODE_TEST_CATALOG"]).read_text())
+        async with httpx.AsyncClient(
+            transport=httpx.MockTransport(
+                lambda request: httpx.Response(200, json=catalog)
+            )
+        ) as client:
+            with (
+                tempfile.TemporaryDirectory() as temporary,
+                patch.dict(
+                    os.environ,
+                    {
+                        "OPENAI_API_KEY": "synthetic-catalog",
+                        "BROWSER_USE_API_KEY": "synthetic-unused",
+                    },
+                ),
+            ):
+                results = await asyncio.gather(
+                    *(
+                        preflight(
+                            os.environ["BCODE_TEST_BIN"],
+                            "0.1.20",
+                            "openai/gpt-6-luna",
+                            "low",
+                            Path(temporary) / str(i),
+                            catalog_client=client,
+                        )
+                        for i in range(4)
+                    )
+                )
+                for result in results:
+                    self.assertEqual(result["resolved_model"]["id"], "gpt-6-luna")
+                    self.assertTrue(
+                        result["resolved_model"]["capabilities"]["attachment"]
+                    )
+
     async def test_native_openai_request_uses_requested_model_and_low_reasoning(self):
         requests = []
 

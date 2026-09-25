@@ -166,28 +166,37 @@ async def preflight(
         {"experimental": {"fetch_use": fetch_use}}
     )
 
+    probe_counter = 0
+
     async def probe(*args):
-        proc = await asyncio.create_subprocess_exec(
-            str(binary),
-            "--pure",
-            *args,
-            env=env,
-            stdin=asyncio.subprocess.DEVNULL,
-            stdout=asyncio.subprocess.PIPE,
-            stderr=asyncio.subprocess.PIPE,
-        )
-        try:
-            stdout, stderr = await asyncio.wait_for(proc.communicate(), 60)
-        except BaseException:
-            if proc.returncode is None:
-                proc.kill()
-                await proc.wait()
-            raise
-        if proc.returncode:
-            raise ValueError(
-                f"BrowserCode {args[0]} preflight failed: {stderr.decode(errors='replace')[-1000:]}"
+        nonlocal probe_counter
+        probe_counter += 1
+        stdout_path = state_dir / f"probe-{probe_counter}.stdout"
+        stderr_path = state_dir / f"probe-{probe_counter}.stderr"
+        # bcode 0.1.20 calls process.exit() without draining stdout pipes.
+        # Its large model listing can be truncated despite exit status zero.
+        # Regular files preserve the complete listing without changing the catalog.
+        with stdout_path.open("wb") as stdout, stderr_path.open("wb") as stderr:
+            proc = await asyncio.create_subprocess_exec(
+                str(binary),
+                "--pure",
+                *args,
+                env=env,
+                stdin=asyncio.subprocess.DEVNULL,
+                stdout=stdout,
+                stderr=stderr,
             )
-        return stdout.decode(errors="replace")
+            try:
+                await asyncio.wait_for(proc.wait(), 60)
+            except BaseException:
+                if proc.returncode is None:
+                    proc.kill()
+                    await proc.wait()
+                raise
+        if proc.returncode:
+            error = stderr_path.read_text(errors="replace")[-1000:]
+            raise ValueError(f"BrowserCode {args[0]} preflight failed: {error}")
+        return stdout_path.read_text(errors="replace")
 
     reported = (await probe("--version")).strip().splitlines()[-1]
     if reported.removeprefix("v") != expected_version.removeprefix("v"):
