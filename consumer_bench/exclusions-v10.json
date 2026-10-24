@@ -1,0 +1,20 @@
+{
+  "parentVersion": 9,
+  "additionalExclusions": [
+    {
+      "id": "consumer-0223",
+      "domain": "ozon.ru",
+      "reason": "observed_access_error",
+      "detail": "HTTP 403 and a connection error. The cause remains unresolved."
+    },
+    {
+      "id": "consumer-0356",
+      "domain": "coupang.com",
+      "reason": "observed_access_denied",
+      "detail": "Access Denied after redirect. The cause remains unresolved."
+    }
+  ],
+  "appliesTo": "All providers equally",
+  "selectionBias": "We selected these exclusions after observing outcomes. This introduces selection bias. Original V9 scores remain available.",
+  "version": 10
+}

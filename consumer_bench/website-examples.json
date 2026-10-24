@@ -1,0 +1,523 @@
+{
+  "updated": "2026-10-24",
+  "sites": [
+    {
+      "slug": "amazon",
+      "name": "Amazon",
+      "domain": "amazon.com",
+      "taskId": null,
+      "task": "Open a public Amazon product page.",
+      "insight": "This older smoke task differs from the 500-task benchmark. It does not measure Amazon cart or checkout automation.",
+      "inMainSelection": false,
+      "rows": [
+        {
+          "agent": "Grok Bot",
+          "outcome": "Success",
+          "score": null,
+          "captcha": "not comparable",
+          "date": "Oct 12–13, 2026",
+          "note": "Separate 50-site browsing study. It requires a product or result page, not a verified cart."
+        }
+      ]
+    },
+    {
+      "slug": "walmart",
+      "name": "Walmart",
+      "domain": "walmart.com",
+      "taskId": "consumer-0020",
+      "task": "Search for milk and verify one product in the cart.",
+      "insight": "Walmart shows why challenge encounters and final task outcomes need separate counts. The Grok browsing study uses different rules.",
+      "inMainSelection": true,
+      "rows": [
+        {
+          "agent": "Browser Use Cloud",
+          "outcome": "Success",
+          "score": "1/1",
+          "captcha": "solved",
+          "date": "Oct 20, 2026",
+          "note": "A Robot or human check cleared during a wait. The cart then showed one milk product."
+        },
+        {
+          "agent": "Dot",
+          "outcome": "Success",
+          "score": "1/1",
+          "captcha": "none",
+          "date": "Oct 20, 2026",
+          "note": "The cart showed one milk product. No CAPTCHA appeared."
+        },
+        {
+          "agent": "Meta Muse",
+          "outcome": "Success",
+          "score": "1/1",
+          "captcha": "not reported",
+          "date": "Oct 21–22, 2026",
+          "note": "Muse reports this outcome. Original parallel action evidence remains incomplete."
+        },
+        {
+          "agent": "Instinct",
+          "outcome": "Unstarted",
+          "score": null,
+          "captcha": "not reported",
+          "date": "Oct 23, 2026 snapshot",
+          "note": "The saved snapshot contains no started attempt for this task."
+        },
+        {
+          "agent": "Grok Bot",
+          "outcome": "Uncleared challenge",
+          "score": null,
+          "captcha": "not comparable",
+          "date": "Oct 12–13, 2026",
+          "note": "Separate 50-site browsing study. It requires a product or result page, not a verified cart."
+        }
+      ]
+    },
+    {
+      "slug": "etsy",
+      "name": "Etsy",
+      "domain": "etsy.com",
+      "taskId": "consumer-0005",
+      "task": "Search for a USB-C cable and verify one product in the cart.",
+      "insight": "Dot reports an unusual-activity restriction on search. A restriction can stop a task without an interactive CAPTCHA.",
+      "inMainSelection": true,
+      "rows": [
+        {
+          "agent": "Browser Use Cloud",
+          "outcome": "Success",
+          "score": "1/1",
+          "captcha": "none",
+          "date": "Oct 20, 2026",
+          "note": "The cart shows one blue, 1M USB-C cable. No CAPTCHA appeared."
+        },
+        {
+          "agent": "Dot",
+          "outcome": "Failure",
+          "score": "0/1",
+          "captcha": "none",
+          "date": "Oct 20, 2026",
+          "note": "Search showed an unusual-activity restriction. No interactive CAPTCHA appeared."
+        },
+        {
+          "agent": "Meta Muse",
+          "outcome": "Success",
+          "score": "1/1",
+          "captcha": "not reported",
+          "date": "Oct 21–22, 2026",
+          "note": "Muse reports this outcome. Original parallel action evidence remains incomplete."
+        },
+        {
+          "agent": "Instinct",
+          "outcome": "Policy hold",
+          "score": null,
+          "captcha": "not reported",
+          "date": "Oct 23, 2026 snapshot",
+          "note": "The source table reports this task outcome."
+        },
+        {
+          "agent": "Grok Bot",
+          "outcome": "Success",
+          "score": null,
+          "captcha": "not comparable",
+          "date": "Oct 12–13, 2026",
+          "note": "Separate 50-site browsing study. It requires a product or result page, not a verified cart."
+        }
+      ]
+    },
+    {
+      "slug": "nike",
+      "name": "Nike",
+      "domain": "nike.com",
+      "taskId": "consumer-0022",
+      "task": "Search for training socks and verify one product in the cart.",
+      "insight": "Dot reports an empty bag after a request error. That error does not establish a bot block.",
+      "inMainSelection": true,
+      "rows": [
+        {
+          "agent": "Browser Use Cloud",
+          "outcome": "Success",
+          "score": "1/1",
+          "captcha": "none",
+          "date": "Oct 20, 2026",
+          "note": "The bag showed the socks, selected size, and quantity one."
+        },
+        {
+          "agent": "Dot",
+          "outcome": "Failure",
+          "score": "0/1",
+          "captcha": "none",
+          "date": "Oct 20, 2026",
+          "note": "Add to Bag produced a request error. The bag remained empty. No CAPTCHA appeared."
+        },
+        {
+          "agent": "Meta Muse",
+          "outcome": "Failure",
+          "score": "0/1",
+          "captcha": "not reported",
+          "date": "Oct 21–22, 2026",
+          "note": "Muse reports this outcome. Original parallel action evidence remains incomplete."
+        },
+        {
+          "agent": "Instinct",
+          "outcome": "Unstarted",
+          "score": null,
+          "captcha": "not reported",
+          "date": "Oct 23, 2026 snapshot",
+          "note": "The saved snapshot contains no started attempt for this task."
+        }
+      ]
+    },
+    {
+      "slug": "playstation",
+      "name": "PlayStation",
+      "domain": "direct.playstation.com",
+      "taskId": "v9-playstation-com",
+      "task": "Choose a DualSense controller and verify one in the cart.",
+      "insight": "Instinct supplies an original cart image. Its overall run remains partial.",
+      "inMainSelection": true,
+      "rows": [
+        {
+          "agent": "Browser Use Cloud",
+          "outcome": "Success",
+          "score": "1/1",
+          "captcha": "none",
+          "date": "Oct 20, 2026",
+          "note": "The source table reports this task outcome."
+        },
+        {
+          "agent": "Dot",
+          "outcome": "Failure",
+          "score": "0/1",
+          "captcha": "none",
+          "date": "Oct 20, 2026",
+          "note": "The source table reports this task outcome."
+        },
+        {
+          "agent": "Meta Muse",
+          "outcome": "Failure",
+          "score": "0/1",
+          "captcha": "not reported",
+          "date": "Oct 21–22, 2026",
+          "note": "Muse reports this outcome. Original parallel action evidence remains incomplete."
+        },
+        {
+          "agent": "Instinct",
+          "outcome": "Success",
+          "score": "1/1",
+          "captcha": "not reported",
+          "date": "Oct 23, 2026 snapshot",
+          "note": "The original endpoint image shows product details and quantity. Complete action review remains separate."
+        }
+      ]
+    },
+    {
+      "slug": "alza",
+      "name": "Alza",
+      "domain": "alza.cz",
+      "taskId": "consumer-0001",
+      "task": "Search for a USB-C charging cable and verify one product in the cart.",
+      "insight": "Cloud and Dot report a cleared human check. They select different matching cables.",
+      "inMainSelection": true,
+      "rows": [
+        {
+          "agent": "Browser Use Cloud",
+          "outcome": "Success",
+          "score": "1/1",
+          "captcha": "solved",
+          "date": "Oct 20, 2026",
+          "note": "The report describes automatic challenge clearance and one cable in the cart."
+        },
+        {
+          "agent": "Dot",
+          "outcome": "Success",
+          "score": "1/1",
+          "captcha": "solved",
+          "date": "Oct 20, 2026",
+          "note": "The report describes a checkbox interaction and one cable in the cart."
+        },
+        {
+          "agent": "Meta Muse",
+          "outcome": "Success",
+          "score": "1/1",
+          "captcha": "not reported",
+          "date": "Oct 21–22, 2026",
+          "note": "Muse reports this outcome. Original parallel action evidence remains incomplete."
+        },
+        {
+          "agent": "Instinct",
+          "outcome": "Success",
+          "score": "1/1",
+          "captcha": "not reported",
+          "date": "Oct 23, 2026 snapshot",
+          "note": "The source table reports this task outcome."
+        },
+        {
+          "agent": "Grok Bot",
+          "outcome": "Success",
+          "score": null,
+          "captcha": "not comparable",
+          "date": "Oct 12–13, 2026",
+          "note": "Separate 50-site browsing study. It requires a product or result page, not a verified cart."
+        }
+      ]
+    },
+    {
+      "slug": "the-north-face",
+      "name": "The North Face",
+      "domain": "thenorthface.com",
+      "taskId": "consumer-0010",
+      "task": "Search for a daypack and verify one product in the cart.",
+      "insight": "Cloud reports automatic clearance. Dot reports an uncleared human check before search results.",
+      "inMainSelection": true,
+      "rows": [
+        {
+          "agent": "Browser Use Cloud",
+          "outcome": "Success",
+          "score": "1/1",
+          "captcha": "solved",
+          "date": "Oct 20, 2026",
+          "note": "A human check cleared without agent interaction. The cart showed one daypack."
+        },
+        {
+          "agent": "Dot",
+          "outcome": "Failure",
+          "score": "0/1",
+          "captcha": "unsolved",
+          "date": "Oct 20, 2026",
+          "note": "The human check remained after a wait and two reported attempts."
+        },
+        {
+          "agent": "Meta Muse",
+          "outcome": "Failure",
+          "score": "0/1",
+          "captcha": "not reported",
+          "date": "Oct 21–22, 2026",
+          "note": "Muse reports this outcome. Original parallel action evidence remains incomplete."
+        },
+        {
+          "agent": "Instinct",
+          "outcome": "Unstarted",
+          "score": null,
+          "captcha": "not reported",
+          "date": "Oct 23, 2026 snapshot",
+          "note": "The saved snapshot contains no started attempt for this task."
+        },
+        {
+          "agent": "Grok Bot",
+          "outcome": "Uncleared challenge",
+          "score": null,
+          "captcha": "not comparable",
+          "date": "Oct 12–13, 2026",
+          "note": "Separate 50-site browsing study. It requires a product or result page, not a verified cart."
+        }
+      ]
+    },
+    {
+      "slug": "dns-shop",
+      "name": "DNS Shop",
+      "domain": "dns-shop.ru",
+      "taskId": "consumer-0381",
+      "task": "Search for a Logitech M170 mouse and verify one in the cart.",
+      "insight": "Instinct supplies a cart image with product and quantity. This endpoint image does not establish a complete action audit.",
+      "inMainSelection": true,
+      "rows": [
+        {
+          "agent": "Browser Use Cloud",
+          "outcome": "Success",
+          "score": "1/1",
+          "captcha": "none",
+          "date": "Oct 20, 2026",
+          "note": "The source table reports this task outcome."
+        },
+        {
+          "agent": "Dot",
+          "outcome": "Success",
+          "score": "1/1",
+          "captcha": "none",
+          "date": "Oct 20, 2026",
+          "note": "The source table reports this task outcome."
+        },
+        {
+          "agent": "Meta Muse",
+          "outcome": "Success",
+          "score": "1/1",
+          "captcha": "not reported",
+          "date": "Oct 21–22, 2026",
+          "note": "Muse reports this outcome. Original parallel action evidence remains incomplete."
+        },
+        {
+          "agent": "Instinct",
+          "outcome": "Success",
+          "score": "1/1",
+          "captcha": "not reported",
+          "date": "Oct 23, 2026 snapshot",
+          "note": "The original endpoint image shows product details and quantity. Complete action review remains separate."
+        }
+      ]
+    },
+    {
+      "slug": "zara",
+      "name": "Zara",
+      "domain": "zara.com",
+      "taskId": "consumer-0346",
+      "task": "Search for a T-shirt and verify one product in the cart.",
+      "insight": "Dot reports a request error while selecting a size. No observed CAPTCHA supports a CAPTCHA failure claim.",
+      "inMainSelection": true,
+      "rows": [
+        {
+          "agent": "Browser Use Cloud",
+          "outcome": "Success",
+          "score": "1/1",
+          "captcha": "none",
+          "date": "Oct 20, 2026",
+          "note": "The cart showed a black shirt in size M at quantity one."
+        },
+        {
+          "agent": "Dot",
+          "outcome": "Failure",
+          "score": "0/1",
+          "captcha": "none",
+          "date": "Oct 20, 2026",
+          "note": "Size selection produced a request error. The bag stayed empty. No CAPTCHA appeared."
+        },
+        {
+          "agent": "Meta Muse",
+          "outcome": "Failure",
+          "score": "0/1",
+          "captcha": "not reported",
+          "date": "Oct 21–22, 2026",
+          "note": "Muse reports this outcome. Original parallel action evidence remains incomplete."
+        },
+        {
+          "agent": "Instinct",
+          "outcome": "Unstarted",
+          "score": null,
+          "captcha": "not reported",
+          "date": "Oct 23, 2026 snapshot",
+          "note": "The saved snapshot contains no started attempt for this task."
+        }
+      ]
+    }
+  ],
+  "gallery": [
+    {
+      "site": "etsy",
+      "src": "https://browser-use.com/benchmarks/consumer-v10/images/etsy-a5440919b967.png",
+      "width": 1920,
+      "height": 760,
+      "agent": "Browser Use Cloud",
+      "date": "Oct 20, 2026",
+      "status": "Verified cart",
+      "caption": "The cart shows the cable, Blue and 1M options, and quantity one.",
+      "sha256": "a5440919b9671b29e4b017daffb02857cbcfd48a3f81fb8cda36466715adb5a3"
+    },
+    {
+      "site": "walmart",
+      "src": "https://browser-use.com/benchmarks/consumer-v10/images/walmart-98a5631ad389.png",
+      "width": 1024,
+      "height": 594,
+      "agent": "Grok Bot",
+      "date": "Oct 12, 2026",
+      "status": "Uncleared challenge",
+      "caption": "The older browsing task stopped at a press-and-hold check.",
+      "sha256": "98a5631ad38939ca57518863f2bbb08201146750071b64951f7ff2ad27183ff8"
+    },
+    {
+      "site": "nike",
+      "src": "https://browser-use.com/benchmarks/consumer-v10/images/nike-11dc4802e2c3.png",
+      "width": 1920,
+      "height": 824,
+      "agent": "Browser Use Cloud",
+      "date": "Oct 20, 2026",
+      "status": "Verified cart",
+      "caption": "The bag shows the socks, selected size, and quantity one.",
+      "sha256": "11dc4802e2c33821193a6e7dfe8e37f0dd93cb472fb265dbdf4e279e81367837"
+    },
+    {
+      "site": "playstation",
+      "src": "https://browser-use.com/benchmarks/consumer-v10/images/playstation-e34f376195a9.png",
+      "width": 1280,
+      "height": 720,
+      "agent": "Instinct",
+      "date": "Oct 23, 2026",
+      "status": "Reported cart",
+      "caption": "The drawer shows a Cosmic Red controller and quantity one.",
+      "sha256": "e34f376195a96d9c160aa8c0ca9e07a4472f607852cc85e914e2cebf1645e6cf"
+    },
+    {
+      "site": "amazon",
+      "src": "https://browser-use.com/benchmarks/consumer-v10/images/amazon-1ddca09a5fa0.png",
+      "width": 1024,
+      "height": 594,
+      "agent": "Grok Bot",
+      "date": "Oct 12, 2026",
+      "status": "Product page",
+      "caption": "The earlier smoke task reached a product page. It did not test checkout.",
+      "sha256": "1ddca09a5fa0574723af06c66e1a820319e96f9c953a07b35b92144657ac6f9e"
+    },
+    {
+      "site": "walmart",
+      "src": "https://browser-use.com/benchmarks/consumer-v10/images/walmart-985630a2a5fe.png",
+      "width": 1920,
+      "height": 824,
+      "agent": "Browser Use Cloud",
+      "date": "Oct 20, 2026",
+      "status": "Challenge appeared",
+      "caption": "The original image shows the Robot or human prompt.",
+      "sha256": "985630a2a5febbb7f1dc208ae13e66e1df28fc873c72e9371de9be5c49faccf4"
+    },
+    {
+      "site": "walmart",
+      "src": "https://browser-use.com/benchmarks/consumer-v10/images/walmart-8890326dffa2.png",
+      "width": 1920,
+      "height": 824,
+      "agent": "Browser Use Cloud",
+      "date": "Oct 20, 2026",
+      "status": "Verified cart",
+      "caption": "The cart shows one milk product after the challenge cleared.",
+      "sha256": "8890326dffa2755ad1daaae0a9652b955b9846ce12f818d02c67fa4eb7c8d2e6"
+    },
+    {
+      "site": "alza",
+      "src": "https://browser-use.com/benchmarks/consumer-v10/images/alza-a7f6c047d146.png",
+      "width": 1920,
+      "height": 760,
+      "agent": "Browser Use Cloud",
+      "date": "Oct 20, 2026",
+      "status": "Cart confirmation",
+      "caption": "The drawer shows an Apple USB-C cable and quantity one.",
+      "sha256": "a7f6c047d1464b6d79c567456f863e319a4454818175be7cf767dfbc5a518cc4"
+    },
+    {
+      "site": "the-north-face",
+      "src": "https://browser-use.com/benchmarks/consumer-v10/images/the-north-face-ebea9ce52d8e.png",
+      "width": 3024,
+      "height": 1472,
+      "agent": "Browser Use Cloud",
+      "date": "Oct 20, 2026",
+      "status": "Cart confirmation",
+      "caption": "The drawer shows a daypack, selected options, and quantity one.",
+      "sha256": "ebea9ce52d8e79a79a68fa68675129cd0d2602dc9731a28fbbcc1ec2bdb2cee4"
+    },
+    {
+      "site": "dns-shop",
+      "src": "https://browser-use.com/benchmarks/consumer-v10/images/dns-shop-03b5fe91545b.png",
+      "width": 1280,
+      "height": 720,
+      "agent": "Instinct",
+      "date": "Oct 23, 2026",
+      "status": "Reported cart",
+      "caption": "The cart shows a Logitech M170 mouse and quantity one.",
+      "sha256": "03b5fe91545b26a4bfe42934249b4cca2fd752d05e42288788c42fb280c3d366"
+    },
+    {
+      "site": "zara",
+      "src": "https://browser-use.com/benchmarks/consumer-v10/images/zara-8c888188d7a6.png",
+      "width": 3024,
+      "height": 1540,
+      "agent": "Browser Use Cloud",
+      "date": "Oct 20, 2026",
+      "status": "Verified cart",
+      "caption": "The bag shows a black shirt, size M, and quantity one.",
+      "sha256": "8c888188d7a61004bbfc0fe8f10a72f085438cbd4b1379ceedfd0c4f0f4dd989"
+    }
+  ]
+}

@@ -492,4 +492,4 @@ No license (public validation split only) | https://huggingface.co/datasets/gaia
 
 ## Consumer web task benchmark
 
-[Consumer V9](consumer_bench/README.md) contains 502 cart and public-information tasks, documented exclusions, and historical result projections. It is separate from the 200-task BU Bench V2.1. Incomplete runs and missing results remain explicit.
+[Shopping benchmark V10](consumer_bench/README.md) contains 500 public-web tasks, documented exclusions, and historical result projections. It is separate from the 200-task BU Bench V2.1. Incomplete runs and missing results remain explicit.

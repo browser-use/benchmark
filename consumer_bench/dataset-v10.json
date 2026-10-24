@@ -1,0 +1,3508 @@
+{
+  "version": 10,
+  "sourceDatasetSha256": "0a250cd92996a176cb3568410170f5b0c77d01b09ba5453cd4a4684e695bbb3d",
+  "parentVersion": 9,
+  "taskTextPublished": false,
+  "tasks": [
+    {
+      "id": "consumer-0001",
+      "domain": "alza.cz",
+      "url": "https://alza.cz/",
+      "endpoint": "cart",
+      "taskSha256": "233cae210ad18bcaa67d4141495492cc847ff30a41e97910e804de9c6902a0f2"
+    },
+    {
+      "id": "consumer-0002",
+      "domain": "bathandbodyworks.com",
+      "url": "https://bathandbodyworks.com",
+      "endpoint": "cart",
+      "taskSha256": "e2c0467e6945c3fe3fb24787cd4c1d7ed3adccb422992dd677ac458889614936"
+    },
+    {
+      "id": "consumer-0003",
+      "domain": "bookshop.org",
+      "url": "https://bookshop.org",
+      "endpoint": "cart",
+      "taskSha256": "65da87e9614dcaceb55779cec6afcf81ee6136d06540269d445a8b3147c71d71"
+    },
+    {
+      "id": "consumer-0004",
+      "domain": "cvs.com",
+      "url": "https://cvs.com/",
+      "endpoint": "cart",
+      "taskSha256": "6e02332fbe84b1ca5ecbd55bba1193e1f364b84fd1b816d1772a83fd414958e2"
+    },
+    {
+      "id": "consumer-0005",
+      "domain": "etsy.com",
+      "url": "https://etsy.com/",
+      "endpoint": "cart",
+      "taskSha256": "776676bbd3f4a232326fe73ef4c718edf62fd30e5ae4ee37c403538f50a2a03f"
+    },
+    {
+      "id": "consumer-0006",
+      "domain": "lowes.com",
+      "url": "https://lowes.com/",
+      "endpoint": "cart",
+      "taskSha256": "adf0bc52edd43dad333bd197b6a28d809171d51b008f9ad91ff35b9d8ec86496"
+    },
+    {
+      "id": "consumer-0008",
+      "domain": "pokemoncenter.com",
+      "url": "https://pokemoncenter.com",
+      "endpoint": "cart",
+      "taskSha256": "467bd764c9d40fd26239be1ea6f973425849934a2ec171b5c27002dec4828c14"
+    },
+    {
+      "id": "consumer-0009",
+      "domain": "ridge.com",
+      "url": "https://ridge.com",
+      "endpoint": "cart",
+      "taskSha256": "34319e0c30ae4145554283d656198f63c5351dc2d01b95545ae9c75b039a2bfb"
+    },
+    {
+      "id": "consumer-0010",
+      "domain": "thenorthface.com",
+      "url": "https://thenorthface.com",
+      "endpoint": "cart",
+      "taskSha256": "d595481295c028713a0288c61cc78f2ddd2322c5ef9c2c510ea756a43abe3e22"
+    },
+    {
+      "id": "consumer-0011",
+      "domain": "threadless.com",
+      "url": "https://threadless.com",
+      "endpoint": "cart",
+      "taskSha256": "fd47542285142d17534ad36417e9828e192af0a57b0634af8aa08bb7e1b9c573"
+    },
+    {
+      "id": "consumer-0012",
+      "domain": "thriftbooks.com",
+      "url": "https://thriftbooks.com/",
+      "endpoint": "cart",
+      "taskSha256": "8ed65fc2a7bb821d326d18f0612b2a79058372ff59f9fb9fb87ab0151f06762b"
+    },
+    {
+      "id": "consumer-0014",
+      "domain": "allegro.cz",
+      "url": "https://allegro.cz/",
+      "endpoint": "cart",
+      "taskSha256": "a1e26f2685681ddca089a76c60d42a726d139896cc84d8d983bf59386f736a52"
+    },
+    {
+      "id": "consumer-0016",
+      "domain": "nordstrom.com",
+      "url": "https://nordstrom.com/",
+      "endpoint": "cart",
+      "taskSha256": "36d04324b249195df3a14b9141c5cda7a8f65cc06289cf74d120c6929f2b276c"
+    },
+    {
+      "id": "consumer-0018",
+      "domain": "target.com",
+      "url": "https://target.com/",
+      "endpoint": "cart",
+      "taskSha256": "3fb7a67da3b25489fe307971f358a8a0a70945eb377a3d2066092855c2de7aa1"
+    },
+    {
+      "id": "consumer-0020",
+      "domain": "walmart.com",
+      "url": "https://walmart.com/",
+      "endpoint": "cart",
+      "taskSha256": "9042fea8dc9374b8958b807788ab11cef33bca011e2cfb124ec8e907465a7b0b"
+    },
+    {
+      "id": "consumer-0022",
+      "domain": "nike.com",
+      "url": "https://nike.com/",
+      "endpoint": "cart",
+      "taskSha256": "12f7518130f2b052183657c600e5257fbfd91438ec6533fdd79b4873da8fa059"
+    },
+    {
+      "id": "consumer-0024",
+      "domain": "ebay.com",
+      "url": "https://ebay.com/",
+      "endpoint": "cart",
+      "taskSha256": "add3c43e6c2d5040458ea5ebc1c3fd66f2ebec9efa441e88bcc2700590e463ac"
+    },
+    {
+      "id": "consumer-0026",
+      "domain": "hoka.com",
+      "url": "https://hoka.com",
+      "endpoint": "cart",
+      "taskSha256": "f614564e13e758ff75e9662ac389a720c5fcceae4ddb3feeaa7a9e486fb86282"
+    },
+    {
+      "id": "consumer-0027",
+      "domain": "saksfifthavenue.com",
+      "url": "https://saksfifthavenue.com/",
+      "endpoint": "cart",
+      "taskSha256": "4fe5537cbbc5e57b2da324b3f501c3cbf1150d57e0d0c7e1ac68d2ce73dc8a51"
+    },
+    {
+      "id": "consumer-0028",
+      "domain": "hm.com",
+      "url": "https://hm.com/",
+      "endpoint": "cart",
+      "taskSha256": "524b1a5d4f45cfc45d5b5678c3a6aafa0ebac42cfda3ee88f1b68ca8ed8d03bb"
+    },
+    {
+      "id": "consumer-0029",
+      "domain": "gucci.com",
+      "url": "https://gucci.com/",
+      "endpoint": "cart",
+      "taskSha256": "11736a0a79316bb3c53391dfbc815a9ad72eeb380956c4442670c249e566389e"
+    },
+    {
+      "id": "consumer-0034",
+      "domain": "abercrombie.com",
+      "url": "https://abercrombie.com/",
+      "endpoint": "cart",
+      "taskSha256": "54ffbc2105e900c246282b15b6d7a584f5ebedab56fdc50ac13028b0e875db45"
+    },
+    {
+      "id": "consumer-0035",
+      "domain": "academy.com",
+      "url": "https://academy.com/",
+      "endpoint": "cart",
+      "taskSha256": "f284c9c6524287dfc1c8b903b0d65371cc9609c4b4c9e91c1b0c5b6dbbfb896d"
+    },
+    {
+      "id": "consumer-0037",
+      "domain": "acehardware.com",
+      "url": "https://acehardware.com/",
+      "endpoint": "cart",
+      "taskSha256": "44eee7f46de071e9bb8ed3826ade0614842a43f35476e1ee47352dfa8a6685cc"
+    },
+    {
+      "id": "consumer-0043",
+      "domain": "aliexpress.com",
+      "url": "https://aliexpress.com/",
+      "endpoint": "cart",
+      "taskSha256": "e97f9ddf1c394bb5f4e81abe09afb763b987bab09b41660d3c0bb92bd9019b6e"
+    },
+    {
+      "id": "consumer-0044",
+      "domain": "allegro.pl",
+      "url": "https://allegro.pl/",
+      "endpoint": "cart",
+      "taskSha256": "09922cfb6b3bb99baf8101f555994c80c60215c74b147d147b4184e857d722bb"
+    },
+    {
+      "id": "consumer-0053",
+      "domain": "arhaus.com",
+      "url": "https://arhaus.com/",
+      "endpoint": "cart",
+      "taskSha256": "e55948e3fa3cd45e79006076e8a89d54c7e0f9506d23da2e74a5fe9f3d94ed6e"
+    },
+    {
+      "id": "consumer-0056",
+      "domain": "asda.com",
+      "url": "https://asda.com/",
+      "endpoint": "public_information",
+      "taskSha256": "94b1314a01497e9692a76934cb15a3c1e5d785af51a82ecadafd0cfc9f4d1277"
+    },
+    {
+      "id": "consumer-0057",
+      "domain": "ashleyfurniture.com",
+      "url": "https://ashleyfurniture.com/",
+      "endpoint": "cart",
+      "taskSha256": "eb45a4b01cb66b776274dc087fbd79bd332c76c51c640545af66dcda0346fc38"
+    },
+    {
+      "id": "consumer-0060",
+      "domain": "autohausaz.com",
+      "url": "https://autohausaz.com/",
+      "endpoint": "cart",
+      "taskSha256": "deaf29171c1ef219bf8dd73fdba4c7d0189bedf88187359697b8f997137d926d"
+    },
+    {
+      "id": "consumer-0061",
+      "domain": "autozone.com",
+      "url": "https://autozone.com/",
+      "endpoint": "cart",
+      "taskSha256": "bb26c9c87f67dee0e33d75664099a7e7fa97e9e5bf5f90692fd5ec4feaa7e968"
+    },
+    {
+      "id": "consumer-0062",
+      "domain": "backcountry.com",
+      "url": "https://backcountry.com/",
+      "endpoint": "cart",
+      "taskSha256": "eb5281403bf9db42d3913036ded63b9c530bd1549f0d632bd54dce4e709d1f45"
+    },
+    {
+      "id": "consumer-0063",
+      "domain": "balenciaga.com",
+      "url": "https://balenciaga.com/",
+      "endpoint": "cart",
+      "taskSha256": "cf81c26a2801487e5eb5cf5e061e7d845e6e346ba0039655317fa6c9bdc6d495"
+    },
+    {
+      "id": "consumer-0065",
+      "domain": "barnesandnoble.com",
+      "url": "https://barnesandnoble.com/",
+      "endpoint": "cart",
+      "taskSha256": "921a9721d99aa5a397774b6ceceb61aef934edd9d6b2d3e3637605304c2ecb61"
+    },
+    {
+      "id": "consumer-0068",
+      "domain": "bergdorfgoodman.com",
+      "url": "https://bergdorfgoodman.com/",
+      "endpoint": "cart",
+      "taskSha256": "caf1aa4b77a1e64b8943d74f0ff762721e5fc215835f8c317850017ee72eea55"
+    },
+    {
+      "id": "consumer-0072",
+      "domain": "bloomingdales.com",
+      "url": "https://bloomingdales.com/",
+      "endpoint": "cart",
+      "taskSha256": "86cc0dbe35884b808c81c82c1ea120bd383d244d8679283665898c652013b32a"
+    },
+    {
+      "id": "consumer-0076",
+      "domain": "bottegaveneta.com",
+      "url": "https://bottegaveneta.com/",
+      "endpoint": "cart",
+      "taskSha256": "4224f1f442cff3e9cc68a67adc28999e402e08aa06db359cfac82d0c7787307d"
+    },
+    {
+      "id": "consumer-0080",
+      "domain": "bulgari.com",
+      "url": "https://bulgari.com/",
+      "endpoint": "cart",
+      "taskSha256": "e328f741b9fd4545fd48e639a3eeea9e453bc6af46c7162d6439742bbc5b26e3"
+    },
+    {
+      "id": "consumer-0086",
+      "domain": "celine.com",
+      "url": "https://celine.com/",
+      "endpoint": "cart",
+      "taskSha256": "e0d43445e661c01707a1d345ed3c6fb083153a29fd94cab852a1a6d3fd95ea69"
+    },
+    {
+      "id": "consumer-0087",
+      "domain": "chewy.com",
+      "url": "https://chewy.com/",
+      "endpoint": "cart",
+      "taskSha256": "5e156000b7bd21dfa54a693687990a853c1073384eeb560052137aa3cc30f645"
+    },
+    {
+      "id": "consumer-0093",
+      "domain": "cos.com",
+      "url": "https://cos.com/",
+      "endpoint": "cart",
+      "taskSha256": "13642a929f7ca72e9ecdbc24aa80fb5e0e2d386cff465ebede116f5608ca5cbb"
+    },
+    {
+      "id": "consumer-0095",
+      "domain": "crateandbarrel.com",
+      "url": "https://crateandbarrel.com/",
+      "endpoint": "cart",
+      "taskSha256": "777a6ed551c817c577e2551511b7033fe60925fbefa5cbf01cfcaebd35cf874c"
+    },
+    {
+      "id": "consumer-0096",
+      "domain": "crocs.com",
+      "url": "https://crocs.com/",
+      "endpoint": "cart",
+      "taskSha256": "5f10ef3b25cbb5b5b9c9abc9b822a0c95215b1560d7ded604d34aa9e75447a13"
+    },
+    {
+      "id": "consumer-0097",
+      "domain": "cutterbuck.com",
+      "url": "https://cutterbuck.com/",
+      "endpoint": "cart",
+      "taskSha256": "4e2b8c30b033056a2885ea363c0a09eb841b732eda538ba53be8e20976c5d083"
+    },
+    {
+      "id": "consumer-0098",
+      "domain": "dcshoes.com",
+      "url": "https://dcshoes.com/",
+      "endpoint": "cart",
+      "taskSha256": "0cfaa7c01a25bcbb1669e589b6f142a8bc106e75cd588943afd4c89a7e5ecbea"
+    },
+    {
+      "id": "consumer-0099",
+      "domain": "dell.com",
+      "url": "https://dell.com/",
+      "endpoint": "cart",
+      "taskSha256": "7e72e31551336c272b4dd84ea16eabde362da47d779ab5b4918714682203d6a4"
+    },
+    {
+      "id": "consumer-0101",
+      "domain": "dickssportinggoods.com",
+      "url": "https://dickssportinggoods.com/",
+      "endpoint": "cart",
+      "taskSha256": "6f19815dbb36756d9839898ff24c99500fa53d750e17eb351702e7e42f13ec11"
+    },
+    {
+      "id": "consumer-0102",
+      "domain": "dillards.com",
+      "url": "https://dillards.com/",
+      "endpoint": "public_information",
+      "taskSha256": "de1adc3365c650d4f6269d0bd36bb4e7f8c074e121029631657a1c07d94561e5"
+    },
+    {
+      "id": "consumer-0110",
+      "domain": "electronics.sony.com",
+      "url": "https://electronics.sony.com/",
+      "endpoint": "cart",
+      "taskSha256": "6abf2bca47444e915a85670a802b2c906a72bcf7c45e671b5e3210cbc828c8fe"
+    },
+    {
+      "id": "consumer-0116",
+      "domain": "farfetch.com",
+      "url": "https://farfetch.com/",
+      "endpoint": "cart",
+      "taskSha256": "c950205be5bbc4c40fec380b4e4ff2186882140909207387cc0b8e50c0e55dca"
+    },
+    {
+      "id": "consumer-0119",
+      "domain": "footlocker.com",
+      "url": "https://footlocker.com/",
+      "endpoint": "cart",
+      "taskSha256": "3811b9ae3d7ed316fe24f99bd0bc27cb438333c28100242466d40802974aa45f"
+    },
+    {
+      "id": "consumer-0120",
+      "domain": "fragrancenet.com",
+      "url": "https://fragrancenet.com/",
+      "endpoint": "cart",
+      "taskSha256": "3202fb68d2d1731d733f8b2e389cfe5ad001df62c5c1ab2ca16c037b7caa761e"
+    },
+    {
+      "id": "consumer-0121",
+      "domain": "fredperry.com",
+      "url": "https://fredperry.com/",
+      "endpoint": "cart",
+      "taskSha256": "fe530cb56c534daa4dff552feaf3d8add286ad9b5f4e7ff68230bce2bb371d0a"
+    },
+    {
+      "id": "consumer-0122",
+      "domain": "fwrd.com",
+      "url": "https://fwrd.com/",
+      "endpoint": "cart",
+      "taskSha256": "0678e0f1b8f599b32ab8ca78e9da812157abe519ef6f98242565c628c8e7bcef"
+    },
+    {
+      "id": "consumer-0133",
+      "domain": "heb.com",
+      "url": "https://heb.com/",
+      "endpoint": "public_information",
+      "taskSha256": "a5caa54563896290e2ebb2520dc7b4eda4e86c9cc6740eda4267ac6677db9f74"
+    },
+    {
+      "id": "consumer-0135",
+      "domain": "hellyhansen.com",
+      "url": "https://hellyhansen.com/",
+      "endpoint": "cart",
+      "taskSha256": "79c30beb976b80d71e605f216097655b07214e289d8f9ac121cb4275428d0064"
+    },
+    {
+      "id": "consumer-0148",
+      "domain": "ikea.com",
+      "url": "https://ikea.com/",
+      "endpoint": "cart",
+      "taskSha256": "885364e47753508dd41b2c70e617717cb8e53a14f330a4a4fa71ce182d7b6de2"
+    },
+    {
+      "id": "consumer-0153",
+      "domain": "jcpenney.com",
+      "url": "https://jcpenney.com/",
+      "endpoint": "cart",
+      "taskSha256": "dd984773e98b3cc028c823ce25d928f334fdb1e36f5a7b962db6e5fad4db62d2"
+    },
+    {
+      "id": "consumer-0155",
+      "domain": "jdsports.com",
+      "url": "https://www.jdsports.com/",
+      "endpoint": "cart",
+      "taskSha256": "3758babeb0b2473204eced74b3d15433dc88991aede437294e43dd7d6f422135"
+    },
+    {
+      "id": "consumer-0168",
+      "domain": "kohls.com",
+      "url": "https://kohls.com/",
+      "endpoint": "cart",
+      "taskSha256": "aa089d062746d7e14db99cabb5b93111c4dd001ee687f5534934658c61d083ef"
+    },
+    {
+      "id": "consumer-0169",
+      "domain": "kroger.com",
+      "url": "https://kroger.com/",
+      "endpoint": "public_information",
+      "taskSha256": "f0081a3c57c1a435e340d68ac84e00d998a02a1638147e2d618c9b1ad7a95895"
+    },
+    {
+      "id": "consumer-0172",
+      "domain": "landsend.com",
+      "url": "https://landsend.com/",
+      "endpoint": "cart",
+      "taskSha256": "52512b28a256ea93cbe69a5c1144842fdf8e956fc1fff57b68f6cf95a09eb2a7"
+    },
+    {
+      "id": "consumer-0184",
+      "domain": "lulus.com",
+      "url": "https://lulus.com/",
+      "endpoint": "cart",
+      "taskSha256": "4c24b1ed41d36eb8039c4ab957c008648337a1f5b5fc6065151d98464b900638"
+    },
+    {
+      "id": "consumer-0204",
+      "domain": "myntra.com",
+      "url": "https://myntra.com/",
+      "endpoint": "cart",
+      "taskSha256": "e2bd98794505f81d97466fe4f3dfda516e34d6f66872e786a91cebe764a1d316"
+    },
+    {
+      "id": "consumer-0205",
+      "domain": "mytheresa.com",
+      "url": "https://mytheresa.com/",
+      "endpoint": "cart",
+      "taskSha256": "7ee0c7fa5020c09545a2b29f82012115be4e60f2dad64cc018f74d4c698e031e"
+    },
+    {
+      "id": "consumer-0208",
+      "domain": "neimanmarcus.com",
+      "url": "https://neimanmarcus.com/",
+      "endpoint": "cart",
+      "taskSha256": "ebb0528946b2fd1b262fdd0d4da71f4efaa5bdf51b2043556569f7d3b7127d05"
+    },
+    {
+      "id": "consumer-0209",
+      "domain": "net-a-porter.com",
+      "url": "https://net-a-porter.com/",
+      "endpoint": "cart",
+      "taskSha256": "edef6106eb3f255cd09393ac68bbbc3f27cc5400a33e2ee9d8e707452e0586d8"
+    },
+    {
+      "id": "consumer-0212",
+      "domain": "nykaa.com",
+      "url": "https://nykaa.com/",
+      "endpoint": "cart",
+      "taskSha256": "ca8e788c052dd253ddc91c4bdbb7725d0bb3d95b96070f0597a630372ef046ca"
+    },
+    {
+      "id": "consumer-0233",
+      "domain": "qvc.com",
+      "url": "https://qvc.com/",
+      "endpoint": "cart",
+      "taskSha256": "3d99ac0305c88919878e11191c595e7be5472e1005a344b6f4531ec08b08dfad"
+    },
+    {
+      "id": "consumer-0235",
+      "domain": "ralphlauren.com",
+      "url": "https://ralphlauren.com/",
+      "endpoint": "cart",
+      "taskSha256": "ef2c87fac4367453099b5fcc2c36f76ad97a9d6c50a3ab49fd6beab4cb2f1c2c"
+    },
+    {
+      "id": "consumer-0236",
+      "domain": "ray-ban.com",
+      "url": "https://ray-ban.com/",
+      "endpoint": "cart",
+      "taskSha256": "e45065c47c2f0dffeb3d855262735067e0790802a035a5ae6f7765a1069a356c"
+    },
+    {
+      "id": "consumer-0242",
+      "domain": "rei.com",
+      "url": "https://rei.com/",
+      "endpoint": "public_information",
+      "taskSha256": "e966c96d98ec129971da1bb4d0e9893b5fa658b9d6d549cbfff5ab4ec0a37808"
+    },
+    {
+      "id": "consumer-0244",
+      "domain": "revolve.com",
+      "url": "https://revolve.com/",
+      "endpoint": "cart",
+      "taskSha256": "7eeb21e37e81af2c0f52fb4ab4f435dc359aa5530313ecc80521e9473cf10f33"
+    },
+    {
+      "id": "consumer-0259",
+      "domain": "sephora.com",
+      "url": "https://sephora.com/",
+      "endpoint": "cart",
+      "taskSha256": "3a7e9bce5e5efee4f076ccd6ae8aa0670d3076ee5c9998fdf92995925b250cb3"
+    },
+    {
+      "id": "consumer-0261",
+      "domain": "shein.com",
+      "url": "https://shein.com/",
+      "endpoint": "cart",
+      "taskSha256": "b675a1f77525c8ef2d9bca2a5bb70925c6f70e95c00bae14419da86ad42c3d34"
+    },
+    {
+      "id": "consumer-0265",
+      "domain": "shop.lululemon.com",
+      "url": "https://shop.lululemon.com/",
+      "endpoint": "cart",
+      "taskSha256": "a1f071b61f11748a8b63f9d2bce9519e107901b9c36597b40cb5674f1cb04cd3"
+    },
+    {
+      "id": "consumer-0278",
+      "domain": "ssense.com",
+      "url": "https://ssense.com/",
+      "endpoint": "cart",
+      "taskSha256": "20f87498ac89feadcfc5f7ec57302a98fe453c4d675bc344511565c37fade019"
+    },
+    {
+      "id": "consumer-0287",
+      "domain": "temu.com",
+      "url": "https://temu.com/",
+      "endpoint": "cart",
+      "taskSha256": "29c8365bbd79b2d55943e6343611e0b6c012bac504f884510100343a73fa79a7"
+    },
+    {
+      "id": "consumer-0288",
+      "domain": "tesco.com",
+      "url": "https://tesco.com/",
+      "endpoint": "public_information",
+      "taskSha256": "353ce0b3c8165238c32b506f8d2c7ce647b79b3da81eecdbb11229501e10fdd3"
+    },
+    {
+      "id": "consumer-0304",
+      "domain": "trendyol.com",
+      "url": "https://trendyol.com/",
+      "endpoint": "cart",
+      "taskSha256": "86310176a34b1dda36474c77672ee85ca71313442d683f6a46043c9a75008527"
+    },
+    {
+      "id": "consumer-0316",
+      "domain": "urbanoutfitters.com",
+      "url": "https://urbanoutfitters.com/",
+      "endpoint": "cart",
+      "taskSha256": "790413825e33da7482ad8e75369635569f1f1a8f328ea02df4714e61826e600f"
+    },
+    {
+      "id": "consumer-0319",
+      "domain": "us.loropiana.com",
+      "url": "https://us.loropiana.com/",
+      "endpoint": "cart",
+      "taskSha256": "b5fc9385f09fe3e97637da5aba10124841ce9e6a22c92d88f42bf2fb81ad547a"
+    },
+    {
+      "id": "consumer-0323",
+      "domain": "vans.com",
+      "url": "https://vans.com/",
+      "endpoint": "cart",
+      "taskSha256": "8c8ea77acab1f9294f232fc61df8a93c8903cc5c954a16783d32f6d6f852a965"
+    },
+    {
+      "id": "consumer-0334",
+      "domain": "wayfair.co.uk",
+      "url": "https://wayfair.co.uk/",
+      "endpoint": "cart",
+      "taskSha256": "8ec8d145bfbde5fe39745acccba35655056ea94c593b669ac90410a29b9074d4"
+    },
+    {
+      "id": "consumer-0335",
+      "domain": "westelm.com",
+      "url": "https://westelm.com/",
+      "endpoint": "cart",
+      "taskSha256": "73c9628d3a17e2ce1f3d40b033f95306681672e7363f0161dc68ff9f5c712b59"
+    },
+    {
+      "id": "consumer-0336",
+      "domain": "williams-sonoma.com",
+      "url": "https://williams-sonoma.com/",
+      "endpoint": "cart",
+      "taskSha256": "b367635fc31c02e6c14535b0cf1671f39262f95958cd8b8ae31f935aa304eca9"
+    },
+    {
+      "id": "consumer-0342",
+      "domain": "yeti.com",
+      "url": "https://yeti.com/",
+      "endpoint": "cart",
+      "taskSha256": "7c06bd41a63883be8b40e331443a7859c785ec9a270cdb160ba1cf908c31a310"
+    },
+    {
+      "id": "consumer-0346",
+      "domain": "zara.com",
+      "url": "https://zara.com/",
+      "endpoint": "cart",
+      "taskSha256": "ce1242a7c67ce4cd85c77e1c3bc03bddf7e27284c3fb7bedbe3e22154cf62994"
+    },
+    {
+      "id": "consumer-0347",
+      "domain": "zoro.com",
+      "url": "https://zoro.com/",
+      "endpoint": "cart",
+      "taskSha256": "82ed465010f395e639cad0f202ba0a1ea4a2c6fb2ff734a5c42306903e335abb"
+    },
+    {
+      "id": "consumer-0349",
+      "domain": "amazon.co.jp",
+      "url": "https://amazon.co.jp/",
+      "endpoint": "cart",
+      "taskSha256": "5d5fc2c1087328a83af3715941d8c9d0cc8a35cd9a60649ef1d2f986b4bd0655"
+    },
+    {
+      "id": "consumer-0354",
+      "domain": "wildberries.ru",
+      "url": "https://wildberries.ru/",
+      "endpoint": "cart",
+      "taskSha256": "40af15ee907d96de4df2d9535301193568dc9b118d6f55a1a20f37f3647dd2b6"
+    },
+    {
+      "id": "consumer-0358",
+      "domain": "ebay.co.uk",
+      "url": "https://ebay.co.uk/",
+      "endpoint": "cart",
+      "taskSha256": "dcd07b1212a1292af445fd4a1399ff00e7e23240c35e8cc01304a47f8de897bf"
+    },
+    {
+      "id": "consumer-0361",
+      "domain": "flipkart.com",
+      "url": "https://www.flipkart.com/",
+      "endpoint": "cart",
+      "taskSha256": "98dc837f4b257c555c6b0829071070718de11f4d9ea15878eeef1ed95c8c0234"
+    },
+    {
+      "id": "consumer-0366",
+      "domain": "market.yandex.ru",
+      "url": "https://market.yandex.ru/",
+      "endpoint": "public_information",
+      "taskSha256": "db098533b1b38021c216819aaccfa718fbeb2a736343ec602f2f3cf52825cd1a"
+    },
+    {
+      "id": "consumer-0368",
+      "domain": "mercari.com",
+      "url": "https://mercari.com/",
+      "endpoint": "cart",
+      "taskSha256": "1b84f55e5e9e01147acbc781f0d78579646d3ef5d9aa029ad560a7d88b8d9277"
+    },
+    {
+      "id": "consumer-0373",
+      "domain": "ebay.de",
+      "url": "https://ebay.de/",
+      "endpoint": "cart",
+      "taskSha256": "5f5c1e12e6dc1fba5d16897352efd2ecb3ffb11545860012266bf024b91317d8"
+    },
+    {
+      "id": "consumer-0377",
+      "domain": "mercadolibre.com.mx",
+      "url": "https://mercadolibre.com.mx/",
+      "endpoint": "public_information",
+      "taskSha256": "f9a6232f03ed046d159bd0e5e26046ad6332eeb69cba8724c819f039c0f2d746"
+    },
+    {
+      "id": "consumer-0378",
+      "domain": "mercadolibre.com.ar",
+      "url": "https://mercadolibre.com.ar/",
+      "endpoint": "public_information",
+      "taskSha256": "d551e6925525e0dbb979227fde2a0d0a48234fad8fbd1ee9332f22efad635a3b"
+    },
+    {
+      "id": "consumer-0379",
+      "domain": "costco.com",
+      "url": "https://costco.com/",
+      "endpoint": "cart",
+      "taskSha256": "9fa9206522f1816333568def25d12d16d063660b663837d81fb7450b66805e1a"
+    },
+    {
+      "id": "consumer-0381",
+      "domain": "dns-shop.ru",
+      "url": "https://dns-shop.ru/",
+      "endpoint": "cart",
+      "taskSha256": "e0d934a37c8f62e71c2e726a83d2a661fc255b5c3792b99a67f10b9a627cd515"
+    },
+    {
+      "id": "v9-playstation-com",
+      "domain": "direct.playstation.com",
+      "url": "https://direct.playstation.com/en-us/",
+      "endpoint": "cart",
+      "taskSha256": "1fbc598db8955286c9afc9c06d03b8fadd22e10b6e8e1077e6eea7413f4c7349"
+    },
+    {
+      "id": "consumer-0386",
+      "domain": "hepsiburada.com",
+      "url": "https://hepsiburada.com/",
+      "endpoint": "cart",
+      "taskSha256": "2cc7590ae003ea52e4ad309b22776e55a97fa16a15aeb3af825a146028a6920f"
+    },
+    {
+      "id": "consumer-0389",
+      "domain": "bol.com",
+      "url": "https://bol.com/",
+      "endpoint": "cart",
+      "taskSha256": "32efe32b767a014461fba07c4b1c5a0e55295b01ad71366c6a525999fe2967d9"
+    },
+    {
+      "id": "consumer-0395",
+      "domain": "tokopedia.com",
+      "url": "https://www.tokopedia.com/",
+      "endpoint": "public_information",
+      "taskSha256": "a91803734d5070206b7d001c5b0d90ea69fe7e2ebf770d159282d6e426af100d"
+    },
+    {
+      "id": "consumer-0404",
+      "domain": "meesho.com",
+      "url": "https://meesho.com/",
+      "endpoint": "public_information",
+      "taskSha256": "156caafbd0600020ea416ac278104329b5b19749d523e9ca6addcfb9653ede65"
+    },
+    {
+      "id": "consumer-0406",
+      "domain": "otto.de",
+      "url": "https://otto.de/",
+      "endpoint": "cart",
+      "taskSha256": "a17d5ae19deaeca0da92b77477f3da5d5fba6da914026e0574364cd2dd584cfc"
+    },
+    {
+      "id": "consumer-0409",
+      "domain": "gmarket.co.kr",
+      "url": "https://gmarket.co.kr/",
+      "endpoint": "cart",
+      "taskSha256": "62e405777101abdd135bb36a5eec34a59397690049e442ebe83e563f3c910601"
+    },
+    {
+      "id": "consumer-0412",
+      "domain": "magazineluiza.com.br",
+      "url": "https://magazineluiza.com.br/",
+      "endpoint": "cart",
+      "taskSha256": "9629e618ba4e8c08a5b18326bfc65543a693c923d8e653694dbf6d5f93e11de9"
+    },
+    {
+      "id": "consumer-0415",
+      "domain": "ebay.it",
+      "url": "https://ebay.it/",
+      "endpoint": "cart",
+      "taskSha256": "fd543784b1c7775dfe0fb054ad22d5f5b3641973d048320c2288ca9697a70bea"
+    },
+    {
+      "id": "consumer-0416",
+      "domain": "yodobashi.com",
+      "url": "https://yodobashi.com/",
+      "endpoint": "cart",
+      "taskSha256": "9d7e4594f16e5682e1f562123072bf9442bfd110d67d1b6f3abdfc0d95bb2e81"
+    },
+    {
+      "id": "consumer-0421",
+      "domain": "lego.com",
+      "url": "https://lego.com/",
+      "endpoint": "cart",
+      "taskSha256": "929c5c33d100747f76e05ec50286087dae60160ad977450ef19cc2d702c55f03"
+    },
+    {
+      "id": "consumer-0422",
+      "domain": "mediaexpert.pl",
+      "url": "https://mediaexpert.pl/",
+      "endpoint": "cart",
+      "taskSha256": "17fc8f40d2bf17a2e29fbc26075945aaf054f9b1463fa51ddfc794365dce545e"
+    },
+    {
+      "id": "consumer-0423",
+      "domain": "walmart.ca",
+      "url": "https://walmart.ca/",
+      "endpoint": "cart",
+      "taskSha256": "5e07acbaa9e568bd6d0038b5c0dfaf5bf9221c358f7757339810e60bac87b4c5"
+    },
+    {
+      "id": "consumer-0427",
+      "domain": "skroutz.gr",
+      "url": "https://skroutz.gr/",
+      "endpoint": "cart",
+      "taskSha256": "8980eb69c64ec1759a639032dc4dd1d34937115b5fbd03156e55ef19b3ddddc0"
+    },
+    {
+      "id": "consumer-0432",
+      "domain": "aliexpress.us",
+      "url": "https://aliexpress.us/",
+      "endpoint": "cart",
+      "taskSha256": "2edd2284e9144ecc1267dc5f840857d94273dd296f1dea9794fd3148a0eff5d8"
+    },
+    {
+      "id": "consumer-0438",
+      "domain": "emag.ro",
+      "url": "https://emag.ro/",
+      "endpoint": "cart",
+      "taskSha256": "00b37023a953c34fae62b5ada526dbc27ee67f861acd0a877adba90c75ebee45"
+    },
+    {
+      "id": "consumer-0440",
+      "domain": "nordstromrack.com",
+      "url": "https://nordstromrack.com/",
+      "endpoint": "cart",
+      "taskSha256": "78d167ffed01493e5832163dbc67e89df106102a8f4a1393e2855468eb64adf3"
+    },
+    {
+      "id": "consumer-0442",
+      "domain": "homedepot.ca",
+      "url": "https://homedepot.ca/",
+      "endpoint": "cart",
+      "taskSha256": "4ded3557106cf634fc62cc9007d45799cd44a92d47c974d053651930971f1904"
+    },
+    {
+      "id": "consumer-0444",
+      "domain": "next.co.uk",
+      "url": "https://next.co.uk/",
+      "endpoint": "cart",
+      "taskSha256": "db1fb03620ee2fd07ccc89d822d54bb7d879cb38a8349a570af0548b7351ba0e"
+    },
+    {
+      "id": "consumer-0445",
+      "domain": "mediamarkt.de",
+      "url": "https://mediamarkt.de/",
+      "endpoint": "cart",
+      "taskSha256": "5febb859a4275256becb36be4f3bd886ff551fb0b994d3f575d4bdcf088cd532"
+    },
+    {
+      "id": "consumer-0449",
+      "domain": "netshoes.com.br",
+      "url": "https://netshoes.com.br/",
+      "endpoint": "cart",
+      "taskSha256": "40e383eb355c94bffbe5e0085c1662fa8a546c8038a1d3a286d69118f81fe133"
+    },
+    {
+      "id": "consumer-0450",
+      "domain": "cdiscount.com",
+      "url": "https://cdiscount.com/",
+      "endpoint": "cart",
+      "taskSha256": "68be7819123ef9b186a5a04f80eb043424a073c48ad1c2e3a5c3be45ceda36eb"
+    },
+    {
+      "id": "consumer-0451",
+      "domain": "zalando.de",
+      "url": "https://zalando.de/",
+      "endpoint": "cart",
+      "taskSha256": "84aa67147d156543068c9cc7cedff18bb2c316023b7f4dd362abb05b7c0f3099"
+    },
+    {
+      "id": "consumer-0457",
+      "domain": "stockx.com",
+      "url": "https://stockx.com/",
+      "endpoint": "public_information",
+      "taskSha256": "6567483f144e7db1c289f8c1ee98556afa30a07392646298047097641dc00d05"
+    },
+    {
+      "id": "consumer-0459",
+      "domain": "decathlon.fr",
+      "url": "https://decathlon.fr/",
+      "endpoint": "cart",
+      "taskSha256": "9b48170f28574d6a66ac86487854e669e68f73731874acfb9282e8f18ece7a44"
+    },
+    {
+      "id": "consumer-0460",
+      "domain": "costco.ca",
+      "url": "https://costco.ca/",
+      "endpoint": "cart",
+      "taskSha256": "bdaf4c94e14516f33f41cd646951a377c5c734c19a57b2dd811a4d15f1ff24a4"
+    },
+    {
+      "id": "consumer-0461",
+      "domain": "tcgplayer.com",
+      "url": "https://tcgplayer.com/",
+      "endpoint": "cart",
+      "taskSha256": "8ca74f29d8ec9654c264a998468e64434b0ed0befbe521a711d9af14e06b1933"
+    },
+    {
+      "id": "consumer-0463",
+      "domain": "canadiantire.ca",
+      "url": "https://canadiantire.ca/",
+      "endpoint": "cart",
+      "taskSha256": "b636a0b7f9f3d1195d627e02c9260f6017828621872782ec5c75856ce0e35c51"
+    },
+    {
+      "id": "consumer-0465",
+      "domain": "walmart.com.mx",
+      "url": "https://walmart.com.mx/",
+      "endpoint": "cart",
+      "taskSha256": "373acdc127f9c83d7528426d306b93dcab0cab210c981689ed9fbf1908dab120"
+    },
+    {
+      "id": "consumer-0470",
+      "domain": "ebay.ca",
+      "url": "https://ebay.ca/",
+      "endpoint": "cart",
+      "taskSha256": "1becf112ae22782e35c46879a487fbbe7cbbbd9b079254e29687bd8685036584"
+    },
+    {
+      "id": "consumer-0471",
+      "domain": "bunnings.com.au",
+      "url": "https://bunnings.com.au/",
+      "endpoint": "cart",
+      "taskSha256": "d7039d1fb67a34a32b166620ad0e27f74e503b5aa04de713530f4e397a093d51"
+    },
+    {
+      "id": "consumer-0472",
+      "domain": "liverpool.com.mx",
+      "url": "https://liverpool.com.mx/",
+      "endpoint": "cart",
+      "taskSha256": "b28effed0938ac2cbf4f0e433c9305ace24ce2afb675270f47108ba29428e1a4"
+    },
+    {
+      "id": "consumer-0483",
+      "domain": "galaxus.ch",
+      "url": "https://galaxus.ch/",
+      "endpoint": "cart",
+      "taskSha256": "b9eb628679041fb360d9dd718edceba9e78f88896cc7760cf41be96962e69b92"
+    },
+    {
+      "id": "consumer-0484",
+      "domain": "suruga-ya.jp",
+      "url": "https://suruga-ya.jp/",
+      "endpoint": "cart",
+      "taskSha256": "8e69f1aa29c42cef6dc4d27edcdaad3af22b1c281fad305b575869327e32df3a"
+    },
+    {
+      "id": "consumer-0485",
+      "domain": "currys.co.uk",
+      "url": "https://currys.co.uk/",
+      "endpoint": "cart",
+      "taskSha256": "78d60ac749f02e4b6e1836f8670cd4bbe70b8e5289a27e1b4e81bb202f419262"
+    },
+    {
+      "id": "consumer-0487",
+      "domain": "falabella.com",
+      "url": "https://falabella.com/",
+      "endpoint": "cart",
+      "taskSha256": "17f38270672848e9f2ea21954ef805cb1def047572239ee42bcc53ea2b73aba0"
+    },
+    {
+      "id": "consumer-0488",
+      "domain": "sainsburys.co.uk",
+      "url": "https://sainsburys.co.uk/",
+      "endpoint": "public_information",
+      "taskSha256": "36b3e9ff4c55c609a3d7675f8958ce306a365ac6b69c631b224a25c9ea4020fa"
+    },
+    {
+      "id": "consumer-0491",
+      "domain": "blibli.com",
+      "url": "https://blibli.com/",
+      "endpoint": "public_information",
+      "taskSha256": "e1466c18f689cf8ff26a059cf76c013521e504e3783c8c8167d53ad80b3ebba9"
+    },
+    {
+      "id": "consumer-0497",
+      "domain": "woolworths.com.au",
+      "url": "https://woolworths.com.au/",
+      "endpoint": "cart",
+      "taskSha256": "ec0274f4bd6a669118e814874f94e539373f29e80100fd9360e5df35185971a3"
+    },
+    {
+      "id": "consumer-0498",
+      "domain": "bestbuy.ca",
+      "url": "https://bestbuy.ca/",
+      "endpoint": "cart",
+      "taskSha256": "687fd99b02a861e92de0464b55e25f54c8ef885557654c1209e43b97cdf30234"
+    },
+    {
+      "id": "consumer-0500",
+      "domain": "mvideo.ru",
+      "url": "https://mvideo.ru/",
+      "endpoint": "cart",
+      "taskSha256": "d8186ac7702a7396d45a3b2881875739c389e18cb7f705a62e272d86953b87fa"
+    },
+    {
+      "id": "consumer-0515",
+      "domain": "redbubble.com",
+      "url": "https://redbubble.com/",
+      "endpoint": "cart",
+      "taskSha256": "77a2653314b0b3524d86c169e84d4beb591edc8e1b926649bfd99ae9fe1d1940"
+    },
+    {
+      "id": "consumer-0518",
+      "domain": "oreillyauto.com",
+      "url": "https://oreillyauto.com/",
+      "endpoint": "cart",
+      "taskSha256": "75fc2c736d3f0a202cda0d5106c09dd82d8eee650aa5a84a13e808873e9196ba"
+    },
+    {
+      "id": "consumer-0529",
+      "domain": "dm.de",
+      "url": "https://dm.de/",
+      "endpoint": "cart",
+      "taskSha256": "0ddbe1036c11b65b47f58c5163407ab26471d950cb0b9f78424e2433be8593ae"
+    },
+    {
+      "id": "consumer-0532",
+      "domain": "empik.com",
+      "url": "https://empik.com/",
+      "endpoint": "cart",
+      "taskSha256": "fe0369e51f3a7d7499bffd0088b467895992e496c2766d495a3e35b3059da355"
+    },
+    {
+      "id": "consumer-0535",
+      "domain": "thredup.com",
+      "url": "https://thredup.com/",
+      "endpoint": "public_information",
+      "taskSha256": "27bdcf80fced22e211e7e3f54b8c881818d872d74912fbe64835cd88d3688df0"
+    },
+    {
+      "id": "consumer-0538",
+      "domain": "chemistwarehouse.com.au",
+      "url": "https://chemistwarehouse.com.au/",
+      "endpoint": "cart",
+      "taskSha256": "b1c677436a2754416c222ef2ebe19e0f317eabb0bd06f87924fb7b47d804cbf6"
+    },
+    {
+      "id": "consumer-0548",
+      "domain": "decathlon.es",
+      "url": "https://decathlon.es/",
+      "endpoint": "cart",
+      "taskSha256": "79a00b6698b120ee635f3a9e2c868f2cc46179417f6080b83e9a8a636ff039c5"
+    },
+    {
+      "id": "consumer-0551",
+      "domain": "shopee.sg",
+      "url": "https://shopee.sg/",
+      "endpoint": "public_information",
+      "taskSha256": "195009a260e30864b8748edb044caa2198a076bd656d244a2691ec7e1433a316"
+    },
+    {
+      "id": "consumer-0559",
+      "domain": "reverb.com",
+      "url": "https://reverb.com/",
+      "endpoint": "cart",
+      "taskSha256": "b2819b296d1cf72cdd1684d2c3b910afa736beeda40111c9d40352fd830d2884"
+    },
+    {
+      "id": "consumer-0561",
+      "domain": "bershka.com",
+      "url": "https://bershka.com/",
+      "endpoint": "cart",
+      "taskSha256": "f1c4dd7e8b73ea59b583f89318a9667e536f198fad7c8e69859da530081d507e"
+    },
+    {
+      "id": "consumer-0562",
+      "domain": "p-bandai.jp",
+      "url": "https://p-bandai.jp/",
+      "endpoint": "public_information",
+      "taskSha256": "4d78dc3c11cbccbeaaadce8d941efb62dce6cf6e83c6fb77ce070f5739e859b1"
+    },
+    {
+      "id": "consumer-0566",
+      "domain": "lidl.fr",
+      "url": "https://lidl.fr/",
+      "endpoint": "cart",
+      "taskSha256": "0d443c462081bb1876946b2d4a490a5b9aa9185c8fa89dd14939c8a20005dffa"
+    },
+    {
+      "id": "consumer-0570",
+      "domain": "freepeople.com",
+      "url": "https://freepeople.com/",
+      "endpoint": "cart",
+      "taskSha256": "370b4b2e1e8b3c68a5c4e049f6757203c8d5a569db2b515f6b17af858617d9e6"
+    },
+    {
+      "id": "consumer-0573",
+      "domain": "ricardo.ch",
+      "url": "https://ricardo.ch/",
+      "endpoint": "public_information",
+      "taskSha256": "c71c719adeaddae0ed23764ec1a122318c03d6d5e64985021a55a5857afa4d5f"
+    },
+    {
+      "id": "consumer-0582",
+      "domain": "lazada.co.id",
+      "url": "https://lazada.co.id/",
+      "endpoint": "cart",
+      "taskSha256": "87f40c02d869f59c34651a01876a5e221a2daf9ca758898159d4dbd2f9bd845a"
+    },
+    {
+      "id": "consumer-0584",
+      "domain": "fanatics.com",
+      "url": "https://fanatics.com/",
+      "endpoint": "cart",
+      "taskSha256": "8b476262eede690de4f6f774c23b3b08b441f786ea1b5b070276a528803b8813"
+    },
+    {
+      "id": "consumer-0588",
+      "domain": "n11.com",
+      "url": "https://n11.com/",
+      "endpoint": "cart",
+      "taskSha256": "bcd1b45c705c83682df12dc795825ea09fa2d23e382542c2cf75aa7816287799"
+    },
+    {
+      "id": "consumer-0591",
+      "domain": "myer.com.au",
+      "url": "https://myer.com.au/",
+      "endpoint": "cart",
+      "taskSha256": "11e4b663759353f7d8733b989a2304ba9e45902de61ab30607d8e24f6e8a4b9c"
+    },
+    {
+      "id": "consumer-0592",
+      "domain": "bhphotovideo.com",
+      "url": "https://bhphotovideo.com/",
+      "endpoint": "cart",
+      "taskSha256": "90e809390a6b19433bacad1a332ae7b6e465de772ce0b0f3d663e8e27204487c"
+    },
+    {
+      "id": "consumer-0594",
+      "domain": "meijer.com",
+      "url": "https://meijer.com/",
+      "endpoint": "cart",
+      "taskSha256": "56a6893e97181e1f18528d14b0e6ad498336d6c38b8e7e3ae4cff3ad6f7d1cf6"
+    },
+    {
+      "id": "consumer-0596",
+      "domain": "llbean.com",
+      "url": "https://llbean.com/",
+      "endpoint": "cart",
+      "taskSha256": "f2b6dd14d7b52c8e0ff58a4bc261dd4f962639d048924b7a670d1201a23333cf"
+    },
+    {
+      "id": "consumer-0597",
+      "domain": "wayfair.ca",
+      "url": "https://wayfair.ca/",
+      "endpoint": "cart",
+      "taskSha256": "fb8b3dc8cceb43b771949d1d94d03278e9dd0bcfd30d6d214e93a8d32dbd2674"
+    },
+    {
+      "id": "consumer-0603",
+      "domain": "staples.com",
+      "url": "https://staples.com/",
+      "endpoint": "cart",
+      "taskSha256": "ec29247e7f391ce35e9077d32ecfd454ae7b2aece071df3335b4404852144374"
+    },
+    {
+      "id": "consumer-0608",
+      "domain": "tkmaxx.com",
+      "url": "https://tkmaxx.com/",
+      "endpoint": "cart",
+      "taskSha256": "368fde2d639521379882dfa2eb8ff453d0eab4a29f0f31129d84248ddf07df28"
+    },
+    {
+      "id": "consumer-0611",
+      "domain": "zalando.nl",
+      "url": "https://zalando.nl/",
+      "endpoint": "cart",
+      "taskSha256": "c5977cae6bba1489b307cc3af43f5b3d7c5edcc6843da5ff417b930d8e066808"
+    },
+    {
+      "id": "consumer-0620",
+      "domain": "lider.cl",
+      "url": "https://lider.cl/",
+      "endpoint": "cart",
+      "taskSha256": "02e61bf04c22654d7d18775d75c4d02a0f41c8baa0fb05873c6c8d062421f1fb"
+    },
+    {
+      "id": "consumer-0623",
+      "domain": "mediamarkt.com.tr",
+      "url": "https://mediamarkt.com.tr/",
+      "endpoint": "cart",
+      "taskSha256": "b95858fe219c8b2ed1e11259cfb253c94ac4fff991a32a848eefcdbbc86be2e3"
+    },
+    {
+      "id": "consumer-0625",
+      "domain": "kabum.com.br",
+      "url": "https://kabum.com.br/",
+      "endpoint": "cart",
+      "taskSha256": "193929bfb54c8fbd2b2c4ac37e797414550daea039f497aa3697c2bfca7fb500"
+    },
+    {
+      "id": "consumer-0628",
+      "domain": "carrefour.es",
+      "url": "https://carrefour.es/",
+      "endpoint": "cart",
+      "taskSha256": "0c52febe3f9af11d69d2e583d3a3b494b59df10afea3a9431b0198564a16f6bf"
+    },
+    {
+      "id": "consumer-0629",
+      "domain": "decathlon.it",
+      "url": "https://decathlon.it/",
+      "endpoint": "cart",
+      "taskSha256": "6112c37772066329823c3360c6724ec73b56bae821a6c5c8e8010d8be10c77fc"
+    },
+    {
+      "id": "consumer-0631",
+      "domain": "tatacliq.com",
+      "url": "https://tatacliq.com/",
+      "endpoint": "cart",
+      "taskSha256": "c8114b144263b4095080d5896acb671107665dc56e27ff47d5f32d936c636552"
+    },
+    {
+      "id": "consumer-0632",
+      "domain": "worten.pt",
+      "url": "https://worten.pt/",
+      "endpoint": "cart",
+      "taskSha256": "b933eb552b1d5b3818658048f5aeb3391a872125b9f384ae96d2940ab09cf381"
+    },
+    {
+      "id": "consumer-0633",
+      "domain": "hottopic.com",
+      "url": "https://hottopic.com/",
+      "endpoint": "cart",
+      "taskSha256": "341e72291a21967ed05f77f9354272ba3a46b91b027c8aa91899939a6855290d"
+    },
+    {
+      "id": "consumer-0639",
+      "domain": "newegg.com",
+      "url": "https://newegg.com/",
+      "endpoint": "cart",
+      "taskSha256": "1ce8c3ba492d50ddc5218689eee86b21753410433b2d705061f404d1c31dff9e"
+    },
+    {
+      "id": "consumer-0640",
+      "domain": "lazada.vn",
+      "url": "https://lazada.vn/",
+      "endpoint": "cart",
+      "taskSha256": "35231372c0ca1307467d53f837e07cd44d4cdb208218b344942b9e4323acf354"
+    },
+    {
+      "id": "consumer-0641",
+      "domain": "grailed.com",
+      "url": "https://grailed.com/",
+      "endpoint": "public_information",
+      "taskSha256": "7c376eafd53a1609736df5b57359c5aa3b38b36ab1f65f708384e899903e5ec1"
+    },
+    {
+      "id": "consumer-0642",
+      "domain": "therange.co.uk",
+      "url": "https://therange.co.uk/",
+      "endpoint": "cart",
+      "taskSha256": "1f358e1c69754b09644468123a6644fd4c4fc6494050c82b1533f77a2f393c76"
+    },
+    {
+      "id": "consumer-0643",
+      "domain": "childrensplace.com",
+      "url": "https://childrensplace.com/",
+      "endpoint": "cart",
+      "taskSha256": "60a2da3286a70ed1ee7b6c5f8ec352ab7ae322eb93bc5389bc9588f75bd3c387"
+    },
+    {
+      "id": "consumer-0646",
+      "domain": "sweetwater.com",
+      "url": "https://sweetwater.com/",
+      "endpoint": "cart",
+      "taskSha256": "42ef2ca9296c7ae7f6b0589481c069d7d6fd227638f2d2fa58cf5b6a88ef3e23"
+    },
+    {
+      "id": "consumer-0647",
+      "domain": "hsn.com",
+      "url": "https://hsn.com/",
+      "endpoint": "cart",
+      "taskSha256": "5d86d9529c949bfcb3663a570561721e28c2003cb79e19bbe29ddb6ab67a1c45"
+    },
+    {
+      "id": "consumer-0650",
+      "domain": "coachoutlet.com",
+      "url": "https://coachoutlet.com/",
+      "endpoint": "cart",
+      "taskSha256": "74694457310b769019e48ada2220eb122a2ab00ee9308c3b8bb5bab2f97222a3"
+    },
+    {
+      "id": "consumer-0652",
+      "domain": "lightinthebox.com",
+      "url": "https://lightinthebox.com/",
+      "endpoint": "cart",
+      "taskSha256": "5a3275f4ebccb6e1450dfd532fbc840ab20c6fd42911156faffadf9a2958d20b"
+    },
+    {
+      "id": "consumer-0653",
+      "domain": "joom.com",
+      "url": "https://joom.com/",
+      "endpoint": "cart",
+      "taskSha256": "dfc6c5c53400528192539cd5cad981d69c9aa9d41d52358db1d7679148bebe02"
+    },
+    {
+      "id": "consumer-0657",
+      "domain": "aritzia.com",
+      "url": "https://aritzia.com/",
+      "endpoint": "cart",
+      "taskSha256": "04d3d6f93ae0117cc597bb42d8d863c421ce00e55cdb126a56aa1d13aa8aa184"
+    },
+    {
+      "id": "consumer-0662",
+      "domain": "books.com.tw",
+      "url": "https://www.books.com.tw/",
+      "endpoint": "public_information",
+      "taskSha256": "46bcaab0266bd4ab3f75cf3aab94e6ff6c74587c1881884e644f2e277c8075b1"
+    },
+    {
+      "id": "consumer-0666",
+      "domain": "onlinetrade.ru",
+      "url": "https://onlinetrade.ru/",
+      "endpoint": "cart",
+      "taskSha256": "6ad1d593f0c1f7b6a864f90eac12c6a471ec53d51af3f0343e39e46b071cd4e3"
+    },
+    {
+      "id": "consumer-0675",
+      "domain": "baycrews.jp",
+      "url": "https://baycrews.jp/",
+      "endpoint": "cart",
+      "taskSha256": "e41f6759e04f7ebde480fbfbb49e139e802fd24feac9f30bc03b040b81ac9ade"
+    },
+    {
+      "id": "consumer-0676",
+      "domain": "jdsports.co.uk",
+      "url": "https://jdsports.co.uk/",
+      "endpoint": "cart",
+      "taskSha256": "48a2cbc7bff1063a36634375a3c518becbba4d6be5f67fef8d42e8387abfd83b"
+    },
+    {
+      "id": "v8-biblio-com",
+      "domain": "biblio.com",
+      "url": "https://biblio.com/",
+      "endpoint": "cart",
+      "taskSha256": "91380095cba9973b32011e2320ccb3b4621436eabb8c561dc2628d17cafbd2cd"
+    },
+    {
+      "id": "consumer-0684",
+      "domain": "digitec.ch",
+      "url": "https://digitec.ch/",
+      "endpoint": "cart",
+      "taskSha256": "2de82709bbe093c2828aa5a6fa2df1d3386d95b541287e4618acec6a14726fe7"
+    },
+    {
+      "id": "consumer-0685",
+      "domain": "carters.com",
+      "url": "https://carters.com/",
+      "endpoint": "cart",
+      "taskSha256": "2284a67283bc92023b302a2f201d954fee76aa33c1e99a94f6bd2cdd9a04c440"
+    },
+    {
+      "id": "consumer-0689",
+      "domain": "belk.com",
+      "url": "https://belk.com/",
+      "endpoint": "cart",
+      "taskSha256": "ecf2af48095ad0282af4591a17fda14d512c11c09d76454517a9fc07ecfb3807"
+    },
+    {
+      "id": "consumer-0690",
+      "domain": "a101.com.tr",
+      "url": "https://a101.com.tr/",
+      "endpoint": "public_information",
+      "taskSha256": "724a386ef6ca31f3698060f591d6d4ce4b02301e72c074fdb7779628a4290ad7"
+    },
+    {
+      "id": "consumer-0691",
+      "domain": "hema.nl",
+      "url": "https://hema.nl/",
+      "endpoint": "cart",
+      "taskSha256": "2d002c225b48f07fe394ddffe092e817de428e362dfe5194c2cd37c3c42357e3"
+    },
+    {
+      "id": "consumer-0694",
+      "domain": "famousfootwear.com",
+      "url": "https://famousfootwear.com/",
+      "endpoint": "cart",
+      "taskSha256": "4bae364df4354f3de88b8b556be09c4634f1ee2a46069b4a896abf3259b8f366"
+    },
+    {
+      "id": "consumer-0696",
+      "domain": "newlook.com",
+      "url": "https://newlook.com/",
+      "endpoint": "cart",
+      "taskSha256": "ccfc7b94a8e1e7d7823b21e43f56bf0b0d33013d5ab74d9ac5b51ca105e205a2"
+    },
+    {
+      "id": "consumer-0698",
+      "domain": "partsgeek.com",
+      "url": "https://partsgeek.com/",
+      "endpoint": "cart",
+      "taskSha256": "fceac1925d2cc434bed28e77b2b2b07771ae25f242a75a936d24a2dad98e7a34"
+    },
+    {
+      "id": "consumer-0702",
+      "domain": "loft.com",
+      "url": "https://loft.com/",
+      "endpoint": "cart",
+      "taskSha256": "15fcfdcc90aa67d2b0cc7bf11890c595b8e6f10257083d30836122e4366b16c4"
+    },
+    {
+      "id": "consumer-0707",
+      "domain": "torrid.com",
+      "url": "https://torrid.com/",
+      "endpoint": "cart",
+      "taskSha256": "ddf220936433be1d1f1ce5791fec69b8829660522ddeac3e107100bb055cb85c"
+    },
+    {
+      "id": "consumer-0708",
+      "domain": "vestiairecollective.com",
+      "url": "https://vestiairecollective.com/",
+      "endpoint": "public_information",
+      "taskSha256": "77e24a146bb62f2f6fbddeef92ddea05e58cb498ad696b3dc9dad32ea796bc1a"
+    },
+    {
+      "id": "consumer-0711",
+      "domain": "jomashop.com",
+      "url": "https://jomashop.com/",
+      "endpoint": "cart",
+      "taskSha256": "500d988c01eb2cae510950b740c7215751d9041ebdd9be0cbb7de7be7bdc77b3"
+    },
+    {
+      "id": "consumer-0715",
+      "domain": "decathlon.co.uk",
+      "url": "https://decathlon.co.uk/",
+      "endpoint": "cart",
+      "taskSha256": "1726bf63b497b5e8fac101b411845dec60741d113b6da70a716e60e761cc1da3"
+    },
+    {
+      "id": "consumer-0716",
+      "domain": "altex.ro",
+      "url": "https://altex.ro/",
+      "endpoint": "cart",
+      "taskSha256": "b49e38bbf1fefb9db6c9b51fe59dc064405b46fe528421e47b045483f246200f"
+    },
+    {
+      "id": "consumer-0722",
+      "domain": "comfy.ua",
+      "url": "https://comfy.ua/",
+      "endpoint": "cart",
+      "taskSha256": "f5af0d6b17debddef2076ce61a811708ce6ad6ce9ba200772b60cc85e55ad7a1"
+    },
+    {
+      "id": "consumer-0727",
+      "domain": "guitarcenter.com",
+      "url": "https://guitarcenter.com/",
+      "endpoint": "cart",
+      "taskSha256": "789ea67e0ae841e97acae93c2a4e580536ff975b297ab71cb5a0d847105424af"
+    },
+    {
+      "id": "consumer-0729",
+      "domain": "ripley.cl",
+      "url": "https://ripley.cl/",
+      "endpoint": "cart",
+      "taskSha256": "2d4f397e895d80fbe21a6997d3b1bb4f4f1d2c4237458a0f50adec3a4333fd10"
+    },
+    {
+      "id": "consumer-0730",
+      "domain": "iceland.co.uk",
+      "url": "https://iceland.co.uk/",
+      "endpoint": "public_information",
+      "taskSha256": "c138a01dca9ae4a7aaa26ab0bef4db61442fa40a21850e38f833def7374d049f"
+    },
+    {
+      "id": "consumer-0732",
+      "domain": "elpalaciodehierro.com",
+      "url": "https://elpalaciodehierro.com/",
+      "endpoint": "cart",
+      "taskSha256": "408229e2b74070d85d11d4798644392dd25d1847021e9b69680e5db3a711eeee"
+    },
+    {
+      "id": "consumer-0735",
+      "domain": "x-kom.pl",
+      "url": "https://x-kom.pl/",
+      "endpoint": "cart",
+      "taskSha256": "d68284a4e63ad585064b8064d426b57cd7452d4eca89a31eca3601b97ff70a74"
+    },
+    {
+      "id": "consumer-0736",
+      "domain": "elgiganten.se",
+      "url": "https://elgiganten.se/",
+      "endpoint": "cart",
+      "taskSha256": "3a7ab851f8ef19f61f899984f4f43767ea4cc177b40923dc895af20c48fd82dc"
+    },
+    {
+      "id": "consumer-0738",
+      "domain": "apotea.se",
+      "url": "https://apotea.se/",
+      "endpoint": "cart",
+      "taskSha256": "f1cc15f0821d383c221fb3fdbd99bc8aa9c01ea54954f66dc704b85dae7018f2"
+    },
+    {
+      "id": "consumer-0739",
+      "domain": "scheels.com",
+      "url": "https://scheels.com/",
+      "endpoint": "cart",
+      "taskSha256": "38690a24f78807efa17491f051bb8da97e8c5e124e1c875d609ab9d887bcd935"
+    },
+    {
+      "id": "consumer-0744",
+      "domain": "target.com.au",
+      "url": "https://target.com.au/",
+      "endpoint": "cart",
+      "taskSha256": "d5612cca5e853337bbfa9f1a4c52fe11a5f0ebce71b56e87bb529b75809469e0"
+    },
+    {
+      "id": "consumer-0746",
+      "domain": "fivebelow.com",
+      "url": "https://fivebelow.com/",
+      "endpoint": "cart",
+      "taskSha256": "3254f984c3fb8dd5040e2c8c07e8d0ed40df77832a4b5c443e9d7a60a731269d"
+    },
+    {
+      "id": "consumer-0748",
+      "domain": "bigbasket.com",
+      "url": "https://bigbasket.com/",
+      "endpoint": "public_information",
+      "taskSha256": "c70da4f6c0e871f1e3f1a7ebab7ae3d1b1522eda0700e6ca5131e541cc7ba778"
+    },
+    {
+      "id": "consumer-0752",
+      "domain": "oneplus.in",
+      "url": "https://oneplus.in/",
+      "endpoint": "cart",
+      "taskSha256": "07013886b41cb7b46c7e87698090f4bf3707eb05e9874c8fb166b91f13bc0122"
+    },
+    {
+      "id": "consumer-0754",
+      "domain": "adidas.co.uk",
+      "url": "https://adidas.co.uk/",
+      "endpoint": "cart",
+      "taskSha256": "347e9b7d2376b61fac72b739c818bd010d747e3615a6ee5b24c3c9cb4b8217ca"
+    },
+    {
+      "id": "consumer-0756",
+      "domain": "microcenter.com",
+      "url": "https://microcenter.com/",
+      "endpoint": "cart",
+      "taskSha256": "d91cb85950ac7610f5b417209b76000e6da4a1352cf143c04342ce5ad5c434de"
+    },
+    {
+      "id": "consumer-0761",
+      "domain": "azazie.com",
+      "url": "https://azazie.com/",
+      "endpoint": "cart",
+      "taskSha256": "a49ef2d2cf36c36548a1e48643d0349cd99a7574d839986cacbccedf72463b1f"
+    },
+    {
+      "id": "consumer-0762",
+      "domain": "migros.ch",
+      "url": "https://migros.ch/",
+      "endpoint": "cart",
+      "taskSha256": "cdd03459b2a8a0640240c7e9dcc7d8004c3e8585ecda97d44e1efcf13d4efb62"
+    },
+    {
+      "id": "consumer-0771",
+      "domain": "ebay.es",
+      "url": "https://ebay.es/",
+      "endpoint": "cart",
+      "taskSha256": "84f26f5f6afd1377547095ab033eea21b4e912ea00777a89f1b9046eb437ca23"
+    },
+    {
+      "id": "consumer-0777",
+      "domain": "spotlightstores.com",
+      "url": "https://spotlightstores.com/",
+      "endpoint": "cart",
+      "taskSha256": "762b1a38420e60bd1d49fae067218e028eba74e3db2d0febf9c67adfc57fc1d7"
+    },
+    {
+      "id": "consumer-0778",
+      "domain": "boohoo.com",
+      "url": "https://boohoo.com/",
+      "endpoint": "cart",
+      "taskSha256": "1bf1af9b91e78af2b0d36714ba0311488dc1d79e3dc4201f4845a2452bf38190"
+    },
+    {
+      "id": "consumer-0779",
+      "domain": "casadellibro.com",
+      "url": "https://casadellibro.com/",
+      "endpoint": "cart",
+      "taskSha256": "bb93342d8a02a38c93f9f696e3598f185c64bccced1e7e1261f82db6415bdb54"
+    },
+    {
+      "id": "consumer-0783",
+      "domain": "intersport.fr",
+      "url": "https://intersport.fr/",
+      "endpoint": "cart",
+      "taskSha256": "df9297e8af7e3c399a41118b502c64b4754e9458e4f5ae8ccb4e69d51acdcdb3"
+    },
+    {
+      "id": "consumer-0784",
+      "domain": "elkjop.no",
+      "url": "https://elkjop.no/",
+      "endpoint": "cart",
+      "taskSha256": "c7c777928605bd79a0527d7ddde288f5d2aec2bed4aa175e6744852c1e771482"
+    },
+    {
+      "id": "consumer-0787",
+      "domain": "shoecarnival.com",
+      "url": "https://shoecarnival.com/",
+      "endpoint": "cart",
+      "taskSha256": "551deec7d483576626a58ee7538b31dfaf591e20186d664878a311a68d5c4832"
+    },
+    {
+      "id": "consumer-0788",
+      "domain": "creator-spring.com",
+      "url": "https://creator-spring.com/",
+      "endpoint": "cart",
+      "taskSha256": "245d9e3e62930bd84a9002d0f7a0394129ddd94863d7700f6b3a1a4427baf200"
+    },
+    {
+      "id": "consumer-0792",
+      "domain": "mangooutlet.com",
+      "url": "https://mangooutlet.com/",
+      "endpoint": "cart",
+      "taskSha256": "2f8a250f3f64509cdef723997b2c2c62e9cd349db822b3ef822caa39a28ca311"
+    },
+    {
+      "id": "consumer-0793",
+      "domain": "emag.hu",
+      "url": "https://emag.hu/",
+      "endpoint": "cart",
+      "taskSha256": "233d8f75a73507ef03e85bb047975128c7884496df9954ae3c2f52d09778e83d"
+    },
+    {
+      "id": "consumer-0796",
+      "domain": "hollandandbarrett.com",
+      "url": "https://hollandandbarrett.com/",
+      "endpoint": "cart",
+      "taskSha256": "eb9e2339b383b73f0b9ed2ad67f8a6c285939369afd832d21bc6276ceaee83ed"
+    },
+    {
+      "id": "consumer-0799",
+      "domain": "k-ruoka.fi",
+      "url": "https://k-ruoka.fi/",
+      "endpoint": "cart",
+      "taskSha256": "8dbe2c9be5179e58b6f50419b4d57a161fd03fcc5365c37d216b984e90b1497f"
+    },
+    {
+      "id": "consumer-0800",
+      "domain": "brilliantearth.com",
+      "url": "https://brilliantearth.com/",
+      "endpoint": "cart",
+      "taskSha256": "df7c8e5144c6a49b23fb78752bcac2840a8b59d0074163b093d3d71a14e74053"
+    },
+    {
+      "id": "consumer-0801",
+      "domain": "sezane.com",
+      "url": "https://sezane.com/",
+      "endpoint": "public_information",
+      "taskSha256": "3113875604c6c1d29e1cdbb78493492049870c653552f9fcf105f92fd5f4dc33"
+    },
+    {
+      "id": "consumer-0803",
+      "domain": "zalando.be",
+      "url": "https://zalando.be/",
+      "endpoint": "cart",
+      "taskSha256": "f6a194528157be94823df5db850285bb7742dbb9db3b9f6722329311a7954904"
+    },
+    {
+      "id": "consumer-0806",
+      "domain": "mandmdirect.com",
+      "url": "https://mandmdirect.com/",
+      "endpoint": "cart",
+      "taskSha256": "c26629685c66589d98fd22bdc3e86f3e2276c0607ef759de80cd5144a1de4973"
+    },
+    {
+      "id": "consumer-0808",
+      "domain": "teepublic.com",
+      "url": "https://teepublic.com/",
+      "endpoint": "cart",
+      "taskSha256": "dc61b25fcf406b7961622256081c758f41dfc9b7a06dd6863074f387b84af77c"
+    },
+    {
+      "id": "consumer-0812",
+      "domain": "allo.ua",
+      "url": "https://allo.ua/",
+      "endpoint": "cart",
+      "taskSha256": "84131344c5842d3e68f408ed0e2354a790c8718b2ab1a06a5b0dd7e6d33c3ed8"
+    },
+    {
+      "id": "consumer-0816",
+      "domain": "aeropostale.com",
+      "url": "https://aeropostale.com/",
+      "endpoint": "cart",
+      "taskSha256": "7a61f44e63688eeef40a68ccba5afff766707835b0329a4db35c61a7bb5e3901"
+    },
+    {
+      "id": "consumer-0819",
+      "domain": "ripley.com.pe",
+      "url": "https://ripley.com.pe/",
+      "endpoint": "cart",
+      "taskSha256": "c0ec700671c55ab870971539fd8ce18a83c67b6d508a4a3c70cc0b3f5b2bd4aa"
+    },
+    {
+      "id": "consumer-0821",
+      "domain": "jumbo.com",
+      "url": "https://jumbo.com/",
+      "endpoint": "cart",
+      "taskSha256": "2665d046c61afa57a3e146338c674269db9b6858e84ee3e7e2e270604b15a523"
+    },
+    {
+      "id": "consumer-0833",
+      "domain": "conforama.fr",
+      "url": "https://conforama.fr/",
+      "endpoint": "cart",
+      "taskSha256": "d6143f949fb5ac7570880d3719eb690866506a0e237afab458310693ff554b21"
+    },
+    {
+      "id": "consumer-0836",
+      "domain": "apple.com.cn",
+      "url": "https://apple.com.cn/",
+      "endpoint": "cart",
+      "taskSha256": "74e0090e06b5684130f4baa6620dc9974eef7717a39d5eef2456f573bae5838a"
+    },
+    {
+      "id": "consumer-0839",
+      "domain": "sears.com.mx",
+      "url": "https://sears.com.mx/",
+      "endpoint": "public_information",
+      "taskSha256": "fe6ef6a391ee45b0b7ce55cde0e88a3b541a6b74022eb0bd775192a8cebef850"
+    },
+    {
+      "id": "consumer-0842",
+      "domain": "bigbadtoystore.com",
+      "url": "https://bigbadtoystore.com/",
+      "endpoint": "cart",
+      "taskSha256": "8330045ca9317457c147cd8aa90268dbb2120bcb0e7e025ba7d6feef9e70ef5c"
+    },
+    {
+      "id": "consumer-0843",
+      "domain": "amiami.jp",
+      "url": "https://amiami.jp/",
+      "endpoint": "cart",
+      "taskSha256": "ac1b3426d671789efab5ecb3b44f90e892ee3e9a3445574ed9dd719202fd1d86"
+    },
+    {
+      "id": "consumer-0847",
+      "domain": "supercheapauto.com.au",
+      "url": "https://supercheapauto.com.au/",
+      "endpoint": "cart",
+      "taskSha256": "2900aa0616aa6858edaa2b76d55fd90e50f6010da6e4d32b8fd6ff5ee86a8986"
+    },
+    {
+      "id": "consumer-0849",
+      "domain": "centrepointstores.com",
+      "url": "https://centrepointstores.com/",
+      "endpoint": "cart",
+      "taskSha256": "ebaaf6b94905ccb33f688b00bc6b44364491bd349b52eec9f83f77a4dd3e6269"
+    },
+    {
+      "id": "consumer-0850",
+      "domain": "crutchfield.com",
+      "url": "https://crutchfield.com/",
+      "endpoint": "cart",
+      "taskSha256": "7ca298cfef401f3341e3281b2accf83c0f62deaf68a68dcd18a0c3d6457e6ca6"
+    },
+    {
+      "id": "consumer-0851",
+      "domain": "douglas.de",
+      "url": "https://douglas.de/",
+      "endpoint": "cart",
+      "taskSha256": "5fd896df0a00ebec6e3b0b15cf3a0871a07a5af366d378dce9dbbac11ed7643b"
+    },
+    {
+      "id": "consumer-0853",
+      "domain": "anntaylor.com",
+      "url": "https://anntaylor.com/",
+      "endpoint": "cart",
+      "taskSha256": "cf32bb0ba891e45c59dbfa7a27d9b3bff19f0b34d33b758447eec9e60353e30f"
+    },
+    {
+      "id": "consumer-0855",
+      "domain": "backmarket.com",
+      "url": "https://backmarket.com/",
+      "endpoint": "cart",
+      "taskSha256": "e4bbc456893c2b87321bc36fae783107161a27c5b45df58f8c2d563f116b5143"
+    },
+    {
+      "id": "consumer-0860",
+      "domain": "simons.ca",
+      "url": "https://simons.ca/",
+      "endpoint": "cart",
+      "taskSha256": "4a6d1fefb96bb830e116a1df17978aaf50bac89336e626df09be3b6f1adf4fa1"
+    },
+    {
+      "id": "consumer-0863",
+      "domain": "joshinweb.jp",
+      "url": "https://joshinweb.jp/",
+      "endpoint": "cart",
+      "taskSha256": "9bbf4e765dd88e19a0c3bd2fea07708118034bd9764135cd2a6ca63b57e91ae9"
+    },
+    {
+      "id": "consumer-0864",
+      "domain": "sanborns.com.mx",
+      "url": "https://www.sanborns.com.mx/",
+      "endpoint": "public_information",
+      "taskSha256": "1fcea44ba70f7e3df12911808e70aed99d7cd219b466c84393df5ea9a3fb0c92"
+    },
+    {
+      "id": "consumer-0866",
+      "domain": "decathlon.be",
+      "url": "https://decathlon.be/",
+      "endpoint": "cart",
+      "taskSha256": "573098b7e7df835a8b846442dd434716e530a4676e2742973c25a730504bf9dc"
+    },
+    {
+      "id": "consumer-0869",
+      "domain": "eyebuydirect.com",
+      "url": "https://eyebuydirect.com/",
+      "endpoint": "cart",
+      "taskSha256": "c89ebdf422df32782511752201f77e902cd286fbdf053434be6ef756ebf22005"
+    },
+    {
+      "id": "consumer-0871",
+      "domain": "sams.com.mx",
+      "url": "https://sams.com.mx/",
+      "endpoint": "cart",
+      "taskSha256": "f7de318164fada799e04c846161f2ed4ad70011d87d669da8d371f73d48dce40"
+    },
+    {
+      "id": "consumer-0872",
+      "domain": "detmir.ru",
+      "url": "https://detmir.ru/",
+      "endpoint": "cart",
+      "taskSha256": "bc741d1b0c42f78addd7ce1565601566e6d1520dbcad95028c4975984e5941e6"
+    },
+    {
+      "id": "consumer-0873",
+      "domain": "casetify.com",
+      "url": "https://casetify.com/",
+      "endpoint": "cart",
+      "taskSha256": "b91035a84c969d96f7f4dceefc7194318693e2d3643080aed7ed6ef48592f1da"
+    },
+    {
+      "id": "consumer-0877",
+      "domain": "netto-online.de",
+      "url": "https://netto-online.de/",
+      "endpoint": "cart",
+      "taskSha256": "9da932ec9dc5571da91b46ccb4adc1c16f1566cf44ab2808d9a28015c4636856"
+    },
+    {
+      "id": "consumer-0878",
+      "domain": "chipdip.ru",
+      "url": "https://chipdip.ru/",
+      "endpoint": "cart",
+      "taskSha256": "c7093256e3a3eece26bd2a3e56eafcc436996864d30f712dca48e0ef18a05a22"
+    },
+    {
+      "id": "consumer-0885",
+      "domain": "kogan.com",
+      "url": "https://kogan.com/",
+      "endpoint": "cart",
+      "taskSha256": "6c263275982094251ff0021d782949ea03530f432d888362bcecc6be33e74f17"
+    },
+    {
+      "id": "consumer-0887",
+      "domain": "kiabi.com",
+      "url": "https://kiabi.com/",
+      "endpoint": "cart",
+      "taskSha256": "840a77b490d8d27e67d321ed4cca0f6ac39f1e1e4c3e121f03ce36f7df53e770"
+    },
+    {
+      "id": "consumer-0889",
+      "domain": "costco.co.uk",
+      "url": "https://costco.co.uk/",
+      "endpoint": "cart",
+      "taskSha256": "6a861576fc41dadb7a83565d0b557b44b2c31db193be6474d89fe78f54eefb6a"
+    },
+    {
+      "id": "consumer-0895",
+      "domain": "chrono24.com",
+      "url": "https://chrono24.com/",
+      "endpoint": "public_information",
+      "taskSha256": "e21d827423adf7f42603047a95c6cc31af5fc3ddf7c38bb3136841d949bc909d"
+    },
+    {
+      "id": "consumer-0902",
+      "domain": "boohooman.com",
+      "url": "https://boohooman.com/",
+      "endpoint": "cart",
+      "taskSha256": "db61884a9f1445bfe754d97e513648f9dd317c7e8aeef510ee4c3e06963ad6dc"
+    },
+    {
+      "id": "consumer-0907",
+      "domain": "tillys.com",
+      "url": "https://tillys.com/",
+      "endpoint": "cart",
+      "taskSha256": "3f77a764c7047ff419086d56a43247b05e0b39856872cb21d0dd59e2966d7cc1"
+    },
+    {
+      "id": "consumer-0916",
+      "domain": "boyner.com.tr",
+      "url": "https://boyner.com.tr/",
+      "endpoint": "cart",
+      "taskSha256": "f4e2a71834876af4d58bcab63462b4b63b4cb85f8cffc2ff87f881e99b181daf"
+    },
+    {
+      "id": "consumer-0918",
+      "domain": "webike.net",
+      "url": "https://japan.webike.net/",
+      "endpoint": "cart",
+      "taskSha256": "62281f1ab9771bacf9682bea44aab1baf2b0fb7776664a7ff97fab26c6eb4d57"
+    },
+    {
+      "id": "consumer-0920",
+      "domain": "galerieslafayette.com",
+      "url": "https://galerieslafayette.com/",
+      "endpoint": "cart",
+      "taskSha256": "3e1de8c9238ea0a40acc4744a569542a6e74053e0462023f5c4c3ff2ddf09dbe"
+    },
+    {
+      "id": "consumer-0923",
+      "domain": "rebelsport.com.au",
+      "url": "https://rebelsport.com.au/",
+      "endpoint": "cart",
+      "taskSha256": "01b6818b66bdc0d958bc3398980da26e1ecd8186936ae72915ef01389c31464d"
+    },
+    {
+      "id": "consumer-0932",
+      "domain": "overstock.com",
+      "url": "https://overstock.com/",
+      "endpoint": "cart",
+      "taskSha256": "b6313cdb765b6831ec3fb98719dfb69274c55a2fa92fa03fd691c641d866686a"
+    },
+    {
+      "id": "consumer-0934",
+      "domain": "houseoffraser.co.uk",
+      "url": "https://houseoffraser.co.uk/",
+      "endpoint": "cart",
+      "taskSha256": "4ee2ec3feda661aff75d2759dffe00d89d5c01faa0e007faa1ef1ca7cda643d7"
+    },
+    {
+      "id": "consumer-0936",
+      "domain": "sierra.com",
+      "url": "https://sierra.com/",
+      "endpoint": "cart",
+      "taskSha256": "5a93e3210556865d66201fb0df5902a2331790d424aa935498a5c876ce239063"
+    },
+    {
+      "id": "consumer-0937",
+      "domain": "duluthtrading.com",
+      "url": "https://duluthtrading.com/",
+      "endpoint": "cart",
+      "taskSha256": "66752f342c09e2bcf74f8aad4924ad8bc63bc871cf79c8c99db782b511dcbd59"
+    },
+    {
+      "id": "consumer-0942",
+      "domain": "talbots.com",
+      "url": "https://talbots.com/",
+      "endpoint": "cart",
+      "taskSha256": "2e78a3839361d808e6c8c5e5feb335f52668eaf8e27bea74a0028195c5c5b105"
+    },
+    {
+      "id": "consumer-0948",
+      "domain": "lanebryant.com",
+      "url": "https://lanebryant.com/",
+      "endpoint": "cart",
+      "taskSha256": "57ba75fefc01fd956383733a635b2356141abcc325a80bd774c877908d497976"
+    },
+    {
+      "id": "consumer-0949",
+      "domain": "bike-discount.de",
+      "url": "https://bike-discount.de/",
+      "endpoint": "cart",
+      "taskSha256": "18044beaa8d15844e443d7c6c66fe35334c7cec66d2fff0f719cb0e2ffd6ebaf"
+    },
+    {
+      "id": "consumer-0951",
+      "domain": "adidas.de",
+      "url": "https://adidas.de/",
+      "endpoint": "cart",
+      "taskSha256": "7bcad97bb46959a5389252ad1a477393662097ba2d40d7a39c083f2a1ffb69b1"
+    },
+    {
+      "id": "consumer-0953",
+      "domain": "elgiganten.dk",
+      "url": "https://elgiganten.dk/",
+      "endpoint": "cart",
+      "taskSha256": "bc6357879ce8ca629b14c686842a311b93b90d126dfcb73dcb8ff8cdc241b4a7"
+    },
+    {
+      "id": "consumer-0955",
+      "domain": "mpb.com",
+      "url": "https://mpb.com/",
+      "endpoint": "cart",
+      "taskSha256": "5304e5bcc68b0f175d11e7688d735ac3115c55316b2783b976d9813afed769b5"
+    },
+    {
+      "id": "consumer-0956",
+      "domain": "revzilla.com",
+      "url": "https://revzilla.com/",
+      "endpoint": "cart",
+      "taskSha256": "96ca179bca9503e0d4c6f86a2ea7343ba693bf3fe4a618c4d669882177a6110c"
+    },
+    {
+      "id": "consumer-0964",
+      "domain": "kitapyurdu.com",
+      "url": "https://kitapyurdu.com/",
+      "endpoint": "cart",
+      "taskSha256": "319baac03fbf35b676bf8312038feab8f72bbdd755d6e54b88f5e16d4fe35630"
+    },
+    {
+      "id": "consumer-0965",
+      "domain": "sephora.fr",
+      "url": "https://sephora.fr/",
+      "endpoint": "cart",
+      "taskSha256": "c56e1e9e9b4edc1231af4c9397e2372ec21a15d54a4d3221a49fa7f2fbfd1306"
+    },
+    {
+      "id": "consumer-0966",
+      "domain": "flannels.com",
+      "url": "https://flannels.com/",
+      "endpoint": "cart",
+      "taskSha256": "a2988ada962af2322a553bf744c7a422f1f869f2f0a400afdaa860fb500861a1"
+    },
+    {
+      "id": "consumer-0975",
+      "domain": "prettylittlething.com",
+      "url": "https://prettylittlething.com/",
+      "endpoint": "cart",
+      "taskSha256": "f45f5d593ad1adfb80ff53fcac081c607054ef48674d12eb0981968f957c75ed"
+    },
+    {
+      "id": "consumer-0978",
+      "domain": "champssports.com",
+      "url": "https://champssports.com/",
+      "endpoint": "cart",
+      "taskSha256": "4892afc75ec3d07e81547c5e24628bc6bbbaa5e42d59c605796c44057a558af6"
+    },
+    {
+      "id": "consumer-0985",
+      "domain": "gigantti.fi",
+      "url": "https://gigantti.fi/",
+      "endpoint": "cart",
+      "taskSha256": "e18cc377e7240e445e37c8a436c4c71e10d81e344af4650c70d97f2c0a42120e"
+    },
+    {
+      "id": "consumer-0987",
+      "domain": "lazada.sg",
+      "url": "https://lazada.sg/",
+      "endpoint": "cart",
+      "taskSha256": "0b55aa9823c4aaa88365a4df68bb1fcc322083d478dfb6e730e25519747455f1"
+    },
+    {
+      "id": "consumer-0988",
+      "domain": "lidl.be",
+      "url": "https://lidl.be/",
+      "endpoint": "public_information",
+      "taskSha256": "b4bc272a3c2a1a8330c7adb99158aaa5f2faf680fad1910d4e6395e3dd87a9ab"
+    },
+    {
+      "id": "consumer-0989",
+      "domain": "warbyparker.com",
+      "url": "https://warbyparker.com/",
+      "endpoint": "cart",
+      "taskSha256": "7174ebb7daa6c9f8cdf532b61386d4670307324edee5e9329ecc6e1b29403d88"
+    },
+    {
+      "id": "consumer-0996",
+      "domain": "mediamarkt.at",
+      "url": "https://mediamarkt.at/",
+      "endpoint": "cart",
+      "taskSha256": "ba3947cf61126e82d0a899a52e55317ded258c9327d58e9cf7eab1538370130e"
+    },
+    {
+      "id": "consumer-0997",
+      "domain": "saturn.de",
+      "url": "https://saturn.de/",
+      "endpoint": "cart",
+      "taskSha256": "34c68202b81edab4650687841ade67148a04e48b3ff68a61fb26f71660cb01aa"
+    },
+    {
+      "id": "retail-1001",
+      "domain": "lefties.com",
+      "url": "https://lefties.com/",
+      "endpoint": "cart",
+      "taskSha256": "ffacd5f4bb88568595492b067e83e66c2aa2644d339a1f64bf4edac2932f3312"
+    },
+    {
+      "id": "retail-1005",
+      "domain": "waterstones.com",
+      "url": "https://waterstones.com/",
+      "endpoint": "cart",
+      "taskSha256": "e75685b8064c9ba977cd6c0d3e129d044d60a070249258d93f0c42cae784b2a3"
+    },
+    {
+      "id": "retail-1007",
+      "domain": "wehkamp.nl",
+      "url": "https://wehkamp.nl/",
+      "endpoint": "cart",
+      "taskSha256": "b4524426c8e061c452be85b01c19a7340568a8fe2314c3b95ec6a7cc4815f0ef"
+    },
+    {
+      "id": "retail-1013",
+      "domain": "glassesusa.com",
+      "url": "https://glassesusa.com/",
+      "endpoint": "cart",
+      "taskSha256": "38f8f64308ccbb2df587ec595cf9c4ba83585e6fa5534e1b018dec02bc9d77b4"
+    },
+    {
+      "id": "retail-1015",
+      "domain": "netonnet.se",
+      "url": "https://netonnet.se/",
+      "endpoint": "cart",
+      "taskSha256": "c370a06ccc5a28d7f86be421cc8a0e44092c52f4b276e94e8f911f1653f057ba"
+    },
+    {
+      "id": "retail-1017",
+      "domain": "todocoleccion.net",
+      "url": "https://todocoleccion.net/",
+      "endpoint": "public_information",
+      "taskSha256": "fcd19920897e556be464d576c32e252fbb45927f01c24bd4292319c35ed5e02f"
+    },
+    {
+      "id": "retail-1020",
+      "domain": "disneystore.com",
+      "url": "https://disneystore.com/",
+      "endpoint": "cart",
+      "taskSha256": "8e017ca625e325fdd7426f6e1081995398858df172aa60cfda3fd6ea345b1045"
+    },
+    {
+      "id": "retail-1025",
+      "domain": "nextdirect.com",
+      "url": "https://nextdirect.com/",
+      "endpoint": "cart",
+      "taskSha256": "a8b3e5efdd8f9a1eed9235728ae7f1d52421c0bc366b24a1e99c4c62afa16602"
+    },
+    {
+      "id": "retail-1029",
+      "domain": "vivaia.com",
+      "url": "https://vivaia.com/",
+      "endpoint": "cart",
+      "taskSha256": "6c621e4ab200bd74020886d97ca28246e0ec314f999cadddf370e4f44e4c6011"
+    },
+    {
+      "id": "retail-1030",
+      "domain": "sportsshoes.com",
+      "url": "https://sportsshoes.com/",
+      "endpoint": "cart",
+      "taskSha256": "01da89e766039a03e9331ab36316c505f37d5fe18a8849840ef94756d961b56f"
+    },
+    {
+      "id": "retail-1033",
+      "domain": "kinokuniya.co.jp",
+      "url": "https://www.kinokuniya.co.jp/",
+      "endpoint": "cart",
+      "taskSha256": "4965ba892c71a3f99cc2cc7ea44775c3ab7e366b381b905a1b686c6203023d5a"
+    },
+    {
+      "id": "retail-1036",
+      "domain": "allmodern.com",
+      "url": "https://allmodern.com/",
+      "endpoint": "cart",
+      "taskSha256": "481b473c3ea612ce11140cda922ae7acf518169233d8d22c1971b96a9f1fd0fe"
+    },
+    {
+      "id": "retail-1039",
+      "domain": "bombas.com",
+      "url": "https://bombas.com/",
+      "endpoint": "cart",
+      "taskSha256": "316bddaf88b631516c70eaacbd9c1ad16c1a9b0c6a35daaf7a7aa5d7cf646f3b"
+    },
+    {
+      "id": "retail-1040",
+      "domain": "arket.com",
+      "url": "https://arket.com/",
+      "endpoint": "cart",
+      "taskSha256": "ad8d2db06f4e20a93bbd1073248dbafd1c74a100cac623b28e4eca4ff4d6030b"
+    },
+    {
+      "id": "retail-1041",
+      "domain": "pigu.lt",
+      "url": "https://pigu.lt/",
+      "endpoint": "cart",
+      "taskSha256": "41bfa1a9d9e86373e06baa479204ae653afe365c23cdd40764c4638859005e03"
+    },
+    {
+      "id": "retail-1043",
+      "domain": "mediamarkt.be",
+      "url": "https://mediamarkt.be/",
+      "endpoint": "cart",
+      "taskSha256": "e924fd0b7ea4df8a3b51e08fd9cfb62bf7a6120dd37c103a5b84dbf918acc14d"
+    },
+    {
+      "id": "retail-1046",
+      "domain": "peek-cloppenburg.de",
+      "url": "https://peek-cloppenburg.de/",
+      "endpoint": "cart",
+      "taskSha256": "8a35687a0afec5e7883ff133b9eeef3d2e7877905d4c1ae3293b88418a83095f"
+    },
+    {
+      "id": "retail-1051",
+      "domain": "harrods.com",
+      "url": "https://harrods.com/",
+      "endpoint": "cart",
+      "taskSha256": "1b011b2355873021dc407a3947d0f42aa60d746a1a0ea8658313e4a38e931af5"
+    },
+    {
+      "id": "retail-1052",
+      "domain": "sunglasshut.com",
+      "url": "https://sunglasshut.com/",
+      "endpoint": "cart",
+      "taskSha256": "b013dde6ffed7e77ec540c80e84f51b63022797dd81378a3e163d0669bd6a7ba"
+    },
+    {
+      "id": "retail-1053",
+      "domain": "snipesusa.com",
+      "url": "https://snipesusa.com/",
+      "endpoint": "cart",
+      "taskSha256": "4e71147ebb6323c596b648c4053e1793b12177bb69315a7158662302a333b9c7"
+    },
+    {
+      "id": "retail-1055",
+      "domain": "pepperfry.com",
+      "url": "https://pepperfry.com/",
+      "endpoint": "cart",
+      "taskSha256": "f81df9819e2239dcc88b2f25fb1187063d0870db32063f08313bcfabe33500ff"
+    },
+    {
+      "id": "retail-1056",
+      "domain": "brack.ch",
+      "url": "https://brack.ch/",
+      "endpoint": "cart",
+      "taskSha256": "0f706515f4afdbea39133f70de1941ab4d03e455958a44146db45c258025e528"
+    },
+    {
+      "id": "retail-1060",
+      "domain": "ebay.pl",
+      "url": "https://ebay.pl/",
+      "endpoint": "cart",
+      "taskSha256": "43276d6bd76ca88649e565b99d0704a9ef45914582db8ae2a66c80f433b2e7c1"
+    },
+    {
+      "id": "retail-1062",
+      "domain": "roman.co.uk",
+      "url": "https://roman.co.uk/",
+      "endpoint": "cart",
+      "taskSha256": "efcb42ec87d7b7582aefb4756cc084f8ea947b21ac5b2ec7b65eaec70e964e75"
+    },
+    {
+      "id": "retail-1063",
+      "domain": "zalando.co.uk",
+      "url": "https://zalando.co.uk/",
+      "endpoint": "cart",
+      "taskSha256": "4c3dedf0d70d4c7bf4153cf3432562ce0ada732e768382ad8bff3c52d92f9766"
+    },
+    {
+      "id": "retail-1065",
+      "domain": "deporvillage.com",
+      "url": "https://deporvillage.com/",
+      "endpoint": "cart",
+      "taskSha256": "70bd4cc8ec7ae33caab783d2c5dbb47561b79b05e309983b9a4937320e681177"
+    },
+    {
+      "id": "retail-1066",
+      "domain": "beymen.com",
+      "url": "https://beymen.com/",
+      "endpoint": "cart",
+      "taskSha256": "ecefc9970d62903bcccaf9b9e11476430a0c7abe911a6238dca0b604baed9a6f"
+    },
+    {
+      "id": "retail-1068",
+      "domain": "g-star.com",
+      "url": "https://g-star.com/",
+      "endpoint": "cart",
+      "taskSha256": "0857d48c4cdacc3a6d1efb4019b8f81834f12ef2baf2dd445cea55518e50871b"
+    },
+    {
+      "id": "retail-1075",
+      "domain": "kavehome.com",
+      "url": "https://kavehome.com/",
+      "endpoint": "cart",
+      "taskSha256": "ce6e46342b97adcd3e8737c28b8bd53b9f4cdd18bd96080ca29744012a4dceae"
+    },
+    {
+      "id": "retail-1076",
+      "domain": "huckberry.com",
+      "url": "https://huckberry.com/",
+      "endpoint": "cart",
+      "taskSha256": "241e23fa1b75347327cf6a7331acc6c72c9a07bafa6a68b46f31e7d89aed16ad"
+    },
+    {
+      "id": "retail-1077",
+      "domain": "fossil.com",
+      "url": "https://fossil.com/",
+      "endpoint": "cart",
+      "taskSha256": "87312b4ba953260974c944f349775ecd60efa9b2e87bf8574feaaf5bc3828ee8"
+    },
+    {
+      "id": "retail-1082",
+      "domain": "secretsales.com",
+      "url": "https://secretsales.com/",
+      "endpoint": "cart",
+      "taskSha256": "fd6a1bcc1e29b35ce78c4fb11ee9da8e906d17d473cd246accc4190b47c63bc4"
+    },
+    {
+      "id": "retail-1085",
+      "domain": "brandalley.co.uk",
+      "url": "https://brandalley.co.uk/",
+      "endpoint": "cart",
+      "taskSha256": "4a2fbbe9fed4d9b842310d0a408a1ed4069c197a531cac5f0093707c94c5e5f8"
+    },
+    {
+      "id": "retail-1086",
+      "domain": "wilko.com",
+      "url": "https://wilko.com/",
+      "endpoint": "cart",
+      "taskSha256": "97e0e28d1c158a5e5b92d7d779a8e922470059cad91586d884631b0afd9b2278"
+    },
+    {
+      "id": "retail-1087",
+      "domain": "fleetfarm.com",
+      "url": "https://www.fleetfarm.com/",
+      "endpoint": "cart",
+      "taskSha256": "66c6916455dc084e480834e568f55b0b56fa6bb422ceb0df640eceb2774aa2d7"
+    },
+    {
+      "id": "retail-1089",
+      "domain": "fc-moto.de",
+      "url": "https://fc-moto.de/",
+      "endpoint": "cart",
+      "taskSha256": "f093da9f6b269ff8d1f0a06e05f3461b7ffd36a110e33bac7d8588fff0447657"
+    },
+    {
+      "id": "retail-1091",
+      "domain": "prettylittlething.us",
+      "url": "https://prettylittlething.us/",
+      "endpoint": "cart",
+      "taskSha256": "5ec6987732531ae59ac4e36682e666240068afd93ec890474870b53ba6d068db"
+    },
+    {
+      "id": "retail-1092",
+      "domain": "vertbaudet.fr",
+      "url": "https://vertbaudet.fr/",
+      "endpoint": "cart",
+      "taskSha256": "0b933f6714e110cdf882c68ed4e059e4fb08cfd2f4c0a2479084755f9d8da109"
+    },
+    {
+      "id": "retail-1099",
+      "domain": "monoprix.fr",
+      "url": "https://www.monoprix.fr/",
+      "endpoint": "cart",
+      "taskSha256": "6611a10bd91aed7da78136db37c27412f525562e5c37220556bbcd4817f63d92"
+    },
+    {
+      "id": "retail-1100",
+      "domain": "proshop.dk",
+      "url": "https://proshop.dk/",
+      "endpoint": "cart",
+      "taskSha256": "cafd1a84c1edc4bd9ea31d1273bb50295aef1fe9562c88a5bc0ea0787f6b71f8"
+    },
+    {
+      "id": "retail-1102",
+      "domain": "prodirectsport.com",
+      "url": "https://prodirectsport.com/",
+      "endpoint": "public_information",
+      "taskSha256": "d869e7d23a8a6758b53049010e692246c89f7685871be189b2c2122842df7133"
+    },
+    {
+      "id": "retail-1103",
+      "domain": "buscalibre.cl",
+      "url": "https://buscalibre.cl/",
+      "endpoint": "cart",
+      "taskSha256": "459ef71f58715dc0adbbbf23ae3fb556b39f8a07752dc344c5bf1670f5fbcdeb"
+    },
+    {
+      "id": "retail-1104",
+      "domain": "magasins-u.com",
+      "url": "https://magasins-u.com/",
+      "endpoint": "public_information",
+      "taskSha256": "23dd24352495ba48f3f599ed3328a6c7563b73fd97777b379ac94772bd94f9b5"
+    },
+    {
+      "id": "retail-1106",
+      "domain": "jegs.com",
+      "url": "https://jegs.com/",
+      "endpoint": "cart",
+      "taskSha256": "e2d3879ef29782833ca97b32cb0e35a81a733802a26a03212d1c4b480e5881cd"
+    },
+    {
+      "id": "retail-1107",
+      "domain": "lampsplus.com",
+      "url": "https://lampsplus.com/",
+      "endpoint": "cart",
+      "taskSha256": "1b5003fdbfe2c2a6028c4d1805b66d8001b4c14eabcce541a1292c15cfa2cc42"
+    },
+    {
+      "id": "retail-1108",
+      "domain": "costco.com.au",
+      "url": "https://costco.com.au/",
+      "endpoint": "cart",
+      "taskSha256": "116db47558d13938408c8be0232117aa7401d218f49423e243d65ea388514133"
+    },
+    {
+      "id": "retail-1111",
+      "domain": "ebay.ie",
+      "url": "https://ebay.ie/",
+      "endpoint": "cart",
+      "taskSha256": "6f8995472799e7bf01d4fa62515b44a28e2fa8cb907bc699cec398212f613eef"
+    },
+    {
+      "id": "retail-1112",
+      "domain": "kickscrew.com",
+      "url": "https://kickscrew.com/",
+      "endpoint": "cart",
+      "taskSha256": "ecd77066e9a66cf9e731f235507a60418cd04a11bb074f08337ee83394819df2"
+    },
+    {
+      "id": "retail-1116",
+      "domain": "ecstuning.com",
+      "url": "https://ecstuning.com/",
+      "endpoint": "cart",
+      "taskSha256": "33dd6d3d76ef4db95f5c3e1ecef701b64e0d05d3a3470cbec3bfe0e1b65e70e3"
+    },
+    {
+      "id": "retail-1118",
+      "domain": "nocibe.fr",
+      "url": "https://nocibe.fr/",
+      "endpoint": "cart",
+      "taskSha256": "2bca30491499337e0fb716c6d969882bf6f5e5797caacdf6c83c0247c7644a2c"
+    },
+    {
+      "id": "retail-1120",
+      "domain": "interdiscount.ch",
+      "url": "https://interdiscount.ch/",
+      "endpoint": "cart",
+      "taskSha256": "d93250901f31dc6841d9ffe647ecf059f9a5b5e548d9febb799a600c389821f3"
+    },
+    {
+      "id": "retail-1121",
+      "domain": "boscovs.com",
+      "url": "https://boscovs.com/",
+      "endpoint": "cart",
+      "taskSha256": "57b25407a0d9db832d72de4102c0520fa769c0df2571b0ed51df55b8eabb9125"
+    },
+    {
+      "id": "retail-1124",
+      "domain": "fyndiq.se",
+      "url": "https://fyndiq.se/",
+      "endpoint": "cart",
+      "taskSha256": "54930f9a79317e9840492f9f18e4e32fa41a7efd377e60e2d35d511dd3ed80c5"
+    },
+    {
+      "id": "retail-1131",
+      "domain": "newbalance.co.uk",
+      "url": "https://newbalance.co.uk/",
+      "endpoint": "cart",
+      "taskSha256": "9f357cabe6c00a3e44d14c9c8d3f1eef5cc52334e8f22b395f81e6f0705ae415"
+    },
+    {
+      "id": "retail-1138",
+      "domain": "jumia.com.eg",
+      "url": "https://jumia.com.eg/",
+      "endpoint": "cart",
+      "taskSha256": "eecc27df39f9fab09734be0ade334685f30bdb21d1b8a4e0bfa5539b8bf7fe2c"
+    },
+    {
+      "id": "retail-1140",
+      "domain": "ebay.be",
+      "url": "https://ebay.be/",
+      "endpoint": "cart",
+      "taskSha256": "f0b4d3ec5c5a22c9daf411a9283e612dd6e013699a87b3ac85f8e9b69f08d7c7"
+    },
+    {
+      "id": "retail-1145",
+      "domain": "maxfashion.com",
+      "url": "https://maxfashion.com/",
+      "endpoint": "cart",
+      "taskSha256": "75d563c13d37c5fe26e8cee6baf241754fc44ff1eba7c3794d6637f90d9b9b0e"
+    },
+    {
+      "id": "retail-1146",
+      "domain": "cdon.se",
+      "url": "https://cdon.se/",
+      "endpoint": "cart",
+      "taskSha256": "09cdcbe24a81b9bad036dfb71c8b4bc26db585aed346f44bf0b9e0a1193fcd97"
+    },
+    {
+      "id": "retail-1147",
+      "domain": "plaisio.gr",
+      "url": "https://plaisio.gr/",
+      "endpoint": "cart",
+      "taskSha256": "9d4ba4517a5e4faa7655fc4798c82f00f9d548e7fb1ef906004422dbdaf24831"
+    },
+    {
+      "id": "retail-1149",
+      "domain": "jetpens.com",
+      "url": "https://jetpens.com/",
+      "endpoint": "cart",
+      "taskSha256": "1597b119e2d69214d9fcc47828f5781e9e13bc0b3118e52eaa0e371c16397930"
+    },
+    {
+      "id": "retail-1150",
+      "domain": "rallyhouse.com",
+      "url": "https://rallyhouse.com/",
+      "endpoint": "cart",
+      "taskSha256": "8f24d83e9c1807f1273b15bd4423fcec52dedef7cea052e8f4b4f6fc4c77ab70"
+    },
+    {
+      "id": "retail-1152",
+      "domain": "vitaminshoppe.com",
+      "url": "https://vitaminshoppe.com/",
+      "endpoint": "cart",
+      "taskSha256": "fb96d3f5bc4813b82501a41100d0b03bfe6c9ec081f264003e5ffb2c12715474"
+    },
+    {
+      "id": "retail-1153",
+      "domain": "fragrancex.com",
+      "url": "https://fragrancex.com/",
+      "endpoint": "cart",
+      "taskSha256": "6ba950d5250127a55df7b2f6ad35118b902eefe277c19cd0b0727d0fe03d93a6"
+    },
+    {
+      "id": "retail-1154",
+      "domain": "gear4music.com",
+      "url": "https://gear4music.com/",
+      "endpoint": "cart",
+      "taskSha256": "95268b93af54f837b059cec0a3c1747e8026f311996c2034e69d51b2abc5f149"
+    },
+    {
+      "id": "retail-1157",
+      "domain": "elcorteingles.pt",
+      "url": "https://elcorteingles.pt/",
+      "endpoint": "cart",
+      "taskSha256": "210688d1d411f5d9593c840ec4b49dc8f725cf9cc48aa6a067c0de723f6fafa8"
+    },
+    {
+      "id": "retail-1159",
+      "domain": "hallmark.com",
+      "url": "https://hallmark.com/",
+      "endpoint": "cart",
+      "taskSha256": "69443f5f800dfab08c92007d23e2f5f6265489f8c4f5b0cc766be65c95ff0d70"
+    },
+    {
+      "id": "retail-1163",
+      "domain": "adorebeauty.com.au",
+      "url": "https://adorebeauty.com.au/",
+      "endpoint": "cart",
+      "taskSha256": "9d5c96e87d20a6288817f7fdb24c96cf68454b26594ce15539e263e42c604a6c"
+    },
+    {
+      "id": "retail-1166",
+      "domain": "adorama.com",
+      "url": "https://adorama.com/",
+      "endpoint": "cart",
+      "taskSha256": "add2d79297d94b9793c5e13ab2fccfe299a3f4227bec7139c4425dfc66d7f6d6"
+    },
+    {
+      "id": "retail-1172",
+      "domain": "wook.pt",
+      "url": "https://wook.pt/",
+      "endpoint": "cart",
+      "taskSha256": "7dbc6767531ce188379029df13ecd93f0c6d292a61372fca1d42865057d03048"
+    },
+    {
+      "id": "retail-1174",
+      "domain": "sephora.com.tr",
+      "url": "https://sephora.com.tr/",
+      "endpoint": "cart",
+      "taskSha256": "689c1de5f7fb5acbe6b57e6a830d420612f83c59e0f103005f25df654b8d3a18"
+    },
+    {
+      "id": "retail-1205",
+      "domain": "esteelauder.com",
+      "url": "https://esteelauder.com/",
+      "endpoint": "cart",
+      "taskSha256": "1dab666368bf887123eb4c013aefbae605354fb5547ad81b27861e0bf49688a5"
+    },
+    {
+      "id": "retail-1263",
+      "domain": "arcteryx.com",
+      "url": "https://arcteryx.com/",
+      "endpoint": "cart",
+      "taskSha256": "082a112a5ccd0d4195bbef6cbca02921b824b376407d97a71697f0281990306a"
+    },
+    {
+      "id": "v8-booking-com",
+      "domain": "booking.com",
+      "url": "https://booking.com/",
+      "endpoint": "public_information",
+      "taskSha256": "ebefc65c8038a7c5c05076a6f66f400f48b970c193f68afe4af1ad2a8f6b31f1"
+    },
+    {
+      "id": "v8-expedia-com",
+      "domain": "expedia.com",
+      "url": "https://expedia.com/",
+      "endpoint": "public_information",
+      "taskSha256": "f4031783703aa7e25ec7ba70a2bb86070d99f4faa2a6e45b18cfab6c163443af"
+    },
+    {
+      "id": "v8-hotels-com",
+      "domain": "hotels.com",
+      "url": "https://hotels.com/",
+      "endpoint": "public_information",
+      "taskSha256": "e69062b7be8650392728d8e2005376ae79c949983e9694e55645900bcfbfb2d4"
+    },
+    {
+      "id": "v8-agoda-com",
+      "domain": "agoda.com",
+      "url": "https://agoda.com/",
+      "endpoint": "public_information",
+      "taskSha256": "8b8480e46f2f7ded2cd5fd60305b5b4be04f0f669f6ad9e652e831e24874882d"
+    },
+    {
+      "id": "v8-trip-com",
+      "domain": "trip.com",
+      "url": "https://trip.com/",
+      "endpoint": "public_information",
+      "taskSha256": "26fb38179d116c22126c9bfcaee031abc54dacd6f1df567ab0f0370023f5e58a"
+    },
+    {
+      "id": "v8-trivago-com",
+      "domain": "trivago.com",
+      "url": "https://trivago.com/",
+      "endpoint": "public_information",
+      "taskSha256": "598e479692f700ac08162def15631885f291ba9f5c9a9b540cd4531d143b804f"
+    },
+    {
+      "id": "v8-kayak-com",
+      "domain": "kayak.com",
+      "url": "https://kayak.com/",
+      "endpoint": "public_information",
+      "taskSha256": "b823ee3769d4c5ea324371ef5c4093241cc838e07f0baf52b000c10c218e51a0"
+    },
+    {
+      "id": "v8-tripadvisor-com",
+      "domain": "tripadvisor.com",
+      "url": "https://tripadvisor.com/",
+      "endpoint": "public_information",
+      "taskSha256": "a6f15dcbf4332e3c390ba0d3c1a0806378fe40d4bc5eb42acaa2dd7acf8e1445"
+    },
+    {
+      "id": "v8-travelocity-com",
+      "domain": "travelocity.com",
+      "url": "https://travelocity.com/",
+      "endpoint": "public_information",
+      "taskSha256": "4ebcaf5df77e917be45864a04d35ee0c708dae9eb43ec97f4570ffb88053cd90"
+    },
+    {
+      "id": "v8-orbitz-com",
+      "domain": "orbitz.com",
+      "url": "https://orbitz.com/",
+      "endpoint": "public_information",
+      "taskSha256": "38df3ea80e4a35bbfa2e97d0b2a936d767dc5ea0b3620beb4a25e649d3c7d8ce"
+    },
+    {
+      "id": "v8-lastminute-com",
+      "domain": "lastminute.com",
+      "url": "https://lastminute.com/",
+      "endpoint": "public_information",
+      "taskSha256": "aed7d9c758f8184c6e1a3378473325713ba73c6d74e762101b4ce3d698fc5ec2"
+    },
+    {
+      "id": "v8-ixigo-com",
+      "domain": "ixigo.com",
+      "url": "https://ixigo.com/",
+      "endpoint": "public_information",
+      "taskSha256": "7239bdef0bdb3f389f643ab22ecbbdb4766cf502d8990afbe11f3170a3cca652"
+    },
+    {
+      "id": "v8-marriott-com",
+      "domain": "marriott.com",
+      "url": "https://marriott.com/",
+      "endpoint": "public_information",
+      "taskSha256": "61a0b273a2b2297948ce98691d867eff1013a9574912cd4892cc0aa09cdba43a"
+    },
+    {
+      "id": "v8-hilton-com",
+      "domain": "hilton.com",
+      "url": "https://hilton.com/",
+      "endpoint": "public_information",
+      "taskSha256": "87fa23127908c52021ed537014c217599d774b1470747a947ed6f149f699534e"
+    },
+    {
+      "id": "v8-hyatt-com",
+      "domain": "hyatt.com",
+      "url": "https://hyatt.com/",
+      "endpoint": "public_information",
+      "taskSha256": "4047e1cd8100d2c8a10898a209f4f78a1484981330300109d844bb537bc96143"
+    },
+    {
+      "id": "v8-ihg-com",
+      "domain": "ihg.com",
+      "url": "https://ihg.com/",
+      "endpoint": "public_information",
+      "taskSha256": "fdda6b68c764d453b335da421409a867446604fef8c5c40b7341672327c747f3"
+    },
+    {
+      "id": "v8-wyndhamhotels-com",
+      "domain": "wyndhamhotels.com",
+      "url": "https://wyndhamhotels.com/",
+      "endpoint": "public_information",
+      "taskSha256": "af8cc216f78c6fac856d64bb60215b12a65b36b4c695380585ef073239eb316a"
+    },
+    {
+      "id": "v8-choicehotels-com",
+      "domain": "choicehotels.com",
+      "url": "https://choicehotels.com/",
+      "endpoint": "public_information",
+      "taskSha256": "c99470006e70d4984bd2d199909e74191400b3fd67a1d201e8cc31dc3c19ca52"
+    },
+    {
+      "id": "v8-bestwestern-com",
+      "domain": "bestwestern.com",
+      "url": "https://bestwestern.com/",
+      "endpoint": "public_information",
+      "taskSha256": "25a642a0d67f1ee54d838e3e2f8ce30295a94fa11d88f3def9b1bbcb560e7787"
+    },
+    {
+      "id": "v8-radissonhotels-com",
+      "domain": "radissonhotels.com",
+      "url": "https://radissonhotels.com/",
+      "endpoint": "public_information",
+      "taskSha256": "5d8bbf3a6724b48cd88d9de48930568eafac398968e3d7f9dfe8d5004756be8c"
+    },
+    {
+      "id": "v8-premierinn-com",
+      "domain": "premierinn.com",
+      "url": "https://premierinn.com/",
+      "endpoint": "public_information",
+      "taskSha256": "a0e75f66ed7ce7117103a3a6cc302d3ad43fac18f33a6fc11669bdeda1658cdc"
+    },
+    {
+      "id": "v8-fourseasons-com",
+      "domain": "fourseasons.com",
+      "url": "https://fourseasons.com/",
+      "endpoint": "public_information",
+      "taskSha256": "0dbbe5f93cf00cd55796e07406e8ebb3255d167423121b858cef573c4d993729"
+    },
+    {
+      "id": "v8-omnihotels-com",
+      "domain": "omnihotels.com",
+      "url": "https://omnihotels.com/",
+      "endpoint": "public_information",
+      "taskSha256": "810f63d6f1b66e08124d22e3215d0326278177e3abae86bbfab13cfd92033d94"
+    },
+    {
+      "id": "v8-extendedstayamerica-com",
+      "domain": "extendedstayamerica.com",
+      "url": "https://extendedstayamerica.com/",
+      "endpoint": "public_information",
+      "taskSha256": "19827a768f3b4f5b87f6752c50691619f2035628e1f2eced3638ef9c8565e199"
+    },
+    {
+      "id": "v8-motel6-com",
+      "domain": "motel6.com",
+      "url": "https://motel6.com/",
+      "endpoint": "public_information",
+      "taskSha256": "a8a138a713f3dbdfeae5d42c9a2461478193ff641d77bf18202c52f0b4979b7c"
+    },
+    {
+      "id": "v8-citizenm-com",
+      "domain": "citizenm.com",
+      "url": "https://citizenm.com/",
+      "endpoint": "public_information",
+      "taskSha256": "8fc05234080e7f99c1b389a936a1455194072e0de5f7f14a5a50238f3e3f06fb"
+    },
+    {
+      "id": "v8-mrandmrssmith-com",
+      "domain": "mrandmrssmith.com",
+      "url": "https://mrandmrssmith.com/",
+      "endpoint": "public_information",
+      "taskSha256": "f17c372fd00a832937197ed957d1150ea42aefa20dfc8cc33f420cc92621bc14"
+    },
+    {
+      "id": "v8-hostelworld-com",
+      "domain": "hostelworld.com",
+      "url": "https://hostelworld.com/",
+      "endpoint": "public_information",
+      "taskSha256": "66d89b675c61f381a648b5a4d15d6b91ac87efdcb1c5991996d19c511de0cfad"
+    },
+    {
+      "id": "v8-vrbo-com",
+      "domain": "vrbo.com",
+      "url": "https://vrbo.com/",
+      "endpoint": "public_information",
+      "taskSha256": "47832732b16ebfe9415c15631ed2a125e94ecaae7b84e652e55780527cfafd70"
+    },
+    {
+      "id": "v8-hertz-com",
+      "domain": "hertz.com",
+      "url": "https://hertz.com/",
+      "endpoint": "public_information",
+      "taskSha256": "d9b2415d4fb5b87752cd046aab99790ac3edadcc8492c321aba8c6aa43d82d5e"
+    },
+    {
+      "id": "v8-avis-com",
+      "domain": "avis.com",
+      "url": "https://avis.com/",
+      "endpoint": "public_information",
+      "taskSha256": "dfb4bbdc9c7bf797bac31036b08d449fe7c2aa64c88511140b6f48417b405873"
+    },
+    {
+      "id": "v8-alamo-com",
+      "domain": "alamo.com",
+      "url": "https://alamo.com/",
+      "endpoint": "public_information",
+      "taskSha256": "8eca8af87a7b0ea704f7c6d1947ecabad4a08623184827f5919d22168446e0e9"
+    },
+    {
+      "id": "v8-sixt-com",
+      "domain": "sixt.com",
+      "url": "https://sixt.com/",
+      "endpoint": "public_information",
+      "taskSha256": "2609c03d1c2b3acacac11bd0cdd1177d72f5643f36a8d2492421a7ff04fa9080"
+    },
+    {
+      "id": "v8-dollar-com",
+      "domain": "dollar.com",
+      "url": "https://dollar.com/",
+      "endpoint": "public_information",
+      "taskSha256": "abb55a3d4b810bd4e6200fc086658d321f8f067f432a2197377c181a9ffa1c57"
+    },
+    {
+      "id": "v8-thrifty-com",
+      "domain": "thrifty.com",
+      "url": "https://thrifty.com/",
+      "endpoint": "public_information",
+      "taskSha256": "8fefc116c2064fe93f8022e10fd52c4f9f2332da28578499b86b93f86041b8d0"
+    },
+    {
+      "id": "v8-paylesscar-com",
+      "domain": "paylesscar.com",
+      "url": "https://paylesscar.com/",
+      "endpoint": "public_information",
+      "taskSha256": "ca00d7daaccb981588786459908913558f18260a2c293115f726bbedc2ba59b6"
+    },
+    {
+      "id": "v8-rentalcars-com",
+      "domain": "rentalcars.com",
+      "url": "https://rentalcars.com/",
+      "endpoint": "public_information",
+      "taskSha256": "0760781b63ccb73f815dc0ddc6a11aaf68c81738770208db1f4dad2f11d6f6b7"
+    },
+    {
+      "id": "v8-turo-com",
+      "domain": "turo.com",
+      "url": "https://turo.com/",
+      "endpoint": "public_information",
+      "taskSha256": "feb4160c7d942e2d74be49a285918451590848c1f7767fc824c4a213c9730cd1"
+    },
+    {
+      "id": "v8-thetrainline-com",
+      "domain": "thetrainline.com",
+      "url": "https://thetrainline.com/",
+      "endpoint": "public_information",
+      "taskSha256": "54781b319a8109557cd3a54231496905b51d3b00f98f70ddc58d9ec3448f09d3"
+    },
+    {
+      "id": "v8-omio-com",
+      "domain": "omio.com",
+      "url": "https://omio.com/",
+      "endpoint": "public_information",
+      "taskSha256": "92c0ee7a189eaa3f54a104c8c02ffddc4b87c3429ddb017b0eabb46502f695ea"
+    },
+    {
+      "id": "v8-eurostar-com",
+      "domain": "eurostar.com",
+      "url": "https://eurostar.com/",
+      "endpoint": "public_information",
+      "taskSha256": "039e1ada12c4f3d502ded112b4fe77e015157cfd0e55d801035cde8d71af7ace"
+    },
+    {
+      "id": "v8-sncf-connect-com",
+      "domain": "sncf-connect.com",
+      "url": "https://sncf-connect.com/",
+      "endpoint": "public_information",
+      "taskSha256": "dad77e3e5fc884b57a01ec123187705b9a3438e9beca81f160086a90655b2273"
+    },
+    {
+      "id": "v8-bahn-de",
+      "domain": "bahn.de",
+      "url": "https://bahn.de/",
+      "endpoint": "public_information",
+      "taskSha256": "49d83fe7103b72ad994821ed7e28c26e84739eaf651bc757104f8d651df9d546"
+    },
+    {
+      "id": "v8-italotreno-com",
+      "domain": "italotreno.com",
+      "url": "https://italotreno.com/",
+      "endpoint": "public_information",
+      "taskSha256": "ad5f2d6cb82466b12289e7b8fd12b2f43e3e7a144949c7cb3c9cc83dfeca249c"
+    },
+    {
+      "id": "v8-wanderu-com",
+      "domain": "wanderu.com",
+      "url": "https://wanderu.com/",
+      "endpoint": "public_information",
+      "taskSha256": "da08e77907baa79a8a73e2c13009bbdb12c228a63021f874ee0d5bb641128c7f"
+    },
+    {
+      "id": "v8-busbud-com",
+      "domain": "busbud.com",
+      "url": "https://busbud.com/",
+      "endpoint": "public_information",
+      "taskSha256": "a17bee94aa4b494ea999eef4f71c94d0594808e7ecccd3b15e86693559cdb0bf"
+    },
+    {
+      "id": "v8-redbus-in",
+      "domain": "redbus.in",
+      "url": "https://redbus.in/",
+      "endpoint": "public_information",
+      "taskSha256": "9ad4902b402f6affe7d56a41ae7469ad41c24de50572eb82380774a8636b009d"
+    },
+    {
+      "id": "v8-ticketmaster-com",
+      "domain": "ticketmaster.com",
+      "url": "https://ticketmaster.com/",
+      "endpoint": "public_information",
+      "taskSha256": "5a8acb5471a145b60dc6ed1befc8506cae5e1516d54b5ad794785f12db533a66"
+    },
+    {
+      "id": "v8-stubhub-com",
+      "domain": "stubhub.com",
+      "url": "https://stubhub.com/",
+      "endpoint": "public_information",
+      "taskSha256": "6ca9624ba6a5cebe462396531f1408eb6187c848c05af17e431b680ff867ac91"
+    },
+    {
+      "id": "v8-axs-com",
+      "domain": "axs.com",
+      "url": "https://axs.com/",
+      "endpoint": "public_information",
+      "taskSha256": "dd8a5f6cb93c5722267442ec2bd567482a8aef1e967d225b6d87fd52af441e02"
+    },
+    {
+      "id": "v8-viagogo-com",
+      "domain": "viagogo.com",
+      "url": "https://viagogo.com/",
+      "endpoint": "public_information",
+      "taskSha256": "f6834b5cde8ebd346c651b52c4cb94ff57f87fb0b8744550866838c27b3007d4"
+    },
+    {
+      "id": "v8-ticketek-com-au",
+      "domain": "ticketek.com.au",
+      "url": "https://ticketek.com.au/",
+      "endpoint": "public_information",
+      "taskSha256": "3c8e04163e42dc6dab07e23432716afd469244eeed5dea7893638e1c637eb92e"
+    },
+    {
+      "id": "v8-ticketmaster-co-uk",
+      "domain": "ticketmaster.co.uk",
+      "url": "https://ticketmaster.co.uk/",
+      "endpoint": "public_information",
+      "taskSha256": "3611f73fe1cbc54e72a85a5f1575e673abaad68b50868427a80374bc1b027cf8"
+    },
+    {
+      "id": "v8-eventim-de",
+      "domain": "eventim.de",
+      "url": "https://eventim.de/",
+      "endpoint": "public_information",
+      "taskSha256": "88092b7d9918305e90e5fae7bddcc11c62e3881fc3b924095c84dc034942dc97"
+    },
+    {
+      "id": "v8-seetickets-com",
+      "domain": "seetickets.com",
+      "url": "https://seetickets.com/",
+      "endpoint": "public_information",
+      "taskSha256": "37ee5a941714cac4a0bb0750d12bbcd127c15136a81bed382b0bb05baa6bdefb"
+    },
+    {
+      "id": "v8-dice-fm",
+      "domain": "dice.fm",
+      "url": "https://dice.fm/",
+      "endpoint": "public_information",
+      "taskSha256": "7d8359db6feb1af04cecb966b90faa1e2763cb45072f2f042d4b4718d862a944"
+    },
+    {
+      "id": "v8-tickpick-com",
+      "domain": "tickpick.com",
+      "url": "https://tickpick.com/",
+      "endpoint": "public_information",
+      "taskSha256": "9711c6b5354ce3ee5af5461cef770756e4f60164242e138d8c9318e78690af16"
+    },
+    {
+      "id": "v8-twickets-live",
+      "domain": "twickets.live",
+      "url": "https://twickets.live/",
+      "endpoint": "public_information",
+      "taskSha256": "5345548214e4d09c5337dcad52c84a3bcbaa9074d4dd5c083e012b4c53ea426c"
+    },
+    {
+      "id": "v8-regmovies-com",
+      "domain": "regmovies.com",
+      "url": "https://regmovies.com/",
+      "endpoint": "public_information",
+      "taskSha256": "4b900710f1948e5bab59740b20df584d2b2f0eef9fb604bff89e8b43eeb7dc17"
+    },
+    {
+      "id": "v8-cinemark-com",
+      "domain": "cinemark.com",
+      "url": "https://cinemark.com/",
+      "endpoint": "public_information",
+      "taskSha256": "6e9f8146f155b230319358be5792d7e0c2c918a604ede1dd642c841dfa37586a"
+    },
+    {
+      "id": "v8-cineworld-co-uk",
+      "domain": "cineworld.co.uk",
+      "url": "https://cineworld.co.uk/",
+      "endpoint": "public_information",
+      "taskSha256": "970679b9a839a9696d27ef1267866c6d5a3909b5cb7d32023257103f14c3d81c"
+    },
+    {
+      "id": "v8-odeon-co-uk",
+      "domain": "odeon.co.uk",
+      "url": "https://odeon.co.uk/",
+      "endpoint": "public_information",
+      "taskSha256": "50667ed66f2431816bd6ae784fbd623fb341fa7f7444884f308eb9cf02b356fe"
+    },
+    {
+      "id": "v8-myvue-com",
+      "domain": "myvue.com",
+      "url": "https://myvue.com/",
+      "endpoint": "public_information",
+      "taskSha256": "e2c6a187b3ec17897668ee9ca48d3f1f8427e407562c394ef97ec7424b687fd7"
+    },
+    {
+      "id": "v8-viator-com",
+      "domain": "viator.com",
+      "url": "https://viator.com/",
+      "endpoint": "public_information",
+      "taskSha256": "6634c8ffff5cf0503b2f137cc4a9e1378e95295e7b2245dc8cdb2ec2b835b3ac"
+    },
+    {
+      "id": "v8-getyourguide-com",
+      "domain": "getyourguide.com",
+      "url": "https://getyourguide.com/",
+      "endpoint": "public_information",
+      "taskSha256": "d75a1e062acdd021e14d7d6fb9f3c5b9eea35975443f32d0686069ec7cfa0231"
+    },
+    {
+      "id": "v8-klook-com",
+      "domain": "klook.com",
+      "url": "https://klook.com/",
+      "endpoint": "public_information",
+      "taskSha256": "65623f9ba057b72d060181acaf42a5c6b9f2f663f29c120a6fa881883a6d0115"
+    },
+    {
+      "id": "v8-tiqets-com",
+      "domain": "tiqets.com",
+      "url": "https://tiqets.com/",
+      "endpoint": "public_information",
+      "taskSha256": "d641ea9f21ef9a7a13c92002cea8426cb99071fc04f5e0dac6cc855d0107b09a"
+    },
+    {
+      "id": "v8-gocity-com",
+      "domain": "gocity.com",
+      "url": "https://gocity.com/",
+      "endpoint": "public_information",
+      "taskSha256": "af3e3d2c7a03582f8ac4f4442decc52b1530e7da17beac3c6552c9637ee2763d"
+    },
+    {
+      "id": "v8-toursbylocals-com",
+      "domain": "toursbylocals.com",
+      "url": "https://toursbylocals.com/",
+      "endpoint": "public_information",
+      "taskSha256": "5f7eba61eb7d11935e768aaf5501aa7738f403766367f7354504d0644e60e693"
+    },
+    {
+      "id": "v8-opentable-com",
+      "domain": "opentable.com",
+      "url": "https://opentable.com/",
+      "endpoint": "public_information",
+      "taskSha256": "a6fa6fc1981c1342f3aa0693ddb46d883a0daf92ce4074e29e606732eeef9f0b"
+    },
+    {
+      "id": "v8-exploretock-com",
+      "domain": "exploretock.com",
+      "url": "https://exploretock.com/",
+      "endpoint": "public_information",
+      "taskSha256": "8f21c10e45099d0c2c86b96403e5d79a523b152698d8c4303c502ebfd1304777"
+    },
+    {
+      "id": "v8-thefork-com",
+      "domain": "thefork.com",
+      "url": "https://thefork.com/",
+      "endpoint": "public_information",
+      "taskSha256": "99dbcc722c409fefeb128d30d99809169924478d6add34da52a38068a5c62e02"
+    },
+    {
+      "id": "v8-wholefoodsmarket-com",
+      "domain": "wholefoodsmarket.com",
+      "url": "https://wholefoodsmarket.com/",
+      "endpoint": "public_information",
+      "taskSha256": "12afb7595ae819397e93ce803d3d86fc5a7b0d28de9e8c97bcf49931689dc1a4"
+    },
+    {
+      "id": "v8-freshdirect-com",
+      "domain": "freshdirect.com",
+      "url": "https://freshdirect.com/",
+      "endpoint": "cart",
+      "taskSha256": "5cc5589ce9b60f5d99b2f11d7c1e46b2fa3880a9e6fa173e52242a0fdaac2cdc"
+    },
+    {
+      "id": "v8-aldi-us",
+      "domain": "aldi.us",
+      "url": "https://aldi.us/",
+      "endpoint": "cart",
+      "taskSha256": "56be14e7c0364827e2a973375a4ed728bea672d582ae533eff7eeafd8296ad75"
+    },
+    {
+      "id": "v8-publix-com",
+      "domain": "publix.com",
+      "url": "https://publix.com/",
+      "endpoint": "public_information",
+      "taskSha256": "be3d8eca2d1c7d3a69015fef40069b3a6d589d42c4da47cb869cffe0ba373eb1"
+    },
+    {
+      "id": "v8-ralphs-com",
+      "domain": "ralphs.com",
+      "url": "https://ralphs.com/",
+      "endpoint": "public_information",
+      "taskSha256": "14152dbdaf993ea6e6e04a368a751e88a111c0fb8b4873369c77d4d092cb79d6"
+    },
+    {
+      "id": "v8-safeway-com",
+      "domain": "safeway.com",
+      "url": "https://safeway.com/",
+      "endpoint": "public_information",
+      "taskSha256": "37cd5bbff0dbad693fadabed012183c34aaff65bc27a21fdbb749718f9aebe5e"
+    },
+    {
+      "id": "v8-albertsons-com",
+      "domain": "albertsons.com",
+      "url": "https://albertsons.com/",
+      "endpoint": "public_information",
+      "taskSha256": "d4b7430efb98c942072ad2aabe16f7ae9e36671c479f6adeadc061cd327c333d"
+    },
+    {
+      "id": "v8-vons-com",
+      "domain": "vons.com",
+      "url": "https://vons.com/",
+      "endpoint": "public_information",
+      "taskSha256": "0d6ef37268e995fc445f96ae63c6a206496ba030ed032e26c235244ceda13c61"
+    },
+    {
+      "id": "v8-jewelosco-com",
+      "domain": "jewelosco.com",
+      "url": "https://jewelosco.com/",
+      "endpoint": "public_information",
+      "taskSha256": "a75838f8f164c332175b9f0f5a02c9e0bc5d1a45385143878bc0b908f37f05da"
+    },
+    {
+      "id": "v8-harristeeter-com",
+      "domain": "harristeeter.com",
+      "url": "https://harristeeter.com/",
+      "endpoint": "public_information",
+      "taskSha256": "9502882ae8a147000ab3599e1e3c9c297d067074856ff1f45fc7023703832740"
+    },
+    {
+      "id": "v8-shoprite-com",
+      "domain": "shoprite.com",
+      "url": "https://shoprite.com/",
+      "endpoint": "public_information",
+      "taskSha256": "b3512f777acee61dd19bb123ecf7332f2d30c361b47e4eef12e76db78a305de6"
+    },
+    {
+      "id": "v8-morrisons-com",
+      "domain": "morrisons.com",
+      "url": "https://morrisons.com/",
+      "endpoint": "cart",
+      "taskSha256": "8c27c9a4d450f3b5f27071ed75d90cda66a8e595bfdfe6213a4c13291160df06"
+    },
+    {
+      "id": "v8-ocado-com",
+      "domain": "ocado.com",
+      "url": "https://ocado.com/",
+      "endpoint": "cart",
+      "taskSha256": "000c5d7ca61de5d25fc304eedb7cf5ae367a3f00620cfc21fad848e3c4b98133"
+    },
+    {
+      "id": "v8-waitrose-com",
+      "domain": "waitrose.com",
+      "url": "https://waitrose.com/",
+      "endpoint": "public_information",
+      "taskSha256": "0b78e59d95d5d1259b92c260da06876177359d83e74688ec38e1fc6303df9c72"
+    },
+    {
+      "id": "v8-loblaws-ca",
+      "domain": "loblaws.ca",
+      "url": "https://loblaws.ca/",
+      "endpoint": "cart",
+      "taskSha256": "14e2d1a6cbce34924dfac3ebe4c50229d02dd333adfabeabe7981334063e9bbb"
+    },
+    {
+      "id": "v8-edeka-de",
+      "domain": "edeka.de",
+      "url": "https://edeka.de/",
+      "endpoint": "public_information",
+      "taskSha256": "4d079f00cbaf207fc07a6c27ff36758b473647967b9c89bc35888e759a9c862a"
+    },
+    {
+      "id": "v8-blueapron-com",
+      "domain": "blueapron.com",
+      "url": "https://blueapron.com/",
+      "endpoint": "public_information",
+      "taskSha256": "5ef156d75c8b87591ba6a6e95a76915e44ae37f591e5f88ef9c3591ddff6f000"
+    },
+    {
+      "id": "v8-sunbasket-com",
+      "domain": "sunbasket.com",
+      "url": "https://sunbasket.com/",
+      "endpoint": "public_information",
+      "taskSha256": "3b1e49c47a45e87ff63a67dfe08b839926e9d0e9baa19586ab6ced2654b4f7f0"
+    },
+    {
+      "id": "v8-ubereats-com",
+      "domain": "ubereats.com",
+      "url": "https://ubereats.com/",
+      "endpoint": "public_information",
+      "taskSha256": "ef8828d96846e1fcdf9569fe1ee321d0b1612882768322959e97ab9f7f35941d"
+    },
+    {
+      "id": "v8-foodpanda-com",
+      "domain": "foodpanda.com",
+      "url": "https://foodpanda.com/",
+      "endpoint": "public_information",
+      "taskSha256": "c2b3d84ddd55ee1442aba06659bc7b0f204cf804220aabe71ce9d2e67a74d635"
+    },
+    {
+      "id": "v8-zillow-com",
+      "domain": "zillow.com",
+      "url": "https://zillow.com/",
+      "endpoint": "public_information",
+      "taskSha256": "a524b3fcb9ace02e83bd54c4e11435f4f21d6529850cdb46d7a363bd51b3bbe8"
+    },
+    {
+      "id": "v8-redfin-com",
+      "domain": "redfin.com",
+      "url": "https://redfin.com/",
+      "endpoint": "public_information",
+      "taskSha256": "f72a363cfbd51a49a67d104f89263cd7b82403b48a052069d501de18407369e4"
+    },
+    {
+      "id": "v8-apartments-com",
+      "domain": "apartments.com",
+      "url": "https://apartments.com/",
+      "endpoint": "public_information",
+      "taskSha256": "a523aac1bdbe78de3dcae2beeaf2261e061cbabe31c50b8a0de7874521ce64ca"
+    },
+    {
+      "id": "v8-trulia-com",
+      "domain": "trulia.com",
+      "url": "https://trulia.com/",
+      "endpoint": "public_information",
+      "taskSha256": "aa6bd23711580a468e400472db643664ce93a5dde9c3299a54b76477e01e778f"
+    },
+    {
+      "id": "v8-homes-com",
+      "domain": "homes.com",
+      "url": "https://homes.com/",
+      "endpoint": "public_information",
+      "taskSha256": "823e909a8a69b4a29f7e8efca8414ae9126ab888e1b31a1507da79491b652b75"
+    },
+    {
+      "id": "v8-zoopla-co-uk",
+      "domain": "zoopla.co.uk",
+      "url": "https://zoopla.co.uk/",
+      "endpoint": "public_information",
+      "taskSha256": "1db722fd443f05bacc0caa5d1dbb82c2ccb6cbf847e3a066073c62f30a11d897"
+    },
+    {
+      "id": "v8-idealista-com",
+      "domain": "idealista.com",
+      "url": "https://idealista.com/",
+      "endpoint": "public_information",
+      "taskSha256": "5fceb9e5b8b606a589897f39a29d602923db07f7c19dd83aee9b2175140ec393"
+    },
+    {
+      "id": "v8-realestate-com-au",
+      "domain": "realestate.com.au",
+      "url": "https://realestate.com.au/",
+      "endpoint": "public_information",
+      "taskSha256": "11ec14314954f6a7c39d8628e0dca8da1ef455a49f4810fe8ea1579d711f53c5"
+    },
+    {
+      "id": "v8-domain-com-au",
+      "domain": "domain.com.au",
+      "url": "https://domain.com.au/",
+      "endpoint": "public_information",
+      "taskSha256": "b77a282a96e32143315e1248df22b8363c849a6a30d93413d41643dcb07e300d"
+    },
+    {
+      "id": "v8-immobilienscout24-de",
+      "domain": "immobilienscout24.de",
+      "url": "https://immobilienscout24.de/",
+      "endpoint": "public_information",
+      "taskSha256": "09d926c80ad92fcf53e0914205501888d38f21aa35f66adfe8a08357522eac7a"
+    },
+    {
+      "id": "v8-autotrader-com",
+      "domain": "autotrader.com",
+      "url": "https://autotrader.com/",
+      "endpoint": "public_information",
+      "taskSha256": "925dfd930d2765bff24977aef95115bcbdb7cb8fc9d65296eb55cf34c751ecf3"
+    },
+    {
+      "id": "v8-cargurus-com",
+      "domain": "cargurus.com",
+      "url": "https://cargurus.com/",
+      "endpoint": "public_information",
+      "taskSha256": "e11f8ae5a03d1415a005d1b15b1865df353b90f213d8c2741fe66994e09caf10"
+    },
+    {
+      "id": "v8-carvana-com",
+      "domain": "carvana.com",
+      "url": "https://carvana.com/",
+      "endpoint": "public_information",
+      "taskSha256": "aa8dba607c58bff0694b35ac7c52b041d955b202deea7c55dc8ff2915ca63abd"
+    },
+    {
+      "id": "v8-truecar-com",
+      "domain": "truecar.com",
+      "url": "https://truecar.com/",
+      "endpoint": "public_information",
+      "taskSha256": "6b3b65f338330cbf78323fd0cafb2e2c00b35633f252640cf552b6895f5bb301"
+    },
+    {
+      "id": "v8-carsales-com-au",
+      "domain": "carsales.com.au",
+      "url": "https://carsales.com.au/",
+      "endpoint": "public_information",
+      "taskSha256": "ae2684d9a3aca36acf2e57be3a132ece42bfe01074af27e225f8cb43f987c1ba"
+    },
+    {
+      "id": "v8-mobile-de",
+      "domain": "mobile.de",
+      "url": "https://mobile.de/",
+      "endpoint": "public_information",
+      "taskSha256": "942e45773efbcf80a0efe55044952cb463939e000660f90e19018a38fe79042c"
+    },
+    {
+      "id": "v8-xfinity-com",
+      "domain": "xfinity.com",
+      "url": "https://xfinity.com/",
+      "endpoint": "public_information",
+      "taskSha256": "fc1798f4839867e4dfdbfb2bcf55b0f1626673f7dd03a5531595f61b57db25ce"
+    },
+    {
+      "id": "v8-spectrum-com",
+      "domain": "spectrum.com",
+      "url": "https://spectrum.com/",
+      "endpoint": "public_information",
+      "taskSha256": "505b31a37151c7165495c4d111e239a641162a18353086b99adbb81f9f5b8840"
+    },
+    {
+      "id": "v8-mintmobile-com",
+      "domain": "mintmobile.com",
+      "url": "https://mintmobile.com/",
+      "endpoint": "public_information",
+      "taskSha256": "c00edc0d61540090348a405540ddd5c5df5ec337186d39e555c57ef15f5c514b"
+    },
+    {
+      "id": "v8-usmobile-com",
+      "domain": "usmobile.com",
+      "url": "https://usmobile.com/",
+      "endpoint": "public_information",
+      "taskSha256": "26039a1bae416b28a917bcb7bf85a6b6dfc528839024354a784ebc1e36d139d6"
+    },
+    {
+      "id": "v8-gamestop-com",
+      "domain": "gamestop.com",
+      "url": "https://www.gamestop.com/",
+      "endpoint": "cart",
+      "taskSha256": "a28d4caa74bec51150066a73ae6bdacdfd6a4d67da658724954d281449850f24"
+    },
+    {
+      "id": "v8-wayfair-com",
+      "domain": "wayfair.com",
+      "url": "https://www.wayfair.com/",
+      "endpoint": "cart",
+      "taskSha256": "0dd08ec050800700c2ffda4218b63a82514bf3741fced4d886258edf8573952d"
+    },
+    {
+      "id": "v8-tirerack-com",
+      "domain": "tirerack.com",
+      "url": "https://www.tirerack.com/",
+      "endpoint": "cart",
+      "taskSha256": "3b1414b7e07d01bdf41ad16c3ff5bb77d92d9fe5715a51710c7f41ea88d887e8"
+    },
+    {
+      "id": "v20-diy-com",
+      "domain": "diy.com",
+      "url": "https://diy.com/",
+      "endpoint": "cart",
+      "taskSha256": "de4b06289c3ca5a592783e512cc93bd66f2f4b4d0686f6f9fe1bc85e71de9f94"
+    },
+    {
+      "id": "v20-osprey-com",
+      "domain": "osprey.com",
+      "url": "https://www.osprey.com/",
+      "endpoint": "cart",
+      "taskSha256": "328df1d494a8a0d858d854f8637580d62abf6711e5fb9b8ba45313d7243580eb"
+    },
+    {
+      "id": "v20-sony-com",
+      "domain": "sony.com",
+      "url": "https://electronics.sony.com/",
+      "endpoint": "cart",
+      "taskSha256": "6abf2bca47444e915a85670a802b2c906a72bcf7c45e671b5e3210cbc828c8fe"
+    },
+    {
+      "id": "v20-dyson-com",
+      "domain": "dyson.com",
+      "url": "https://www.dyson.com/",
+      "endpoint": "cart",
+      "taskSha256": "49e2a5122c64a4e5da92299ffb8abb0fea91d21533dc3b215fff89d3a6a562ac"
+    },
+    {
+      "id": "v20-garmin-com",
+      "domain": "garmin.com",
+      "url": "https://www.garmin.com/en-US/",
+      "endpoint": "cart",
+      "taskSha256": "898df50d5c4d27b030d97e52eadddff7f9df87d29c7ea2343272d8fb2d7e2106"
+    },
+    {
+      "id": "v20-hydroflask-com",
+      "domain": "hydroflask.com",
+      "url": "https://hydroflask.com/",
+      "endpoint": "cart",
+      "taskSha256": "47fad079582308826f5ab45eba71e7708d1cba2a894b27e18eb549076877e501"
+    },
+    {
+      "id": "v20-breville-com",
+      "domain": "breville.com",
+      "url": "https://breville.com/",
+      "endpoint": "cart",
+      "taskSha256": "8385502c9b015f37764350319878d23cb95eb213606bb776181e587335f8c176"
+    },
+    {
+      "id": "v20-delonghi-com",
+      "domain": "delonghi.com",
+      "url": "https://delonghi.com/",
+      "endpoint": "cart",
+      "taskSha256": "634be157e2010c63bf8ebd499575a954266d72f08a5965ece97823228aaf7888"
+    },
+    {
+      "id": "v20-fender-com",
+      "domain": "fender.com",
+      "url": "https://fender.com/",
+      "endpoint": "cart",
+      "taskSha256": "2ab65e4b43e9fd19b96299c28492d7e5507b328273df968b9d78039bc6ba805c"
+    },
+    {
+      "id": "v20-jbl-com",
+      "domain": "jbl.com",
+      "url": "https://www.jbl.com/",
+      "endpoint": "cart",
+      "taskSha256": "c47bccf471ad65b202168d342d59812ba73e2a8bb767c4e7eb4411b02cedf4a1"
+    },
+    {
+      "id": "v20-potterybarn-com",
+      "domain": "potterybarn.com",
+      "url": "https://www.potterybarn.com/",
+      "endpoint": "cart",
+      "taskSha256": "1c887be7fcc04694063dd896159bd447308c1f86f03b85cc34f5b536753b1b46"
+    },
+    {
+      "id": "v20-nespresso-com",
+      "domain": "nespresso.com",
+      "url": "https://www.nespresso.com/",
+      "endpoint": "cart",
+      "taskSha256": "f506c3c7e6ca8a721aa3f9565007c1ea420daa4dccce7daab61983b37815ee4e"
+    },
+    {
+      "id": "v20-aveda-com",
+      "domain": "aveda.com",
+      "url": "https://www.aveda.com/",
+      "endpoint": "cart",
+      "taskSha256": "3f67dd66ed5ed1967181fe84547d47a05cbb23421623d71aa3bbd6852615c28b"
+    },
+    {
+      "id": "v20-mouser-com",
+      "domain": "mouser.com",
+      "url": "https://www.mouser.com/en/ProductDetail/Nordic-Semiconductor/NRF9151-SMA-DK?qs=4dK74SdgGtzTN4HCNX7L0Q%3D%3D",
+      "endpoint": "cart",
+      "taskSha256": "b602e6e52f5d074dcb473f16068a8f0264a86f671c4f801873f594ca92725551"
+    },
+    {
+      "id": "v20-digikey-com",
+      "domain": "digikey.com",
+      "url": "https://www.digikey.com/en/products/detail/nordic-semiconductor-asa/NRF9151-SMA-DK/28263704?s=N4IgTCBcDaIHICUBiBOAjAVjQWgMoFkBBbAEQGkQBdAXyA",
+      "endpoint": "cart",
+      "taskSha256": "0ad157518b0fd7748e0d9dc4f1186523387122d73fccd31900d207dab503ab55"
+    },
+    {
+      "id": "v20-ouraring-com",
+      "domain": "ouraring.com",
+      "url": "https://ouraring.com/store/rings/oura-ring-5",
+      "endpoint": "cart",
+      "taskSha256": "6d36b5cda5912bb8ad699a5a785962ede95ecf00ef6c904341b7c97fd34ac25e"
+    },
+    {
+      "id": "v20-ford-com",
+      "domain": "ford.com",
+      "url": "https://www.ford.com/search/accessories",
+      "endpoint": "cart",
+      "taskSha256": "7ee709b8f543eca2973d09faa7f0822bc9ea86b53d19ba184b43639a7c0bd555"
+    },
+    {
+      "id": "v22-ebgames-ca",
+      "domain": "ebgames.ca",
+      "url": "https://www.ebgames.ca/",
+      "endpoint": "cart",
+      "taskSha256": "c8d108c17cff34b76ec590b6c4b1510771701b8250a598826e56a870a54c57c5"
+    }
+  ]
+}

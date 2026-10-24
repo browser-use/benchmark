@@ -42,7 +42,7 @@ def summarize(tasks, outcomes):
 def main():
     root = Path(__file__).resolve().parent
     data = json.loads((root / "results.json").read_text())
-    dataset = json.loads((root / "dataset-v9.json").read_text())
+    dataset = json.loads((root / "dataset-v10.json").read_text())
     for run in data["runs"]:
         if run.get("outcomes") is not None:
             print(run["label"], json.dumps(summarize(dataset["tasks"], run["outcomes"])))

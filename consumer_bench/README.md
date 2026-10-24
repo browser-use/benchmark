@@ -1,23 +1,23 @@
-# Consumer web task benchmark V9
+# Shopping and browser infrastructure benchmark
 
-This manifest describes 502 public-web tasks: 363 cart tasks and 139 public-information tasks. It is separate from BU Bench V2.1 and Stealth Bench V2.
+Shopping and browser infrastructure benchmark, selection V10
 
-The V9 source removes 11 task IDs from the previous 513-task set. `exclusions-v9.json` lists each removed ID and its reason. Fleet Farm has a corrected URL and task text. The original datasets and scores remain unchanged. Two additional country-specific exclusions remain unselected; none were invented to obtain a round task count.
+500 retained public-web tasks. Source metadata retains 361 cart tasks and 139 public-information tasks. The website shows one overall score. A cart task stops before checkout. No purchase occurs.
 
-## Current results
+[exclusions-v10.json](exclusions-v10.json) records both additional exclusions. Selection V10 removes consumer-0223 (ozon.ru) and consumer-0356 (coupang.com) from V9. Both produced access errors. Their cause remains unresolved. All providers use the same exclusions. V9 already removed eleven tasks. These post-outcome exclusions introduce selection bias. Original V9 data and scores remain available.
 
-`results.json` contains sanitized task outcomes and their aggregate scores. Run `python consumer_bench/score.py` from the repository root to recalculate each score. All providers use the same retained task IDs. Missing results remain unknown. Unstarted tasks remain separate from failures. No missing score becomes zero.
+Browser Use Cloud, Dot, and Meta Muse show historical V8 outcomes on the retained V10 IDs. They do not establish fresh V10 execution. Fleet Farm changed its URL and task in V9. That change limits exact cross-version comparison. Browser Use Cloud uses the best retained run. This choice introduces selection bias. The owner maps OpenAI browser runner to the Dot display name. Original source identity remains in results.json.
 
-Browser Use, the OpenAI browser runner, and Muse use historical V8 results filtered to V9 task IDs. They are not fresh V9 runs. The revised Fleet Farm task limits exact cross-version comparison. The selected Browser Use run was the best retained run, which introduces selection bias. The OpenAI runner identity does not establish a Dot run.
+Instinct remains partial. Its later native message reports 292 provisional successes across 382 finished attempts from the original 513-task run. It includes known partial results. Updated original task rows remain missing. Its earlier retained snapshot still reports 12/500. No new 500-task score follows. Unstarted tasks are not failures. Grok Bot reports 36/50 in a different October 12–13 browsing study. It has no matched 500-task score here. Its Amazon smoke prompt differs from the frozen 50-site template.
 
-Instinct supplied a partial result table. Its later acknowledgement of continuation does not establish resumed execution. Its conservative self-check is a separate provider claim. Grok Bot and Dot have no matched complete result in this export.
+Task completion does not isolate infrastructure stealth. Models, dates, profiles, CAPTCHA rules, and review differ. CAPTCHA counts come from structured per-task reports. A cleared challenge includes automatic clearance. Missing CAPTCHA fields remain unknown. Each Cloud and Dot run has four unknown CAPTCHA reports. No causal infrastructure comparison or complete independent CAPTCHA audit follows.
 
-These scores measure endpoint completion. They do not measure a general website block rate. The tasks come from a curated difficult set. Models, browser profiles, dates, solver policies, deadlines, and evidence review differ across runs. Muse's CSV review does not establish Root review of all original actions or runtime releases.
+Muse reports 168 failures in its original 513-task run. Only 26 carry the website-security-block category. Ninety-six failures occur before a website opens. Security blocks are not all CAPTCHAs. No complete Muse CAPTCHA encounter count exists. Root reviewed 37 original tasks, with 24 endpoints and 13 misses. Runtime release receipts remain missing.
 
-## Execution contract
+Retain one original attempt per task, one active task per domain, exact task text, and original eight-minute deadlines. Never retry accepted, unknown, terminal, failed, stopped, or mismatched attempts. Original task and browser evidence remains separate from public aggregate reports.
 
-The public `dataset-v9.json` is a task manifest with IDs, domains, endpoint types, and task hashes. It omits full prompts. The private runner package preserves the exact task and protocol text under the source dataset hash. Use one original attempt per task and one active task per domain. Use the runner's supported parallel limit. Keep the original first-request deadline at eight minutes. Record the first browser request and original task ID. Preserve unknown, stopped, failed, and accepted attempts without retry.
+## Recalculate
 
-Use public pages only. Stop after the requested cart or public-information endpoint. Never purchase, start checkout, reserve, subscribe, create accounts, enter private data, or request codes. Follow the active tool policy for every CAPTCHA and binding action. General solver permission does not replace any required action-time confirmation.
+Run `python consumer_bench/score.py`. The current selection uses `dataset-v10.json`. The original `dataset-v9.json` and `results-v9.json` preserve 502-task results. `grok-historical-50.json` preserves the separate study.
 
-Return all task outcomes, full results and failure CSV files, unstarted counts, original evidence, and configuration. Record successes over all planned tasks, cart successes over 363, and public-information successes over 139. Keep reported endpoints, evidence review, protocol deviations, page exposure, and website blocks separate.
+Execution limits: use public pages only. Never purchase, enter checkout, reserve, subscribe, create accounts, enter private data, or request codes. Follow the active tool policy for CAPTCHA and binding actions. Obtain specific action-time confirmation when that policy requires it. The original private runner package preserves the exact task and protocol text.
