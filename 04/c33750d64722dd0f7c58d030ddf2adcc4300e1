@@ -1,0 +1,16 @@
+consumer_bench/exclusions-v10.json
+  h_e7a2b198222b93 18
+consumer_bench/results.json
+  h_e7a2b198222b93 10593,10608
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "04c33750d64722dd0f7c58d030ddf2adcc4300e1",
+  "prompts": {},
+  "humans": {
+    "h_e7a2b198222b93": {
+      "author": "Gregor Žunič <36313686+gregpr07@users.noreply.github.com>"
+    }
+  }
+}
