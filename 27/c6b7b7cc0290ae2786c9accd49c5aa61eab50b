@@ -1,0 +1,18 @@
+consumer_bench/README.md
+  h_e7a2b198222b93 11
+consumer_bench/results.json
+  h_e7a2b198222b93 8488,10590-10611
+tests/test_consumer_score.py
+  h_e7a2b198222b93 31,42-45
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "27c6b7b7cc0290ae2786c9accd49c5aa61eab50b",
+  "prompts": {},
+  "humans": {
+    "h_e7a2b198222b93": {
+      "author": "Gregor Žunič <36313686+gregpr07@users.noreply.github.com>"
+    }
+  }
+}
