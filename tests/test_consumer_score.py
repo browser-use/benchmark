@@ -1,5 +1,6 @@
 import unittest
 import json
+from collections import Counter
 from pathlib import Path
 
 from consumer_bench.score import summarize
@@ -9,21 +10,44 @@ class ConsumerScoreTests(unittest.TestCase):
     def setUp(self):
         self.tasks = [{"id": "cart-a", "endpoint": "cart"}, {"id": "public-b", "endpoint": "public_information"}]
 
-    def test_published_summaries_match_the_retained_outcome_rows(self):
+    def test_published_summaries_match_each_version_without_rewriting_original_scores(self):
         root = Path(__file__).resolve().parents[1] / "consumer_bench"
-        tasks = json.loads((root / "dataset-v9.json").read_text())["tasks"]
+        for version, total, excluded, unstarted in [(9, 502, 11, 481), (10, 500, 13, 479)]:
+            with self.subTest(version=version):
+                tasks = json.loads((root / f"dataset-v{version}.json").read_text())["tasks"]
+                filename = "results.json" if version == 10 else "results-v9.json"
+                data = json.loads((root / filename).read_text())
+                self.assertEqual(len(tasks), total)
+                self.assertEqual(len(data["dataset"]["removedTasks"]), excluded)
+                for run in data["runs"]:
+                    if run["outcomes"] is None:
+                        self.assertIsNone(run["summary"])
+                    else:
+                        self.assertEqual(run["summary"], summarize(tasks, run["outcomes"]), run["id"])
+                instinct = next(run for run in data["runs"] if run["id"] == "instinct")
+                self.assertFalse(instinct["summary"]["allTasksTerminal"])
+                self.assertEqual(instinct["summary"]["all"]["unstarted"], unstarted)
+
+    def test_current_selection_preserves_runner_identity_and_separate_grok_denominator(self):
+        root = Path(__file__).resolve().parents[1] / "consumer_bench"
         data = json.loads((root / "results.json").read_text())
-        self.assertEqual(len(tasks), 502)
-        self.assertEqual(len(data["dataset"]["removedTasks"]), 11)
+        dot = next(run for run in data["runs"] if run["label"] == "Dot")
+        self.assertEqual(dot["id"], "openai-runner")
+        self.assertEqual(dot["originalRunner"], "OpenAI browser runner")
+        self.assertEqual(len([run for run in data["runs"] if run["label"] == "Dot"]), 1)
+        study = data["historicalStudies"][0]
+        self.assertEqual(len(study["outcomes"]), 50)
+        self.assertEqual(sum(row["outcome"] == "success" for row in study["outcomes"]), study["successes"])
+        self.assertEqual(study["tasks"], 50)
         for run in data["runs"]:
-            with self.subTest(agent=run["id"]):
-                if run["outcomes"] is None:
-                    self.assertIsNone(run["summary"])
-                else:
-                    self.assertEqual(run["summary"], summarize(tasks, run["outcomes"]))
-        instinct = next(run for run in data["runs"] if run["id"] == "instinct")
-        self.assertFalse(instinct["summary"]["allTasksTerminal"])
-        self.assertEqual(instinct["summary"]["all"]["unstarted"], 481)
+            if "captcha" in run:
+                counts = run["captcha"]
+                self.assertEqual(counts["none"] + counts["cleared"] + counts["uncleared"] + counts["unknown"], 500)
+                self.assertEqual(counts["encountered"], counts["cleared"] + counts["uncleared"])
+                ids = {task["id"] for task in json.loads((root / "dataset-v10.json").read_text())["tasks"]}
+                reports = Counter(row["captchaReport"] for row in run["outcomes"] if row["task_id"] in ids)
+                self.assertEqual(counts["encountered"], reports["solved"] + reports["unsolved"])
+                self.assertEqual(counts["unknown"], reports["unknown"])
 
     def test_exclusions_remove_the_same_task_from_successes_and_denominator(self):
         rows = [{"task_id": "cart-a", "outcome": "failure"}, {"task_id": "public-b", "outcome": "success"}, {"task_id": "removed", "outcome": "success"}]

@@ -1,0 +1,320 @@
+{
+  "id": "grok",
+  "label": "Grok Bot",
+  "tasks": 50,
+  "successes": 36,
+  "successRate": 0.72,
+  "runDate": "Oct 12–13, 2026",
+  "scope": "Search or category, then open a product or result. No cart requirement.",
+  "note": "Different tasks and CAPTCHA rules. Amazon used an earlier smoke prompt. This is not a matched 500-task score.",
+  "outcomeCounts": {
+    "success": 36,
+    "uncleared challenge": 7,
+    "site error": 2,
+    "tool error": 2,
+    "login gate": 2,
+    "explicit denial": 1
+  },
+  "outcomes": [
+    {
+      "domain": "amazon.com",
+      "outcome": "success",
+      "date": "2026-10-12T22:35-07:00",
+      "promptVariant": "original smoke prompt (differs from frozen template)"
+    },
+    {
+      "domain": "walmart.com",
+      "outcome": "uncleared challenge",
+      "date": "2026-10-12T22:40-07:00",
+      "promptVariant": "frozen template"
+    },
+    {
+      "domain": "united.com",
+      "outcome": "site error",
+      "date": "2026-10-12T22:41:55-07:00",
+      "promptVariant": "frozen template"
+    },
+    {
+      "domain": "delta.com",
+      "outcome": "success",
+      "date": "2026-10-12T22:43:05-07:00",
+      "promptVariant": "frozen template"
+    },
+    {
+      "domain": "yelp.com",
+      "outcome": "tool error",
+      "date": "2026-10-12T22:43:31-07:00",
+      "promptVariant": "frozen template"
+    },
+    {
+      "domain": "zillow.com",
+      "outcome": "uncleared challenge",
+      "date": "2026-10-12T22:44:56-07:00",
+      "promptVariant": "frozen template"
+    },
+    {
+      "domain": "adidas.com",
+      "outcome": "success",
+      "date": "2026-10-12T22:45:46-07:00",
+      "promptVariant": "frozen template"
+    },
+    {
+      "domain": "pizzahut.com",
+      "outcome": "success",
+      "date": "2026-10-12T22:46:36-07:00",
+      "promptVariant": "frozen template"
+    },
+    {
+      "domain": "xfinity.com",
+      "outcome": "success",
+      "date": "2026-10-12T22:47:16-07:00",
+      "promptVariant": "frozen template"
+    },
+    {
+      "domain": "ubereats.com",
+      "outcome": "uncleared challenge",
+      "date": "2026-10-12T22:49:10-07:00",
+      "promptVariant": "frozen template"
+    },
+    {
+      "domain": "insurify.com",
+      "outcome": "success",
+      "date": "2026-10-12T22:49:35-07:00",
+      "promptVariant": "frozen template"
+    },
+    {
+      "domain": "resy.com",
+      "outcome": "success",
+      "date": "2026-10-12T22:50:28-07:00",
+      "promptVariant": "frozen template"
+    },
+    {
+      "domain": "costplusdrugs.com",
+      "outcome": "success",
+      "date": "2026-10-12T22:51:06-07:00",
+      "promptVariant": "frozen template"
+    },
+    {
+      "domain": "ebay.com",
+      "outcome": "success",
+      "date": "2026-10-12T22:51:59-07:00",
+      "promptVariant": "frozen template"
+    },
+    {
+      "domain": "americanexpress.com",
+      "outcome": "site error",
+      "date": "2026-10-12T22:52:43-07:00",
+      "promptVariant": "frozen template"
+    },
+    {
+      "domain": "spectrum.net",
+      "outcome": "success",
+      "date": "2026-10-12T22:53:19-07:00",
+      "promptVariant": "frozen template"
+    },
+    {
+      "domain": "verizon.com",
+      "outcome": "success",
+      "date": "2026-10-12T22:54:10-07:00",
+      "promptVariant": "frozen template"
+    },
+    {
+      "domain": "instagram.com",
+      "outcome": "login gate",
+      "date": "2026-10-12T22:54:41-07:00",
+      "promptVariant": "frozen template"
+    },
+    {
+      "domain": "bathandbodyworks.com",
+      "outcome": "uncleared challenge",
+      "date": "2026-10-12T22:56:10-07:00",
+      "promptVariant": "frozen template"
+    },
+    {
+      "domain": "alza.cz",
+      "outcome": "success",
+      "date": "2026-10-12T22:58:12-07:00",
+      "promptVariant": "frozen template"
+    },
+    {
+      "domain": "allegro.cz",
+      "outcome": "explicit denial",
+      "date": "2026-10-12T22:59:42-07:00",
+      "promptVariant": "frozen template"
+    },
+    {
+      "domain": "dba.dk",
+      "outcome": "success",
+      "date": "2026-10-12T23:00:51-07:00",
+      "promptVariant": "frozen template"
+    },
+    {
+      "domain": "reddit.com",
+      "outcome": "success",
+      "date": "2026-10-12T23:01:17-07:00",
+      "promptVariant": "frozen template"
+    },
+    {
+      "domain": "shopify.com",
+      "outcome": "success",
+      "date": "2026-10-12T23:01:40-07:00",
+      "promptVariant": "frozen template"
+    },
+    {
+      "domain": "x.com",
+      "outcome": "login gate",
+      "date": "2026-10-12T23:02:04-07:00",
+      "promptVariant": "frozen template"
+    },
+    {
+      "domain": "suno.com",
+      "outcome": "success",
+      "date": "2026-10-12T23:02:28-07:00",
+      "promptVariant": "frozen template"
+    },
+    {
+      "domain": "cursor.com",
+      "outcome": "success",
+      "date": "2026-10-12T23:02:52-07:00",
+      "promptVariant": "frozen template"
+    },
+    {
+      "domain": "gamestop.com",
+      "outcome": "success",
+      "date": "2026-10-12T23:03:40-07:00",
+      "promptVariant": "frozen template"
+    },
+    {
+      "domain": "pokemoncenter.com",
+      "outcome": "success",
+      "date": "2026-10-12T23:04:16-07:00",
+      "promptVariant": "frozen template"
+    },
+    {
+      "domain": "cvs.com",
+      "outcome": "success",
+      "date": "2026-10-12T23:05:20-07:00",
+      "promptVariant": "frozen template"
+    },
+    {
+      "domain": "hm.com",
+      "outcome": "success",
+      "date": "2026-10-12T23:05:59-07:00",
+      "promptVariant": "frozen template"
+    },
+    {
+      "domain": "macys.com",
+      "outcome": "success",
+      "date": "2026-10-12T23:07:01-07:00",
+      "promptVariant": "frozen template"
+    },
+    {
+      "domain": "rei.com",
+      "outcome": "success",
+      "date": "2026-10-12T23:07:39-07:00",
+      "promptVariant": "frozen template"
+    },
+    {
+      "domain": "lululemon.com",
+      "outcome": "success",
+      "date": "2026-10-12T23:08:22-07:00",
+      "promptVariant": "frozen template"
+    },
+    {
+      "domain": "puma.com",
+      "outcome": "success",
+      "date": "2026-10-12T23:08:59-07:00",
+      "promptVariant": "frozen template"
+    },
+    {
+      "domain": "newbalance.com",
+      "outcome": "success",
+      "date": "2026-10-12T23:09:28-07:00",
+      "promptVariant": "frozen template"
+    },
+    {
+      "domain": "patagonia.com",
+      "outcome": "uncleared challenge",
+      "date": "2026-10-12T23:11:07-07:00",
+      "promptVariant": "frozen template"
+    },
+    {
+      "domain": "drmartens.com",
+      "outcome": "success",
+      "date": "2026-10-12T23:11:39-07:00",
+      "promptVariant": "frozen template"
+    },
+    {
+      "domain": "homedepot.com",
+      "outcome": "success",
+      "date": "2026-10-12T23:12:34-07:00",
+      "promptVariant": "frozen template"
+    },
+    {
+      "domain": "lowes.com",
+      "outcome": "success",
+      "date": "2026-10-12T23:13:33-07:00",
+      "promptVariant": "frozen template"
+    },
+    {
+      "domain": "costco.com",
+      "outcome": "success",
+      "date": "2026-10-12T23:14:36-07:00",
+      "promptVariant": "frozen template"
+    },
+    {
+      "domain": "wayfair.com",
+      "outcome": "tool error",
+      "date": "2026-10-12T23:15:37-07:00",
+      "promptVariant": "frozen template"
+    },
+    {
+      "domain": "kohls.com",
+      "outcome": "success",
+      "date": "2026-10-12T23:16:18-07:00",
+      "promptVariant": "frozen template"
+    },
+    {
+      "domain": "ridge.com",
+      "outcome": "success",
+      "date": "2026-10-13T09:11:56-07:00",
+      "promptVariant": "frozen template"
+    },
+    {
+      "domain": "bookshop.org",
+      "outcome": "success",
+      "date": "2026-10-13T09:12:27-07:00",
+      "promptVariant": "frozen template"
+    },
+    {
+      "domain": "threadless.com",
+      "outcome": "success",
+      "date": "2026-10-13T09:13:00-07:00",
+      "promptVariant": "frozen template"
+    },
+    {
+      "domain": "etsy.com",
+      "outcome": "success",
+      "date": "2026-10-13T09:13:39-07:00",
+      "promptVariant": "frozen template"
+    },
+    {
+      "domain": "target.com",
+      "outcome": "uncleared challenge",
+      "date": "2026-10-13T09:17:02-07:00",
+      "promptVariant": "frozen template"
+    },
+    {
+      "domain": "thenorthface.com",
+      "outcome": "uncleared challenge",
+      "date": "2026-10-13T09:19:09-07:00",
+      "promptVariant": "frozen template"
+    },
+    {
+      "domain": "nordstrom.com",
+      "outcome": "success",
+      "date": "2026-10-13T09:20:07-07:00",
+      "promptVariant": "frozen template"
+    }
+  ]
+}
