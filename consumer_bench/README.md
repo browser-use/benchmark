@@ -4,9 +4,9 @@ Shopping and browser infrastructure benchmark, selection V10
 
 500 retained public-web tasks. Source metadata retains 361 cart tasks and 139 public-information tasks. The website shows one overall score. A cart task stops before checkout. No purchase occurs.
 
-Selection V10 removes consumer-0223 (ozon.ru) and consumer-0356 (coupang.com) from V9. Both produced access errors. Their cause remains unresolved. All providers use the same exclusions. V9 already removed eleven tasks. These post-outcome exclusions introduce selection bias. Original V9 data and scores remain available.
+[exclusions-v10.json](exclusions-v10.json) records both additional exclusions. Selection V10 removes consumer-0223 (ozon.ru) and consumer-0356 (coupang.com) from V9. Both produced access errors. Their cause remains unresolved. All providers use the same exclusions. V9 already removed eleven tasks. These post-outcome exclusions introduce selection bias. Original V9 data and scores remain available.
 
-Browser Use Cloud, Dot, and Meta Muse show historical V8 outcomes on the retained V10 IDs. They do not establish fresh V10 execution. Fleet Farm changed its URL and task in V9. Browser Use Cloud uses the best retained run. The owner maps OpenAI browser runner to the Dot display name. Original source identity remains in results.json.
+Browser Use Cloud, Dot, and Meta Muse show historical V8 outcomes on the retained V10 IDs. They do not establish fresh V10 execution. Fleet Farm changed its URL and task in V9. That change limits exact cross-version comparison. Browser Use Cloud uses the best retained run. This choice introduces selection bias. The owner maps OpenAI browser runner to the Dot display name. Original source identity remains in results.json.
 
 Instinct remains partial. Its later native message reports 292 provisional successes across 382 finished attempts from the original 513-task run. It includes known partial results. Updated original task rows remain missing. Its earlier retained snapshot still reports 12/500. No new 500-task score follows. Unstarted tasks are not failures. Grok Bot reports 36/50 in a different October 12–13 browsing study. It has no matched 500-task score here. Its Amazon smoke prompt differs from the frozen 50-site template.
 
@@ -19,3 +19,5 @@ Retain one original attempt per task, one active task per domain, exact task tex
 ## Recalculate
 
 Run `python consumer_bench/score.py`. The current selection uses `dataset-v10.json`. The original `dataset-v9.json` and `results-v9.json` preserve 502-task results. `grok-historical-50.json` preserves the separate study.
+
+Execution limits: use public pages only. Never purchase, enter checkout, reserve, subscribe, create accounts, enter private data, or request codes. Follow the active tool policy for CAPTCHA and binding actions. Obtain specific action-time confirmation when that policy requires it. The original private runner package preserves the exact task and protocol text.

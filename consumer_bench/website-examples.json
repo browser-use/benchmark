@@ -400,7 +400,7 @@
   "gallery": [
     {
       "site": "etsy",
-      "src": "/benchmarks/consumer-v10/images/etsy-a5440919b967.png",
+      "src": "https://browser-use.com/benchmarks/consumer-v10/images/etsy-a5440919b967.png",
       "width": 1920,
       "height": 760,
       "agent": "Browser Use Cloud",
@@ -411,7 +411,7 @@
     },
     {
       "site": "walmart",
-      "src": "/benchmarks/consumer-v10/images/walmart-98a5631ad389.png",
+      "src": "https://browser-use.com/benchmarks/consumer-v10/images/walmart-98a5631ad389.png",
       "width": 1024,
       "height": 594,
       "agent": "Grok Bot",
@@ -422,7 +422,7 @@
     },
     {
       "site": "nike",
-      "src": "/benchmarks/consumer-v10/images/nike-11dc4802e2c3.png",
+      "src": "https://browser-use.com/benchmarks/consumer-v10/images/nike-11dc4802e2c3.png",
       "width": 1920,
       "height": 824,
       "agent": "Browser Use Cloud",
@@ -433,7 +433,7 @@
     },
     {
       "site": "playstation",
-      "src": "/benchmarks/consumer-v10/images/playstation-e34f376195a9.png",
+      "src": "https://browser-use.com/benchmarks/consumer-v10/images/playstation-e34f376195a9.png",
       "width": 1280,
       "height": 720,
       "agent": "Instinct",
@@ -444,7 +444,7 @@
     },
     {
       "site": "amazon",
-      "src": "/benchmarks/consumer-v10/images/amazon-1ddca09a5fa0.png",
+      "src": "https://browser-use.com/benchmarks/consumer-v10/images/amazon-1ddca09a5fa0.png",
       "width": 1024,
       "height": 594,
       "agent": "Grok Bot",
@@ -455,7 +455,7 @@
     },
     {
       "site": "walmart",
-      "src": "/benchmarks/consumer-v10/images/walmart-985630a2a5fe.png",
+      "src": "https://browser-use.com/benchmarks/consumer-v10/images/walmart-985630a2a5fe.png",
       "width": 1920,
       "height": 824,
       "agent": "Browser Use Cloud",
@@ -466,7 +466,7 @@
     },
     {
       "site": "walmart",
-      "src": "/benchmarks/consumer-v10/images/walmart-8890326dffa2.png",
+      "src": "https://browser-use.com/benchmarks/consumer-v10/images/walmart-8890326dffa2.png",
       "width": 1920,
       "height": 824,
       "agent": "Browser Use Cloud",
@@ -477,7 +477,7 @@
     },
     {
       "site": "alza",
-      "src": "/benchmarks/consumer-v10/images/alza-a7f6c047d146.png",
+      "src": "https://browser-use.com/benchmarks/consumer-v10/images/alza-a7f6c047d146.png",
       "width": 1920,
       "height": 760,
       "agent": "Browser Use Cloud",
@@ -488,7 +488,7 @@
     },
     {
       "site": "the-north-face",
-      "src": "/benchmarks/consumer-v10/images/the-north-face-ebea9ce52d8e.png",
+      "src": "https://browser-use.com/benchmarks/consumer-v10/images/the-north-face-ebea9ce52d8e.png",
       "width": 3024,
       "height": 1472,
       "agent": "Browser Use Cloud",
@@ -499,7 +499,7 @@
     },
     {
       "site": "dns-shop",
-      "src": "/benchmarks/consumer-v10/images/dns-shop-03b5fe91545b.png",
+      "src": "https://browser-use.com/benchmarks/consumer-v10/images/dns-shop-03b5fe91545b.png",
       "width": 1280,
       "height": 720,
       "agent": "Instinct",
@@ -510,7 +510,7 @@
     },
     {
       "site": "zara",
-      "src": "/benchmarks/consumer-v10/images/zara-8c888188d7a6.png",
+      "src": "https://browser-use.com/benchmarks/consumer-v10/images/zara-8c888188d7a6.png",
       "width": 3024,
       "height": 1540,
       "agent": "Browser Use Cloud",

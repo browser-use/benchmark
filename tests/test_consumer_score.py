@@ -1,5 +1,6 @@
 import unittest
 import json
+import hashlib
 from collections import Counter
 from pathlib import Path
 
@@ -12,12 +13,16 @@ class ConsumerScoreTests(unittest.TestCase):
 
     def test_published_summaries_match_each_version_without_rewriting_original_scores(self):
         root = Path(__file__).resolve().parents[1] / "consumer_bench"
+        self.assertEqual(hashlib.sha256((root / "results-v9.json").read_bytes()).hexdigest(), "c1c6c17da22a32f0a6f06a8799f6794b94e2ec63c830d494cb7c40cb160af5cf")
         for version, total, excluded, unstarted in [(9, 502, 11, 481), (10, 500, 13, 479)]:
             with self.subTest(version=version):
                 tasks = json.loads((root / f"dataset-v{version}.json").read_text())["tasks"]
                 filename = "results.json" if version == 10 else "results-v9.json"
                 data = json.loads((root / filename).read_text())
                 self.assertEqual(len(tasks), total)
+                self.assertEqual(len({task["domain"] for task in tasks}), total)
+                if version == 10:
+                    self.assertTrue({"ozon.ru", "coupang.com"}.isdisjoint(task["domain"] for task in tasks))
                 self.assertEqual(len(data["dataset"]["removedTasks"]), excluded)
                 for run in data["runs"]:
                     if run["outcomes"] is None:
@@ -39,6 +44,8 @@ class ConsumerScoreTests(unittest.TestCase):
         self.assertEqual(len(study["outcomes"]), 50)
         self.assertEqual(sum(row["outcome"] == "success" for row in study["outcomes"]), study["successes"])
         self.assertEqual(study["tasks"], 50)
+        self.assertEqual(study["outcomeCounts"], dict(Counter(row["outcome"] for row in study["outcomes"])))
+        self.assertEqual(study["successRate"], study["successes"] / study["tasks"])
         instinct = next(run for run in data["runs"] if run["id"] == "instinct")
         self.assertIsNone(instinct["latestProviderUpdate"]["retained500Successes"])
         self.assertEqual(instinct["latestProviderUpdate"]["planned"], 513)
@@ -52,6 +59,8 @@ class ConsumerScoreTests(unittest.TestCase):
                 reports = Counter(row["captchaReport"] for row in run["outcomes"] if row["task_id"] in ids)
                 self.assertEqual(counts["encountered"], reports["solved"] + reports["unsolved"])
                 self.assertEqual(counts["unknown"], reports["unknown"])
+                for aggregate, report in [("none", "none"), ("cleared", "solved"), ("uncleared", "unsolved")]:
+                    self.assertEqual(counts[aggregate], reports[report], f"{run['id']}: {aggregate}")
 
     def test_exclusions_remove_the_same_task_from_successes_and_denominator(self):
         rows = [{"task_id": "cart-a", "outcome": "failure"}, {"task_id": "public-b", "outcome": "success"}, {"task_id": "removed", "outcome": "success"}]
