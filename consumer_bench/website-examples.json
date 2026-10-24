@@ -55,11 +55,11 @@
         },
         {
           "agent": "Instinct",
-          "outcome": "Unstarted",
-          "score": null,
+          "outcome": "Success",
+          "score": "1/1",
           "captcha": "not reported",
-          "date": "Oct 23, 2026 snapshot",
-          "note": "The saved snapshot contains no started attempt for this task."
+          "date": "Oct 23–24, 2026 · Provider audit",
+          "note": "Instinct reports a verified endpoint. It records a deviation. We did not complete an action audit."
         },
         {
           "agent": "Grok Bot",
@@ -107,10 +107,10 @@
         {
           "agent": "Instinct",
           "outcome": "Policy hold",
-          "score": null,
+          "score": "0/1",
           "captcha": "not reported",
-          "date": "Oct 23, 2026 snapshot",
-          "note": "The source table reports this task outcome."
+          "date": "Oct 23–24, 2026 · Provider audit",
+          "note": "Instinct records the original policy hold. This result does not establish a website block rate."
         },
         {
           "agent": "Grok Bot",
@@ -157,11 +157,11 @@
         },
         {
           "agent": "Instinct",
-          "outcome": "Unstarted",
-          "score": null,
+          "outcome": "Unverified",
+          "score": "0/1",
           "captcha": "not reported",
-          "date": "Oct 23, 2026 snapshot",
-          "note": "The saved snapshot contains no started attempt for this task."
+          "date": "Oct 23–24, 2026 · Provider audit",
+          "note": "Instinct records incomplete endpoint evidence. This result does not establish a website block rate."
         }
       ]
     },
@@ -171,7 +171,7 @@
       "domain": "direct.playstation.com",
       "taskId": "v9-playstation-com",
       "task": "Choose a DualSense controller and verify one in the cart.",
-      "insight": "Instinct supplies an original cart image. Its overall run remains partial.",
+      "insight": "Instinct supplies an original cart image. Its final endpoint audit records success with a deviation.",
       "inMainSelection": true,
       "rows": [
         {
@@ -203,8 +203,8 @@
           "outcome": "Success",
           "score": "1/1",
           "captcha": "not reported",
-          "date": "Oct 23, 2026 snapshot",
-          "note": "The original endpoint image shows product details and quantity. Complete action review remains separate."
+          "date": "Oct 23–24, 2026 · Provider audit",
+          "note": "Instinct reports a verified endpoint. It records a deviation. We did not complete an action audit."
         }
       ]
     },
@@ -246,8 +246,8 @@
           "outcome": "Success",
           "score": "1/1",
           "captcha": "not reported",
-          "date": "Oct 23, 2026 snapshot",
-          "note": "The source table reports this task outcome."
+          "date": "Oct 23–24, 2026 · Provider audit",
+          "note": "Instinct reports a verified endpoint. It records a deviation. We did not complete an action audit."
         },
         {
           "agent": "Grok Bot",
@@ -294,11 +294,11 @@
         },
         {
           "agent": "Instinct",
-          "outcome": "Unstarted",
-          "score": null,
+          "outcome": "Failure",
+          "score": "0/1",
           "captcha": "not reported",
-          "date": "Oct 23, 2026 snapshot",
-          "note": "The saved snapshot contains no started attempt for this task."
+          "date": "Oct 23–24, 2026 · Provider audit",
+          "note": "Instinct records a terminal failure. This result does not establish a website block rate."
         },
         {
           "agent": "Grok Bot",
@@ -348,8 +348,8 @@
           "outcome": "Success",
           "score": "1/1",
           "captcha": "not reported",
-          "date": "Oct 23, 2026 snapshot",
-          "note": "The original endpoint image shows product details and quantity. Complete action review remains separate."
+          "date": "Oct 23–24, 2026 · Provider audit",
+          "note": "Instinct reports a verified endpoint. It records a deviation. We did not complete an action audit."
         }
       ]
     },
@@ -388,11 +388,11 @@
         },
         {
           "agent": "Instinct",
-          "outcome": "Unstarted",
-          "score": null,
+          "outcome": "Success",
+          "score": "1/1",
           "captcha": "not reported",
-          "date": "Oct 23, 2026 snapshot",
-          "note": "The saved snapshot contains no started attempt for this task."
+          "date": "Oct 23–24, 2026 · Provider audit",
+          "note": "Instinct reports a verified endpoint. It records no deviation. We did not complete an action audit."
         }
       ]
     }

@@ -8483,2129 +8483,3189 @@
     {
       "id": "instinct",
       "label": "Instinct",
-      "status": "partial",
-      "source": "Instinct supplied v4 archive, October 23, 2026",
-      "evidence": "Earlier supplied archive supports the saved 12-success snapshot. A later native message reports provisional counts without updated original task rows.",
+      "status": "historical_subset",
+      "source": "Instinct final results archive, October 24, 2026; SHA256 b4db0148d33d6ef736f074c6b7edd66ae4756a8555e2935dc9552bfbe1cc1b3c",
+      "evidence": "Instinct audits endpoints against original images. We check exact task IDs, frozen prompts, archive integrity and 491 image hashes. Full independent image and action review remains incomplete.",
       "datasetVersionExecuted": 8,
       "freshV9Run": false,
       "summary": {
         "all": {
           "planned": 500,
-          "successes": 12,
-          "failures": 4,
+          "successes": 283,
+          "failures": 116,
           "policyHolds": 5,
-          "unknown": 0,
-          "unstarted": 479,
+          "unknown": 96,
+          "unstarted": 0,
           "pending": 0,
-          "successRate": 0.024,
+          "successRate": 0.566,
           "rowsPresent": 500
         },
         "cart": {
           "planned": 361,
-          "successes": 9,
-          "failures": 4,
+          "successes": 197,
+          "failures": 89,
           "policyHolds": 4,
-          "unknown": 0,
-          "unstarted": 344,
+          "unknown": 71,
+          "unstarted": 0,
           "pending": 0,
-          "successRate": 0.024930747922437674,
+          "successRate": 0.5457063711911357,
           "rowsPresent": 361
         },
         "public_information": {
           "planned": 139,
-          "successes": 3,
-          "failures": 0,
+          "successes": 86,
+          "failures": 27,
           "policyHolds": 1,
-          "unknown": 0,
-          "unstarted": 135,
+          "unknown": 25,
+          "unstarted": 0,
           "pending": 0,
-          "successRate": 0.02158273381294964,
+          "successRate": 0.6187050359712231,
           "rowsPresent": 139
         },
         "excludedResults": 13,
-        "allTasksTerminal": false
+        "allTasksTerminal": true
       },
       "outcomes": [
         {
           "task_id": "consumer-0001",
-          "outcome": "success"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0002",
-          "outcome": "success"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0003",
-          "outcome": "success"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0004",
-          "outcome": "failure"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0005",
-          "outcome": "policy_hold"
+          "outcome": "policy_hold",
+          "providerAuditOutcome": "policy_hold",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0006",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0008",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0009",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0010",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0011",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0012",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0014",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0016",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0018",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0020",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0022",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0024",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0026",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0027",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0028",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0029",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0034",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0035",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0037",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0043",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0044",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0053",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0056",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0057",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0060",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0061",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0062",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0063",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0065",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0068",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0072",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0076",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0080",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0086",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0087",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0093",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0095",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0096",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0097",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "endpoint_unmet",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0098",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0099",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0101",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0102",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0110",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0116",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0119",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0120",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0121",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0122",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0133",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0135",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0148",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0153",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0155",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0168",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0169",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0172",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0184",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0204",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0205",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0208",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0209",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0212",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0223",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0233",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0235",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0236",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0242",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0244",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0259",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0261",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0265",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0278",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0287",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0288",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0304",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0316",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0319",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0323",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0334",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0335",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0336",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0342",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0346",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0347",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0349",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "platform_block",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0354",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0356",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0358",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0361",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0366",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0368",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0369",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0371",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0373",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0376",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0377",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0378",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0379",
-          "outcome": "success"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0381",
-          "outcome": "success"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v9-playstation-com",
-          "outcome": "success"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0386",
-          "outcome": "success"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0389",
-          "outcome": "failure"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0395",
-          "outcome": "success"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0401",
-          "outcome": "policy_hold"
+          "outcome": "policy_hold",
+          "providerAuditOutcome": "policy_hold",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0404",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0406",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0409",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0412",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0415",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0416",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "missing_evidence",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0421",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0422",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0423",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0427",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0432",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0438",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0440",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0442",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0444",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0445",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0449",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0450",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0451",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0457",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0459",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0460",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0461",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0463",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0465",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0470",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0471",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0472",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0483",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0484",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0485",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0487",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0488",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0491",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0497",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0498",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0500",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0515",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0518",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0529",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0532",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0535",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0538",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0548",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0551",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0559",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0561",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0562",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0566",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0570",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0573",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0582",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0584",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0588",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0590",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0591",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0592",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0594",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0596",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0597",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0601",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0603",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0608",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0611",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0620",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0623",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0625",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0628",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0629",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0630",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0631",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0632",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0633",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "missing_evidence",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0639",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "missing_evidence",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0640",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0641",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0642",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0643",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0646",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0647",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0650",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0652",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0653",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0657",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0662",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0666",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0669",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0675",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0676",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v8-biblio-com",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "endpoint_unmet",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0684",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0685",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0689",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0690",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0691",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0694",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0696",
-          "outcome": "policy_hold"
+          "outcome": "policy_hold",
+          "providerAuditOutcome": "policy_hold",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0698",
-          "outcome": "success"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0702",
-          "outcome": "policy_hold"
+          "outcome": "policy_hold",
+          "providerAuditOutcome": "policy_hold",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0707",
-          "outcome": "failure"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0708",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0711",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0715",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0716",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0717",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0722",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0727",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0729",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0730",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0732",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0735",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0736",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0738",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0739",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0744",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0746",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0748",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0752",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0754",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0756",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0761",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "endpoint_unmet",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0762",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "protocol_deviation",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0771",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0777",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0778",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0779",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0783",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0784",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0786",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0787",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0788",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0792",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0793",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0796",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0799",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0800",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0801",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0803",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0806",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0808",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0812",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0816",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0819",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0821",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0833",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0836",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0839",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0842",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0843",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0844",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0847",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0849",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0850",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0851",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0853",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0855",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0860",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0863",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0864",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0866",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0869",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0871",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0872",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "endpoint_unmet",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0873",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0877",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0878",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0885",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0887",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0889",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0895",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0902",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0907",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0916",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0918",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0920",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0923",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0932",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0934",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0936",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0937",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0942",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0948",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0949",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0951",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0953",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0955",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0956",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0964",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0965",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0966",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0975",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0978",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0985",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0987",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0988",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0989",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "consumer-0996",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "consumer-0997",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "retail-1001",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "retail-1005",
-          "outcome": "failure"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "retail-1007",
-          "outcome": "success"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "retail-1013",
-          "outcome": "policy_hold"
+          "outcome": "policy_hold",
+          "providerAuditOutcome": "policy_hold",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "retail-1015",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "retail-1017",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "retail-1020",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "retail-1025",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "retail-1029",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "retail-1030",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "retail-1033",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "retail-1036",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "retail-1039",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "retail-1040",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "retail-1041",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "retail-1043",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "retail-1046",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "retail-1051",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "retail-1052",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "retail-1053",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "retail-1055",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "retail-1056",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "retail-1060",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "retail-1062",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "retail-1063",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "retail-1065",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "retail-1066",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "retail-1068",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "retail-1075",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "retail-1076",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "retail-1077",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "retail-1082",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "retail-1085",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "retail-1086",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "retail-1087",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "retail-1089",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "retail-1091",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "retail-1092",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "retail-1099",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "retail-1100",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "retail-1102",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "retail-1103",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "retail-1104",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "retail-1106",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "retail-1107",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "retail-1108",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "retail-1111",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "retail-1112",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "retail-1116",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "retail-1118",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "retail-1120",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "retail-1121",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "retail-1124",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "retail-1131",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "retail-1138",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "retail-1140",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "retail-1145",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "retail-1146",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "retail-1147",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "retail-1149",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "retail-1150",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "retail-1152",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "retail-1153",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "retail-1154",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "retail-1157",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "retail-1159",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "retail-1163",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "retail-1166",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "retail-1172",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "retail-1174",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "retail-1205",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "retail-1263",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-booking-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v8-expedia-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v8-hotels-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v8-agoda-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v8-trip-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-trivago-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v8-kayak-com",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-tripadvisor-com",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-travelocity-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-orbitz-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-lastminute-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v8-ixigo-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v8-marriott-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-hilton-com",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-hyatt-com",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-ihg-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-wyndhamhotels-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-choicehotels-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-bestwestern-com",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-radissonhotels-com",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-premierinn-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-fourseasons-com",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-omnihotels-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v8-extendedstayamerica-com",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-motel6-com",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-citizenm-com",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-mrandmrssmith-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v8-hostelworld-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v8-vrbo-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v8-hertz-com",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-avis-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v8-alamo-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v8-sixt-com",
-          "outcome": "success"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-dollar-com",
-          "outcome": "success"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-thrifty-com",
-          "outcome": "policy_hold"
+          "outcome": "policy_hold",
+          "providerAuditOutcome": "policy_hold",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-paylesscar-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-rentalcars-com",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-turo-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-thetrainline-com",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-omio-com",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-eurostar-com",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-sncf-connect-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-bahn-de",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-italotreno-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-wanderu-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-busbud-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-redbus-in",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-ticketmaster-com",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-stubhub-com",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-axs-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v8-viagogo-com",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-ticketek-com-au",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v8-ticketmaster-co-uk",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-eventim-de",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-seetickets-com",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-dice-fm",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v8-tickpick-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v8-twickets-live",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v8-regmovies-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v8-cinemark-com",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-cineworld-co-uk",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v8-odeon-co-uk",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v8-myvue-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v8-viator-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v8-getyourguide-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v8-klook-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v8-tiqets-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v8-gocity-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v8-toursbylocals-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v8-opentable-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v8-exploretock-com",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-thefork-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v8-wholefoodsmarket-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v8-freshdirect-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v8-aldi-us",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v8-publix-com",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-ralphs-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v8-safeway-com",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-albertsons-com",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-vons-com",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-jewelosco-com",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-harristeeter-com",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-shoprite-com",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-morrisons-com",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-ocado-com",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-waitrose-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v8-loblaws-ca",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-edeka-de",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v8-blueapron-com",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-sunbasket-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v8-ubereats-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v8-foodpanda-com",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-zillow-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v8-redfin-com",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-apartments-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v8-trulia-com",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-homes-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v8-zoopla-co-uk",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v8-idealista-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v8-realestate-com-au",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-domain-com-au",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-immobilienscout24-de",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v8-autotrader-com",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-cargurus-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v8-carvana-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v8-truecar-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v8-carsales-com-au",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-mobile-de",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v8-xfinity-com",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-spectrum-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v8-mintmobile-com",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-usmobile-com",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-gamestop-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v8-wayfair-com",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v8-tirerack-com",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v20-diy-com",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v20-osprey-com",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v20-sony-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v20-dyson-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v20-garmin-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v20-hydroflask-com",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v20-breville-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v20-delonghi-com",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v20-fender-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         },
         {
           "task_id": "v20-jbl-com",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v20-potterybarn-com",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v20-nespresso-com",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v20-aveda-com",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v20-mouser-com",
-          "outcome": "unstarted"
+          "outcome": "failure",
+          "providerAuditOutcome": "failure",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v20-digikey-com",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v20-ouraring-com",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v20-ford-com",
-          "outcome": "unstarted"
+          "outcome": "unknown",
+          "providerAuditOutcome": "partial_not_verified",
+          "noRecordedDeviationCandidate": false
         },
         {
           "task_id": "v22-ebgames-ca",
-          "outcome": "unstarted"
+          "outcome": "success",
+          "providerAuditOutcome": "endpoint_verified",
+          "noRecordedDeviationCandidate": true
         }
       ],
-      "snapshotOnly": true,
+      "snapshotOnly": false,
       "resumeAcknowledged": true,
-      "conservativeSelfCheck": {
-        "all": 4,
-        "cart": 3,
-        "public_information": 1
-      },
       "freshV10Run": false,
-      "runDate": "Oct 23, 2026 snapshot",
+      "runDate": "Oct 23–24, 2026 · Provider audit",
       "latestProviderUpdate": {
-        "observedAtUtc": "2026-10-24T06:11:26.992408+00:00",
-        "source": "Instinct message, October 23, 2026, 6:02 PM Pacific",
-        "reportedAt": "2026-10-23T18:02:00-07:00",
-        "dateLabel": "Oct 23, 2026 · 6:02 PM PDT",
-        "successes": 292,
+        "observedAtUtc": "2026-10-24T22:11:14.745647+00:00",
+        "dateLabel": "Oct 24, 2026 · Final provider audit",
+        "successes": 285,
         "planned": 513,
-        "finishedAttempts": 382,
-        "unfinished": 131,
-        "successRateAmongFinished": 0.7643979057591623,
-        "successRateAcrossOriginalPlan": 0.5692007797270955,
-        "status": "provisional_capacity_pause",
-        "includesKnownPartialResults": true,
-        "verifiedFinalScore": null,
-        "retained500Successes": null,
-        "originalTaskRowsReceived": false,
-        "note": "Provider includes known partial results. Latest per-task rows remain missing. The 500-task score cannot yet update.",
-        "capacityReport": "Daily browser-time limit. Provider plans continuation after midnight Pacific."
+        "finishedAttempts": 513,
+        "unfinished": 0,
+        "status": "final_provider_endpoint_audit",
+        "verifiedFinalScore": 0.5555555555555556,
+        "retained500Successes": 283,
+        "originalTaskRowsReceived": true,
+        "note": "Provider audit only. We verify original file integrity and exact task coverage. Full independent image and action review remains incomplete."
+      },
+      "previousArchiveSnapshot": {
+        "date": "Oct 23, 2026",
+        "originalTasks": 513,
+        "started": 22,
+        "reportedSuccesses": 12,
+        "retainedTasks": 500,
+        "retainedSuccesses": 12,
+        "retainedUnstarted": 479,
+        "conservativeProviderClaim": 4,
+        "supersededByFinalRecords": true
+      },
+      "providerAudit": {
+        "sourceResultArchiveSha256": "b4db0148d33d6ef736f074c6b7edd66ae4756a8555e2935dc9552bfbe1cc1b3c",
+        "originalTasks": 513,
+        "originalReportedSuccessClaims": 386,
+        "originalEndpointSuccesses": 285,
+        "originalNoRecordedDeviationCandidates": 226,
+        "retainedEndpointSuccesses": 283,
+        "retainedNoRecordedDeviationCandidates": 224,
+        "retainedOutcomeCounts": {
+          "endpoint_verified": 283,
+          "failure": 111,
+          "policy_hold": 5,
+          "partial_not_verified": 92,
+          "endpoint_unmet": 4,
+          "platform_block": 1,
+          "missing_evidence": 3,
+          "protocol_deviation": 1
+        },
+        "unverifiedOutcomeMapping": [
+          "partial_not_verified",
+          "missing_evidence",
+          "protocol_deviation"
+        ],
+        "outcomeMappingNote": "Unknown aggregates incomplete proof, missing images and the excluded protocol-deviation result. These records do not establish website failures.",
+        "originalImagesReceived": 596,
+        "selectedImageHashesChecked": 491,
+        "independentCompleteImageAudit": false,
+        "originalActionHistoriesReceived": false,
+        "runtimeReleaseReceiptsVerified": 0,
+        "reopenedOriginalOrdinal": 219,
+        "reopenedAmendmentCounted": false,
+        "preGrantAttemptsKeptSeparate": 22,
+        "completeCaptchaEncounterCount": null
       }
     }
   ],
