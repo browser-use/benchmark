@@ -28,7 +28,7 @@ class ConsumerScoreTests(unittest.TestCase):
                 self.assertFalse(instinct["summary"]["allTasksTerminal"])
                 self.assertEqual(instinct["summary"]["all"]["unstarted"], unstarted)
 
-    def test_current_selection_preserves_runner_identity_and_separate_grok_denominator(self):
+    def test_current_selection_preserves_source_identity_and_unmatched_claim_denominators(self):
         root = Path(__file__).resolve().parents[1] / "consumer_bench"
         data = json.loads((root / "results.json").read_text())
         dot = next(run for run in data["runs"] if run["label"] == "Dot")
@@ -39,6 +39,10 @@ class ConsumerScoreTests(unittest.TestCase):
         self.assertEqual(len(study["outcomes"]), 50)
         self.assertEqual(sum(row["outcome"] == "success" for row in study["outcomes"]), study["successes"])
         self.assertEqual(study["tasks"], 50)
+        instinct = next(run for run in data["runs"] if run["id"] == "instinct")
+        self.assertIsNone(instinct["latestProviderUpdate"]["retained500Successes"])
+        self.assertEqual(instinct["latestProviderUpdate"]["planned"], 513)
+        self.assertEqual(instinct["summary"]["all"]["successes"], 12)
         for run in data["runs"]:
             if "captcha" in run:
                 counts = run["captcha"]

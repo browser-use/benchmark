@@ -8485,7 +8485,7 @@
       "label": "Instinct",
       "status": "partial",
       "source": "Instinct supplied v4 archive, October 23, 2026",
-      "evidence": "Actual result rows and archive structure verified. Original screenshot and action review remains separate.",
+      "evidence": "Earlier supplied archive supports the saved 12-success snapshot. A later native message reports provisional counts without updated original task rows.",
       "datasetVersionExecuted": 8,
       "freshV9Run": false,
       "summary": {
@@ -10587,7 +10587,28 @@
         "public_information": 1
       },
       "freshV10Run": false,
-      "runDate": "Oct 23, 2026 snapshot"
+      "runDate": "Oct 23, 2026 snapshot",
+      "latestProviderUpdate": {
+        "observedAtUtc": "2026-10-24T06:11:26.992408+00:00",
+        "source": "Direct native Messages AX, verified Maybe: Instinct window",
+        "reportedAt": "2026-10-23T18:02:00-07:00",
+        "dateLabel": "Oct 23, 2026 · 6:02 PM PDT",
+        "successes": 292,
+        "planned": 513,
+        "finishedAttempts": 382,
+        "unfinished": 131,
+        "successRateAmongFinished": 0.7643979057591623,
+        "successRateAcrossOriginalPlan": 0.5692007797270955,
+        "status": "provisional_capacity_pause",
+        "includesKnownPartialResults": true,
+        "verifiedFinalScore": null,
+        "retained500Successes": null,
+        "originalTaskRowsReceived": false,
+        "note": "Provider includes known partial results. Latest per-task rows remain missing. The 500-task score cannot yet update.",
+        "capacityReport": "Daily browser-time limit. Provider plans continuation after midnight Pacific.",
+        "ownerResumeInstructionAlreadyRead": true,
+        "noRootMessageSent": true
+      }
     }
   ],
   "historicalStudies": [
