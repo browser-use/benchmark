@@ -15,6 +15,6 @@
     }
   ],
   "appliesTo": "All providers equally",
-  "selectionBias": "These exclusions follow observed access failures. Original V9 scores remain available.",
+  "selectionBias": "We selected these exclusions after observing outcomes. This introduces selection bias. Original V9 scores remain available.",
   "version": 10
 }

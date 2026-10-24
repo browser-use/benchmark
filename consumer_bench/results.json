@@ -10590,7 +10590,7 @@
       "runDate": "Oct 23, 2026 snapshot",
       "latestProviderUpdate": {
         "observedAtUtc": "2026-10-24T06:11:26.992408+00:00",
-        "source": "Direct native Messages AX, verified Maybe: Instinct window",
+        "source": "Instinct message, October 23, 2026, 6:02 PM Pacific",
         "reportedAt": "2026-10-23T18:02:00-07:00",
         "dateLabel": "Oct 23, 2026 · 6:02 PM PDT",
         "successes": 292,
@@ -10605,9 +10605,7 @@
         "retained500Successes": null,
         "originalTaskRowsReceived": false,
         "note": "Provider includes known partial results. Latest per-task rows remain missing. The 500-task score cannot yet update.",
-        "capacityReport": "Daily browser-time limit. Provider plans continuation after midnight Pacific.",
-        "ownerResumeInstructionAlreadyRead": true,
-        "noRootMessageSent": true
+        "capacityReport": "Daily browser-time limit. Provider plans continuation after midnight Pacific."
       }
     }
   ],
