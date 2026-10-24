@@ -1,0 +1,20 @@
+consumer_bench/README.md
+  h_e7a2b198222b93 7,9,22-23
+consumer_bench/exclusions-v10.json
+  h_e7a2b198222b93 18-19
+consumer_bench/website-examples.json
+  h_e7a2b198222b93 403,414,425,436,447,458,469,480,491,502,513
+tests/test_consumer_score.py
+  h_e7a2b198222b93 3,16,23-25,47-48,62-63
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "02b84e56cd3c36aac531de0ebe42876f30342b8c",
+  "prompts": {},
+  "humans": {
+    "h_e7a2b198222b93": {
+      "author": "Gregor Žunič <36313686+gregpr07@users.noreply.github.com>"
+    }
+  }
+}
