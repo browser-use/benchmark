@@ -249,7 +249,7 @@
         {
           "task_id": "consumer-0024",
           "outcome": "failure",
-          "captchaReport": "none",
+          "captchaReport": "unknown",
           "categoryReport": "ordinary_or_unknown_error"
         },
         {
@@ -1191,7 +1191,7 @@
         {
           "task_id": "consumer-0611",
           "outcome": "failure",
-          "captchaReport": "none",
+          "captchaReport": "unknown",
           "categoryReport": "ordinary_or_unknown_error"
         },
         {
@@ -1497,7 +1497,7 @@
         {
           "task_id": "consumer-0744",
           "outcome": "failure",
-          "captchaReport": "none",
+          "captchaReport": "unknown",
           "categoryReport": "ordinary_or_unknown_error"
         },
         {
@@ -3177,7 +3177,7 @@
         {
           "task_id": "v20-jbl-com",
           "outcome": "failure",
-          "captchaReport": "none",
+          "captchaReport": "unknown",
           "categoryReport": "ordinary_or_unknown_error"
         },
         {
@@ -3232,12 +3232,12 @@
       "freshV10Run": false,
       "runDate": "Oct 20, 2026",
       "captcha": {
-        "none": 446,
+        "none": 442,
         "cleared": 47,
         "uncleared": 7,
-        "unknown": 0,
+        "unknown": 4,
         "encountered": 54,
-        "source": "Structured per-task runner reports; not independently complete CAPTCHA telemetry."
+        "source": "Original execution reports. Four attempts lack valid reports. A missing report remains unknown."
       }
     },
     {

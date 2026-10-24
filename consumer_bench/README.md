@@ -10,7 +10,7 @@ Browser Use Cloud, Dot, and Meta Muse show historical V8 outcomes on the retaine
 
 Instinct remains partial. Unstarted tasks are not failures. Grok Bot reports 36/50 in a different October 12–13 browsing study. It has no matched 500-task score here. Its Amazon smoke prompt differs from the frozen 50-site template.
 
-Task completion does not isolate infrastructure stealth. Models, dates, profiles, CAPTCHA rules, and review differ. CAPTCHA counts come from structured per-task reports. A cleared challenge includes automatic clearance. Missing CAPTCHA fields remain unknown. No causal infrastructure comparison or complete independent CAPTCHA audit follows.
+Task completion does not isolate infrastructure stealth. Models, dates, profiles, CAPTCHA rules, and review differ. CAPTCHA counts come from structured per-task reports. A cleared challenge includes automatic clearance. Missing CAPTCHA fields remain unknown. Each Cloud and Dot run has four unknown CAPTCHA reports. No causal infrastructure comparison or complete independent CAPTCHA audit follows.
 
 Muse reports 168 failures in its original 513-task run. Only 26 carry the website-security-block category. Ninety-six failures occur before a website opens. Security blocks are not all CAPTCHAs. No complete Muse CAPTCHA encounter count exists. Root reviewed 37 original tasks, with 24 endpoints and 13 misses. Runtime release receipts remain missing.
 
