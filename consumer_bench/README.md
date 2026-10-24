@@ -8,7 +8,13 @@ Shopping and browser infrastructure benchmark, selection V10
 
 Browser Use Cloud, Dot, and Meta Muse show historical V8 outcomes on the retained V10 IDs. They do not establish fresh V10 execution. Fleet Farm changed its URL and task in V9. That change limits exact cross-version comparison. Browser Use Cloud uses the best retained run. This choice introduces selection bias. The owner maps OpenAI browser runner to the Dot display name. Original source identity remains in results.json.
 
-Instinct remains partial. Its later native message reports 292 provisional successes across 382 finished attempts from the original 513-task run. It includes known partial results. Updated original task rows remain missing. Its earlier retained snapshot still reports 12/500. No new 500-task score follows. Unstarted tasks are not failures. Grok Bot reports 36/50 in a different October 12–13 browsing study. It has no matched 500-task score here. Its Amazon smoke prompt differs from the frozen 50-site template.
+Instinct supplies final records for all 513 original tasks. Its endpoint audit counts 285/513 successes (55.6%). The retained V10 tasks yield 283/500 (56.6%). Only 224/500 have verified endpoints with no recorded deviation. That candidate count does not certify full protocol compliance.
+
+We check exact frozen prompts, IDs, archive integrity and all 491 selected image hashes. The eight evidence archives contain 596 unique original images. Full independent image and action review remains incomplete. Original action histories and runtime release receipts remain missing.
+
+The audit rejects 101 of 386 initial success claims. These include 93 partial results, three missing images, four wrong endpoints and one prohibited postcode submission. The original terminal failure for ordinal 219 remains a failure despite a later reopened result. Unverified proof does not establish website failure.
+
+Grok Bot retains 36/50 in a different October 12–13 browsing study. It has no matched 500-task score. Its Amazon smoke prompt differs from the frozen 50-site template.
 
 Task completion does not isolate infrastructure stealth. Models, dates, profiles, CAPTCHA rules, and review differ. CAPTCHA counts come from structured per-task reports. A cleared challenge includes automatic clearance. Missing CAPTCHA fields remain unknown. Each Cloud and Dot run has four unknown CAPTCHA reports. No causal infrastructure comparison or complete independent CAPTCHA audit follows.
 

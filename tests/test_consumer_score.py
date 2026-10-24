@@ -14,7 +14,7 @@ class ConsumerScoreTests(unittest.TestCase):
     def test_published_summaries_match_each_version_without_rewriting_original_scores(self):
         root = Path(__file__).resolve().parents[1] / "consumer_bench"
         self.assertEqual(hashlib.sha256((root / "results-v9.json").read_bytes()).hexdigest(), "c1c6c17da22a32f0a6f06a8799f6794b94e2ec63c830d494cb7c40cb160af5cf")
-        for version, total, excluded, unstarted in [(9, 502, 11, 481), (10, 500, 13, 479)]:
+        for version, total, excluded, unstarted, terminal in [(9, 502, 11, 481, False), (10, 500, 13, 0, True)]:
             with self.subTest(version=version):
                 tasks = json.loads((root / f"dataset-v{version}.json").read_text())["tasks"]
                 filename = "results.json" if version == 10 else "results-v9.json"
@@ -30,7 +30,7 @@ class ConsumerScoreTests(unittest.TestCase):
                     else:
                         self.assertEqual(run["summary"], summarize(tasks, run["outcomes"]), run["id"])
                 instinct = next(run for run in data["runs"] if run["id"] == "instinct")
-                self.assertFalse(instinct["summary"]["allTasksTerminal"])
+                self.assertEqual(instinct["summary"]["allTasksTerminal"], terminal)
                 self.assertEqual(instinct["summary"]["all"]["unstarted"], unstarted)
 
     def test_current_selection_preserves_source_identity_and_unmatched_claim_denominators(self):
@@ -47,9 +47,18 @@ class ConsumerScoreTests(unittest.TestCase):
         self.assertEqual(study["outcomeCounts"], dict(Counter(row["outcome"] for row in study["outcomes"])))
         self.assertEqual(study["successRate"], study["successes"] / study["tasks"])
         instinct = next(run for run in data["runs"] if run["id"] == "instinct")
-        self.assertIsNone(instinct["latestProviderUpdate"]["retained500Successes"])
+        self.assertEqual(instinct["latestProviderUpdate"]["retained500Successes"], 283)
         self.assertEqual(instinct["latestProviderUpdate"]["planned"], 513)
-        self.assertEqual(instinct["summary"]["all"]["successes"], 12)
+        self.assertEqual(instinct["summary"]["all"]["successes"], 283)
+        self.assertEqual(instinct["summary"]["all"]["failures"], 116)
+        self.assertEqual(instinct["summary"]["all"]["unknown"], 96)
+        self.assertEqual(instinct["providerAudit"]["originalEndpointSuccesses"], 285)
+        self.assertFalse(instinct["providerAudit"]["independentCompleteImageAudit"])
+        self.assertFalse(instinct["providerAudit"]["reopenedAmendmentCounted"])
+        self.assertEqual(instinct["previousArchiveSnapshot"]["retainedUnstarted"], 479)
+        for row in instinct["outcomes"]:
+            if row["providerAuditOutcome"] in instinct["providerAudit"]["unverifiedOutcomeMapping"]:
+                self.assertEqual(row["outcome"], "unknown", row["task_id"])
         for run in data["runs"]:
             if "captcha" in run:
                 counts = run["captcha"]
