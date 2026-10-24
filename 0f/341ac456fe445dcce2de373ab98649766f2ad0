@@ -1,0 +1,26 @@
+README.md
+  h_e7a2b198222b93 492-495
+consumer_bench/README.md
+  h_e7a2b198222b93 1-23
+consumer_bench/dataset-v9.json
+  h_e7a2b198222b93 1-3521
+consumer_bench/exclusions-v9.json
+  h_e7a2b198222b93 1-64
+consumer_bench/results.json
+  h_e7a2b198222b93 1-8511
+consumer_bench/score.py
+  h_e7a2b198222b93 1-52
+tests/test_consumer_score.py
+  h_e7a2b198222b93 1-65
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "0f341ac456fe445dcce2de373ab98649766f2ad0",
+  "prompts": {},
+  "humans": {
+    "h_e7a2b198222b93": {
+      "author": "Gregor Žunič <36313686+gregpr07@users.noreply.github.com>"
+    }
+  }
+}
