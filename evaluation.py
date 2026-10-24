@@ -33,7 +33,7 @@ from judge import JudgementResult, construct_judge_messages
 from screenshot_evidence import prepare_screenshots
 
 DEFAULT_BENCHMARK = "BU_Bench_V2"
-BENCHMARKS = (DEFAULT_BENCHMARK, "BU_Bench_V1", "Stealth_Bench_V1")
+BENCHMARKS = (DEFAULT_BENCHMARK, "BU_Bench_V1")
 FINDINGS_MODEL = "gpt-5.6-luna"
 LEGACY_MODEL = "gemini-2.5-flash"
 MAX_IMAGES = 50

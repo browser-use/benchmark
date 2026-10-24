@@ -27,3 +27,10 @@ plots = ["matplotlib", "numpy"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["."]
+
+[tool.ruff.lint.per-file-ignores]
+# Keep the evaluated probe/judge snapshots byte-identical for provenance.
+# Their process boundaries record unexpected provider failures as unresolved;
+# the remaining exceptions preserve harmless source spelling and API validation.
+"stealth_bench/v2/judge.py" = ["BLE001"]
+"stealth_bench/v2/probe.py" = ["BLE001", "FURB167", "ISC004", "TRY004"]

@@ -283,13 +283,14 @@ def summarize_results(results: list[dict]) -> dict:
 
 def parse_args(argv=None):
     parser = argparse.ArgumentParser(
-        description="Run all 200 V2 tasks with BrowserCode and the findings judge (default)"
+        description="Run all 200 V2 tasks with BrowserCode and the findings judge (default)",
+        epilog="Stealth Bench V2 uses its own runner: uv run --script stealth_bench/run.py --help"
     )
     parser.add_argument(
         "--executor",
         choices=["bcode", "browser-use"],
         default=None,
-        help="Default: bcode for V2; browser-use for V1/Stealth",
+        help="Default: bcode for V2; browser-use for BU Bench V1",
     )
     parser.add_argument("--bcode-bin", default=str(Path.home() / ".bcode/bin/bcode"))
     parser.add_argument("--bcode-version", default="0.1.20")

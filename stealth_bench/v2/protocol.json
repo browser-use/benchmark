@@ -1,0 +1,12 @@
+{
+  "dataset_sha256": "6dee4f2eb9954c96445222b0fb8b7228689300f84001de4ba4ee9a952b0f3228",
+  "tasks": 100,
+  "observation_seconds": 60,
+  "membership": "Unchanged from frozen HighSecurity100; no reselection after new runs",
+  "judge": "access-v3, gpt-5.6-luna low, 1200 output tokens",
+  "repetitions": 2,
+  "retry_policy": "One identical retry for missing acquisition/capture/infrastructure only; never retry valid failures or uncertain rendered pages",
+  "dataset_file": "datasets/Stealth_Bench_V2_100_60s.json",
+  "viewport_note": "Stock and competitor CDP content viewport 1365x900; Cloud requests 1365x900 screen but provider-managed content viewport may vary.",
+  "selection_note": "Historically selected for Cloud versus stock headful+US-proxy differences; no representative-web or fingerprint-only claim."
+}

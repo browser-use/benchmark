@@ -185,9 +185,8 @@ seconds. `--model` and `--agent-reasoning` select another BrowserCode model/vari
 while `--judge-model` and `--judge-reasoning` change the findings judge. `--check`
 performs the binary/model preflight without executing tasks.
 
-The historical V1, Stealth, and framework comparison runners remain available
-below. `--benchmark BU_Bench_V1` and `--benchmark Stealth_Bench_V1` keep their
-existing paths. To explicitly run the Python Agent against V2, use
+The historical BU Bench V1 and framework comparison runners remain available
+below. `--benchmark BU_Bench_V1` keeps its existing path. To explicitly run the Python Agent against V2, use
 `--executor browser-use`; that path retains its existing browser and `--max-steps`
 options. The older `eval.yaml` workflow is also retained for the historical V1
 batch/orchestrator path.
@@ -244,57 +243,33 @@ configuration and compare matching task instructions before comparing scores.
 
 <br/>
 
-## Stealth Bench V1
+## Stealth Bench V2
 
-**71 tasks for evaluating browser stealth across anti-bot protections**
+**100 distinct starting domains. One question: can the browser access the website within 60 seconds?**
 
-<picture>
-  <source media="(prefers-color-scheme: light)" srcset="stealth_bench/official_plots/accuracy_by_browser_light.png">
-  <source media="(prefers-color-scheme: dark)" srcset="stealth_bench/official_plots/accuracy_by_browser_dark.png">
-  <img alt="Stealth Bench - Accuracy by Browser" src="stealth_bench/official_plots/accuracy_by_browser_light.png" width="100%">
-</picture>
+This high-security navigation challenge was selected from historical sites where stock headful Chromium with a US proxy struggled. Membership was frozen before the provider comparison. It measures this deliberately difficult cohort, not representative web-wide access.
 
 <picture>
-  <source media="(prefers-color-scheme: light)" srcset="stealth_bench/official_plots/category_heatmap_light.png">
-  <source media="(prefers-color-scheme: dark)" srcset="stealth_bench/official_plots/category_heatmap_dark.png">
-  <img alt="Stealth Bench - Category Heatmap" src="stealth_bench/official_plots/category_heatmap_light.png" width="100%">
+  <source media="(prefers-color-scheme: light)" srcset="stealth_bench/official_plots/stealth_v2_broken_axis_light.png">
+  <source media="(prefers-color-scheme: dark)" srcset="stealth_bench/official_plots/stealth_v2_broken_axis_dark.png">
+  <img alt="Stealth Bench V2 — confirmed website access in 60 seconds; axis omits 20–65%" src="stealth_bench/official_plots/stealth_v2_broken_axis_light.png" width="100%">
 </picture>
 
-**Tasks:** [Stealth Bench V1 task set](Stealth_Bench_V1.enc) (80 tasks, encrypted; the plots use a 71-task subset).
+**The chart omits 20–65% with a marked axis break; both visible segments use the same scale.** [Full 0–100% chart](stealth_bench/official_plots/stealth_v2_light.png). All configurations and original two-repeat results are unchanged.
 
-The tasks are encrypted to keep their text out of web crawlers and model training data.
+**[Dataset](Stealth_Bench_V2.enc) · [Methodology and judge prompt](stealth_bench/README.md) · [Results](stealth_bench/official_results/)**
 
-Read more in our [blog post](https://browser-use.com/posts/stealth-benchmark).
+A deterministic Playwright probe opens each URL. A separate, browser-blinded Luna judge inspects the page text and screenshots at 20 and 60 seconds. There is no executor self-report. Remaining CAPTCHA or security denials fail access; login walls, site/network errors and unresolved measurements remain separate. The published model judgments retain known overlay/blank-page ambiguities; see the [visual audit and sensitivity bounds](stealth_bench/README.md#visual-audit-and-score-sensitivity).
 
-### Running the Stealth Benchmark
+Run the complete dataset twice with a fresh browser session per attempt:
 
-**1. Install dependencies**
-```bash
-pip install uv
-uv sync
-```
+    # OPENAI_API_KEY for the judge, plus the selected provider's key in .env
+    uv run --with playwright==1.63.0 python -m playwright install --with-deps chromium
+    uv run --locked --script stealth_bench/run.py --browser browser-use --repetitions 2
 
-**2. Set up your `.env`** (see [`.env.example`](.env.example))
-```bash
-cp .env.example .env
-# Fill in GOOGLE_API_KEY (required for the judge LLM)
-# Fill in the API key for the browser provider you want to test
-```
+Stock headful/headless controls, US-proxy controls and other providers use the same runner. See [setup, all configurations and limitations](stealth_bench/README.md#reproduce). Tasks are encrypted using the repository convention; do not publish decrypted tasks or use them for training.
 
-**3. Run the evaluation** (decrypts in memory; uses the legacy binary judge)
-```bash
-uv run python run_eval.py --benchmark Stealth_Bench_V1 --browser <provider>
-```
-
-Available providers: `browser-use-cloud`, `anchor`, `browserbase`, `browserless`, `hyperbrowser`, `onkernel`, `steel`, `local_headful`, `local_headless`
-
-**Results and official data:** [`stealth_bench/`](stealth_bench/)
-
-<br/>
-
----
-
-<br/>
+**Independent provider rerun:** all seven managed providers were evaluated again on the same 100 tasks. Cloud scored 90%, Anchor 85%, Kernel and Browserless 83%, Browserbase standard 78%, Steel 74%, and Hyperbrowser 72%. See the [separate confirmation results, unresolved counts and chart](stealth_bench/README.md#independent-provider-confirmation); the original two-repeat results above remain unchanged.
 
 ## BU Bench V1
 

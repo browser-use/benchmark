@@ -1,0 +1,9 @@
+{"configuration":"browserless_solver","repetition":1,"task_id":"shs100-013","classification":"judge_or_capture_error","score":null}
+{"configuration":"browserless_solver","repetition":1,"task_id":"shs100-014","classification":"judge_or_capture_error","score":null}
+{"configuration":"browserless_solver","repetition":1,"task_id":"shs100-038","classification":"judge_or_capture_error","score":null}
+{"configuration":"browserless_solver","repetition":1,"task_id":"shs100-051","classification":"bot_block","score":0}
+{"configuration":"browserless_solver","repetition":1,"task_id":"shs100-054","classification":"accessible","score":1}
+{"configuration":"browserless_solver","repetition":1,"task_id":"shs100-082","classification":"accessible","score":1}
+{"configuration":"browserless_solver","repetition":1,"task_id":"shs100-086","classification":"accessible","score":1}
+{"configuration":"hyperbrowser","repetition":1,"task_id":"shs100-011","classification":"judge_or_capture_error","score":null}
+{"configuration":"kernel","repetition":1,"task_id":"shs100-041","classification":"bot_block","score":0}

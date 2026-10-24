@@ -88,8 +88,8 @@ class ConfigurationTests(unittest.TestCase):
             {"task_id": "bu2-001", "score": 0.5},
         )
 
-    def test_stealth_and_v1_keep_their_existing_executor_and_datasets(self):
-        for benchmark, count in (("Stealth_Bench_V1", 80), ("BU_Bench_V1", 100)):
+    def test_bu_v1_keeps_its_existing_executor_and_dataset(self):
+        for benchmark, count in (("BU_Bench_V1", 100),):
             args = run_eval.parse_args(
                 ["--benchmark", benchmark, "--browser", "local_headless"]
             )

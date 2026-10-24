@@ -1,0 +1,75 @@
+{
+  "platform_sha": "9433cb3f87314c0d0bd8ef538404d1e05fe69646",
+  "dataset_sha256": "6dee4f2eb9954c96445222b0fb8b7228689300f84001de4ba4ee9a952b0f3228",
+  "judge": "access-v3, gpt-5.6-luna, low, 1200 output tokens",
+  "concurrency": {
+    "full": 5,
+    "missing_measurement_retry": 2
+  },
+  "task_order_seed": 20260930,
+  "observed_browser_versions": {
+    "cloud": {
+      "151.0.7922.108": 100
+    },
+    "browserbase": {
+      "154.0.8037.58": 100
+    },
+    "kernel": {
+      "153.0.8010.36": 100
+    },
+    "anchor": {
+      "147.0.7727.137": 100
+    },
+    "hyperbrowser": {
+      "140.0.7339.186": 100
+    },
+    "steel": {
+      "150.0.7871.46": 100
+    },
+    "browserless_solver": {
+      "154.0.8037.58": 100
+    }
+  },
+  "requested_configurations": {
+    "cloud": {
+      "browser": "cloud",
+      "solve_captchas": true,
+      "observation_seconds": 60
+    },
+    "browserbase": {
+      "browser": "browserbase",
+      "verified": false,
+      "observation_seconds": 60
+    },
+    "kernel": {
+      "browser": "kernel",
+      "observation_seconds": 60
+    },
+    "anchor": {
+      "browser": "anchor",
+      "observation_seconds": 60
+    },
+    "hyperbrowser": {
+      "browser": "hyperbrowser",
+      "observation_seconds": 60
+    },
+    "steel": {
+      "browser": "steel",
+      "observation_seconds": 60
+    },
+    "browserless_solver": {
+      "browser": "browserless",
+      "solve_captchas": true,
+      "observation_seconds": 60
+    }
+  },
+  "notes": [
+    "Independent single-repeat confirmation; original two-repeat outcomes remain unchanged.",
+    "Same frozen100 tasks and20/60-second capture protocol; fresh sessions.",
+    "All providers use concurrency5 here; original comparisons used different documented concurrency.",
+    "Browserbase standard is scored; Enterprise Verified is not requested.",
+    "Browser versions, network exits, native solvers and viewports differ. No causal fingerprint or web-wide claim.",
+    "Known age-overlay and blank-page model-judge ambiguities remain; no selective rejudge or score override."
+  ],
+  "renderer_sha256": "a7cf53947801d86e147472335f602cf8c65fea151c2812c758ee27f7e1c15240"
+}

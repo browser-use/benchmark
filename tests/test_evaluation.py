@@ -102,7 +102,6 @@ class DatasetTests(unittest.TestCase):
 
     def test_legacy_datasets_still_load(self):
         self.assertEqual(len(load_tasks("BU_Bench_V1")), 100)
-        self.assertEqual(len(load_tasks("Stealth_Bench_V1")), 80)
 
     def test_bad_metadata_is_rejected(self):
         for changes in (

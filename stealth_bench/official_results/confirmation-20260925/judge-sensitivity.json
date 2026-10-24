@@ -1,0 +1,302 @@
+{
+  "scope": "Separate conservative sensitivity check; no original verdict or headline score is overwritten. These are not statistical confidence intervals.",
+  "criteria": [
+    "Both known age-overlay tasks are flagged for every provider.",
+    "Every complete empty-body-text final capture is flagged, including embedded challenges or image-only pages that may actually be classifiable. This broader check avoids selecting only one disputed provider outcome."
+  ],
+  "visual_sample": "Three task IDs per provider sampled with Random(20261001), without filtering on outcomes.",
+  "flagged_attempts": [
+    {
+      "configuration": "browserless_solver",
+      "task_id": "shs100-049",
+      "classification": "accessible",
+      "score": 1,
+      "audit_reasons": [
+        "Previously identified age-overlay task, flagged across all configurations"
+      ]
+    },
+    {
+      "configuration": "browserless_solver",
+      "task_id": "shs100-072",
+      "classification": "accessible",
+      "score": 1,
+      "audit_reasons": [
+        "Previously identified age-overlay task, flagged across all configurations"
+      ]
+    },
+    {
+      "configuration": "steel",
+      "task_id": "shs100-049",
+      "classification": "accessible",
+      "score": 1,
+      "audit_reasons": [
+        "Previously identified age-overlay task, flagged across all configurations"
+      ]
+    },
+    {
+      "configuration": "steel",
+      "task_id": "shs100-013",
+      "classification": "bot_block",
+      "score": 0,
+      "audit_reasons": [
+        "Complete final capture has empty body text; conservative blank/embedded-page screen"
+      ]
+    },
+    {
+      "configuration": "steel",
+      "task_id": "shs100-015",
+      "classification": "bot_block",
+      "score": 0,
+      "audit_reasons": [
+        "Complete final capture has empty body text; conservative blank/embedded-page screen"
+      ]
+    },
+    {
+      "configuration": "steel",
+      "task_id": "shs100-072",
+      "classification": "accessible",
+      "score": 1,
+      "audit_reasons": [
+        "Previously identified age-overlay task, flagged across all configurations"
+      ]
+    },
+    {
+      "configuration": "hyperbrowser",
+      "task_id": "shs100-049",
+      "classification": "accessible",
+      "score": 1,
+      "audit_reasons": [
+        "Previously identified age-overlay task, flagged across all configurations"
+      ]
+    },
+    {
+      "configuration": "hyperbrowser",
+      "task_id": "shs100-013",
+      "classification": "bot_block",
+      "score": 0,
+      "audit_reasons": [
+        "Complete final capture has empty body text; conservative blank/embedded-page screen"
+      ]
+    },
+    {
+      "configuration": "hyperbrowser",
+      "task_id": "shs100-072",
+      "classification": "bot_block",
+      "score": 0,
+      "audit_reasons": [
+        "Previously identified age-overlay task, flagged across all configurations"
+      ]
+    },
+    {
+      "configuration": "hyperbrowser",
+      "task_id": "shs100-015",
+      "classification": "bot_block",
+      "score": 0,
+      "audit_reasons": [
+        "Complete final capture has empty body text; conservative blank/embedded-page screen"
+      ]
+    },
+    {
+      "configuration": "anchor",
+      "task_id": "shs100-056",
+      "classification": "bot_block",
+      "score": 0,
+      "audit_reasons": [
+        "Complete final capture has empty body text; conservative blank/embedded-page screen"
+      ]
+    },
+    {
+      "configuration": "anchor",
+      "task_id": "shs100-049",
+      "classification": "accessible",
+      "score": 1,
+      "audit_reasons": [
+        "Previously identified age-overlay task, flagged across all configurations"
+      ]
+    },
+    {
+      "configuration": "anchor",
+      "task_id": "shs100-084",
+      "classification": "bot_block",
+      "score": 0,
+      "audit_reasons": [
+        "Complete final capture has empty body text; conservative blank/embedded-page screen"
+      ]
+    },
+    {
+      "configuration": "anchor",
+      "task_id": "shs100-020",
+      "classification": "bot_block",
+      "score": 0,
+      "audit_reasons": [
+        "Complete final capture has empty body text; conservative blank/embedded-page screen"
+      ]
+    },
+    {
+      "configuration": "anchor",
+      "task_id": "shs100-038",
+      "classification": "bot_block",
+      "score": 0,
+      "audit_reasons": [
+        "Complete final capture has empty body text; conservative blank/embedded-page screen"
+      ]
+    },
+    {
+      "configuration": "anchor",
+      "task_id": "shs100-072",
+      "classification": "accessible",
+      "score": 1,
+      "audit_reasons": [
+        "Previously identified age-overlay task, flagged across all configurations"
+      ]
+    },
+    {
+      "configuration": "kernel",
+      "task_id": "shs100-049",
+      "classification": "accessible",
+      "score": 1,
+      "audit_reasons": [
+        "Previously identified age-overlay task, flagged across all configurations"
+      ]
+    },
+    {
+      "configuration": "kernel",
+      "task_id": "shs100-072",
+      "classification": "accessible",
+      "score": 1,
+      "audit_reasons": [
+        "Previously identified age-overlay task, flagged across all configurations"
+      ]
+    },
+    {
+      "configuration": "browserbase",
+      "task_id": "shs100-036",
+      "classification": "bot_block",
+      "score": 0,
+      "audit_reasons": [
+        "Complete final capture has empty body text; conservative blank/embedded-page screen"
+      ]
+    },
+    {
+      "configuration": "browserbase",
+      "task_id": "shs100-049",
+      "classification": "accessible",
+      "score": 1,
+      "audit_reasons": [
+        "Previously identified age-overlay task, flagged across all configurations"
+      ]
+    },
+    {
+      "configuration": "browserbase",
+      "task_id": "shs100-013",
+      "classification": "bot_block",
+      "score": 0,
+      "audit_reasons": [
+        "Complete final capture has empty body text; conservative blank/embedded-page screen"
+      ]
+    },
+    {
+      "configuration": "browserbase",
+      "task_id": "shs100-015",
+      "classification": "bot_block",
+      "score": 0,
+      "audit_reasons": [
+        "Complete final capture has empty body text; conservative blank/embedded-page screen"
+      ]
+    },
+    {
+      "configuration": "browserbase",
+      "task_id": "shs100-072",
+      "classification": "accessible",
+      "score": 1,
+      "audit_reasons": [
+        "Previously identified age-overlay task, flagged across all configurations"
+      ]
+    },
+    {
+      "configuration": "cloud",
+      "task_id": "shs100-049",
+      "classification": "uncertain",
+      "score": null,
+      "audit_reasons": [
+        "Previously identified age-overlay task, flagged across all configurations"
+      ]
+    },
+    {
+      "configuration": "cloud",
+      "task_id": "shs100-015",
+      "classification": "bot_block",
+      "score": 0,
+      "audit_reasons": [
+        "Complete final capture has empty body text; conservative blank/embedded-page screen"
+      ]
+    },
+    {
+      "configuration": "cloud",
+      "task_id": "shs100-072",
+      "classification": "accessible",
+      "score": 1,
+      "audit_reasons": [
+        "Previously identified age-overlay task, flagged across all configurations"
+      ]
+    }
+  ],
+  "configurations": [
+    {
+      "configuration": "cloud",
+      "attempts": 100,
+      "recorded_access_percent": 90,
+      "audit_flagged_attempts": 3,
+      "conservative_access_lower_percent": 89,
+      "conservative_access_upper_percent": 92
+    },
+    {
+      "configuration": "browserbase",
+      "attempts": 100,
+      "recorded_access_percent": 78,
+      "audit_flagged_attempts": 5,
+      "conservative_access_lower_percent": 76,
+      "conservative_access_upper_percent": 81
+    },
+    {
+      "configuration": "kernel",
+      "attempts": 100,
+      "recorded_access_percent": 83,
+      "audit_flagged_attempts": 2,
+      "conservative_access_lower_percent": 81,
+      "conservative_access_upper_percent": 83
+    },
+    {
+      "configuration": "anchor",
+      "attempts": 100,
+      "recorded_access_percent": 85,
+      "audit_flagged_attempts": 6,
+      "conservative_access_lower_percent": 83,
+      "conservative_access_upper_percent": 89
+    },
+    {
+      "configuration": "hyperbrowser",
+      "attempts": 100,
+      "recorded_access_percent": 72,
+      "audit_flagged_attempts": 4,
+      "conservative_access_lower_percent": 71,
+      "conservative_access_upper_percent": 76
+    },
+    {
+      "configuration": "steel",
+      "attempts": 100,
+      "recorded_access_percent": 74,
+      "audit_flagged_attempts": 4,
+      "conservative_access_lower_percent": 72,
+      "conservative_access_upper_percent": 76
+    },
+    {
+      "configuration": "browserless_solver",
+      "attempts": 100,
+      "recorded_access_percent": 83,
+      "audit_flagged_attempts": 2,
+      "conservative_access_lower_percent": 81,
+      "conservative_access_upper_percent": 86
+    }
+  ]
+}

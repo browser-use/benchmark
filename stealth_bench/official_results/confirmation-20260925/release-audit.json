@@ -1,0 +1,29 @@
+{
+  "visual_sample_review_counts": {
+    "supported": 19,
+    "ambiguous_blank": 1,
+    "age_overlay_ambiguity": 1
+  },
+  "scheduled_original_attempts": 700,
+  "exact_task_and_retry_lineage": "verified by package export",
+  "all_workflows_terminal": true,
+  "dataset_sha256": "6dee4f2eb9954c96445222b0fb8b7228689300f84001de4ba4ee9a952b0f3228",
+  "original_public_results_hash_unchanged": true,
+  "observed_judge_models": {
+    "gpt-5.6-luna": 696
+  },
+  "final_observation_start_range_seconds": [
+    60.0,
+    60.042
+  ],
+  "session_freshness_counts": {
+    "cloud": {
+      "recorded": 100,
+      "unique": 100
+    }
+  },
+  "session_freshness_limit": "Only Cloud retains session IDs in page evidence; other providers request new sessions but do not retain unique IDs here.",
+  "public_fields_allowlisted": true,
+  "public_sensitive_pattern_scan": "passed",
+  "scope": "Structural/privacy/source checks; model judgments retain documented uncertainty and require evidence review."
+}
