@@ -1,0 +1,64 @@
+{
+  "version": 9,
+  "removed": [
+    {
+      "id": "consumer-0369",
+      "domain": "shopee.vn",
+      "reason": "duplicate_shopee_site"
+    },
+    {
+      "id": "consumer-0371",
+      "domain": "shopee.co.id",
+      "reason": "duplicate_shopee_site"
+    },
+    {
+      "id": "consumer-0376",
+      "domain": "shopee.co.th",
+      "reason": "duplicate_shopee_site"
+    },
+    {
+      "id": "consumer-0401",
+      "domain": "shopee.com.my",
+      "reason": "duplicate_shopee_site"
+    },
+    {
+      "id": "consumer-0590",
+      "domain": "very.co.uk",
+      "reason": "local_access_denied"
+    },
+    {
+      "id": "consumer-0601",
+      "domain": "darty.com",
+      "reason": "local_access_denied"
+    },
+    {
+      "id": "consumer-0630",
+      "domain": "webuy.com",
+      "reason": "local_access_denied"
+    },
+    {
+      "id": "consumer-0669",
+      "domain": "snapdeal.com",
+      "reason": "local_access_denied"
+    },
+    {
+      "id": "consumer-0717",
+      "domain": "goldapple.ru",
+      "reason": "local_access_denied"
+    },
+    {
+      "id": "consumer-0786",
+      "domain": "livemaster.ru",
+      "reason": "local_access_denied"
+    },
+    {
+      "id": "consumer-0844",
+      "domain": "buyee.jp",
+      "reason": "temporary_maintenance"
+    }
+  ],
+  "changedTaskIds": [
+    "retail-1087"
+  ],
+  "additionalCountryExclusions": []
+}
