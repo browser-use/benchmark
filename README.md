@@ -32,11 +32,15 @@
 
 <br/>
 
-## Benchmark scores — historical 60-task results
+## Benchmark scores — BU Bench V2.1
 
-<img alt="Legacy 60-task BU Bench V2 results - Mean rubric score by model and cost per task, including GPT-6 Astra" src="official_plots/bu_bench_v2_astra.jpg" width="100%">
+<picture>
+  <source media="(prefers-color-scheme: light)" srcset="official_plots/bu_bench_v21_light.png">
+  <source media="(prefers-color-scheme: dark)" srcset="official_plots/bu_bench_v21_dark.png">
+  <img alt="BU Bench V2.1 - Mean rubric score vs model cost per task, best effort per model" src="official_plots/bu_bench_v21_light.png" width="100%">
+</picture>
 
-These results use the earlier 60-task set. They are not results for the current 200-task V2.1 dataset. Compare model scores only on the same task set and revision.
+The 180 of 200 V2.1 tasks scored for every model in the lineup, judged by the findings-v21 judge on GPT-5.6 Luna xhigh. One dot per model at its best-scoring effort. Lab models ran in the open-source BrowserCode harness, Browser Use's own agent at BU fast. Cost is model cost only (no search, judge, browser or runner). Every effort level, confidence intervals and per-model notes: [browser-use.com/benchmarks/agents](https://browser-use.com/benchmarks/agents). Chart: `scripts/bu_bench_v21_chart.py`.
 
 ## BU Bench V2.1
 
@@ -243,6 +247,16 @@ configuration and compare matching task instructions before comparing scores.
 ---
 
 <br/>
+
+## Historical 60-task results (BU Bench V2)
+
+<details>
+<summary>Earlier 60-task set. Not comparable with V2.1.</summary>
+
+<img alt="Legacy 60-task BU Bench V2 results - Mean rubric score by model and cost per task, including GPT-6 Astra" src="official_plots/bu_bench_v2_astra.jpg" width="100%">
+
+These results use the earlier 60-task set. They are not results for the current 200-task V2.1 dataset. Compare model scores only on the same task set and revision.
+</details>
 
 ## Stealth Bench V1
 
