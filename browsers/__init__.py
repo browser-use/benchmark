@@ -15,6 +15,7 @@ from browsers import (
     onkernel,
     rebrowser,
     steel,
+    string,
 )
 
 PROVIDERS = [
@@ -28,6 +29,7 @@ PROVIDERS = [
     "onkernel",
     "rebrowser",
     "steel",
+    "string",
 ]
 
 BROWSERS = {
@@ -42,6 +44,7 @@ BROWSERS = {
     "onkernel": onkernel,
     "rebrowser": rebrowser,
     "steel": steel,
+    "string": string,
 }
 
 

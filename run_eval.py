@@ -126,7 +126,9 @@ async def create_browser(
     cdp_url = await browser_provider.connect()
     if cdp_url is None:
         return Browser(headless=getattr(browser_provider, "HEADLESS", True))
-    return Browser(cdp_url=cdp_url)
+    # Providers that authenticate the CDP handshake expose headers().
+    headers = getattr(browser_provider, "headers", None)
+    return Browser(cdp_url=cdp_url, headers=headers() if headers else None)
 
 
 async def run_task(

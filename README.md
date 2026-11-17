@@ -286,7 +286,7 @@ cp .env.example .env
 uv run python run_eval.py --benchmark Stealth_Bench_V1 --browser <provider>
 ```
 
-Available providers: `browser-use-cloud`, `anchor`, `browserbase`, `browserless`, `hyperbrowser`, `onkernel`, `steel`, `local_headful`, `local_headless`
+Available providers: `browser-use-cloud`, `anchor`, `browserbase`, `browserless`, `driver`, `hyperbrowser`, `onkernel`, `rebrowser`, `steel`, `string`, `local_headful`, `local_headless`
 
 **Results and official data:** [`stealth_bench/`](stealth_bench/)
 
