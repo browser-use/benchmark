@@ -1,6 +1,6 @@
 """String -- https://usestring.ai
 
-Residential proxy and captcha solving.
+Default (residential) proxy and captcha solving.
 Requires: STRING_API_KEY env var. STRING_CDP_URL optionally overrides the endpoint.
 
 There is no session API: connecting to the CDP WebSocket starts a fresh browser,
@@ -13,8 +13,7 @@ from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
 DEFAULT_CDP_URL = "wss://request.usestring.ai/v1/wss"
 
-# proxy=premium is String's residential pool (also its default).
-SETTINGS = {"proxy": "premium", "solveCaptcha": "true"}
+SETTINGS = {"solveCaptcha": "true"}
 
 
 def headers() -> dict[str, str]:
