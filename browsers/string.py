@@ -23,8 +23,14 @@ def headers() -> dict[str, str]:
 
 async def connect() -> str:
     parts = urlsplit(os.environ.get("STRING_CDP_URL") or DEFAULT_CDP_URL)
-    query = dict(parse_qsl(parts.query))
-    query.update(SETTINGS)
+    # Keep the override's own parameters as given, blank and repeated ones
+    # included, and replace only the keys this benchmark sets.
+    query = [
+        (key, value)
+        for key, value in parse_qsl(parts.query, keep_blank_values=True)
+        if key not in SETTINGS
+    ]
+    query.extend(SETTINGS.items())
     return urlunsplit(parts._replace(query=urlencode(query)))
 
 
