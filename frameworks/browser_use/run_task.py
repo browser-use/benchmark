@@ -49,7 +49,8 @@ async def execute(
     try:
         cdp_url = await provider.connect()
         if cdp_url:
-            browser = Browser(cdp_url=cdp_url)
+            headers = getattr(provider, "headers", None)
+            browser = Browser(cdp_url=cdp_url, headers=headers() if headers else None)
         else:
             headless = getattr(provider, "HEADLESS", True)
             browser = Browser(headless=headless)
